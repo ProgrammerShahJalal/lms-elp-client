@@ -1,4 +1,4 @@
-# Easy Learning Platform
+# Easy Learning Platform Client
 
 ## Web and Android Application
 
