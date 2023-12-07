@@ -1,7 +1,11 @@
+import Courses from "./Courses";
+import Hero from "./Hero";
+
 const HomePage = () => {
   return (
     <div className="">
-      <h2>Home</h2>
+      <Hero/>
+      <Courses/>
     </div>
   );
 };
