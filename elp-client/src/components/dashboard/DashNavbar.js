@@ -4,10 +4,10 @@ import { FiLogOut } from "react-icons/fi";
 
 const DashNavbar = () => {
   return (
-    <div className="bg-white border-b border-b-gray-300">
+    <div className="bg-white border-b border-b-gray-300 sticky top-0 z-10">
     <div className="navbar px-5">
   <div className="navbar-start ">
-    <Link href="/" className="text-xl">লার্নিং প্লাটফর্ম</Link>
+    <Link href="/" className="text-xl text-cyan-900">ইজি লার্নিং প্লাটফর্ম</Link>
     
   </div>
   <div className="navbar-center hidden lg:flex">
