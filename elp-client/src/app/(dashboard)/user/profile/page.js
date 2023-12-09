@@ -1,21 +1,27 @@
+import DashNavbar from "@/components/dashboard/DashNavbar"
+import UserContent from "@/components/dashboard/userDashboard/UserContent"
+import UserProfileInfo from "@/components/dashboard/userDashboard/UserProfileInfo"
+import UserSidebar from "@/components/dashboard/userDashboard/UserSidebar"
+
 
 
 const UserProfile = () => {
   return (
-    <div>
-        <header>User dash</header>
-        <div className="flex justify-start items-center gap-5">
-            <div className="bg-gray-500 h-screen">
-                sidebar
+    <div className="">
+    <UserProfileInfo/>
+    
+        {/* <DashNavbar/>
+        <div className=" grid grid-cols-2  bg-gray-200">
+            <div className="bg-white h-screen w-60 mt-5 border border-gray-300 rounded ml-5 ">
+                <UserSidebar/>
             </div>
-            <div className="bg-gray-300 h-screen w-100">
-             content
+            <div className="bg-white  w-100 mt-5 rounded px-10 pt-10 mr-10" style={{marginLeft:'-300px'}}>
+             <UserContent/>
             </div>
-        </div>
+        </div> */}
+        
 
-        <footer >
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
-        </footer>
+        
     </div>
   )
 }
