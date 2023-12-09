@@ -1,12 +1,12 @@
 "use client";
 
 import Footer from "@/components/shared/Footer";
-import MainNavber from "@/components/shared/MainNavber";
+import Navbar from "@/components/shared/Navbar";
 
 export default function RootLayout({ children }) {
   return (
     <>
-      <MainNavber />
+      <Navbar />
 
       {children}
       <Footer />

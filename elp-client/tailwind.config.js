@@ -5,15 +5,16 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  // theme: {
-  //   extend: {
-  //     backgroundImage: {
-  //       'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-  //       'gradient-conic':
-  //         'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-  //     },
-  //   },
-  // },
+  theme: {
+    extend: {
+      colors:{
+        'bluePrimary':"#525FE1",
+        'cyanPrimary':"#231F40",
+        'yellowPrimary':"#F86F03"
+        
+      },
+    },
+  },
   plugins: [require("daisyui")],
   // daisyui: {
   //   themes: ["light"],

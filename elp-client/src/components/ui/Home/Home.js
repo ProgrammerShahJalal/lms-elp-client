@@ -4,8 +4,10 @@ import Hero from "./Hero";
 const HomePage = () => {
   return (
     <div className="">
-      <Hero/>
-      <Courses/>
+    <br /> <br />
+    <br />
+      {/* <Hero/>
+      <Courses/> */}
     </div>
   );
 };
