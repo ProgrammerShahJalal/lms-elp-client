@@ -9,8 +9,8 @@ const HomePage = () => {
     <br />
         
       <Hero/>
-      {/* 
-      <Courses/> */}
+      
+      <Courses/> 
       <ScrollToTopButton/>
     </div>
   );
