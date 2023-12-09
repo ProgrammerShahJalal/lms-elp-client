@@ -7,7 +7,7 @@ import Link from "next/link";
 const CourseCard = () => {
   return (
     <>
-<div className="card w-[350px]  shadow-xl cursor-pointer ">
+<div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 ">
           <figure className="relative">
             <Image src="https://i.ibb.co/G9hnB13/course-1.webp" alt="course" width={400} height={100}/>
           </figure>
@@ -27,7 +27,7 @@ const CourseCard = () => {
             <hr />
              <div className="flex">
              
-             <p className="text-sm font-semibold pb-3"> কোর্সের মূল্যঃ  <del className="text-gray-400 pr-3 "> -500 </del> 3000 Tk</p>
+             <p className="text-sm font-semibold py-3"> কোর্সের মূল্যঃ  <del className="text-gray-400 pr-3 "> -500 </del> 3000 Tk</p>
              </div>
             <div className=" card-actions justify-center ">
             
