@@ -49,8 +49,8 @@ const Navbar = () => {
   const navItems = [
     { link: "হোম", path: "home" },
     { link: "কোর্সসমূহ", path: "courses", dropdown: [
-        { sublink: "কোর্স 1", subpath: "course1" },
-        { sublink: "কোর্স 2", subpath: "course2" },
+        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "course1" },
+        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "course2" },
         // Add more courses as needed
       ] },
     { link: "আমাদের সম্পর্কে", path: "about" },
@@ -81,9 +81,9 @@ const Navbar = () => {
                 //   onMouseLeave={closeCoursesDropdown}
                   >
                   <span className="flex items-center "> {link} <IoIosArrowDown /> </span>
-                  <div className={`absolute ${isCoursesDropdownOpen ? "block" : "hidden"} space-y-2 text-white bg-bluePrimary left-0 mt-3 text-left cursor-pointer w-24 `}>
+                  <div className={`absolute ${isCoursesDropdownOpen ? "block" : "hidden"} space-y-2 text-white bg-bluePrimary left-0 mt-5 text-left cursor-pointer w-48 py-5 `}>
                     {dropdown.map(({ sublink, subpath }) => (
-                      <Link href={subpath} key={subpath} className="block px-3  hover:text-white cursor-pointer">
+                      <Link href={subpath} key={subpath} className="block px-3  hover:text-cyanPrimary cursor-pointer ">
                         {sublink}
                       </Link>
                     ))}
