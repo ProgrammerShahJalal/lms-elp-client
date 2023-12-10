@@ -11,7 +11,7 @@ const SelectCarreer = () => {
        <div>
        <button className="bg-cyanPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-transparent hover:border border-cyan-900">সবগুলো কোর্স দেখুন </button>
         <button className="bg-gray-600 text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary mx-4">সেমিনারে অংশ নেন </button>
-        <button className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"> কল বক করুন</button>
+        <button className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary md: mt-5"> কল বক করুন</button>
        </div>
     </div>
 

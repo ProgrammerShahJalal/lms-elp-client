@@ -1,3 +1,4 @@
+import Category from "./Category";
 import Courses from "./Courses";
 import FreeSeminar from "./FreeSeminar";
 import Hero from "./Hero";
@@ -11,7 +12,8 @@ const HomePage = () => {
     <br />
         
       <Hero/>
-      <FreeSeminar/>
+      <Category/>
+      {/* <FreeSeminar/> */}
       <Courses/> 
       <SelectCarreer/>
       <ScrollToTopButton/>
