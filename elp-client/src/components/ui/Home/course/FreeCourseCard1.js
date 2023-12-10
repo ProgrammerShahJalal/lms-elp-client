@@ -3,10 +3,10 @@ import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
 
-const CourseCard = () => {
+const FreeCourseCard1 = () => {
   return (
     <>
-      {/* hover:-translate-y-1 hover:scale-110 */}
+      
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
         <figure className="relative">
           <Image
@@ -42,7 +42,7 @@ const CourseCard = () => {
           <div className="flex">
             <p className="text-sm font-semibold py-3">
               {" "}
-              কোর্সের মূল্যঃ <del className="text-gray-400 pr-3 "> -500 </del> 3000 Tk
+              ফ্রী কোর্স <del className="text-gray-400 pr-3 "> -500 Tk </del> 
             </p>
           </div>
           {/* <div className=" card-actions justify-center ">
@@ -56,4 +56,4 @@ const CourseCard = () => {
   );
 };
 
-export default CourseCard;
+export default FreeCourseCard1;
