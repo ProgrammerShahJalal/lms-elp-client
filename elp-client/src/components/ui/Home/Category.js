@@ -6,17 +6,17 @@ import icon2 from "../../../assets/images/icon2.png";
 
 const Category = () => {
   return (
-    <div className=" px-14 py-14">
-      <div className="lg:flex items-center justify-between">
+    <div className=" px-14 py-14 ">
+      <div className="lg:flex items-center justify-between ">
         <div>
           <h2 className="lg:text-3xl md:text-2xl font-semibold ">
             আমাদের কোর্সসমূহ থেকে বেছে নিন আপনার পছন্দের কোর্স
           </h2>
-          <h5 className="lg:text-xl  py-4">
+          <h5 className="lg:text-xl py-4 mb-3">
             দেশসেরা ইন্সট্রাক্টরদের সেরা সব কোর্স এখন এক প্ল্যাটফর্মে।
           </h5>
         </div>
-        <button className="bg-transparent border-0">
+        <button className="bg-transparent border-0 ">
           <Link
             href="/"
             className="bg-transparent text-cyanPrimary py-4 px-4 transition-all font-semibold border border-cyan-900 duration-300 rounded hover:bg-yellowPrimary hover:border-none hover:text-white"
@@ -26,7 +26,7 @@ const Category = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 pt-4">
+      <div className="grid lg:grid-cols-4 gap-4 pt-10 lg:pt-4">
         <Link href="/" className="relative  overflow-hidden  ">
           <div className="bg-white rounded shadow-lg">
             <div className="text-center">

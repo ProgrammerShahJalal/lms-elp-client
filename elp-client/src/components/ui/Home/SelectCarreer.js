@@ -2,7 +2,7 @@ import React from 'react'
 
 const SelectCarreer = () => {
   return (
-    <div className=' my-5 bg-bluePrimary rounded py-10'>
+    <div className='mt-10  bg-bluePrimary  py-10'>
 
     <div className='py-10 text-center text-white'> 
         <h2 className='font-bold text-3xl pb-5'>সফল ক্যারিয়ার গড়তে সঠিক প্রোগ্রামটি বেছে নিন</h2>
