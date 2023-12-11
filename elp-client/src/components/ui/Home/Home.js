@@ -13,9 +13,6 @@ import Testing from "./Testing";
 const HomePage = () => {
   return (
     <div className="">
-    <br /> <br />
-    <br />
-        
       <Hero/>
       <Category/>
       <Courses/> 

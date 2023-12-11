@@ -32,7 +32,7 @@ const ToggleTheme = () => {
           type="checkbox"
           onChange={handleToggle}
           checked={theme === "dark"}
-          defaultChecked={theme === "dark"}
+          
         />
 
         {/* sun icon */}

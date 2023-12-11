@@ -82,7 +82,7 @@ const Footer = () => {
           <a className="link link-hover">abc@gmail.com</a>
         </nav>
       </footer>
-      <footer className="footer footer-center p-4 bg-cyanPrimary text-white">
+      <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">
         <aside>
           <p>Copyright © 2023 - All right reserved by ইজি লার্নিং প্লাটফর্ম</p>
         </aside>

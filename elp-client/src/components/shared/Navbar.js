@@ -62,7 +62,7 @@ const Navbar = () => {
     { link: "FAQ", path: "faq" },
   ];
   return (
-    <header className="w-full bg-white md:bg-transparent fixed top-0 left-0 right-0 z-10">
+    <header className="w-full bg-white md:bg-transparent sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
       <nav
         className={`py-4 lg:px-14 px-4 ${
           isSticky ? " bg-white sticky top-0 left-0 right-0 border-b duration-300" : ""
@@ -122,15 +122,15 @@ const Navbar = () => {
           {/* btn for large device */}
           <div className="space-x-5 hidden lg:flex items-center">
           <ToggleTheme/>
-            <a
-              href="/"
+            <Link
+              href="/login"
               className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
             >
               লগইন করুন
-            </a>
-            <button className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary">
+            </Link>
+            <Link href="/register" className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary">
               রেজিস্টার
-            </button>
+            </Link>
           </div>
 
           {/* menu btn for only mobile devices */}
