@@ -1,5 +1,7 @@
 
+import Providers from '@/lib/Providers'
 import './globals.css'
+import ToastProvider from '@/lib/ToastProvider'
 
 
 
@@ -10,8 +12,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <Providers>
+      <html lang="en" data-theme = 'light'>
+        <body>
+          <ToastProvider>
+          {children}
+          </ToastProvider>
+        </body>
+      </html>
+    </Providers>
   )
 }

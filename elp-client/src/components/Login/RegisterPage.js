@@ -4,10 +4,17 @@ import { useState } from "react";
 import { VscEye,VscEyeClosed } from "react-icons/vsc";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useUserSignupMutation } from "@/redux/api/authApi";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { storeUserInfo } from "@/services/auth.service";
 
 
 const RegisterPage = () => {
-  const { register, handleSubmit } = useForm();
+
+  const [userSignup] = useUserSignupMutation();
+  const router = useRouter();
+  const { register, handleSubmit,reset } = useForm();
   
 
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +26,25 @@ const RegisterPage = () => {
   };
 
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const res = await userSignup({ ...data }).unwrap();
+      
+
+      // if (res?.accessToken) {
+      //   alert("user created")
+      //   reset();
+      //   router.push("/");
+      // } else {
+      //   alert("something is wrong")
+      // }
+       storeUserInfo({ accessToken: res?.accessToken });
+      // storeUserInfo()
+      console.log(res,' from res')
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
   return (
     <div className="bg-white border rounded shadow-lg max-w-md mx-auto py-5 my-10 z-0">
       <div>

@@ -1,8 +1,12 @@
-
+'use client'
 import Link from "next/link";
 import CourseCard from "./course/CourseCard";
+import { useGetCoursesQuery } from "@/redux/api/authApi";
 
 const Courses = () => {
+  const {data} = useGetCoursesQuery();
+
+  console.log(data)
   return (
     <div className="px-14 py-10">
     <div className="flex gap-5">

@@ -1,13 +1,40 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { VscEye,VscEyeClosed } from "react-icons/vsc";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useUserLoginMutation } from "@/redux/api/authApi";
+import { useRouter } from "next/navigation";
+import { storeUserInfo } from "@/services/auth.service";
 
 const LoginPage = () => {
+  const [userLogin] = useUserLoginMutation();
+  const router = useRouter();
   
   const { register, handleSubmit } = useForm();
+
+  const [data, setData] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
+  useEffect(()=>{
+    fetch('http://localhost:5000/api/v1/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' // Set the content type
+      },
+      body: JSON.stringify(data) // Stringify the data
+    })
+    .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => {
+      console.log(responseData)
+      // Handle successful response
+    })
+    .catch(error => {
+      // Handle error
+    });
+  },[])
   
 
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +46,23 @@ const LoginPage = () => {
   };
 
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit =  (data) => {
+     fetch('http://localhost:5000/api/v1/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' // Set the content type
+      },
+      body: JSON.stringify(data) // Stringify the data
+    })
+    .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => {
+      console.log(responseData)
+      // Handle successful response
+    })
+    .catch(error => {
+      // Handle error
+    });
+  };
   return (
     <div className="bg-white border rounded shadow-lg max-w-md mx-auto py-5 my-10 z-0">
       <div>
@@ -29,7 +72,7 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
           
           <div className="flex justify-center">
-          <input type="number" {...register("contact_no")}  placeholder="আপনার মোবাইল নাম্বার / ইমেইল" className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200" required />
+          <input type="text" {...register("contact_no")}  placeholder="আপনার মোবাইল নাম্বার / ইমেইল" className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200" required />
           </div>
           <div className="flex justify-center">
       <div className="relative w-80">
