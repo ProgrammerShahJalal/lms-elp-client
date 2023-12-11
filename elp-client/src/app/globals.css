@@ -7,9 +7,16 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
+body[data-theme='light'] {
   background-color: #F1E9F4;
 }
+/* .light body{
+  background-color: #F1E9F4;
+}
+.dark body {
+  background-color: #ffffff;
+  color: #333333;
+} */
 
 
 

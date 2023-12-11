@@ -1,8 +1,12 @@
+'use client'
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
+import ToggleTheme from "../shared/ToggleTheme";
 
 
 const DashNavbar = () => {
+  
   return (
     <div className="bg-white border-b border-b-gray-300 sticky top-0 z-10">
     <div className="navbar px-5">
@@ -18,6 +22,7 @@ const DashNavbar = () => {
      </ul>
   </div>
   <div className="navbar-end">
+        <ToggleTheme/>
     <div className="flex items-center gap-3 bg-blue-600 text-white transition-all  hover:bg-blue-900 cursor-pointer px-5 py-2 rounded">
     <FiLogOut fontSize={20} />
     <button className="text-xl ">লগ আউট</button>
