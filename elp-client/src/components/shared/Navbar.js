@@ -75,7 +75,7 @@ const Navbar = () => {
   }, []);
 
   const commonRoutes = [
-    { link: "হোম", path: "home" },
+    { link: "হোম", path: "/" },
     {
       link: "কোর্সসমূহ",
       path: "courses",

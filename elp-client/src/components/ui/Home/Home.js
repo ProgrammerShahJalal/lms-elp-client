@@ -1,3 +1,4 @@
+import MemeberShipPlan from "@/components/ohters/MemeberShipPlan";
 import Benefits from "./Benefits";
 import BookSection from "./BookSection";
 import Category from "./Category";
@@ -16,6 +17,7 @@ const HomePage = () => {
       <Hero/>
       <Category/>
       <Courses/> 
+      <MemeberShipPlan/>
       <FreeCourse/>
       <BookSection/>
       <FreeSeminar/>
