@@ -12,16 +12,14 @@ instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     const accessToken = getFromLocalStorage('accessToken');
-    console.log(accessToken, 'from axios')
+    // console.log(accessToken, 'from axios')
 
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
 
-    // if (accessToken && typeof accessToken === 'string') {
-    //   config.headers.Authorization = accessToken;
-    // }
-    console.log(accessToken, 'from axios1')
+    
+    // console.log(accessToken, 'from axios1')
     return config;
   },
   function (error) {
