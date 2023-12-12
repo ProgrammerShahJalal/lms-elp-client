@@ -7,3 +7,23 @@
   padding: 0;
   box-sizing: border-box;
 }
+body[data-theme='light'] {
+  background-color: #F1E9F4;
+}
+/* .light body{
+  background-color: #F1E9F4;
+}
+.dark body {
+  background-color: #ffffff;
+  color: #333333;
+} */
+
+
+
+.scroll-to-top.visible {
+  display: block;
+}
+
+.banner{
+  background-image: linear-gradient(to left top, #fef1e8, #feeee9, #fdebeb, #f9e9ed, #f4e7ef, #f4e7ef, #f3e8f0, #f3e8f0, #f8ebf0, #fbeef0, #fdf2f1, #fef6f3);
+}

@@ -1,43 +1,20 @@
+
+import Link from "next/link";
+import CourseCard from "./course/CourseCard";
+
 const Courses = () => {
   return (
-    <div className="px-20 py-10">
-      <div className="grid grid-cols-3  gap-4">
-        <div className="card w-72  shadow-xl">
-          <figure>
-            <img src="https://i.ibb.co/G9hnB13/course-1.webp" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">প্রাইমারী কোর্স</h2>
-            <p>লLorem ipsum dolor sit amet consectetur, adipisicing elit. Quam, quaerat. </p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">এনরোল করুন</button>
-            </div>
-          </div> 
-        </div>
-        <div className="card w-72  shadow-xl">
-          <figure>
-            <img src="https://i.ibb.co/G9hnB13/course-1.webp" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">প্রাইমারী কোর্স</h2>
-            <p>লLorem ipsum dolor sit amet consectetur, adipisicing elit. Quam, quaerat. </p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">এনরোল করুন</button>
-            </div>
-          </div> 
-        </div>
-        <div className="card w-72  shadow-xl">
-          <figure>
-            <img src="https://i.ibb.co/G9hnB13/course-1.webp" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">প্রাইমারী কোর্স</h2>
-            <p>লLorem ipsum dolor sit amet consectetur, adipisicing elit. Quam, quaerat. </p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">এনরোল করুন</button>
-            </div>
-          </div> 
-        </div>
+    <div className="px-14 py-10">
+    <div className="flex gap-5">
+    <h2 className="text-2xl font-bold px-2  rounded">ক্যারিয়ার ট্র্যাক কোর্স</h2>
+    <Link href="/" className="mb-5 bg-cyanPrimary w-44 text-white px-7 py-3 rounded">সব কোর্স দেখুন</Link>
+    </div>
+      <div className="grid lg:grid-cols-3  gap-4">
+        
+        <CourseCard/>
+        <CourseCard/>
+        <CourseCard/>
+        
         
        
        

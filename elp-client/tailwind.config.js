@@ -7,6 +7,8 @@ module.exports = {
   ],
   theme: {
     extend: {
+      
+      
       colors:{
         'bluePrimary':"#525FE1",
         'cyanPrimary':"#231F40",
@@ -16,7 +18,7 @@ module.exports = {
     },
   },
   plugins: [require("daisyui")],
-  // daisyui: {
-  //   themes: ["light"],
-  // },
+  daisyui: {
+    themes: ["light","dark"],
+  },
 }

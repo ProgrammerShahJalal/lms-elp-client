@@ -1,18 +1,22 @@
-import React from 'react'
+import React from 'react';
+import banner from '../../../assets/images/banner.png';
+import Image from 'next/image';
 
 const Hero = () => {
   return (
     <div>
-<div className="hero  bg-base-200">
-  <div className="hero-content text-center">
-    <div className="max-w-md">
-      <h1 className="text-5xl font-bold">Hello there</h1>
-      <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-      <button className="btn btn-primary">Get Started</button>
+<div className="banner bg-cyanPrimary ">
+<div className="hero-content flex-col lg:flex-row-reverse ">
+    <Image src={banner} className="max-w-sm rounded-lg shadow-2xl" />
+    <div className=''>
+      <h1 className="text-5xl font-bold leading-relaxed text-cyanPrimary">নিজের মত শিখুন, <br />
+আত্মবিশ্বাস গড়ুন!</h1>
+      <p className="pt-6 pb-3  font-medium text-lg">চাকরির  জন্য নিজেকে প্রস্তুত করতে ইজি লার্নিং প্লাটফর্ম  <span className='opacity-0'>ক্যারিয়ার ট্র্যাক কোর্সগুলোই যথেষ্ট।</span></p>
+      <p className="pb-6 font-medium text-lg"> ক্যারিয়ার ট্র্যাক কোর্সগুলোই যথেষ্ট।</p>
+      <button className="bg-bluePrimary text-white py-3 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary">কোর্সগুলো দেখুন</button>
     </div>
   </div>
 </div>
-
     </div>
   )
 }
