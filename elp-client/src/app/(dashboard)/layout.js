@@ -22,10 +22,10 @@ const DashBoardLayout = ({children}) => {
       router.push("/login")
     }
     setIsLoading(true)
-  },[]);
+  },[router,isLoading,userLoggedIn]);
 
   if(!isLoading){
-    return <p>Loading.................</p>
+    return <p className="text-center py-20 text-2xl font-blod">Loading.................</p>
   }
 
 

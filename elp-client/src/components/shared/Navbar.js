@@ -7,27 +7,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import ToggleTheme from "./ToggleTheme";
-import { isLoggedIn, removeUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const userLoggedIn = isLoggedIn();
-  const router = useRouter()
+  const router = useRouter();
+  const {role} = getUserInfo()
 
   // logout
 
-  const logout  = () => {
-    removeUserInfo(authKey)
-    router.push('/login')
-  }
+  const logout = () => {
+    removeUserInfo(authKey);
+    router.push("/login");
+  };
 
-  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
 
-  
   const toggleCoursesDropdown = () => {
     setIsCoursesDropdownOpen(!isCoursesDropdownOpen);
   };
@@ -45,6 +44,21 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 100) {
+  //       setIsSticky(true);
+  //     } else {
+  //       setIsSticky(false);
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.addEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
@@ -56,11 +70,11 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => {
-      window.addEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const navItems = [
+  const commonRoutes = [
     { link: "হোম", path: "home" },
     {
       link: "কোর্সসমূহ",
@@ -74,21 +88,26 @@ const Navbar = () => {
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
     { link: "FAQ", path: "faq" },
+    
   ];
+  const navItems = userLoggedIn
+  ? [...commonRoutes, { link: "প্রোফাইল", path: "profile" }]
+  : commonRoutes;
   return (
     <header className="w-full bg-white md:bg-transparent sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
       <nav
-        className={`py-4 lg:px-14 px-4 ${
+        className={`py-4  px-4 ${
           isSticky ? " bg-white sticky top-0 left-0 right-0 border-b duration-300" : ""
         }`}
       >
         <div className="flex justify-between items-center text-base gap-8">
-          <a href="/" className="text-xl font-semibold flex items-center space-x-2">
+          <Link href="/" className="text-lg font-semibold flex items-center space-x-2">
             <Image src={logo} alt="logo" className="w-14 inline-block items-center" />
             <span className="text-cyanPrimary hover:text-bluePrimary">ইজি লার্নিং প্লাটফর্ম</span>
-          </a>
+          </Link>
 
           {/* nav for large device*/}
+          
 
           <ul className="md:flex space-x-5 hidden">
             {navItems.map(({ link, path, dropdown }) => (
@@ -134,18 +153,26 @@ const Navbar = () => {
           </ul>
 
           {/* btn for large device */}
-          <div className="space-x-5 hidden lg:flex items-center">
-          <ToggleTheme/>
-          {userLoggedIn ?<button onClick={logout} className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary">
-             লগআউট
-            </button> : <Link
-              href="/login"
-              className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
-            >
-              লগইন করুন
-            </Link>}
-            
-            
+          <div className="space-x-2 hidden lg:flex items-center">
+            <ToggleTheme />
+            {userLoggedIn ? (
+              <>
+              <p>{role}</p>
+              <button
+                onClick={logout}
+                className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+              >
+                লগআউট
+              </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
+              >
+                লগইন 
+              </Link>
+            )}
           </div>
 
           {/* menu btn for only mobile devices */}
@@ -210,7 +237,10 @@ const Navbar = () => {
               লগইন করুন
             </a>
             <br />
-            <Link href="/register" className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded ml-[-20px] hover:bg-cyanPrimary font-bold">
+            <Link
+              href="/register"
+              className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded ml-[-20px] hover:bg-cyanPrimary font-bold"
+            >
               রেজিস্টার
             </Link>
           </div>

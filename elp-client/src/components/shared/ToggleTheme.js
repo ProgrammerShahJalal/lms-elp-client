@@ -26,7 +26,7 @@ const ToggleTheme = () => {
   };
   return (
     <div>
-      <label className="swap swap-rotate">
+      <label className="swap swap-rotate pt-2">
         {/* this hidden checkbox controls the state */}
         <input
           type="checkbox"
@@ -37,7 +37,7 @@ const ToggleTheme = () => {
 
         {/* sun icon */}
         <svg
-          className="swap-on fill-current w-10 h-10"
+          className="swap-on fill-current w-5 h-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -46,7 +46,7 @@ const ToggleTheme = () => {
 
         {/* moon icon */}
         <svg
-          className="swap-off fill-current w-10 h-10"
+          className="swap-off fill-current w-5 h-6 "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
