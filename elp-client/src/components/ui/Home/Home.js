@@ -1,3 +1,4 @@
+import MemeberShipPlan from "@/components/ohters/MemeberShipPlan";
 import Benefits from "./Benefits";
 import BookSection from "./BookSection";
 import Category from "./Category";
@@ -13,12 +14,10 @@ import Testing from "./Testing";
 const HomePage = () => {
   return (
     <div className="">
-    <br /> <br />
-    <br />
-        
       <Hero/>
       <Category/>
       <Courses/> 
+      <MemeberShipPlan/>
       <FreeCourse/>
       <BookSection/>
       <FreeSeminar/>

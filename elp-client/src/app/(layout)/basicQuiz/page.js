@@ -48,7 +48,7 @@ const BasicQuizPage = () => {
   };
 
   return (
-    <div className="mt-16 px-14 text-center">
+    <div className=" px-14 text-center">
       <div className="py-16">
       <h2 className="text-2xl font-bold text-center">Welcome Jesmin </h2>
         {!showResults ? (
