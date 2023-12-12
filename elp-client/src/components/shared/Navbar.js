@@ -7,8 +7,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import ToggleTheme from "./ToggleTheme";
+import { isLoggedIn, removeUserInfo } from "@/services/auth.service";
+import { authKey } from "@/constants/storage";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const userLoggedIn = isLoggedIn();
+  const router = useRouter()
+
+  // logout
+
+  const logout  = () => {
+    removeUserInfo(authKey)
+    router.push('/login')
+  }
+
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
@@ -122,15 +136,16 @@ const Navbar = () => {
           {/* btn for large device */}
           <div className="space-x-5 hidden lg:flex items-center">
           <ToggleTheme/>
-            <Link
+          {userLoggedIn ?<button onClick={logout} className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary">
+             লগআউট
+            </button> : <Link
               href="/login"
               className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
             >
               লগইন করুন
-            </Link>
-            <Link href="/register" className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary">
-              রেজিস্টার
-            </Link>
+            </Link>}
+            
+            
           </div>
 
           {/* menu btn for only mobile devices */}
@@ -191,13 +206,13 @@ const Navbar = () => {
             </div>
           ))}
           <div className=" ">
-            <a href="/" className=" text-white hover:text-bluePrimary font-bold">
+            <a href="/login" className=" text-white hover:text-bluePrimary font-bold">
               লগইন করুন
             </a>
             <br />
-            <button className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded ml-[-20px] hover:bg-cyanPrimary font-bold">
+            <Link href="/register" className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded ml-[-20px] hover:bg-cyanPrimary font-bold">
               রেজিস্টার
-            </button>
+            </Link>
           </div>
         </div>
       </nav>

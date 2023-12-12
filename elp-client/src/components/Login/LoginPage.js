@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
-import { storeUserInfo } from "@/services/auth.service";
+import { getUserInfo, storeUserInfo } from "@/services/auth.service";
 import toast from "react-hot-toast";
 
 const LoginPage = () => {
@@ -21,6 +21,7 @@ const LoginPage = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
 
   const onSubmit = async (data) => {
     try {
@@ -45,7 +46,7 @@ const LoginPage = () => {
         toast.error("User not found or other error. Please check your credentials.");
       } else {
         // Handle other errors
-        console.error("Error during login:", err);
+        // console.error("Error during login:", err);
         toast.error("An error occurred during login. Please try again.");
       }
     }

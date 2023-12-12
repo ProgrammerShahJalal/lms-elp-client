@@ -1,11 +1,12 @@
-import DashNavbar from "@/components/dashboard/DashNavbar"
-import UserContent from "@/components/dashboard/userDashboard/UserContent"
 import UserProfileInfo from "@/components/dashboard/userDashboard/UserProfileInfo"
-import UserSidebar from "@/components/dashboard/userDashboard/UserSidebar"
+
 
 
 
 const UserProfile = () => {
+
+
+  
   return (
     <div className="">
     <UserProfileInfo/>
