@@ -44,10 +44,10 @@ body{
   overflow: hidden;
   line-height: 0;
   transform: rotate(180deg);
-  z-index: 1;
+  /* z-index: 0; */
 }
 .card-body {
-  z-index: 1111;
+  z-index: 9;
 }
 
 .custom-shape-divider-bottom-1645939714 svg {

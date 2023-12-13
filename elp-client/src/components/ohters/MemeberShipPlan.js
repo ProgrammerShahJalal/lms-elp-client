@@ -6,7 +6,7 @@ const MemeberShipPlan = () => {
   return (
     <div>
            <section>
-       <div className="container mx-auto my-10">
+       <div className="container mx-auto my-10 z-0">
         <div className="text-center mb-24">
           <h4 className="text-2xl font-semibold">Choose Your Plan</h4>
           
