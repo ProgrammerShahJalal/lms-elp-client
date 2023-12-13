@@ -1,9 +1,11 @@
 import Commonbanner from "@/components/banners/Commonbanner";
+import Teachers from "./Teachers";
 
 const AboutUs = () => {
   return (
-    <div>
+    <div className=" ">
       <Commonbanner />
+      <Teachers/>
     </div>
   );
 };

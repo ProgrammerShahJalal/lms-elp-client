@@ -8,7 +8,7 @@ const Commonbanner = () => {
        
       ];
   return (
-    <div className="bg-white h-screen">
+    <div >
       <div className="banner  py-14">
         <div className="flex justify-center items-center">
             <div>

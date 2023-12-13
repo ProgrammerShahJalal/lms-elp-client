@@ -189,3 +189,32 @@ i.fa-solid.fa-users.i-3 {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+/* Team Part STart */
+
+
+.team_img:hover .team_img_overlay {
+  opacity: 1;
+  visibility: visible;
+  width: 33.33%;
+}
+.team_img_overlay ul li a {
+  height: 40px;
+  width: 40px;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+  text-decoration: none;
+  border: 1px solid white;
+  color: #fff;
+  transition: 0.4s;
+}
+
+/* Team Part End */
