@@ -2,25 +2,29 @@ import Image from "next/image";
 import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-const CourseCard = () => {
+const CourseCard = ({item}) => {
+  
+  console.log(item)
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
-      <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
+      <div className="card w-[300px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
         <figure className="relative">
           <Image
             className="rounded"
             src="https://i.ibb.co/G9hnB13/course-1.webp"
             alt="course"
-            width={400}
-            height={100}
+            width={300}
+            height={50}
           />
         </figure>
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
-          <h2 className="card-title  border w-36 pl-4 py-1 bg-bluePrimary  ring-1 border-white absolute top-56 text-white text-[16px] border-b-0 rounded">
-            প্রাইমারী কোর্স
+          <h2 className="card-title  border w-36  px-2 bg-bluePrimary  ring-1 border-white absolute top-[200px] text-white text-[16px] border-b-0 rounded">
+            {item?.name
+}
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
@@ -33,7 +37,8 @@ const CourseCard = () => {
             </div>
           </div>
           <p className="py-3">
-            প্রতিটি বিষয়ের সেরা মেন্টরের সাথে ৩ ধরনের লাইভ ক্লাসে প্রতিটি টপিক শিখো{" "}
+            {item?.description
+}{" "}
             <Link href="/" className="text-yellowPrimary">
               বিস্তারিত পড়ুন
             </Link>{" "}

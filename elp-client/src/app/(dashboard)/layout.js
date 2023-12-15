@@ -25,7 +25,7 @@ const DashBoardLayout = ({children}) => {
   },[router,isLoading,userLoggedIn]);
 
   if(!isLoading){
-    return <p className="text-center py-20 text-2xl font-blod">Loading.................</p>
+    return <p className="text-center py-20 text-2xl font-bold">Loading.................</p>
   }
 
 
@@ -33,11 +33,11 @@ const DashBoardLayout = ({children}) => {
     <>
        <div className="">
         <DashNavbar/>
-        <div className=" grid grid-cols-2  bg-gray-200">
+        <div className=" grid lg:grid-cols-2  bg-gray-200">
             <div className="bg-white  h-screen w-60 mt-5 border border-gray-300 rounded ml-5 ">
                 <UserSidebar/>
             </div>
-            <div className="bg-white  w-100 mt-5 rounded px-10 pt-10 mr-10" style={{marginLeft:'-300px'}}>
+            <div className="bg-white   mt-5 rounded px-10 pt-10 lg:mr-10 lg:ml-[-300px]" >
             <UserWelcome/>
             <br />
             {children}

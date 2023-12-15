@@ -1,13 +1,21 @@
+'use client'
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import React from "react";
 import { MdModeEditOutline } from "react-icons/md";
 
 const UserProfileInfo = () => {
+  const { userId, email } = getUserInfo();
+  // console.log(getUserInfo())
+  const { data } = useGetSingleUserQuery(userId);
+  
+
   return (
     <div className="bg-white rounded-lg py-5 border border-gray-200 ">
       <div className="flex items-center justify-between px-10">
         <div>
-          <h2 className="text-2xl font-bold">Jesmin Akhter</h2>
+          <h2 className="text-2xl font-bold">{data?.name} </h2>
           
         </div>
         <div>
