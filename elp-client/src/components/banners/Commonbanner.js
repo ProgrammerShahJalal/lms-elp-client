@@ -1,18 +1,14 @@
 import BreadCrumb from "../breadcrumb/BreadCrumb";
 
 
-const Commonbanner = () => {
-    const breadcrumbItems = [
-        { label: 'হোম ', link: '/' },
-        { label: 'আমাদের সম্পর্কে',  },
-       
-      ];
+const Commonbanner = ({title,breadcrumbItems}) => {
+
   return (
     <div >
       <div className="banner  py-14">
         <div className="flex justify-center items-center">
             <div>
-            <h2 className="font-bold text-2xl"> About Us</h2>
+            <h2 className="font-bold text-2xl"> {title}</h2>
             <BreadCrumb items={breadcrumbItems}  />
             </div>
         </div>

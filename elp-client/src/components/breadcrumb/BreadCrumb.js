@@ -5,7 +5,7 @@ const BreadCrumb = ({items}) => {
     <div>
     <div className="text-sm breadcrumbs">
       <ul>
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <li key={index}>
             {item.link ? (
               <a href={item.link} >{item.label}</a>

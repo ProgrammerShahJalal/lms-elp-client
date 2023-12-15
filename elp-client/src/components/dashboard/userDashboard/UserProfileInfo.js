@@ -12,7 +12,7 @@ const UserProfileInfo = () => {
         </div>
         <div>
           <Link
-            href="/user/profile/edit/1"
+            href="/profile/edit/1"
             className="flex items-center gap-3 bg-sky-900 text-white transition-all  hover:bg-blue-900 cursor-pointer px-5 py-2 rounded"
           >
             <span>এডিট করুন</span> <MdModeEditOutline />

@@ -21,14 +21,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
-    // getCourses: build.query({
-    //   query: () => ({
-    //     url: `${USERS_URL}/login`,
-    //     method: "POST",
-    //     data: loginData,
-    //   }),
-    //   invalidatesTags: ["users"],
-    // }),
+    
 
      // get all tasks
      getCourses: build.query({
