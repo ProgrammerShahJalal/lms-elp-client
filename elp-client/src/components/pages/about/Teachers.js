@@ -14,7 +14,7 @@ const Teachers = () => {
     <div className="px-14">
       <div className="flex justify-center">
         <div className="">
-          <h3 className='font-bold text-2xl capitalize py-10'>our Teachers</h3>
+          <h3 className='font-bold text-2xl capitalize py-10'>Meet Our Instructor</h3>
           {/* <img src="assets/img/divider.png" alt="" /> */}
         </div>
       </div>
