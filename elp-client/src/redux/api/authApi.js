@@ -1,7 +1,7 @@
 import { baseApi } from "./baseApi";
 
 export const USERS_URL = "/users";
-export const COURSES_URL = "/courses";
+
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -32,27 +32,26 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
      // update User
-     updateUser: build.mutation({
+    //  updateUser: build.mutation({
+    //   query: ({id, ...data}) => ({
+    //     url: `${USERS_URL}/${id}`,
+    //     method: "PATCH",
+    //     data: data
+    //   }),
+
+    //   invalidatesTags: ['users']
+    // }),
+    updateUser: build.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/${data.id}`,
+        url: `${USERS_URL}/${data?.id}`,
         method: "PATCH",
-        data: data.body
-
-
-
+        data: data.body,
       }),
-
       invalidatesTags: ['users']
     }),
 
-     // get all tasks
-     getCourses: build.query({
-      query: () => ({
-        url: COURSES_URL,
-      }),
-      providesTags: ['courses'],
-    }),
+    
   }),
 });
 
-export const { useUserSignupMutation, useUserLoginMutation, useGetSingleUserQuery, useUpdateUserMutation, useGetCoursesQuery } = authApi;
+export const { useUserSignupMutation, useUserLoginMutation, useGetSingleUserQuery, useUpdateUserMutation } = authApi;

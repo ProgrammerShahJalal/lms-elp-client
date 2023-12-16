@@ -3,7 +3,8 @@ import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
 
-const BookSectionCard = () => {
+const BookSectionCard = ({item}) => {
+
   return (
     <>
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
@@ -18,25 +19,28 @@ const BookSectionCard = () => {
         </figure>
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
-          <h2 className="card-title  border w-36 pl-4 py-1 bg-bluePrimary  ring-1 border-white absolute top-56 text-white text-[16px] border-b-0 rounded">
-            প্রাইমারী কোর্স
+          <h2 className="card-title  border w-56 pl-4 py-1 bg-bluePrimary  ring-1 border-white absolute top-56 text-white text-[16px] border-b-0 rounded">
+            {item?.name}
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
               <Image src={avatar} width={40} height={50} alt="avatar" className="rounded-full" />
-              <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">সাইফুল রাহমান</span>
+              <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">{item?.writer}</span>
             </div>
             <div className="flex items-center">
               <PiNotebookBold />{" "}
-              <span className="pl-1 text-cyanPrimary font-semibold"> ২০ লেসন</span>
+              <span className="pl-1 text-cyanPrimary font-semibold"> {item?.format}</span>
             </div>
+            
           </div>
+
+          <p>{item?.description}<Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
           
           <hr />
           <div className="flex">
             <p className="text-sm font-semibold py-3">
               {" "}
-              কোর্সের মূল্যঃ <del className="text-gray-400 pr-3 "> -500 </del> 3000 Tk
+              কোর্সের মূল্যঃ <del className="text-gray-400 pr-3 "> -500 </del> {item?.price} Tk
             </p>
           </div>
           <div className=" card-actions justify-start ">

@@ -4,9 +4,7 @@ import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-const CourseCard = ({item}) => {
-  
-  console.log(item)
+const CourseCard = ({ item }) => {
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
@@ -23,8 +21,7 @@ const CourseCard = ({item}) => {
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
           <h2 className="card-title  border w-36  px-2 bg-bluePrimary  ring-1 border-white absolute top-[200px] text-white text-[16px] border-b-0 rounded">
-            {item?.name
-}
+            {item?.name}
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
@@ -37,9 +34,8 @@ const CourseCard = ({item}) => {
             </div>
           </div>
           <p className="py-3">
-            {item?.description
-}{" "}
-            <Link href="/" className="text-yellowPrimary">
+            {item?.description}{" "}
+            <Link href={`/courses/details/${item?._id}`} className="text-yellowPrimary">
               বিস্তারিত পড়ুন
             </Link>{" "}
           </p>
@@ -47,7 +43,7 @@ const CourseCard = ({item}) => {
           <div className="flex">
             <p className="text-sm font-semibold py-3">
               {" "}
-              কোর্সের মূল্যঃ <del className="text-gray-400 pr-3 "> -500 </del> 3000 Tk
+              <span className="pr-5">মেম্বারশিপ ধরন</span>  {item?.membership_type}
             </p>
           </div>
           {/* <div className=" card-actions justify-center ">

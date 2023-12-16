@@ -10,6 +10,7 @@ import HomeQuiz from "./HomeQuiz";
 import ScrollToTopButton from "./ScrollToTopButton";
 import SelectCarreer from "./SelectCarreer";
 import Testing from "./Testing";
+import Faq from "./Faq";
 
 const HomePage = () => {
   return (
@@ -23,6 +24,7 @@ const HomePage = () => {
       <FreeSeminar/>
       {/* <Testing/> */}
       <Benefits/>
+      <Faq/>
       <HomeQuiz/>
       <SelectCarreer/>
       <ScrollToTopButton/>
