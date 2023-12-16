@@ -1,10 +1,11 @@
 "use client";
 
 import CourseCard from "@/components/ui/Home/course/CourseCard";
-import { useGetCoursesQuery } from "@/redux/api/authApi";
+import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+
 
 const AllCourses = () => {
-    const {data} = useGetCoursesQuery()
+    const {data} = useGetAllCoursesQuery()
   return (
     <>
       <div className="px-14 py-10">

@@ -1,7 +1,7 @@
 import { baseApi } from "./baseApi";
 
 export const USERS_URL = "/users";
-export const COURSES_URL = "/courses";
+
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -50,14 +50,8 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ['users']
     }),
 
-     // get all tasks
-     getCourses: build.query({
-      query: () => ({
-        url: COURSES_URL,
-      }),
-      providesTags: ['courses'],
-    }),
+    
   }),
 });
 
-export const { useUserSignupMutation, useUserLoginMutation, useGetSingleUserQuery, useUpdateUserMutation, useGetCoursesQuery } = authApi;
+export const { useUserSignupMutation, useUserLoginMutation, useGetSingleUserQuery, useUpdateUserMutation } = authApi;
