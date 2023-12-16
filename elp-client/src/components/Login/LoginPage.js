@@ -53,9 +53,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg-white border rounded shadow-lg max-w-md mx-auto py-5 my-10 z-0">
+    <div className="bg-white border rounded shadow-lg max-w-md mx-auto py-5 my-10 z-7">
       <div>
-        <h2 className="text-lg font-bold text-center pb-10 pt-5 text-cyanPrimary">
+        <h2 className="text-lg font-bold text-center pb-10 pt-5 text-cyanPrimary z-7">
           ইজি লার্নিং প্লাটফর্মে আপনাকে স্বাগতম।
         </h2>
 

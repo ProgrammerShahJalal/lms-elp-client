@@ -13,7 +13,7 @@ const Courses = () => {
     <h2 className="text-2xl font-bold px-2  rounded">ক্যারিয়ার ট্র্যাক কোর্স</h2>
     <Link href="/courses" className="mb-5 bg-cyanPrimary w-44 text-white px-7 py-3 rounded">সব কোর্স দেখুন</Link>
     </div>
-      <div className="grid lg:grid-cols-3  gap-4">
+      {/* <div className="grid lg:grid-cols-3  gap-4">
         {data?.map((item)=><CourseCard key={item?._id} item={item}/>)}
         
         
@@ -23,7 +23,7 @@ const Courses = () => {
        
        
         
-      </div>
+      </div> */}
     </div>
   );
 };

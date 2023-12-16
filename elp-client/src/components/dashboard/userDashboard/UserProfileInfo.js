@@ -20,7 +20,7 @@ const UserProfileInfo = () => {
         </div>
         <div>
           <Link
-            href="/profile/edit/1"
+            href={`/profile/edit/${data?._id}`}
             className="flex items-center gap-3 bg-sky-900 text-white transition-all  hover:bg-blue-900 cursor-pointer px-5 py-2 rounded"
           >
             <span>এডিট করুন</span> <MdModeEditOutline />
@@ -30,12 +30,12 @@ const UserProfileInfo = () => {
 
 
       <div className="pl-10 w-96">
-        <h5 className="text-lg font-semibold py-3">+880 1753 659023</h5>
+        <h5 className="text-lg font-semibold py-3">{data?.contact_no}</h5>
 
         <div className="flex justify-between items-center">
           <div>
             <h3 className="text-lg font-semibold py-1">ইমেইল</h3>
-             <h5 className="text-md font-semibold py-1">abc@gmail.com</h5>
+             <h5 className="text-md font-semibold py-1">{data?.email}</h5>
           </div>
           <div className="text-left">
           <h3 className="text-lg font-semibold py-1">জন্ম তারিখ</h3>
