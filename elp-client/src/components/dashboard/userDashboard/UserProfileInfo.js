@@ -1,18 +1,26 @@
+'use client'
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import React from "react";
 import { MdModeEditOutline } from "react-icons/md";
 
 const UserProfileInfo = () => {
+  const { userId, email } = getUserInfo();
+  // console.log(getUserInfo())
+  const { data } = useGetSingleUserQuery(userId);
+  
+
   return (
     <div className="bg-white rounded-lg py-5 border border-gray-200 ">
       <div className="flex items-center justify-between px-10">
         <div>
-          <h2 className="text-2xl font-bold">Jesmin Akhter</h2>
+          <h2 className="text-2xl font-bold">{data?.name} </h2>
           
         </div>
         <div>
           <Link
-            href="/user/profile/edit/1"
+            href="/profile/edit/1"
             className="flex items-center gap-3 bg-sky-900 text-white transition-all  hover:bg-blue-900 cursor-pointer px-5 py-2 rounded"
           >
             <span>এডিট করুন</span> <MdModeEditOutline />

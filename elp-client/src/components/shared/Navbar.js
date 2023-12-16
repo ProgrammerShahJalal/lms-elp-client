@@ -10,11 +10,15 @@ import ToggleTheme from "./ToggleTheme";
 import { getUserInfo, isLoggedIn, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
 const Navbar = () => {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-  const {role} = getUserInfo()
+  const {role, userId} = getUserInfo();
+  
+  const { data } = useGetSingleUserQuery(userId);
+  
 
   // logout
 
@@ -157,7 +161,7 @@ const Navbar = () => {
             <ToggleTheme />
             {userLoggedIn ? (
               <>
-              <p>{role}</p>
+              <p>{data?.name}</p>
               <button
                 onClick={logout}
                 className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
