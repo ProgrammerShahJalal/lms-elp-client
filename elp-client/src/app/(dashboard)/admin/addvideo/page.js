@@ -1,4 +1,5 @@
 'use client'
+import { useAddPlaylistVideoMutation } from '@/redux/api/videoApi';
 import React, { useState } from 'react';
 
 const AddVideo = () => {
@@ -7,20 +8,8 @@ const AddVideo = () => {
         course_id: '',
         playlist_link: '',
     };
-
+    const [addPlaylistVideo] = useAddPlaylistVideoMutation();
     const [formData, setFormData] = useState(initialFormData);
-    const [data, setData] = useState([
-        {
-            _id: "65756ca57875e03b786ab40e",
-            name: "Basic",
-            course_id: "65755aa98358bafe08784a01",
-            playlist_link: "https://www.youtube.com/playlist?list=PLHiZ4m8vCp9Nflbo9a0pZuLscG_Xc7DKq",
-            createdAt: "2023-12-10T07:45:41.364Z",
-            updatedAt: "2023-12-10T07:45:41.364Z",
-            __v: 0
-        }
-    ]);
-    const [submittedData, setSubmittedData] = useState(null);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -28,27 +17,7 @@ const AddVideo = () => {
 
     const handleSubmit = async () => {
         try {
-            // Assuming your API endpoint is http://localhost:5000/api/v1/course-playlists
-            const response = await fetch('http://localhost:5000/api/v1/course-playlists', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log('POST request successful:', responseData);
-
-                // Update the data state with the new data
-                setData((prevData) => [...prevData, responseData.data.data]);
-
-                // Update the submittedData state with the response data
-                setSubmittedData(responseData.data.data);
-            } else {
-                console.error('POST request failed');
-            }
+            addPlaylistVideo(formData)
         } catch (error) {
             console.error('Error during POST request:', error);
         }
@@ -68,7 +37,7 @@ const AddVideo = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Course ID:</label>
+                    <label className="block text-sm font-medium text-gray-600">Course</label>
                     <input
                         type="text"
                         name="course_id"
@@ -77,6 +46,7 @@ const AddVideo = () => {
                         className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
                     />
                 </div>
+
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">Playlist Link:</label>
                     <input
