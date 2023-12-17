@@ -33,7 +33,7 @@ const AdminDashboard = () => {
                         )}
                     </div>
                     <ul className="py-2 text-white">
-                        <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">Home</li>
+                        <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/allusers'}>ব্যবহারকারী</Link></li>
                         <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addquiz'}>
                             কুইজ যোগ করুন</Link></li>
                         <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
