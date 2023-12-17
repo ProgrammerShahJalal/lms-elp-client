@@ -6,8 +6,9 @@ import image3 from '../../../../../public/images2.png'
 import image4 from '../../../../../public/arrow-down-2.png'
 import image5 from '../../../../../public/arrow-top-2.png'
 import Image from 'next/image';
+import { useAddQuizPlaylistMutation } from '@/redux/api/videoApi';
 const AddQuiz = () => {
-    const [questions, setQuestions] = useState([]);
+    const [addQuizPlaylist] = useAddQuizPlaylistMutation()
     const [newQuestion, setNewQuestion] = useState({
         question: '',
         a: '',
@@ -18,17 +19,10 @@ const AddQuiz = () => {
         exam_id: '',
     });
 
-    useEffect(() => {
-        fetch('http://localhost:5000/api/v1/quiz-questions')
-            .then((response) => response.json())
-            .then((data) => setQuestions(data.data))
-            .catch((error) => console.error('Error fetching quiz questions:', error));
-    }, []);
-
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(questions, 'this is questions');
-        console.log(newQuestion, 'this is new question');
+        addQuizPlaylist(newQuestion)
+        console.log(newQuestion);
         // fetch('http://localhost:5000/api/v1/quiz-questions', {
         //     method: 'POST',
         //     headers: {

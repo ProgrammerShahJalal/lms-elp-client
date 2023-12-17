@@ -23,18 +23,23 @@ const RegisterPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      // const res = await userSignup({ ...data }).unwrap();
-      await userSignup({ ...data }).unwrap();
-      // console.log(res, ' from res');
-      toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
-    } catch (err) {
-      if (err.data?.statusCode === 500 && err.data?.errorMessages.includes("duplicate key")) {
-        // Handle duplicate key error (email already exists)
-        toast.error("Email already exists. Please use a different email.");
-      } else {
-        // Handle other errors
-        toast.error(err.message);
+       const res = await userSignup({ ...data }).unwrap();
+      
+      
+      if (res?.accessToken){
+        console.log(res, ' from res');
+        storeUserInfo({ accessToken: res?.accessToken })
+        toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
+        router.push("/")
       }
+      else{
+        toast.error("Email already exists. Please use a different email.");
+      }
+      
+    } catch (err) {
+      
+        toast.error(err.message);
+      
     }
   };
   return (

@@ -14,31 +14,6 @@ const AdminDashboard = () => {
     return (
         <>
             <div>
-                <div className="navbar bg-base-100">
-                    <div className="flex-1">
-                        <a className="btn btn-ghost text-xl">eশিখন</a>
-                    </div>
-                    <div className="flex-none">
-
-                        <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                </div>
-                            </div>
-                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                                <li>
-                                    <a className="justify-between">
-                                        Profile
-                                        <span className="badge">New</span>
-                                    </a>
-                                </li>
-                                <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <button
                     className="block lg:hidden px-2 py-1 "
                     onClick={toggleSidebar}
@@ -58,7 +33,7 @@ const AdminDashboard = () => {
                         )}
                     </div>
                     <ul className="py-2 text-white">
-                        <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">Home</li>
+                        <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/allusers'}>ব্যবহারকারী</Link></li>
                         <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addquiz'}>
                             কুইজ যোগ করুন</Link></li>
                         <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
