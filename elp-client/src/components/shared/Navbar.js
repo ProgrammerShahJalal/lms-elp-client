@@ -48,20 +48,6 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 100) {
-  //       setIsSticky(true);
-  //     } else {
-  //       setIsSticky(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.addEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,14 +70,14 @@ const Navbar = () => {
       link: "কোর্সসমূহ",
       path: "courses",
       dropdown: [
-        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "course1" },
-        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "course2" },
+        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "primaryCourses" },
+        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "bankCourses" },
         // Add more courses as needed
       ],
     },
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
-    { link: "FAQ", path: "faq" },
+    
     
   ];
   const navItems = userLoggedIn

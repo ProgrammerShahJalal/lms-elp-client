@@ -27,9 +27,9 @@ const Quiz = ({ quizData, onSubmit }) => {
       <p className=''>{quizData[currentQuestion].question}</p>
       <div>
         {quizData[currentQuestion].options.map((option, index) => (
-          <label key={index}>
-            <input
-              type="radio"
+          <label key={index} className=''>
+            <input 
+              type="radio" required
               name={`question${currentQuestion}`}
               value={option}
               checked={userAnswers[currentQuestion] === option}

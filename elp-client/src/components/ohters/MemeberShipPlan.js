@@ -1,6 +1,7 @@
 import { PiUsersThreeLight, PiUsersThreeThin } from "react-icons/pi";
 
 import { LiaUser } from "react-icons/lia";
+import { LuUsers } from "react-icons/lu";
 
 const MemeberShipPlan = () => {
   return (
@@ -8,14 +9,14 @@ const MemeberShipPlan = () => {
       <section>
         <div className="container mx-auto my-10 z-0">
           <div className="text-center mb-24">
-            <h4 className="text-2xl font-semibold">Choose Your Plan</h4>
+            <h4 className="text-2xl font-bold ">Choose Your Plan</h4>
 
           </div>
           <div className="grid lg:grid-cols-3 gap-3">
             <div className=" bg-white rounded border shadow-md">
 
               <div className="card svg-card text-center p-4 " >
-                <div className="flex justify-center"><span > <PiUsersThreeLight className=" card-icon-3" /></span></div>
+                <div className="flex justify-center"><span > <LiaUser className=" card-icon-3" /></span></div>
                 <div className="card-body">
                   <h5 className="text-center">Simple</h5>
                   <h1><sup>$</sup>19</h1>
@@ -38,7 +39,7 @@ const MemeberShipPlan = () => {
               <div className="bg-white rounded border shadow-md">
 
                 <div className="card svg-card text-center p-4 " >
-                  <div className="flex justify-center"><span > <PiUsersThreeLight className=" card-icon-3" /></span> </div>
+                  <div className="flex justify-center"><span > <LuUsers className=" card-icon-3 " /></span> </div>
                   <div className="card-body">
                     <h5 className="text-center">Basic</h5>
                     <h1><sup>$</sup>49</h1>

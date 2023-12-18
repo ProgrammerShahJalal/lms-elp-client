@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { SiYoutubemusic } from "react-icons/si";
 
@@ -8,11 +9,12 @@ const FreeSeminar = () => {
       <div className="px-14">
         <div className=" grid lg:grid-cols-2  gap-5">
           <div className="relative    transition duration-300 ease-in-out hover:opacity-60">
-            <Image className="rounded " src="https://tecdn.b-cdn.net/img/new/fluid/city/113.webp" alt="booking" height={300} width={500}/>
-            <div className="absolute md:top-36  left-52 ">
-            <a href="https://www.youtube.com/watch?v=CitLPrSS1w0" target="_blank" rel="noopener noreferrer">
+            {/* <Image className="rounded " src="https://tecdn.b-cdn.net/img/new/fluid/city/113.webp" alt="booking" height={300} width={500}/> */}
+            <div className=" ">
+            {/* <a href="https://www.youtube.com/watch?v=CitLPrSS1w0" target="_blank" rel="noopener noreferrer">
             <SiYoutubemusic className="text-6xl text-white "/>
-            </a>
+            </a> */}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/CitLPrSS1w0?si=GTpGRpu6sXHvQsac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
           </div>
           <div className="lg:pt-20 text-white space-y-6">
@@ -21,7 +23,7 @@ const FreeSeminar = () => {
               সফল ক্যারিয়ার গড়ার সঠিক দিকনির্দেশনা পেতে আমাদের ফ্রি সেমিনারগুলোতে অংশগ্রহণ করুন। এসব
               সেমিনারে প্রশ্নোত্তরের মাধ্যমে আপনার কনফিউশন দূর করতে পারবেন।
             </p>
-            <button className="bg-cyanPrimary text-white py-3 px-6 transition-all duration-300 rounded hover:bg-yellowPrimary">সিট বুক করুন</button>
+            <Link href="/subscribe" className="bg-cyanPrimary text-white py-3 px-6 transition-all duration-300 rounded hover:bg-yellowPrimary">সিট বুক করুন</Link>
           </div>
         </div>
       </div>
