@@ -117,8 +117,6 @@ const AddCourseForm = () => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
-
-
     // const handleAddCourse = async (e) => {
     //     e.preventDefault();
 
@@ -156,7 +154,7 @@ const AddCourseForm = () => {
         e.preventDefault();
 
 
-        const selectedCategory = categories.categories.find(category => category.id === formData.category_id);
+        // const selectedCategory = categories.categories.find(category => category.id === formData.category_id);
         const selectedSubcategory = subcategories.subcategories.find(subcategory => subcategory._id === formData.subcategory_id);
         console.log(selectedSubcategory);
 
@@ -186,9 +184,6 @@ const AddCourseForm = () => {
             console.error('Error adding course:', error);
         }
     };
-
-
-
     if (isLoadingCategories || isLoadingSubcategories) {
         return <p>Loading...</p>;
     }
@@ -246,6 +241,8 @@ const AddCourseForm = () => {
                             ))}
                     </select>
                 </div>
+
+
                 {/* <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">Membership Type:</label>
                     <input
