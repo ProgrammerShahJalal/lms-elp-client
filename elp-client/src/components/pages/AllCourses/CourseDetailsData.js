@@ -41,9 +41,10 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
           />
 
           <div>
-            <p>
+            {/* <p>
               {data?.description}
-            </p>
+            </p> */}
+            <p dangerouslySetInnerHTML={{ __html: data?.description }} ></p>
           </div>
         </div>
 
