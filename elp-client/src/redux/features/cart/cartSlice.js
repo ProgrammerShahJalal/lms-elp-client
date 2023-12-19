@@ -3,8 +3,14 @@ import toast from "react-hot-toast";
 const { createSlice } = require("@reduxjs/toolkit");
 
 export const initialState = {
-  books: [],
+  books:[],
   total:0
+  // books: localStorage.getItem("cartItems")
+  // ? JSON.parse(localStorage.getItem("cartItems") || "{}")
+  // : [],
+  // total:localStorage.getItem("cartItems")
+  // ? JSON.parse(localStorage.getItem("cartItems") || "{}")
+  // : 0
 };
 
 const cartSlice = createSlice({
@@ -22,6 +28,7 @@ const cartSlice = createSlice({
       }
 
       state.total += action.payload.price
+      // localStorage.setItem("cartItems", JSON.stringify(state.books));
     },
 
 
