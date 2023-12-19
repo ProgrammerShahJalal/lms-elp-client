@@ -11,11 +11,17 @@ import { getUserInfo, isLoggedIn, removeUserInfo } from "@/services/auth.service
 import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 
 const Navbar = () => {
+
+  const { data:courseCategoryData } = useGetAllCategoriesQuery();
+  const categoriesData = courseCategoryData?.categories;
+
+  
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-  const {role, userId} = getUserInfo();
+  const { userId} = getUserInfo();
   
   const { data } = useGetSingleUserQuery(userId);
   
@@ -70,8 +76,8 @@ const Navbar = () => {
       link: "কোর্সসমূহ",
       path: "courses",
       dropdown: [
-        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "primaryCourses" },
-        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "bankCourses" },
+        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "/courses/primaryCourses" },
+        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "/courses/bankCourses" },
         // Add more courses as needed
       ],
     },

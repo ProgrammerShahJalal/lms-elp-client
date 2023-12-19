@@ -1,10 +1,54 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import icon1 from "../../../assets/images/learn-icon.svg";
 import icon2 from "../../../assets/images/icon2.png";
+import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import { useRouter } from "next/navigation";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import InitialLoader from "@/components/Loader/InitialLoader";
+import Error from "@/components/Loader/Error";
+import EmptyContent from "@/components/Loader/EmptyContent";
 
 const Category = () => {
+  const { data, isError, isLoading } = useGetAllCategoriesQuery();
+  const categoriesData = data?.categories;
+
+
+  let content = null;
+
+  if (isLoading) {
+    content = (
+      <>
+        <InitialLoader/>
+      </>
+    );
+  }
+
+  if (!isLoading && isError) {
+    content = <Error/>;
+  }
+
+  if (!isLoading && !isError && categoriesData?.length === 0) {
+    content = (
+      <>
+        {" "}
+       <EmptyContent/>
+      </>
+    );
+  }
+
+  if (!isLoading && !isError && categoriesData?.length > 0) {
+    content = categoriesData?.map((item) =>  <Link href={`/courses/category/${item?._id}`} key={item?._id} className=" ">
+    <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
+      <div className="text-center">
+        <h2 className="py-5 font-semibold ">{item?.name} </h2>
+      </div>
+    </div>
+  </Link>);
+  }
+
   return (
     <div className=" px-14 py-20 ">
       <div className="lg:flex items-center justify-between my-4">
@@ -27,50 +71,8 @@ const Category = () => {
       </div>
 
       <div className="grid lg:grid-cols-4 gap-4 pt-10 lg:pt-4">
+        {content}
 
-
-        <Link href="/courses/primaryCourses" className=" ">
-          <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
-            <div className="text-center">
-             
-              <h2 className="py-5 font-semibold ">প্রাইমারী চাকরী প্রস্ততি </h2>
-            </div>
-            
-          </div>
-        </Link>
-        <Link href="/courses/primaryCourses" className=" ">
-          <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
-            <div className="text-center">
-             
-              <h2 className="py-5 font-semibold ">ব্যাংক চাকরী প্রস্ততি </h2>
-            </div>
-            
-          </div>
-        </Link>
-        <Link href="/courses/primaryCourses" className=" ">
-          <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
-            <div className="text-center">
-             
-              <h2 className="py-5 font-semibold ">বিসিএস চাকরী প্রস্ততি </h2>
-            </div>
-           
-          </div>
-        </Link>
-        <Link href="/courses/primaryCourses" className=" ">
-          <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
-            <div className="text-center">
-             
-              <h2 className="py-5 font-semibold ">প্রাইমারী চাকরী প্রস্ততি </h2>
-            </div>
-            
-          </div>
-        </Link>
-
-
-
-
-
-       
         {/* <Link href="/" className="relative  overflow-hidden  ">
           <div className="bg-white rounded shadow-lg">
             <div className="text-center">
