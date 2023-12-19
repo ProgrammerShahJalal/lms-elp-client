@@ -12,12 +12,14 @@ import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { IoCartOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
 
   const { data:courseCategoryData } = useGetAllCategoriesQuery();
   const categoriesData = courseCategoryData?.categories;
-
+  const { books } = useSelector((state) => state.cart);
   
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
@@ -154,6 +156,7 @@ const Navbar = () => {
             {userLoggedIn ? (
               <>
               <p>{data?.name}</p>
+              <Link href="/cart" className="flex items-center"><IoCartOutline className="text-2xl font-bold" /> <sup className="text-md font-bold">{books?.length}</sup></Link>
               <button
                 onClick={logout}
                 className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"

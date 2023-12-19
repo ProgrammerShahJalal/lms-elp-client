@@ -2,8 +2,20 @@ import Image from "next/image";
 import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+
+import toast from "react-hot-toast";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 
 const BookSectionCard = ({item}) => {
+  const dispatch = useDispatch();
+
+  const handleAddBook = (item) => {
+    // console.log(item)
+    dispatch(addToCart(item));
+    toast.success('Book added in your cart')
+    
+  }
 
   return (
     <>
@@ -18,7 +30,7 @@ const BookSectionCard = ({item}) => {
           />
         </figure>
 
-        <Link href={`/books/details/${item?._id}`} className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
+        <div  className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
           <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[220px] text-white text-[16px] border-b-0 rounded">
             {item?.name}
           </h2>
@@ -42,16 +54,16 @@ const BookSectionCard = ({item}) => {
               {" "}
               কোর্সের মূল্যঃ <del className="text-gray-400  "> -500 </del> <span className="font-bold pl-2">{item?.price}</span> Tk
             </p>
-            <Link href= '/cart' className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+            <button onClick={() => handleAddBook(item)}  className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
               এড টু কার্ড
-            </Link>
+            </button>
           </div>
           {/* <div className=" card-actions justify-start ">
             <button className="text-black transition-all duration-300 rounded hover:text-yellowPrimary font-medium underline">
               বইটি কিনুন
             </button>
           </div> */}
-        </Link>
+        </div>
       </div>
     </>
   );
