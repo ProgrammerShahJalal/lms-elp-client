@@ -5,7 +5,6 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 
 const Courses = () => {
   const { data, isError, isLoading } = useGetAllCoursesQuery();
-  
   const coursesData = data?.courses?.data;
 
   let content = null;

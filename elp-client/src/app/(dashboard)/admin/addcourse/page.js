@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useGetAllCategoriesQuery } from '@/redux/api/categoryApi';
 import { useGetAllSubcategoriesQuery } from '@/redux/api/subcategoryApi';
 import { useAddCourseMutation } from '@/redux/api/courseApi';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // const AddCourseForm = () => {
 //     const { data: categories, isLoading: isLoadingCategories, isError: isErrorCategories } = useGetAllCategoriesQuery();
 //     const { data: subcategories, isLoading: isLoadingSubcategories, isError: isErrorSubcategories } = useGetAllSubcategoriesQuery();
@@ -104,7 +106,22 @@ const AddCourseForm = () => {
     const { data: categories, isLoading: isLoadingCategories, isError: isErrorCategories } = useGetAllCategoriesQuery();
     const { data: subcategories, isLoading: isLoadingSubcategories, isError: isErrorSubcategories } = useGetAllSubcategoriesQuery();
     const [addCourseMutation] = useAddCourseMutation();
-
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{ 'header': 1 }, { 'header': 2 }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],
+        [{ 'indent': '-1' }, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+        ['image'],
+        ['clean']
+    ];
     const [formData, setFormData] = useState({
         name: '',
         category_id: '',
@@ -162,17 +179,6 @@ const AddCourseForm = () => {
             name: formData.name,
             membership_type: formData.membership_type,
             sub_category_id: selectedSubcategory._id,
-
-            // sub_category_id: {
-            //     _id: selectedSubcategory._id,
-            //     name: selectedSubcategory.name,
-            //     category_id: {
-            //         _id: selectedCategory.id,
-            //         name: selectedCategory.name,
-            //         id: selectedCategory.id,
-            //     },
-            //     id: selectedSubcategory._id,
-            // },
             description: formData.description || 'Default description',
         };
 
@@ -267,13 +273,23 @@ const AddCourseForm = () => {
                     </select>
                 </div>
 
-                <div className="mb-4">
+                {/* <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">Description:</label>
                     <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleInputChange}
                         className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+                    />
+                </div> */}
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Description:</label>
+                    <ReactQuill
+                        theme="snow"
+                        value={formData.description}
+                        // onChange={handleInputChange}
+                        onChange={(value) => setFormData((prevData) => ({ ...prevData, description: value }))}
+                        modules={{ toolbar: toolbarOptions }}
                     />
                 </div>
                 <button
