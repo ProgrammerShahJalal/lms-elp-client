@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const CourseCard = ({ item }) => {
+  console.log(item.description);
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
@@ -33,8 +34,9 @@ const CourseCard = ({ item }) => {
               <span className="pl-1 text-cyanPrimary font-semibold"> ২০ লেসন</span>
             </div>
           </div>
-          <p className="py-3">
-            {item?.description}{" "}
+          <p dangerouslySetInnerHTML={{ __html: item?.description.substring(0, 30) }} ></p>
+          <p className="py-3" >
+            {/* {item?.description}{" "} */}
             <Link href={`/courses/details/${item?._id}`} className="text-yellowPrimary">
               বিস্তারিত পড়ুন
             </Link>{" "}

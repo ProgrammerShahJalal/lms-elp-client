@@ -8,8 +8,7 @@ import EmptyContent from "@/components/Loader/EmptyContent";
 
 const Courses = () => {
   const { data, isError, isLoading } = useGetAllCoursesQuery();
-  
-  
+
   const coursesData = data?.courses?.data;
   
 
