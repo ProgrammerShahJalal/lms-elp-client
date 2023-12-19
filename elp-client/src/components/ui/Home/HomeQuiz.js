@@ -1,7 +1,10 @@
+
 import Link from "next/link"
 
 
 const HomeQuiz = () => {
+
+  
   return (
     <div className="mx-14 bg-white py-10 rounded shadow-current">
         <div className="px-14 bg-white ">

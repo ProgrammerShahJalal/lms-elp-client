@@ -8,19 +8,19 @@ const CourseCard = ({ item }) => {
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
-      <div className="card w-[300px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
+      <div className="card shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
         <figure className="relative">
           <Image
             className="rounded"
             src="https://i.ibb.co/G9hnB13/course-1.webp"
             alt="course"
-            width={300}
+            width={400}
             height={50}
           />
         </figure>
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
-          <h2 className="card-title  border w-36  px-2 bg-bluePrimary  ring-1 border-white absolute top-[200px] text-white text-[16px] border-b-0 rounded">
+          <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[238px] text-white text-[16px] border-b-0 rounded">
             {item?.name}
           </h2>
           <div className="flex justify-between items-center py-3">
@@ -40,12 +40,16 @@ const CourseCard = ({ item }) => {
             </Link>{" "}
           </p>
           <hr />
-          <div className="flex">
-            <p className="text-sm font-semibold py-3">
+          <div className="flex justify-between mt-3">
+            <p className="text-sm font-semibold py-3 ">
               {" "}
-              <span className="pr-5">মেম্বারশিপ ধরন</span>  {item?.membership_type}
+              <span className="pr-5">মেম্বারশিপ ধরন</span>  <span className="bg-blue-200 font-bold px-2 py-1 rounded">{item?.membership_type}</span>
             </p>
+            <Link href= '/subscribe' className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+              সাবস্ক্রাইব করুন
+            </Link>
           </div>
+         
           {/* <div className=" card-actions justify-center ">
             <button className="bg-bluePrimary text-white py-2 px-2 transition-all duration-300 rounded hover:bg-yellowPrimary">
               এনরোল করুন

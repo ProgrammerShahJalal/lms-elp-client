@@ -62,7 +62,7 @@ const data = [
 
 const Benefits = () => {
   return (
-    <div className="px-14 py-10">
+    <div className="px-14 pt-20 pb-10">
       <h2 className="lg:text-3xl md:text-xl font-bold pt-5 pb-10 text-cyanPrimary">
         {" "}
         ইজি লার্নিং প্লাটফর্ম থেকে আপনি কী কী সুবিধা পাবেন

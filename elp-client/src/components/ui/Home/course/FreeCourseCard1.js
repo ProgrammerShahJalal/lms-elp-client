@@ -19,7 +19,7 @@ const FreeCourseCard1 = () => {
         </figure>
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
-          <h2 className="card-title  border w-36 pl-4 py-1 bg-bluePrimary  ring-1 border-white absolute top-56 text-white text-[16px] border-b-0 rounded">
+          <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[220px] text-white text-[16px] border-b-0 rounded">
             প্রাইমারী কোর্স
           </h2>
           <div className="flex justify-between items-center py-3">

@@ -18,8 +18,8 @@ const BookSectionCard = ({item}) => {
           />
         </figure>
 
-        <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
-          <h2 className="card-title  border w-56 pl-4 py-1 bg-bluePrimary  ring-1 border-white absolute top-56 text-white text-[16px] border-b-0 rounded">
+        <Link href={`/books/details/${item?._id}`} className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
+          <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[220px] text-white text-[16px] border-b-0 rounded">
             {item?.name}
           </h2>
           <div className="flex justify-between items-center py-3">
@@ -34,21 +34,24 @@ const BookSectionCard = ({item}) => {
             
           </div>
 
-          <p>{item?.description}<Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
+          <p className="py-2">{item?.description}<Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
           
           <hr />
-          <div className="flex">
+          <div className="flex justify-between items-center mt-3">
             <p className="text-sm font-semibold py-3">
               {" "}
-              কোর্সের মূল্যঃ <del className="text-gray-400 pr-3 "> -500 </del> {item?.price} Tk
+              কোর্সের মূল্যঃ <del className="text-gray-400  "> -500 </del> <span className="font-bold pl-2">{item?.price}</span> Tk
             </p>
+            <Link href= '/cart' className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+              এড টু কার্ড
+            </Link>
           </div>
-          <div className=" card-actions justify-start ">
+          {/* <div className=" card-actions justify-start ">
             <button className="text-black transition-all duration-300 rounded hover:text-yellowPrimary font-medium underline">
               বইটি কিনুন
             </button>
-          </div>
-        </div>
+          </div> */}
+        </Link>
       </div>
     </>
   );
