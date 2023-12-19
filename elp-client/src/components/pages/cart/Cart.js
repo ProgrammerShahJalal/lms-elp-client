@@ -1,9 +1,7 @@
 "use client";
-import EmptyContent from "@/components/Loader/EmptyContent";
-import Error from "@/components/Loader/Error";
-import InitialLoader from "@/components/Loader/InitialLoader";
+
 import Commonbanner from "@/components/banners/Commonbanner";
-import { useGetAllBooksQuery } from "@/redux/api/booksApi";
+
 import { addToCart, removeFromCart, removeOneBook } from "@/redux/features/cart/cartSlice";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,37 +12,7 @@ const Cart = () => {
   const { books, total } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  // const { data, isError, isLoading } = useGetAllBooksQuery();
-
-  // const booksData = data?.books?.data;
-
-  // let content = null;
-
-  // if (isLoading) {
-  //   content = (
-  //     <>
-  //       <InitialLoader/>
-  //     </>
-  //   );
-  // }
-
-  // if (!isLoading && isError) {
-  //   content = <Error/>;
-  // }
-
-  // if (!isLoading && !isError && booksData?.length === 0) {
-  //   content = (
-  //     <>
-  //       {" "}
-  //      <EmptyContent/>
-  //     </>
-  //   );
-  // }
-
-  // if (!isLoading && !isError && booksData?.length > 0) {
-  //   content = booksData?.map((item) => <BookSectionCard key={item?._id} item={item} />);
-  // }
-  // console.log(books)
+  
   const breadcrumbItems = [
     { label: "হোম", link: "/" },
     { label: "অল বুকস্", link: "/books" },
