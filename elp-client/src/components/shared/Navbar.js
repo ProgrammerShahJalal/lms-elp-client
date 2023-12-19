@@ -11,11 +11,19 @@ import { getUserInfo, isLoggedIn, removeUserInfo } from "@/services/auth.service
 import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { IoCartOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+
+  const { data:courseCategoryData } = useGetAllCategoriesQuery();
+  const categoriesData = courseCategoryData?.categories;
+  const { books } = useSelector((state) => state.cart);
+  
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-  const {role, userId} = getUserInfo();
+  const { userId} = getUserInfo();
   
   const { data } = useGetSingleUserQuery(userId);
   
@@ -48,20 +56,6 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 100) {
-  //       setIsSticky(true);
-  //     } else {
-  //       setIsSticky(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.addEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,14 +78,14 @@ const Navbar = () => {
       link: "কোর্সসমূহ",
       path: "courses",
       dropdown: [
-        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "course1" },
-        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "course2" },
+        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "/courses/primaryCourses" },
+        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "/courses/bankCourses" },
         // Add more courses as needed
       ],
     },
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
-    { link: "FAQ", path: "faq" },
+    
     
   ];
   const navItems = userLoggedIn
@@ -162,6 +156,7 @@ const Navbar = () => {
             {userLoggedIn ? (
               <>
               <p>{data?.name}</p>
+              <Link href="/cart" className="flex items-center"><IoCartOutline className="text-2xl font-bold" /> <sup className="text-md font-bold">{books?.length}</sup></Link>
               <button
                 onClick={logout}
                 className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"

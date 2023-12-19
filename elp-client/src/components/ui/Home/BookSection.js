@@ -2,6 +2,9 @@
 import Link from "next/link";
 import BookSectionCard from "./course/BookSectionCard";
 import { useGetAllBooksQuery } from "@/redux/api/booksApi";
+import InitialLoader from "@/components/Loader/InitialLoader";
+import EmptyContent from "@/components/Loader/EmptyContent";
+import Error from "@/components/Loader/Error";
 
 const BookSection = () => {
   const { data, isError, isLoading } = useGetAllBooksQuery();
@@ -14,20 +17,20 @@ const BookSection = () => {
   if (isLoading) {
     content = (
       <>
-        <div>Loading.......</div>
+        <InitialLoader/>
       </>
     );
   }
 
   if (!isLoading && isError) {
-    content = <h5>There was an error</h5>;
+    content = <Error/>;
   }
 
   if (!isLoading && !isError && booksData?.length === 0) {
     content = (
       <>
         {" "}
-        <p>There is no data</p>
+       <EmptyContent/>
       </>
     );
   }
@@ -36,10 +39,10 @@ const BookSection = () => {
     content = booksData?.map((item) => <BookSectionCard key={item?._id} item={item} />);
   }
   return (
-    <div className="px-14 py-10">
-      <div className="flex gap-5">
-        <h2 className="text-2xl font-bold px-2  rounded">আমাদের সকল বইসমূহ</h2>
-        <Link href="/books" className="mb-5 bg-cyanPrimary w-44 text-white px-7 py-3 rounded">
+    <div className="px-14 py-20">
+      <div className="flex gap-5 py-5">
+        <h2 className="text-2xl font-bold px-2  rounded ">আমাদের সকল বইসমূহ</h2>
+        <Link href="/books" className="mb-5 bg-bluePrimary hover:bg-cyanPrimary w-44 text-white px-7 py-3 rounded transition-all duration-500 delay-200">
           সব বই দেখুন
         </Link>
       </div>
