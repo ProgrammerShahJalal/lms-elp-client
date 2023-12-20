@@ -148,7 +148,7 @@ const UserCourses = () => {
       {/* from here i show quiz question to the student */}
 
       <h1 className="text-2xl font-bold mb-4">Quiz Questions</h1>
-      {quizQuestions.length > 0 && (
+      {quizQuestions?.length > 0 && (
         <div>
           {quizQuestions.map((question) => (
             <div key={question._id} className="bg-white p-4 rounded-md shadow-md mb-4">
