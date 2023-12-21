@@ -36,6 +36,7 @@ const AdminDashboard = () => {
                     <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addcategory'}>বিভাগ যোগ করুন</Link></li>
                     <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addsubcategory'}>উপ বিভাগ যোগ করুন</Link></li>
                     <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addcourse'}>কোর্স যোগ করুন</Link></li>
+                    <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addbooks'}>বই যোগ করুন</Link></li>
                     <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/admin/addquiz'}>
                         কুইজ যোগ করুন</Link></li>
                     <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
