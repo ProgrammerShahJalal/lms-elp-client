@@ -72,16 +72,18 @@ const Navbar = () => {
     };
   }, []);
 
+  const coursesLink =  categoriesData?.map((item)=>{  
+    return {
+      sublink: `${item?.name}`, subpath: `/courses/category/${item?._id}`
+    }
+  })
+
   const commonRoutes = [
     { link: "হোম", path: "/" },
     {
       link: "কোর্সসমূহ",
       path: "courses",
-      dropdown: [
-        { sublink: "প্রাইমারী চাকুরী কোর্স ", subpath: "/courses/primaryCourses" },
-        { sublink: "ব্যাংক চাকুরি কোর্স ", subpath: "/courses/bankCourses" },
-        // Add more courses as needed
-      ],
+      dropdown: coursesLink,
     },
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
