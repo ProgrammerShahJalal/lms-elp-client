@@ -1,12 +1,20 @@
 'use client'
-import { useGetAllUsersQuery } from '@/redux/api/usersApi';
+import { useGetAllUsersQuery, useMakeAdminMutation } from '@/redux/api/usersApi';
 import React from 'react';
 
 const AdminAllUsers = () => {
     const { data, isLoading, isError } = useGetAllUsersQuery();
     const users = data?.data?.data || [];
-    // console.log(users);
-    // console.log(data.data.data, 'this is users');
+    const [makeAdmin] = useMakeAdminMutation();
+    const handleMakeAdmin = async (userId) => {
+        try {
+            const response = await makeAdmin({ userId });
+            console.log(response);
+
+        } catch (error) {
+            console.error('Error making user admin:', error);
+        }
+    };
 
     if (isLoading) {
         return <p>Loading users...</p>;
@@ -28,6 +36,7 @@ const AdminAllUsers = () => {
                                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Email</th>
                                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Contact Number</th>
                                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Role</th>
+                                <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Make Admin</th>
                                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Created At</th>
                                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Updated At</th>
                             </tr>
@@ -39,6 +48,7 @@ const AdminAllUsers = () => {
                                     <td className="border px-4 py-2 md:table-cell">{user.email}</td>
                                     <td className="border px-4 py-2 md:table-cell">{user.contact_no}</td>
                                     <td className="border px-4 py-2 md:table-cell">{user.role}</td>
+                                    <td> <button onClick={() => handleMakeAdmin(user?._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md" >  Make Admin </button></td>
                                     <td className="border px-4 py-2 md:table-cell">{user.createdAt}</td>
                                     <td className="border px-4 py-2 md:table-cell">{user.updatedAt}</td>
                                 </tr>

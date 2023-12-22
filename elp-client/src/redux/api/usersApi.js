@@ -20,10 +20,18 @@ export const usersApi = baseApi.injectEndpoints({
             },
             providesTags: ["users"],
         }),
+        makeAdmin: build.mutation({
+            query: (data) => ({
+                url: `${COURSES_URL}/${data.userId}`,
+                method: "PATCH",
+                data: { role: "admin" },
+            }),
+            invalidatesTags: ["users"],
+        }),
 
 
 
     }),
 });
 
-export const { useGetAllUsersQuery } = usersApi;
+export const { useGetAllUsersQuery, useMakeAdminMutation } = usersApi;

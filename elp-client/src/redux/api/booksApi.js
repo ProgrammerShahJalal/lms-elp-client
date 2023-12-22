@@ -8,33 +8,41 @@ export const booksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // all Books
     getAllBooks: build.query({
-        query: (arg) => {
-          return {
-            url: BOOKS_URL,
-            method: "GET",
-            params: arg,
-          };
-        },
-        transformResponse: (response, meta) => {
-          return {
-            books: response,
-            meta,
-          };
-        },
-        providesTags: ["books"],
-      }),
-
-      getSingleBook: build.query({
-        query: (id) => ({
-          url: `${BOOKS_URL}/${id}`,
+      query: (arg) => {
+        return {
+          url: BOOKS_URL,
           method: "GET",
-        }),
-        providesTags: ["books"],
-      }),
-  
+          params: arg,
+        };
+      },
+      transformResponse: (response, meta) => {
+        return {
+          books: response,
+          meta,
+        };
+      },
+      providesTags: ["books"],
+    }),
 
-    
+    getSingleBook: build.query({
+      query: (id) => ({
+        url: `${BOOKS_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["books"],
+    }),
+    addBooks: build.mutation({
+      query: (data) => ({
+        url: BOOKS_URL,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["books"],
+    }),
+
+
+
   }),
 });
 
-export const { useGetAllBooksQuery, useGetSingleBookQuery  } = booksApi;
+export const { useGetAllBooksQuery, useGetSingleBookQuery, useAddBooksMutation } = booksApi;
