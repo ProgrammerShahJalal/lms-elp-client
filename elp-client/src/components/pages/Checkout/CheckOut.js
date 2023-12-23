@@ -39,7 +39,7 @@ const CheckOut = () => {
                 Go back to cart
               </Link>
               <Link
-                href="/placeOrder"
+                href="/profile"
                 className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
               >
                 Place Order{" "}
