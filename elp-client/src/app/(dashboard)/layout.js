@@ -3,7 +3,8 @@
 import DashNavbar from "@/components/dashboard/DashNavbar";
 import UserSidebar from "@/components/dashboard/userDashboard/UserSidebar";
 import UserWelcome from "@/components/dashboard/userDashboard/UserWelcome";
-import { isLoggedIn } from "@/services/auth.service";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -16,8 +17,15 @@ const DashBoardLayout = ({children}) => {
   const router = useRouter();
   const userLoggedIn = isLoggedIn();
   const [isLoading, setIsLoading] = useState(false);
+  const {role, userId} = getUserInfo();
+   
+  
+  const { data:user } = useGetSingleUserQuery(userId);
 
   useEffect(()=>{
+    // if(role !== 'admin' || role !== 'super_admin'){
+    //   router.push('/')
+    // }
     if(!userLoggedIn){
       router.push("/login")
     }
@@ -27,6 +35,8 @@ const DashBoardLayout = ({children}) => {
   if(!isLoading){
     return <p className="text-center py-20 text-2xl font-bold">Loading.................</p>
   }
+
+  
 
 
   return (
