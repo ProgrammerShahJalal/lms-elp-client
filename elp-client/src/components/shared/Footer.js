@@ -59,21 +59,22 @@ const Footer = () => {
         </aside>
         <nav>
           <header className="text-white text-lg font-bold pb-3">সার্ভিস সমূহ</header>
-          <a className=" link-hover  link ">
+          <a className=" link-hover  link " href="/courses">
             <span className="flex  link ">
               <MdKeyboardDoubleArrowRight className="mr-2" /> সকল কোর্স
             </span>{" "}
           </a>
-          <a className="link link-hover">টার্মস এন্ড কন্ডিশন</a>
-          <a className="link link-hover">প্লেসমেন্ট সাপোর্ট</a>
-          <a className="link link-hover">প্রাইভেসি পলিসি</a>
+          <a  href="/terms"className="link link-hover">টার্মস এন্ড কন্ডিশন</a>
+          <a className="link link-hover" href="/support">প্লেসমেন্ট সাপোর্ট</a>
+          <a className="link link-hover" href="/privacy">প্রাইভেসি পলিসি</a>
         </nav>
         <nav>
           <header className=" text-white text-lg font-bold pb-3">প্রয়োজনীয় লিংক সমূহ</header>
-          <a className="link link-hover">আমাদের সম্পর্কে</a>
-          <a className="link link-hover">যোগাযোগ</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <a className="link link-hover"href="/about">আমাদের সম্পর্কে</a>
+          <a className="link link-hover"href="/contact">যোগাযোগ</a>
+          <a className="link link-hover"href="/books">All Books</a>
+          <a className="link link-hover"href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank">Join Free Seminar</a>
+          
         </nav>
         <nav>
           <header className=" text-white text-lg font-bold pb-3">Contact Info</header>

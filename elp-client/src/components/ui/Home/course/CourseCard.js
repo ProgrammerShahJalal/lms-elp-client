@@ -13,7 +13,7 @@ const CourseCard = ({ item }) => {
         <figure className="relative">
           <Image
             className="rounded"
-            src="https://i.ibb.co/G9hnB13/course-1.webp"
+            src={item?.banner}
             alt="course"
             width={400}
             height={50}
@@ -21,13 +21,13 @@ const CourseCard = ({ item }) => {
         </figure>
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
-          <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[238px] text-white text-[16px] border-b-0 rounded">
-            {item?.name}
+          <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[160px] text-white text-[16px] border-b-0 rounded">
+            {item?.title}
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
               <Image src={avatar} width={40} height={50} alt="avatar" className="rounded-full" />
-              <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">সাইফুল রাহমান</span>
+              <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">{item?.author}</span>
             </div>
             <div className="flex items-center">
               <PiNotebookBold />{" "}

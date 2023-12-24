@@ -14,6 +14,7 @@ import EmptyContent from "@/components/Loader/EmptyContent";
 const Category = () => {
   const { data, isError, isLoading } = useGetAllCategoriesQuery();
   const categoriesData = data?.categories;
+  // console.log(categoriesData)
 
 
   let content = null;
@@ -43,7 +44,7 @@ const Category = () => {
     content = categoriesData?.map((item) =>  <Link href={`/courses/category/${item?._id}`} key={item?._id} className=" ">
     <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
       <div className="text-center">
-        <h2 className="py-5 font-semibold ">{item?.name} </h2>
+        <h2 className="py-5 font-semibold ">{item?.title} </h2>
       </div>
     </div>
   </Link>);

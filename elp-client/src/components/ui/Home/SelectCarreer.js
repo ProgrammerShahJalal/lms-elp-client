@@ -11,7 +11,7 @@ const SelectCarreer = () => {
 
        <div>
        <Link href="/courses" className="bg-cyanPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-transparent hover:border border-cyan-900">সবগুলো কোর্স দেখুন </Link>
-        <Link href="/" className="bg-gray-600 text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary mx-4">সেমিনারে অংশ নেন </Link>
+        <a href="https://forms.gle/3vjsXVuQi2vUomHX7" className="bg-gray-600 text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary mx-4" target="_blank"> সেমিনারে অংশ নেন</a>
         <Link href="/subscribe" className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary md: mt-5"> কল বক করুন</Link>
        </div>
     </div>

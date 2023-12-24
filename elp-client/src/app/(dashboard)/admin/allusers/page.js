@@ -1,6 +1,7 @@
 'use client'
 import { useGetAllUsersQuery, useMakeAdminMutation } from '@/redux/api/usersApi';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const AdminAllUsers = () => {
     const { data, isLoading, isError } = useGetAllUsersQuery();
@@ -9,10 +10,11 @@ const AdminAllUsers = () => {
     const handleMakeAdmin = async (userId) => {
         try {
             const response = await makeAdmin({ userId });
-            console.log(response);
+            
+            // console.log(response);
 
         } catch (error) {
-            console.error('Error making user admin:', error);
+            toast.error('Error making user admin:', error);
         }
     };
 
