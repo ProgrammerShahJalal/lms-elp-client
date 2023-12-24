@@ -14,7 +14,7 @@ const MemeberShipPlan = () => {
 
           </div>
           <div className="grid lg:grid-cols-3 gap-3">
-            <div className=" bg-white rounded border shadow-md">
+            <div className="  rounded border shadow-md">
 
               <div className="card svg-card text-center p-4 " >
                 <div className="flex justify-center"><span > <LiaUser className=" card-icon-3" /></span></div>
@@ -37,7 +37,7 @@ const MemeberShipPlan = () => {
 
             </div>
             <div className="mt-[-24px]">
-              <div className="bg-white rounded border shadow-md">
+              <div className=" rounded border shadow-md">
 
                 <div className="card svg-card text-center p-4 " >
                   <div className="flex justify-center"><span > <LuUsers className=" card-icon-3 " /></span> </div>
@@ -59,7 +59,7 @@ const MemeberShipPlan = () => {
 
               </div>
             </div>
-            <div className="bg-white rounded border shadow-md">
+            <div className=" rounded border shadow-md">
 
               <div className="card svg-card text-center p-4 " >
                 <div className=" flex justify-center"><span > <PiUsersThreeLight className=" card-icon-3" /></span></div>

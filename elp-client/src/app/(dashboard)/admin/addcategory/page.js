@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const AdminAddCategory = () => {
     const [addCategory] = useAddCategoryMutation();
     const [newCategory, setNewCategory] = useState({
-        name: '',
+        title: '',
     });
 
     const handleSubmit = async (event) => {
@@ -34,8 +34,8 @@ const AdminAddCategory = () => {
                     <input
                         type="text"
                         name="name"
-                        value={newCategory.name}
-                        onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
+                        value={newCategory.title}
+                        onChange={(e) => setNewCategory({ ...newCategory, title: e.target.value })}
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>

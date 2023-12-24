@@ -38,7 +38,7 @@ const AddBooks = () => {
         }
     };
     return (
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
+        <div className="max-w-md mx-auto mt-8 p-6  shadow-md rounded-md">
             <h2 className="text-2xl font-semibold mb-6">Add Book</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>

@@ -13,10 +13,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <Providers>
-      <html lang="en" data-theme = 'light'>
+      <html lang="en" data-theme='light'>
         <body>
           <ToastProvider>
-          {children}
+            {children}
           </ToastProvider>
         </body>
       </html>

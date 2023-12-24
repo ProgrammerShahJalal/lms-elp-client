@@ -9,7 +9,7 @@ import { getUserInfo, isLoggedIn, removeUserInfo } from "@/services/auth.service
 const DashNavbar = () => {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-  const {role} = getUserInfo()
+  const { role } = getUserInfo()
 
   // logout
 
@@ -19,7 +19,7 @@ const DashNavbar = () => {
   };
 
   return (
-    <div className="bg-white border-b border-b-gray-300 sticky top-0 z-10">
+    <div className=" border-b border-b-gray-300 sticky top-0 z-10">
       <div className="navbar px-5">
         <div className="navbar-start ">
           <Link href="/" className="text-lg text-cyan-900">
@@ -53,7 +53,7 @@ const DashNavbar = () => {
               </Link>
             </div>
           )}
-          
+
         </div>
       </div>
     </div>

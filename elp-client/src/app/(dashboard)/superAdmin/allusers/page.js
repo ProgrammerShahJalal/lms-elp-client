@@ -10,7 +10,7 @@ const AdminAllUsers = () => {
     const handleMakeAdmin = async (userId) => {
         try {
             const response = await makeAdmin({ userId });
-            
+
             // console.log(response);
 
         } catch (error) {
@@ -27,11 +27,11 @@ const AdminAllUsers = () => {
     }
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 ">
             <h1 className="text-2xl font-bold mb-4">Admin - All Users</h1>
             {users && users.length > 0 ? (
                 <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-gray-300">
+                    <table className="min-w-full  border border-gray-300">
                         <thead>
                             <tr>
                                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">Name</th>
