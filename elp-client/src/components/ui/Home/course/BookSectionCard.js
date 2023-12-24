@@ -32,7 +32,7 @@ const BookSectionCard = ({item}) => {
 
         <div  className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
           <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[220px] text-white text-[16px] border-b-0 rounded">
-            {item?.name}
+            {item?.title}
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
