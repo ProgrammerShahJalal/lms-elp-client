@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+/* global.css */
 
 /* body{
   background-color: #F1E9F4;
@@ -22,14 +23,26 @@
   color: #333333;
 } */
 
-
-
 .scroll-to-top.visible {
   display: block;
 }
 
-.banner{
-  background-image: linear-gradient(to left top, #fef1e8, #feeee9, #fdebeb, #f9e9ed, #f4e7ef, #f4e7ef, #f3e8f0, #f3e8f0, #f8ebf0, #fbeef0, #fdf2f1, #fef6f3);
+.banner {
+  background-image: linear-gradient(
+    to left top,
+    #fef1e8,
+    #feeee9,
+    #fdebeb,
+    #f9e9ed,
+    #f4e7ef,
+    #f4e7ef,
+    #f3e8f0,
+    #f3e8f0,
+    #f8ebf0,
+    #fbeef0,
+    #fdf2f1,
+    #fef6f3
+  );
 }
 
 /* card wave css */
@@ -89,8 +102,6 @@ i.fa-solid.fa-users.i-3 {
   color: white;
 }
 /* wave css end*/
-
-
 
 .btn-main {
   border: 2px solid;
@@ -190,12 +201,7 @@ i.fa-solid.fa-users.i-3 {
   }
 }
 
-
-
-
-
 /* Team Part STart */
-
 
 .team_img:hover .team_img_overlay {
   opacity: 1;
