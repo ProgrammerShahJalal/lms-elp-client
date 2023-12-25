@@ -19,22 +19,15 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
     content = <Error></Error>;
   }
 
-  //   if (!isLoading && !isError && coursesData?.length === 0) {
-  //     content = (
-  //       <>
-  //         {" "}
-  //         <p>There is no data</p>
-  //       </>
-  //     );
-  //   }
+ 
 
   if (!isLoading && !isError && data) {
     content = (<div className="grid lg:grid-cols-2 gap-5 my-10">
       <div>
         <div className="space-y-4 mb-10">
-          <h2 className="text-2xl font-bold">{data?.name}</h2>
+          <h2 className="text-2xl font-bold">{data?.title}</h2>
 
-          <p > <span className=" text-bluePrimary pr-10 font-semibold"> Category: {data?.title} </span>  Sub Category: <span className=" text-yellowPrimary">{data?.sub_category_id?.title}</span > </p>
+          <p > <span className=" text-bluePrimary pr-10 font-semibold"> Category: {data?.sub_category_id?.title} </span>  Sub Category: <span className=" text-yellowPrimary">{data?.sub_category_id?.category_id?.title}</span > </p>
           <Image
             className="rounded"
             src={data?.banner}

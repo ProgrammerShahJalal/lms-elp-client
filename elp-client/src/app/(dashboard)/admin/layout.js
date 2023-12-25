@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }) => {
     const {role, userId} = getUserInfo();
     useEffect(()=>{
         setIsLoading(true)
-        if(role !== 'admin' || role !== 'super_admin'){
+        if(role !== 'admin' && role !== 'super_admin'){
           router.push('/')
         }
         
