@@ -19,16 +19,17 @@ const AdminAddCategory = () => {
     const content = {...data};
     const file = content['file']
     // console.log(file)
-    delete content['file'];
+    // delete content['file'];
     const result = JSON.stringify(content)
-    // console.log(result)
+    console.log(result, "json")
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file[0]);
     formData.append('data', result);
     console.log(formData, 'formdaata')
 
     try {
       const resultData = await addCategory(formData)
+      console.log(resultData, "after api call")
       if(resultData){
           toast.success("category created successfully");
           router.push("/")

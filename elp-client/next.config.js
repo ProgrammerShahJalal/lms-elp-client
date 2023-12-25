@@ -4,7 +4,8 @@ const nextConfig = {
         domains:[
             "i.ibb.co",
             "tecdn.b-cdn.net",
-            "res.cloudinary.com"
+            "res.cloudinary.com",
+            
         ]
 
     }

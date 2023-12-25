@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const CourseDetailsData = ({ data, isError, isLoading }) => {
-  // console.log(data?.title)
+   console.log(data)
   let content = null;
 
   if (isLoading) {
