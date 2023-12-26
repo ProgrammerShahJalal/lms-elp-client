@@ -22,8 +22,8 @@ const BookSectionCard = ({item}) => {
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
         <figure className="relative">
           <Image
-            className="rounded"
-            src="https://i.ibb.co/G9hnB13/course-1.webp"
+            className="rounded w-full h-72"
+            src={item?.cover_page}
             alt="course"
             width={400}
             height={100}
@@ -52,7 +52,7 @@ const BookSectionCard = ({item}) => {
           <div className="flex justify-between items-center mt-3">
             <p className="text-sm font-semibold py-3">
               {" "}
-              কোর্সের মূল্যঃ <del className="text-gray-400  "> -500 </del> <span className="font-bold pl-2">{item?.price}</span> Tk
+              কোর্সের মূল্যঃ <del className="text-gray-400  "> -{item?.discount_price} </del> <span className="font-bold pl-2">{item?.price}</span> Tk
             </p>
             <button onClick={() => handleAddBook(item)}  className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
               এড টু কার্ড
