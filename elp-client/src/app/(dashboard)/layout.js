@@ -43,11 +43,11 @@ const DashBoardLayout = ({ children }) => {
     <>
       <div className="">
         <DashNavbar />
-        <div className=" grid lg:grid-cols-2 ">
-          <div className="  h-screen w-60 mt-5 border border-gray-300 rounded ml-5 ">
+        <div className=" grid  lg:grid-cols-2  bg-gray-200">
+          <div className="bg-white  mt-5 border border-gray-300 rounded ml-5 ">
             <UserSidebar />
           </div>
-          <div className="   mt-5 rounded px-10 pt-10 lg:mr-10 lg:ml-[-300px]" >
+          <div className="bg-white   mt-5 rounded px-10 pt-10 lg:mr-10 lg:ml-[-300px]" >
             <UserWelcome />
             <br />
             {children}

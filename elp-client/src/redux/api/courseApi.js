@@ -39,9 +39,16 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
+    deleteCourses: build.mutation({
+      query: (categoryId) => ({
+        url: `${COURSES_URL}/${categoryId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["courses"],
+    }),
 
 
   }),
 });
 
-export const { useGetAllCoursesQuery, useGetSingleCourseQuery, useAddCourseMutation } = courseApi;
+export const { useGetAllCoursesQuery, useGetSingleCourseQuery, useAddCourseMutation, useDeleteCoursesMutation } = courseApi;

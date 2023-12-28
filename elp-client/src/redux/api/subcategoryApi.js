@@ -22,12 +22,19 @@ export const subcategoryApi = baseApi.injectEndpoints({
             query: (data) => ({
                 url: SUBCATEGORIES_URL,
                 method: "POST",
-                contentType:"multipart/form-data",
+                contentType: "multipart/form-data",
                 data: data,
+            }),
+            invalidatesTags: ["sub-categories"],
+        }),
+        deleteSubCategory: build.mutation({
+            query: (categoryId) => ({
+                url: `${SUBCATEGORIES_URL}/${categoryId}`,
+                method: "DELETE",
             }),
             invalidatesTags: ["sub-categories"],
         }),
     }),
 });
 
-export const { useGetAllSubcategoriesQuery, useAddSubcategoryMutation } = subcategoryApi;
+export const { useGetAllSubcategoriesQuery, useAddSubcategoryMutation, useDeleteSubCategoryMutation } = subcategoryApi;
