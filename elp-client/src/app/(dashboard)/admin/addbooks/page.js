@@ -1,3 +1,4 @@
+
 'use client'
 import React, { useState } from 'react';
 import { useAddBooksMutation, useDeleteBooksMutation, useGetAllBooksQuery } from '@/redux/api/booksApi';
@@ -194,8 +195,17 @@ const AddBooks = () => {
             )}
 
 
+
         </div>
-    );
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md"
+        >
+          Add Book
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default AddBooks;

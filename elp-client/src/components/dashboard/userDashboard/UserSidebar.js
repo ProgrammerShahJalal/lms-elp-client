@@ -59,6 +59,7 @@ const UserSidebar = () => {
                 <ul className="menu p-4 bg-white">
                     {role === 'admin' ? (
                         <>
+
                             <ul className="py-2 ">
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addexams'}><PiExamFill />পরীক্ষা যোগ করুন</Link></li>
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addcategory'}> <FaAddressBook />বিভাগ যোগ করুন</Link></li>
@@ -68,12 +69,17 @@ const UserSidebar = () => {
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addquiz'}><MdQuiz /> কুইজ যোগ করুন</Link></li>
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addquestions'}><BsFillQuestionSquareFill /> প্রশ্ন যোগ করুন</Link></li>
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addvideo'}> <FaFileVideo />ভিডিও যোগ করুন</Link> </li>
-                            </ul>
+
+                           
                         </>
                     ) : role === 'super_admin' ? (
                         <>
-                            <ul>
-                                <li className="px-4 py-2  cursor-pointer"><Link href={'/superAdmin/allusers'}>ব্যবহারকারী</Link></li>
+
+                            
+
+                            <ul className="py-2 text-white">
+                                <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer"><Link href={'/superAdmin/allusers'}>ব্যবহারকারী</Link></li>
+
                             </ul>
                         </>
                     ) : (

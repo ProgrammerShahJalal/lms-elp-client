@@ -35,6 +35,7 @@ export const booksApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: BOOKS_URL,
         method: "POST",
+        contentType:"multipart/form-data",
         data: data,
       }),
       invalidatesTags: ["books"],

@@ -21,54 +21,23 @@ const AdminAddSubCategory = () => {
   const [deleteSubCategory] = useDeleteSubCategoryMutation()
 
 
-  //   const [newSubCategory, setNewSubCategory] = useState({
-  //     title: "",
-  //     category: "",
-  //   });
 
-  // const handleSubmit = async (event) => {
-  //     event.preventDefault();
-  //     const selectedCategory = categories?.categories?.find(category => category?.title === newSubCategory.category);
-  //     // console.log(selectedCategory, 'selected category')
-  //     if (!selectedCategory) {
-  //         console.error('Selected category not found');
-  //         return;
-  //     }
-  //     const data = {
-  //         title: newSubCategory.title,
-  //         category_id: selectedCategory.id
-  //         // category_id: {
-  //         //     _id: selectedCategory.id,
-  //         //     name: selectedCategory.name,
-  //         //     id: selectedCategory.id,
-  //         // },
-  //     };
-  //     console.log(data, 'try in first after result')
-  //     try {
-  //         const result = await addSubcategory(data);
-  //         console.log('Mutation result:', result);
-  //         console.log('New Subcategory added successfully');
-  //         if(result){
-  //             toast.success("Sub Category added Success fully")
-  //         }
-  //     } catch (error) {
-  //         toast.error('Error adding new subcategory', error);
-  //     }
-  // };
-
+  
   const onSubmit = async (data) => {
-    // console.log(data);
-    const content = { ...data };
+    console.log(data);
+    const content = {...data};
+
     const file = content['file']
     // console.log(file)
-    delete content['file'];
+    // delete content['file'];
     const result = JSON.stringify(content)
-    // console.log(result, 'json')
+    console.log(result, "json")
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file[0]);
     formData.append('data', result);
-    // console.log(formData, 'formdaata')
+    console.log(formData, 'formdaata')
     try {
+
       const resultData = await addSubcategory(formData)
       console.log(resultData, 'after ap call')
       // if(resultData){
@@ -90,6 +59,8 @@ const AdminAddSubCategory = () => {
       // toast.success("Category deleted successfully");
     } catch (error) {
       toast.error("Failed to delete category");
+
+
     }
   };
 
