@@ -21,14 +21,7 @@ export const makeQuizApi = baseApi.injectEndpoints({
             },
             providesTags: ["course-playlists"],
         }),
-        addQuizPlaylist: build.mutation({
-            query: (data) => ({
-                url: QUIZ_PLAYLIST,
-                method: "POST",
-                data: data,
-            }),
-            invalidatesTags: ["quiz-questions"],
-        }),
+        
         addPlaylistVideo: build.mutation({
             query: (data) => ({
                 url: COURSE_PLAYLIST,
@@ -40,4 +33,4 @@ export const makeQuizApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useAddQuizPlaylistMutation, useAddPlaylistVideoMutation, useGetAllPlaylistQuery } = makeQuizApi;
+export const {  useAddPlaylistVideoMutation, useGetAllPlaylistQuery } = makeQuizApi;
