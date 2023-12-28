@@ -39,7 +39,7 @@ const AddBooks = () => {
       const resultData = await addBooks(formData);
     //   console.log(resultData, "after ap call");
       if (resultData) {
-        toast.success("course created successfully");
+        toast.success("Book created successfully");
       }
       // console.log(resultData, ' from add category async')
     } catch (error) {
