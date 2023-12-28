@@ -80,7 +80,7 @@ const AddQuiz = () => {
                 </div>
             </div>
             <div className="container mx-auto mt-8">
-                <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 border rounded shadow">
+                <form onSubmit={handleSubmit} className="max-w-md mx-auto  p-8 border rounded shadow">
                     <h2 className="text-2xl font-semibold mb-4">Quiz Questions</h2>
                     {/* Add new question form */}
                     <div className="mb-4">

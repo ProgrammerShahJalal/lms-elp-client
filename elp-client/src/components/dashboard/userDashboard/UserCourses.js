@@ -76,7 +76,7 @@ const UserCourses = () => {
     setShowResults(true);
   };
   return (
-    <div className="bg-white rounded-lg py-5 border border-gray-200">
+    <div className="rounded-lg py-5 border border-gray-200">
       <div className="card card-compact w-72 bg-base-100 shadow-xl ml-10">
         <figure><Image src="https://i.ibb.co/G9hnB13/course-1.webp" alt="course" width={300} height={100} /></figure>
         <div className="card-body">
