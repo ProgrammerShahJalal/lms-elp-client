@@ -18,8 +18,15 @@ export const examsApi = baseApi.injectEndpoints({
             },
             providesTags: ["exams"],
         }),
-
+        addAllExams: build.mutation({
+            query: (data) => ({
+                url: EXAMS_URL,
+                method: "POST",
+                data: data,
+            }),
+            invalidatesTags: ["exams"],
+        }),
     }),
 });
 
-export const { useGetAllExamsQuery } = examsApi;
+export const { useGetAllExamsQuery , useAddAllExamsMutation} = examsApi;
