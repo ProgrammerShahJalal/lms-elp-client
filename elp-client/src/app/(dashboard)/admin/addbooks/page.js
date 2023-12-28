@@ -26,8 +26,10 @@ const AddBooks = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(e)
         try {
-            addBooks(bookData);
+            // addBooks(bookData);
+            console.log( bookData)
             toast.success('Book added successfully!');
             setBookData({
                 name: '',
@@ -49,6 +51,7 @@ const AddBooks = () => {
         }
     }
     return (
+      <>
         <div className="container mx-auto mt-8 p-6">
             <h2 className="text-2xl font-semibold mb-6">Add Book</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -197,14 +200,15 @@ const AddBooks = () => {
 
 
         </div>
-        <button
+        {/* <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded-md"
         >
           Add Book
         </button>
       </form>
-    </div>
+    </div> */}
+    </>
   );
 };
 

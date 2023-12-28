@@ -43,7 +43,7 @@ const UserProfileEditPage = ({params}) => {
 
 
   const onSubmit = async (values) => {
-    console.log(values)
+    // console.log(values)
     try {
        const res = await updateUser({id, body:values});
        if(res){

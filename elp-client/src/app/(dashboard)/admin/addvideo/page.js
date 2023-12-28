@@ -1,10 +1,15 @@
 'use client'
+import { useGetAllQuestionsQuery } from '@/redux/api/questionsApi';
 import { useAddPlaylistVideoMutation, useGetAllPlaylistQuery } from '@/redux/api/videoApi';
 import React, { useState } from 'react';
 
 const AddVideo = () => {
     const { data } = useGetAllPlaylistQuery()
     const course = data?.courses;
+
+    const { data:allVedio } = useGetAllQuestionsQuery();
+    // const allQuiz = data?.categories?.data;
+    // console.log(allVedio, 'from api')
     const initialFormData = {
         name: '',
         course_id: '',
@@ -78,7 +83,7 @@ const AddVideo = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {course.map((playlist) => (
+                        {course?.map((playlist) => (
                             <tr key={playlist._id}>
                                 <td className="py-2 px-4 border-b">{playlist.title}</td>
                                 <td className="py-2 px-4 border-b">{playlist.course_id.title}</td>

@@ -69,7 +69,7 @@ const UserSidebar = () => {
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addquiz'}><MdQuiz /> কুইজ যোগ করুন</Link></li>
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addquestions'}><BsFillQuestionSquareFill /> প্রশ্ন যোগ করুন</Link></li>
                                 <li className="px-4 py-2  cursor-pointer"><Link href={'/admin/addvideo'}> <FaFileVideo />ভিডিও যোগ করুন</Link> </li>
-
+</ul>
                            
                         </>
                     ) : role === 'super_admin' ? (
