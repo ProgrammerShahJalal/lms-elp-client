@@ -24,26 +24,26 @@ const AdminAddSubCategory = () => {
 
   
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     const content = {...data};
 
     const file = content['file']
     // console.log(file)
     // delete content['file'];
     const result = JSON.stringify(content)
-    console.log(result, "json")
+    // console.log(result, "json")
     const formData = new FormData();
     formData.append('file', file[0]);
     formData.append('data', result);
-    console.log(formData, 'formdaata')
+    // console.log(formData, 'formdaata')
     try {
 
       const resultData = await addSubcategory(formData)
-      console.log(resultData, 'after ap call')
-      // if(resultData){
-      //     toast.success("subcategory created successfully");
-      //     router.push("/")
-      // }
+      // console.log(resultData, 'after ap call')
+      if(resultData){
+          toast.success("subcategory created successfully");
+         
+      }
       // console.log(resultData, ' from add category async')
 
     } catch (error) {
@@ -105,7 +105,7 @@ const AdminAddSubCategory = () => {
             </option>
             {categories?.categories?.map((category) => (
               <option key={category?.id} value={category?._id}>
-                {category.title}
+                {category?.title}
               </option>
             ))}
           </select>
@@ -134,17 +134,17 @@ const AdminAddSubCategory = () => {
             </thead>
             <tbody>
               {allSubcategory?.map((subcategory, i) => (
-                <tr key={subcategory._id} className="block md:table-row">
-                  <td className="py-2 px-4 border-b md:table-cell">{i + 1}) {subcategory.title}</td>
+                <tr key={subcategory?._id} className="block md:table-row">
+                  <td className="py-2 px-4 border-b md:table-cell">{i + 1}) {subcategory?.title}</td>
                   <td className="py-2 px-4 border-b md:table-cell">
-                    <img src={subcategory.icon} alt="Subcategory Icon" className="w-10 h-10" />
+                    <img src={subcategory?.icon} alt="Subcategory Icon" className="w-10 h-10" />
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">{subcategory?.category_id?.title}</td>
                   <td className="py-2 px-4 border-b md:table-cell">
                     <button className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</button>
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">
-                    <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory.id)}>Delete</button>
+                    <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory?.id)}>Delete</button>
                   </td>
                 </tr>
               ))}

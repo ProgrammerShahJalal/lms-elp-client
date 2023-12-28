@@ -7,7 +7,7 @@ const FreeCourseCard1 = () => {
   return (
     <>
       
-      <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded">
+      <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
         <figure className="relative">
           <Image
             className="rounded"

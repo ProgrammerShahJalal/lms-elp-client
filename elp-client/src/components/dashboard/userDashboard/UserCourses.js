@@ -1,25 +1,31 @@
 
 import { useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
+import { useGetAllPlaylistQuery } from "@/redux/api/videoApi";
 import Image from "next/image"
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
 const UserCourses = () => {
   const { data } = useGetAllQuestionsQuery();
-  // const allQuiz = data?.categories?.data;
+  const allQuiz = data?.categories?.data;
+  console.log(data, 'from api')
 
   console.log(data);
   const [videoData, setVideoData] = useState([]);
+  
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  
+ 
   useEffect(() => {
+   
     const fetchVideoData = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/v1/course-playlists');
         const data = await response.json();
-        setVideoData(data.data);
+        setVideoData(data?.data);
         setCurrentVideoIndex(0);
       } catch (error) {
         setError('Error fetching video data');
@@ -30,6 +36,8 @@ const UserCourses = () => {
     fetchVideoData();
 
   }, []);
+
+  console.log(videoData,'video data')
   const showPreviousVideo = () => {
     setCurrentVideoIndex((prevIndex) => (prevIndex === 0 ? videoData.length - 1 : prevIndex - 1));
   };
@@ -67,16 +75,16 @@ const UserCourses = () => {
       <div>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {videoData.length > 0 && (
+        {videoData?.length > 0 && (
           <div className="container mx-auto my-8">
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 place-items-center gap-4">
               <div>
                 <h1 className="text-2xl font-bold mb-4">Video List</h1>
 
                 <div className="bg-white p-4 rounded-md shadow-md">
-                  <h2 className="text-lg font-semibold mb-2">{videoData[currentVideoIndex].title}</h2>
+                  <h2 className="text-lg font-semibold mb-2">{videoData[currentVideoIndex]?.title}</h2>
                   <div id="youtube-player">
-                    <ReactPlayer width={500} controls key={videoData[currentVideoIndex].playlist_link} volume url={videoData[currentVideoIndex].playlist_link}
+                    <ReactPlayer width={500} controls key={videoData[currentVideoIndex]?.playlist_link} volume url={videoData[currentVideoIndex].playlist_link}
                     />
 
                   </div>
@@ -119,7 +127,7 @@ const UserCourses = () => {
                         } text-xl`}
                       onClick={() => selectVideo(index)}
                     >
-                      {index + 1}. {video.title}
+                      {index + 1}. {video?.title}
                     </li>
                   ))}
                 </ol>

@@ -35,6 +35,7 @@ export const courseApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: COURSES_URL,
         method: "POST",
+        contentType:"multipart/form-data",
         data: data,
       }),
       invalidatesTags: ["courses"],
