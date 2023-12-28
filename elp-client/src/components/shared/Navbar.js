@@ -104,9 +104,9 @@ const Navbar = () => {
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
   ];
-  // const navItems = userLoggedIn
-  // ? [...commonRoutes, { link: "প্রোফাইল", path: "profile" }]
-  // : commonRoutes;
+  const navItems = userLoggedIn
+  ? [...commonRoutes, { link: "ড্যাসবোর্ড", path: "profile" }]
+  : commonRoutes; 
   return (
     <header className="w-full bg-white md:bg-transparent sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
       <nav
@@ -126,7 +126,7 @@ const Navbar = () => {
               alt="logo"
               className="w-14 inline-block items-center"
             />
-            <span className="text-cyanPrimary hover:text-bluePrimary">
+            <span className="dark:text-cyanPrimary hover:text-bluePrimary">
               ইজি লার্নিং প্লাটফর্ম
             </span>
           </Link>
@@ -134,7 +134,7 @@ const Navbar = () => {
           {/* nav for large device*/}
 
           <ul className="md:flex space-x-5 hidden">
-            {commonRoutes.map(({ link, path, dropdown }) => (
+            {navItems.map(({ link, path, dropdown }) => (
               <div key={path}>
                 {dropdown ? (
                   <div
@@ -156,7 +156,7 @@ const Navbar = () => {
                         <Link
                           href={subpath}
                           key={subpath}
-                          className="block px-3  hover:text-cyanPrimary cursor-pointer "
+                          className="block px-3   hover:text-cyanPrimary cursor-pointer "
                         >
                           {sublink}
                         </Link>
@@ -167,7 +167,7 @@ const Navbar = () => {
                   <Link
                     href={path}
                     key={path}
-                    className="block text-black hover:text-bluePrimary font-bold"
+                    className="block dark:text-black hover:text-bluePrimary font-bold"
                   >
                     {link}
                   </Link>
@@ -224,7 +224,7 @@ const Navbar = () => {
                           href="/profile"
                           className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
-                          Profile
+                         প্রোফাইল
                         </Link>
                       </li>
 
@@ -270,7 +270,7 @@ const Navbar = () => {
           }`}
         >
           <ToggleTheme />
-          {commonRoutes.map(({ link, path, dropdown }) => (
+          {navItems.map(({ link, path, dropdown }) => (
             <div key={path}>
               {dropdown ? (
                 <div

@@ -24,7 +24,7 @@ const AdminAddSubCategory = () => {
 
   
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     const content = {...data};
 
     const file = content['file']
@@ -39,11 +39,11 @@ const AdminAddSubCategory = () => {
     try {
 
       const resultData = await addSubcategory(formData)
-      console.log(resultData, 'after ap call')
-      // if(resultData){
-      //     toast.success("subcategory created successfully");
-      //     router.push("/")
-      // }
+      // console.log(resultData, 'after ap call')
+      if(resultData){
+          toast.success("subcategory created successfully");
+         
+      }
       // console.log(resultData, ' from add category async')
 
     } catch (error) {
@@ -144,7 +144,7 @@ const AdminAddSubCategory = () => {
                     <button className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</button>
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">
-                    <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory.id)}>Delete</button>
+                    <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory?.id)}>Delete</button>
                   </td>
                 </tr>
               ))}
