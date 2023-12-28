@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 
 
 const DashboardLayout = ({ children }) => {
+
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter();
   const { role, userId } = getUserInfo();
@@ -34,6 +35,7 @@ const DashboardLayout = ({ children }) => {
       {children}
     </div>
   );
+
 };
 
 export default DashboardLayout;

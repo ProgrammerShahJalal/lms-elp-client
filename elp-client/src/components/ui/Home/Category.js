@@ -45,6 +45,8 @@ const Category = () => {
     <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
       <div className="text-center">
         <h2 className="py-5 font-semibold ">{item?.title} </h2>
+        {/* <h2 className="py-5 font-semibold ">{item?.icon} </h2> */}
+        <Image src={item?.icon} alt="img" width={50} height={20}/>
       </div>
     </div>
   </Link>);

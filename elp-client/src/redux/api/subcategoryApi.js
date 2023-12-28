@@ -22,6 +22,7 @@ export const subcategoryApi = baseApi.injectEndpoints({
             query: (data) => ({
                 url: SUBCATEGORIES_URL,
                 method: "POST",
+                contentType:"multipart/form-data",
                 data: data,
             }),
             invalidatesTags: ["sub-categories"],

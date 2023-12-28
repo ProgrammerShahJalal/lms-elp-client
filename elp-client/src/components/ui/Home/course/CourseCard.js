@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const CourseCard = ({ item }) => {
-  console.log(item.description);
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
