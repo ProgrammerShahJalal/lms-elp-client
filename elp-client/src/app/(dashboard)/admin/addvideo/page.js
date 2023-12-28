@@ -1,8 +1,10 @@
 'use client'
-import { useAddPlaylistVideoMutation } from '@/redux/api/videoApi';
+import { useAddPlaylistVideoMutation, useGetAllPlaylistQuery } from '@/redux/api/videoApi';
 import React, { useState } from 'react';
 
 const AddVideo = () => {
+    const { data } = useGetAllPlaylistQuery()
+    const course = data?.courses;
     const initialFormData = {
         name: '',
         course_id: '',
@@ -22,6 +24,7 @@ const AddVideo = () => {
             console.error('Error during POST request:', error);
         }
     };
+
     return (
         <div className="container mx-auto my-8 lg:space-x-48">
             <h2 className="text-2xl font-bold mb-4">Form</h2>
@@ -65,20 +68,35 @@ const AddVideo = () => {
                     Submit
                 </button>
             </form>
-
-            {/* Display the submitted data */}
-            {/* {submittedData && (
-                <div className="mt-4">
-                    <h2 className="text-2xl font-bold">Submitted Data</h2>
-                    <pre className="bg-gray-100 p-4 mt-2 rounded">{JSON.stringify(submittedData, null, 2)}</pre>
-                </div>
-            )} */}
-
-            {/* Display the current data array */}
-            {/* <div className="mt-8">
-                <h2 className="text-2xl font-bold">Current Data</h2>
-                <pre className="bg-gray-100 p-4 mt-2 rounded">{JSON.stringify(data, null, 2)}</pre>
-            </div> */}
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th className="py-2 px-4 border-b">Playlist Title</th>
+                            <th className="py-2 px-4 border-b">Course Title</th>
+                            <th className="py-2 px-4 border-b">Playlist Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {course.map((playlist) => (
+                            <tr key={playlist._id}>
+                                <td className="py-2 px-4 border-b">{playlist.title}</td>
+                                <td className="py-2 px-4 border-b">{playlist.course_id.title}</td>
+                                <td className="py-2 px-4 border-b">
+                                    <a
+                                        href={playlist.playlist_link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 hover:underline"
+                                    >
+                                        {playlist.playlist_link}
+                                    </a>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

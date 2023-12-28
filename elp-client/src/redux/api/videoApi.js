@@ -1,10 +1,26 @@
 import { baseApi } from "./baseApi";
 
-export const QUIZ_PLAYLIST = "/quiz-questions";
+export const QUIZ_PLAYLIST = "/questions";
 export const COURSE_PLAYLIST = "/course-playlists";
 
 export const makeQuizApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getAllPlaylist: build.query({
+            query: (arg) => {
+                return {
+                    url: COURSE_PLAYLIST,
+                    method: "GET",
+                    params: arg,
+                };
+            },
+            transformResponse: (response, meta) => {
+                return {
+                    courses: response,
+                    meta,
+                };
+            },
+            providesTags: ["course-playlists"],
+        }),
         addQuizPlaylist: build.mutation({
             query: (data) => ({
                 url: QUIZ_PLAYLIST,
@@ -24,4 +40,4 @@ export const makeQuizApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useAddQuizPlaylistMutation, useAddPlaylistVideoMutation } = makeQuizApi;
+export const { useAddQuizPlaylistMutation, useAddPlaylistVideoMutation, useGetAllPlaylistQuery } = makeQuizApi;

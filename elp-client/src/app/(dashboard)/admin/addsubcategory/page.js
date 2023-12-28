@@ -1,6 +1,7 @@
 "use client";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
-import { useAddSubcategoryMutation } from "@/redux/api/subcategoryApi";
+import { useDeleteCoursesMutation } from "@/redux/api/courseApi";
+import { useAddSubcategoryMutation, useDeleteSubCategoryMutation, useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,12 +15,16 @@ const AdminAddSubCategory = () => {
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
   } = useGetAllCategoriesQuery();
+  const { data: subcategories, isLoading: isSubcategoryLoading } = useGetAllSubcategoriesQuery();
+  const allSubcategory = subcategories?.subcategories;
+  const [deleteCourses] = useDeleteCoursesMutation()
+  const [deleteSubCategory] = useDeleteSubCategoryMutation()
 
 
-//   const [newSubCategory, setNewSubCategory] = useState({
-//     title: "",
-//     category: "",
-//   });
+  //   const [newSubCategory, setNewSubCategory] = useState({
+  //     title: "",
+  //     category: "",
+  //   });
 
   // const handleSubmit = async (event) => {
   //     event.preventDefault();
@@ -51,9 +56,9 @@ const AdminAddSubCategory = () => {
   //     }
   // };
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     // console.log(data);
-    const content = {...data};
+    const content = { ...data };
     const file = content['file']
     // console.log(file)
     delete content['file'];
@@ -64,23 +69,32 @@ const AdminAddSubCategory = () => {
     formData.append('data', result);
     // console.log(formData, 'formdaata')
     try {
-        const resultData = await addSubcategory(formData)
-        console.log(resultData, 'after ap call')
-        // if(resultData){
-        //     toast.success("subcategory created successfully");
-        //     router.push("/")
-        // }
-        // console.log(resultData, ' from add category async')
-        
-      } catch (error) {
-        toast.error(error.message)
-        
-      }
-    
+      const resultData = await addSubcategory(formData)
+      console.log(resultData, 'after ap call')
+      // if(resultData){
+      //     toast.success("subcategory created successfully");
+      //     router.push("/")
+      // }
+      // console.log(resultData, ' from add category async')
+
+    } catch (error) {
+      toast.error(error.message)
+
+    }
+
+  };
+  const handleDelete = async (categoryId) => {
+    try {
+      await deleteCourses(categoryId);
+
+      // toast.success("Category deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete category");
+    }
   };
 
   return (
-    <div>
+    <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Admin Add Subcategory</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
@@ -91,7 +105,7 @@ const AdminAddSubCategory = () => {
             type="text"
             name="title"
             {...register("title", { required: true })}
-           
+
             className="w-full border border-gray-300 p-2 rounded-md"
           />
         </div>
@@ -103,16 +117,16 @@ const AdminAddSubCategory = () => {
             type="file"
             name="file"
             {...register("file", { required: true })}
-            
+
             className="w-full border border-gray-300 p-2 rounded-md"
           />
         </div>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category</label>
           <select
-           
+
             {...register("category_id", { required: true })}
-          
+
             className="w-full border border-gray-300 p-2 rounded-md"
           >
             <option value="" disabled>
@@ -132,6 +146,43 @@ const AdminAddSubCategory = () => {
           Add Subcategory
         </button>
       </form>
+      <h1 className="text-2xl font-bold mb-4 mt-12">Admin Update & Delete Sub Category</h1>
+      {isSubcategoryLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-300">
+            <thead className="hidden md:table-header-group">
+              <tr>
+                <th className="py-2 px-4 border-b">Title</th>
+                <th className="py-2 px-4 border-b">Icon</th>
+                <th className="py-2 px-4 border-b">Category</th>
+                <th className="py-2 px-4 border-b">Update</th>
+                <th className="py-2 px-4 border-b">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allSubcategory?.map((subcategory, i) => (
+                <tr key={subcategory._id} className="block md:table-row">
+                  <td className="py-2 px-4 border-b md:table-cell">{i + 1}) {subcategory.title}</td>
+                  <td className="py-2 px-4 border-b md:table-cell">
+                    <img src={subcategory.icon} alt="Subcategory Icon" className="w-10 h-10" />
+                  </td>
+                  <td className="py-2 px-4 border-b md:table-cell">{subcategory?.category_id?.title}</td>
+                  <td className="py-2 px-4 border-b md:table-cell">
+                    <button className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</button>
+                  </td>
+                  <td className="py-2 px-4 border-b md:table-cell">
+                    <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory.id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+
+      )}
     </div>
   );
 };

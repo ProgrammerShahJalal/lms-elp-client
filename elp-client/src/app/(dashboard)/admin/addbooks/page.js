@@ -1,9 +1,12 @@
 'use client'
 import React, { useState } from 'react';
-import { useAddBooksMutation } from '@/redux/api/booksApi';
+import { useAddBooksMutation, useDeleteBooksMutation, useGetAllBooksQuery } from '@/redux/api/booksApi';
 import toast from 'react-hot-toast';
 
 const AddBooks = () => {
+    const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery();
+    const allBook = allBooks?.books?.data;
+    const [deleteBooks] = useDeleteBooksMutation();
     const [bookData, setBookData] = useState({
         name: '',
         writer: '',
@@ -37,8 +40,15 @@ const AddBooks = () => {
             console.error('Error adding book:', error);
         }
     };
+    const handleDelete = async (categoryId) => {
+        try {
+            await deleteBooks(categoryId);
+        } catch (error) {
+            toast.error('Failed to delete category')
+        }
+    }
     return (
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
+        <div className="container mx-auto mt-8 p-6">
             <h2 className="text-2xl font-semibold mb-6">Add Book</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -131,6 +141,59 @@ const AddBooks = () => {
                     Add Book
                 </button>
             </form>
+            <h1 className="text-2xl font-bold mb-4 mt-12">Admin Update & Delete Books</h1>
+            {isBooksLoading ? (
+                <p className="text-center text-xl">Loading books...</p>
+            ) : (
+                <div className="">
+                    <table className=" bg-white border border-gray-300">
+                        <thead>
+                            <tr>
+                                <th className="py-2 px-4 border-b">Title</th>
+                                <th className="py-2 px-4 border-b">Writer</th>
+                                <th className="py-2 px-4 border-b">Price</th>
+                                <th className="py-2 px-4 border-b">Discount Price</th>
+                                <th className="py-2 px-4 border-b">Cover Page</th>
+                                <th className="py-2 px-4 border-b">Format</th>
+                                <th className="py-2 px-4 border-b">PDF Link</th>
+                                <th className="py-2 px-4 border-b">Update</th>
+                                <th className="py-2 px-4 border-b">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {allBook?.map((book, i) => (
+                                <tr key={book._id}>
+                                    <td className="py-2 px-4 border-b">{i + 1}) {book?.title}</td>
+                                    <td className="py-2 px-4 border-b">{book?.writer}</td>
+                                    <td className="py-2 px-4 border-b">{book?.price}</td>
+                                    <td className="py-2 px-4 border-b">{book?.discount_price}</td>
+                                    <td className="py-2 px-4 border-b">
+                                        <img src={book.cover_page} alt={`Cover for ${book.title}`} className="w-10 h-10" />
+                                    </td>
+                                    <td className="py-2 px-4 border-b">{book.format}</td>
+                                    <td className="py-2 px-4 border-b">
+                                        {book.format === "pdf" ? (
+                                            <a href={book.pdf_link} target="_blank" rel="noopener noreferrer">
+                                                View PDF
+                                            </a>
+                                        ) : (
+                                            "Not Applicable"
+                                        )}
+                                    </td>
+                                    <td className="py-2 px-4 border-b md:table-cell">
+                                        <button className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</button>
+                                    </td>
+                                    <td className="py-2 px-4 border-b md:table-cell">
+                                        <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(book?.id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+
         </div>
     );
 };

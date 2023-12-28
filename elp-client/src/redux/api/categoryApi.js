@@ -22,16 +22,23 @@ export const categoryApi = baseApi.injectEndpoints({
             query: (data) => ({
                 url: CATEGORIES_URL,
                 method: "POST",
-                contentType:"multipart/form-data",
+                contentType: "multipart/form-data",
                 data: data,
-              }),
-              invalidatesTags: ["categories"],
-        
-        })
+            }),
+            invalidatesTags: ["categories"],
+        }),
+        deleteCategory: build.mutation({
+            query: (categoryId) => ({
+                url: `${CATEGORIES_URL}/${categoryId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["categories"],
+        }),
+
     }),
 });
 
-export const { useGetAllCategoriesQuery, useAddCategoryMutation } = categoryApi;
+export const { useGetAllCategoriesQuery, useAddCategoryMutation, useDeleteCategoryMutation } = categoryApi;
 
 
 // addCategory: build.mutation({
