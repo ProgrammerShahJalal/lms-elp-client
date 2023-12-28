@@ -4,6 +4,7 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import {
   useAddCourseMutation,
+  useDeleteCoursesMutation,
   useGetAllCoursesQuery,
 } from "@/redux/api/courseApi";
 import ReactQuill from "react-quill";
@@ -29,6 +30,7 @@ const AddCourseForm = () => {
     useGetAllCoursesQuery();
   const allCourses = courses?.courses?.data;
  const[addCourse] = useAddCourseMutation();
+ const [deleteCourses] = useDeleteCoursesMutation()
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -65,12 +67,13 @@ const onSubmit = async (data) => {
 
   // handle delete course function
 
-  const handleDelete = async (categoryId) => {
+  const handleDelete = async (courseId) => {
     try {
-      console.log(categoryId);
-      await deleteSubCategory(categoryId);
+      
+      const result = await deleteCourses(courseId);
+      console.log(result)
 
-      // toast.success("Category deleted successfully");
+      toast.success("Category deleted successfully");
     } catch (error) {
       toast.error("Failed to delete category");
     }
@@ -141,16 +144,7 @@ const onSubmit = async (data) => {
           </select>
         </div>
 
-        {/* <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Membership Type:</label>
-                    <input
-                        type="text"
-                        name="membership_type"
-                        value={formData.membership_type}
-                        onChange={handleInputChange}
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-                    />
-                </div> */}
+       
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
             Membership Type:
@@ -169,15 +163,7 @@ const onSubmit = async (data) => {
         </div>
 
 
-        {/* <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Description:</label>
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-                    />
-                </div> */}
+     
         <div className="mb-4">
         <label
               htmlFor="description"
