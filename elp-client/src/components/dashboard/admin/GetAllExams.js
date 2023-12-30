@@ -4,6 +4,7 @@ import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useDeleteExamMutation, useGetAllExamsQuery } from "@/redux/api/examsApi";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -108,9 +109,11 @@ const GetAllExams = () => {
           {item?.total_marks}
         </td>
         <td className="py-2 px-4 border-b md:table-cell">
-          <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
+         <Link href={`/admin/addexams/edit/${item?._id}`}>
+         <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
             Update
           </button>
+         </Link>
         </td>
         <td className="py-2 px-4 border-b md:table-cell">
           <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={()=> handleDelete(item?._id)}>
