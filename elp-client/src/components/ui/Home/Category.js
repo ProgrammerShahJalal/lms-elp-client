@@ -102,7 +102,7 @@ const Category = () => {
           </Link>{" "}
         </button> */}
       </div>
-
+{/* grid lg:grid-cols-4 gap-4 pt-10 lg:pt-4 */}
       <div className="">
       <Swiper
         // pagination={{
