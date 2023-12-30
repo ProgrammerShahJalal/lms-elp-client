@@ -12,12 +12,21 @@ export const examsApi = baseApi.injectEndpoints({
             }),
             transformResponse: (response, meta) => {
                 return {
-                    categories: response,
+                    exams: response,
                     meta,
                 };
             },
             providesTags: ["exams"],
         }),
+
+        getSingleExam: build.query({
+            query: (id) => ({
+              url: `${EXAMS_URL}/${id}`,
+              method: "GET",
+            }),
+            providesTags: ["exams"],
+          }),
+
         addAllExams: build.mutation({
             query: (data) => ({
                 url: EXAMS_URL,
@@ -26,7 +35,15 @@ export const examsApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["exams"],
         }),
+
+        deleteExam: build.mutation({
+            query: (id) => ({
+              url: `${EXAMS_URL}/${id}`,
+              method: "DELETE",
+            }),
+            invalidatesTags: ["exams"],
+          }),
     }),
 });
 
-export const { useGetAllExamsQuery , useAddAllExamsMutation} = examsApi;
+export const { useGetAllExamsQuery ,useGetSingleExamQuery, useDeleteExamMutation ,useAddAllExamsMutation} = examsApi;

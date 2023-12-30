@@ -1,5 +1,6 @@
 'use client'
 
+import GetAllExams from '@/components/dashboard/admin/GetAllExams';
 import { useGetAllCoursesQuery } from '@/redux/api/courseApi';
 import { useAddAllExamsMutation } from '@/redux/api/examsApi';
 import React, { useState } from 'react';
@@ -63,6 +64,7 @@ const AdminAddExams = () => {
                         name="examId"
                         value={newQuestion.exam_id}
                         onChange={(e) => setNewQuestion({ ...newQuestion, exam_id: e.target.value })}
+                        required
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     >
                         <option value="" disabled>Select Exam</option>
@@ -97,6 +99,7 @@ const AdminAddExams = () => {
                         id="description"
                         name="description"
                         value={newQuestion.description}
+                        required
                         onChange={(e) => setNewQuestion({ ...newQuestion, description: e.target.value })}
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
@@ -110,6 +113,7 @@ const AdminAddExams = () => {
                         id="total_marks"
                         name="total_marks"
                         value={newQuestion.total_marks}
+                        required
                         onChange={(e) => setNewQuestion({ ...newQuestion, total_marks: e.target.value })}
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
@@ -123,6 +127,7 @@ const AdminAddExams = () => {
                         id="duration_in_minutes"
                         name="duration_in_minutes"
                         value={newQuestion.duration_in_minutes}
+                        required
                         onChange={(e) => setNewQuestion({ ...newQuestion, duration_in_minutes: e.target.value })}
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
@@ -136,6 +141,7 @@ const AdminAddExams = () => {
                         id="fee"
                         name="fee"
                         value={newQuestion.fee}
+                        required
                         onChange={(e) => setNewQuestion({ ...newQuestion, fee: e.target.value })}
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
@@ -148,6 +154,7 @@ const AdminAddExams = () => {
                         id="is_active"
                         name="is_active"
                         value={newQuestion.is_active}
+                        required
                         onChange={(e) => setNewQuestion({ ...newQuestion, is_active: e.target.value })}
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     >
@@ -164,6 +171,7 @@ const AdminAddExams = () => {
                         id="exam_type"
                         name="exam_type"
                         value={newQuestion.exam_type}
+                        required
                         onChange={(e) => setNewQuestion({ ...newQuestion, exam_type: e.target.value })}
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     >
@@ -179,6 +187,8 @@ const AdminAddExams = () => {
                     Add Exams
                 </button>
             </form>
+
+            <GetAllExams/>
         </div>
     );
 };
