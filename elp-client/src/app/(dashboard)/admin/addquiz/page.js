@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 // import image4 from '../../../../../public/arrow-down-2.png'
 // import image5 from '../../../../../public/arrow-top-2.png'
 import Image from 'next/image';
-import { useAddQuizPlaylistMutation } from '@/redux/api/videoApi';
+
 import { useGetAllExamsQuery } from '@/redux/api/examsApi';
-import { useDeleteQuestionsMutation, useGetAllQuestionsQuery } from '@/redux/api/questionsApi';
+import { useAddQuizPlaylistMutation, useDeleteQuestionsMutation, useGetAllQuestionsQuery } from '@/redux/api/questionsApi';
 import toast from 'react-hot-toast';
 const AddQuiz = () => {
     // this is show quiz

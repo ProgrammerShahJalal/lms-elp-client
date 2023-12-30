@@ -1,18 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
-import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-import {
-  useAddCourseMutation,
-  useDeleteCoursesMutation,
-  useGetAllCoursesQuery,
-} from "@/redux/api/courseApi";
-import "react-quill/dist/quill.snow.css";
+// import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+// import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+// import {
+//   useAddCourseMutation,
+//   useDeleteCoursesMutation,
+//   useGetAllCoursesQuery,
+// } from "@/redux/api/courseApi";
+// import "react-quill/dist/quill.snow.css";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import { useAddCourseMutation, useDeleteCoursesMutation, useGetAllCoursesQuery } from "@/redux/api/courseApi";
 
 const AddCourseForm = () => {
   const {
@@ -26,32 +29,32 @@ const AddCourseForm = () => {
     isLoading: isLoadingSubcategories,
     isError: isErrorSubcategories,
   } = useGetAllSubcategoriesQuery();
-  const allSubcategory =subcategories?.subcategories
+  const allSubcategory =subcategories?.subcategories;
 
   const { data: courses, isLoading: isSubcategoryLoading } =
     useGetAllCoursesQuery();
   const allCourses = courses?.courses?.data;
  const[addCourse] = useAddCourseMutation();
- const [deleteCourses] = useDeleteCoursesMutation()
+ const [deleteCourses] = useDeleteCoursesMutation();
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
-  const toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-    [{ 'header': 1 }, { 'header': 2 }],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],
-    [{ 'indent': '-1' }, { 'indent': '+1' }],
-    [{ 'direction': 'rtl' }],
-    [{ 'size': ['small', false, 'large', 'huge'] }],
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    [{ 'color': [] }, { 'background': [] }],
-    [{ 'font': [] }],
-    [{ 'align': [] }],
+//   const toolbarOptions = [
+//     ['bold', 'italic', 'underline', 'strike'],
+//     ['blockquote', 'code-block'],
+//     [{ 'header': 1 }, { 'header': 2 }],
+//     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+//     [{ 'script': 'sub' }, { 'script': 'super' }],
+//     [{ 'indent': '-1' }, { 'indent': '+1' }],
+//     [{ 'direction': 'rtl' }],
+//     [{ 'size': ['small', false, 'large', 'huge'] }],
+//     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+//     [{ 'color': [] }, { 'background': [] }],
+//     [{ 'font': [] }],
+//     [{ 'align': [] }],
    
-    ['clean']
-];
+//     ['clean']
+// ];
 
 
 
