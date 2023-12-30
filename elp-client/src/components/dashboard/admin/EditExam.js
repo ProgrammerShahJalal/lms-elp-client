@@ -57,7 +57,7 @@ const EditExam = ({ id }) => {
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Course Id</label>
             <select
-              {...register("course_id", { required: true })}
+              {...register("course_id" )}
               defaultValue={data?.course_id}
               className="w-full border border-gray-300 p-2 rounded-md"
             >
@@ -79,7 +79,7 @@ const EditExam = ({ id }) => {
             <input
               type="text"
               name="title"
-              {...register("title", { required: true })}
+              {...register("title")}
               defaultValue={data?.title}
               className="w-full border border-gray-300 p-2 rounded-md"
             />
@@ -97,7 +97,7 @@ const EditExam = ({ id }) => {
             <textarea
               id="description"
               name="description"
-              {...register("description", { required: true })}
+              {...register("description")}
               defaultValue={data?.description}
               className="mt-1 p-2 border rounded-md w-full"
             />
@@ -115,7 +115,7 @@ const EditExam = ({ id }) => {
               type="number"
               id="total_marks"
               name="total_marks"
-              {...register("total_marks", { required: true })}
+              {...register("total_marks")}
               defaultValue={data?.total_marks}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             />
@@ -133,7 +133,7 @@ const EditExam = ({ id }) => {
               type="number"
               id="duration_in_minutes"
               name="duration_in_minutes"
-              {...register("duration_in_minutes", { required: true })}
+              {...register("duration_in_minutes")}
               defaultValue={data?.duration_in_minutes}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             />
@@ -151,7 +151,7 @@ const EditExam = ({ id }) => {
               type="number"
               id="fee"
               name="fee"
-              {...register("fee", { required: true })}
+              {...register("fee")}
               defaultValue={data?.fee}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             />
@@ -168,7 +168,7 @@ const EditExam = ({ id }) => {
             <select
               id="is_active"
               name="is_active"
-              {...register("is_active", { required: true })}
+              {...register("is_active")}
               defaultValue={data?.is_active}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             >
@@ -191,7 +191,7 @@ const EditExam = ({ id }) => {
             <select
               id="exam_type"
               name="exam_type"
-              {...register("exam_type", { required: true })}
+              {...register("exam_type")}
               defaultValue={data?.exam_type}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             >

@@ -1,54 +1,58 @@
 
 import { useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
-import { useGetAllPlaylistQuery } from "@/redux/api/videoApi";
+import { useGetAllPlaylistQuery, useGetSingleCoursePlaylistQuery } from "@/redux/api/videoApi";
 import Image from "next/image"
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
-const UserCourses = () => {
-  const { data } = useGetAllQuestionsQuery();
-  const allQuiz = data?.categories?.data;
-  console.log(data, 'from api')
+const UserCourses = ({params}) => {
+  // const { data } = useGetAllQuestionsQuery();
+  // const allQuiz = data?.categories?.data;
+  const {id} = params;
+  console.log(id, 'from params')
 
-  console.log(data);
-  const [videoData, setVideoData] = useState([]);
+  // const {data:coursePlaylists} = useGetSingleCoursePlaylistQuery({id: params?.id});
+  // console.log(coursePlaylists, 'from api single coures playlist data')
+
+  // console.log(data);
+  // const [videoData, setVideoData] = useState([]);
   
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
   
  
-  useEffect(() => {
+  // useEffect(() => {
    
-    const fetchVideoData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/v1/course-playlists');
-        const data = await response.json();
-        setVideoData(data?.data);
-        setCurrentVideoIndex(0);
-      } catch (error) {
-        setError('Error fetching video data');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchVideoData();
+  //   const fetchVideoData = async () => {
+  //     try {
+  //       const response = await fetch('https://easy-learning-platform.vercel.app/api/v1/course-playlists');
+  //       const data = await response.json();
+  //       setVideoData(data?.data);
+  //       setCurrentVideoIndex(0);
+  //     } catch (error) {
+  //       setError('Error fetching video data');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchVideoData();
 
-  }, []);
+  // }, []);
 
-  console.log(videoData,'video data')
-  const showPreviousVideo = () => {
-    setCurrentVideoIndex((prevIndex) => (prevIndex === 0 ? videoData.length - 1 : prevIndex - 1));
-  };
+  // console.log(videoData,'video data')
+  // const showPreviousVideo = () => {
+  //   setCurrentVideoIndex((prevIndex) => (prevIndex === 0 ? videoData.length - 1 : prevIndex - 1));
+  // };
 
-  const showNextVideo = () => {
-    setCurrentVideoIndex((prevIndex) => (prevIndex === videoData.length - 1 ? 0 : prevIndex + 1));
-  };
+  // const showNextVideo = () => {
+  //   setCurrentVideoIndex((prevIndex) => (prevIndex === videoData.length - 1 ? 0 : prevIndex + 1));
+  // };
 
-  const selectVideo = (index) => {
-    setCurrentVideoIndex(index);
-  };
+  // const selectVideo = (index) => {
+  //   setCurrentVideoIndex(index);
+  // };
 
 
 
@@ -72,7 +76,7 @@ const UserCourses = () => {
         </div>
       </div>
       {/* this is video playlist */}
-      <div>
+      {/* <div>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {videoData?.length > 0 && (
@@ -135,7 +139,7 @@ const UserCourses = () => {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
       {/* from here i show quiz question to the student */}
 
       <h1 className="text-2xl font-bold mb-4">Quiz Questions</h1>
