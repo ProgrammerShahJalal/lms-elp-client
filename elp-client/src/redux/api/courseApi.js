@@ -2,6 +2,7 @@ import { baseApi } from "./baseApi";
 
 export const COURSES_URL = "/courses";
 export const COURSE_SUBSCRIPTIONS_URL = "/subscriptions";
+export const COURSE_SUBSCRIPTIONS_HISTORY_URL = "/subscription-histories";
 
 export const courseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -60,6 +61,14 @@ export const courseApi = baseApi.injectEndpoints({
       },
       providesTags: ["subscriptions"],
     }),
+    subscribeToCourse: build.mutation({
+      query: (data) => ({
+        url: COURSE_SUBSCRIPTIONS_HISTORY_URL,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["subscription-histories"],
+    }),
   }),
 });
 
@@ -69,4 +78,5 @@ export const {
   useAddCourseMutation,
   useDeleteCoursesMutation,
   useGetAllSubscriptionsQuery,
+  useSubscribeToCourseMutation,
 } = courseApi;

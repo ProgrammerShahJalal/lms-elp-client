@@ -1,22 +1,34 @@
-import { useGetAllSubscriptionsQuery } from "@/redux/api/courseApi";
+import { authKey } from "@/constants/storage";
+import {
+  useGetAllSubscriptionsQuery,
+  useSubscribeToCourseMutation,
+} from "@/redux/api/courseApi";
+import { getUserInfo } from "@/services/auth.service";
+import { getFromLocalStorage } from "@/utils/local-storage";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 function CourseSubscriptions({ course_id }) {
+  const router = useRouter();
   const { data, isError, isLoading } = useGetAllSubscriptionsQuery({
     course_id,
   });
   const subscriptionData = data?.subscriptions?.data;
 
-  const enrollToCourse = async (exam) => {
+  const [subscribeToCourse] = useSubscribeToCourseMutation();
+
+  const enrollToCourse = async (subscription) => {
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
-      exam_id: exam?.id,
+      subscription_id: subscription?.id,
     };
-
     Cookies.set("creationPayload", JSON.stringify(coursePaymentPayload));
+
     const { data } = await axios.post(
       "http://localhost:5000/api/v1/bkash/payment/create",
       {
-        amount: `${exam?.fee}`,
+        amount: `${subscription?.cost}`,
       },
       {
         withCredentials: true,
@@ -50,7 +62,7 @@ function CourseSubscriptions({ course_id }) {
                 <td>{subscription?.cost}</td>
                 <td>
                   <p
-                    onClick={() => enrollToCourse(subscription?._id)}
+                    onClick={() => enrollToCourse(subscription)}
                     className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
                   >
                     Enroll

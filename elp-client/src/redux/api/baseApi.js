@@ -19,5 +19,6 @@ export const baseApi = createApi({
     "exam-payments",
     "questions",
     "subscriptions",
+    "subscription-histories",
   ],
 });

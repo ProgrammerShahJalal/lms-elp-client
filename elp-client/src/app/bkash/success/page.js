@@ -5,10 +5,12 @@ import { useSearchParams } from "next/navigation";
 import { usePayForExamMutation } from "@/redux/api/examsApi";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useSubscribeToCourseMutation } from "@/redux/api/courseApi";
 
 function Success() {
   const searchParams = useSearchParams();
   const [payForExam] = usePayForExamMutation();
+  const [subscribeToCourse] = useSubscribeToCourseMutation();
   const trx_id = searchParams.get("trx_id");
   const payloadString = Cookies.get("creationPayload");
 
@@ -16,8 +18,13 @@ function Success() {
     if (payloadString) {
       const payload = JSON.parse(payloadString);
       payload.trx_id = trx_id;
-      if (payload.exam_id) {
+      console.log(payload);
+      if (payload?.exam_id) {
         payForExam(payload);
+        toast("Success!");
+        Cookies.remove("creationPayload");
+      } else if (payload?.subscription_id) {
+        subscribeToCourse(payload);
         toast("Success!");
         Cookies.remove("creationPayload");
       }
