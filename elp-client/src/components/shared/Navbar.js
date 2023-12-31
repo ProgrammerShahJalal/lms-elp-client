@@ -135,7 +135,7 @@ const Navbar = () => {
 
           <ul className="md:flex space-x-5 hidden">
             {navItems.map(({ link, path, dropdown }) => (
-              <div key={path}>
+              <li key={path}>
                 {dropdown ? (
                   <div
                     className="relative inline-block  hover:text-bluePrimary font-bold cursor-pointer"
@@ -172,7 +172,7 @@ const Navbar = () => {
                     {link}
                   </Link>
                 )}
-              </div>
+              </li>
             ))}
           </ul>
 

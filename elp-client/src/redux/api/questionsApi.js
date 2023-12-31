@@ -18,6 +18,14 @@ export const questionsApi = baseApi.injectEndpoints({
             },
             providesTags: ["questions"],
         }),
+        addQuizPlaylist: build.mutation({
+            query: (data) => ({
+                url: QUESTIONS_URL,
+                method: "POST",
+                data: data,
+            }),
+            invalidatesTags: ["questions"],
+        }),
         deleteQuestions: build.mutation({
             query: (categoryId) => ({
                 url: `${QUESTIONS_URL}/${categoryId}`,
@@ -30,4 +38,4 @@ export const questionsApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetAllQuestionsQuery, useDeleteQuestionsMutation } = questionsApi;
+export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useDeleteQuestionsMutation } = questionsApi;

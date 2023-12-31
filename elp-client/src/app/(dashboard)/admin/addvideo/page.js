@@ -85,11 +85,11 @@ const AddVideo = () => {
                     <tbody>
                         {course?.map((playlist) => (
                             <tr key={playlist._id}>
-                                <td className="py-2 px-4 border-b">{playlist.title}</td>
-                                <td className="py-2 px-4 border-b">{playlist.course_id.title}</td>
+                                <td className="py-2 px-4 border-b">{playlist?.title}</td>
+                                <td className="py-2 px-4 border-b">{playlist?.course_id?.title}</td>
                                 <td className="py-2 px-4 border-b">
                                     <a
-                                        href={playlist.playlist_link}
+                                        href={playlist?.playlist_link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-blue-500 hover:underline"

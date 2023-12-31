@@ -16,31 +16,6 @@ const UserProfileEditPage = ({params}) => {
 
   const [updateUser] = useUpdateUserMutation();
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setValue("name", data?.name);
-  //     setValue("email", data?.email);
-  //     setValue("contact_no", data?.contact_no);
-      
-  //   }
-  // }, [data, setValue]);
-
-  // const onSubmit = async (values) => {
-  //   console.log(values)
-  //   // try {
-  //   //   // console.log(values);
-  //   //    const res =await updateUser( id,  values );
-  //   //   console.log(res)
-  //   //   if (res) {
-  //   //     toast.success("Profile updated successfully");
-  //   //     router.push("/profile");
-  //   //   }
-  //   // } catch (err) {
-  //   //   toast.error(err.message);
-  //   // }
-  // };
-
-
 
   const onSubmit = async (values) => {
     // console.log(values)
