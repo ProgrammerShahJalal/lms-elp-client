@@ -24,16 +24,17 @@ const Quiz = ({ quizData, onSubmit }) => {
   return (
     <div className='space-y-7 text-center'>
       <h2 className="text-xl font-bold pt-5">Question {currentQuestion + 1}</h2>
-      <p className=''>{quizData[currentQuestion].question}</p>
-      <div>
+      <p className='text-lg'>{quizData[currentQuestion].question}</p>
+      <div className='grid lg:grid-cols-4 gap-4 px-4 '>
         {quizData[currentQuestion].options.map((option, index) => (
-          <label key={index} className=''>
+          <label key={index} className='border py-4 rounded hover:shadow-lg cursor-pointer hover:text-white hover:bg-bluePrimary'>
             <input 
               type="radio" required
               name={`question${currentQuestion}`}
               value={option}
               checked={userAnswers[currentQuestion] === option}
               onChange={() => handleOptionSelect(option)}
+              className='mr-2'
             />
             {option}
           </label>
