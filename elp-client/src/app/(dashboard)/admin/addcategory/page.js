@@ -28,18 +28,18 @@ const AdminAddCategory = () => {
     // console.log(file)
     // delete content['file'];
     const result = JSON.stringify(content);
-    console.log(result, "json");
+    // console.log(result, "json");
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
-    console.log(formData, "formdaata");
+    // console.log(formData, "formdaata");
 
     try {
       const resultData = await addCategory(formData);
-      console.log(resultData, "after api call");
-      if (resultData) {
+      // console.log(resultData, "after api call");
+      if (resultData?.data?._id) {
         toast.success("category created successfully");
-        router.push("/");
+        // router.push("/");
       }
       // console.log(resultData, ' from add category async')
     } catch (error) {

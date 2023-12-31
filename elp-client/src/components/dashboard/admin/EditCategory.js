@@ -17,8 +17,8 @@ const EditCategory = ({id}) => {
         const { title, file } = data;
         console.log(data,'first')
       
-        const formData = new FormData();
-        formData.append("title", title);
+        // const formData = new FormData();
+        // formData.append("title", title);
         // formData.append("file", file[0]);
       
         try {

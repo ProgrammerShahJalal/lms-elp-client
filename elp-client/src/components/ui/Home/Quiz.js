@@ -19,6 +19,17 @@ const Quiz = ({ quizData, onSubmit }) => {
   const handleNext = () => {
     setCurrentQuestion((prevQuestion) => prevQuestion + 1);
   };
+  const isNextButtonDisabled = () => {
+    return clickedOption === null;
+  };
+
+  // const handleNextButtonClick = () => {
+  //   if (isNextButtonDisabled()) {
+  //     return alert('Please select one option before proceeding.');
+  //   } else {
+  //     setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+  //   }
+  // };
 
   const handlePrevious = () => {
     setCurrentQuestion((prevQuestion) => prevQuestion - 1);
@@ -53,11 +64,11 @@ const Quiz = ({ quizData, onSubmit }) => {
       ))}
       </div>
       <div>
-        {currentQuestion > 0 && <button className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary mr-5"  onClick={handlePrevious}>Previous</button>}
+        {currentQuestion > 0 && <button className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary mr-5 cursor-pointer"  onClick={handlePrevious}>Previous</button>}
         {isLastQuestion ? (
-          <button onClick={() => onSubmit(userAnswers)} className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-bluePrimary" >Submit</button>
+          <button onClick={() => onSubmit(userAnswers)} className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-bluePrimary cursor-pointer" >Submit</button>
         ) : (
-          <button onClick={handleNext}  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary" >Next</button>
+          <button onClick={handleNext}  disabled={isNextButtonDisabled()}  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary cursor-pointer" >Next</button>
         )}
       </div>
     </div>

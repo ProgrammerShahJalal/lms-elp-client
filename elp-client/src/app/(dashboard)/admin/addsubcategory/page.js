@@ -39,7 +39,7 @@ const AdminAddSubCategory = () => {
     try {
 
       const resultData = await addSubcategory(formData)
-      // console.log(resultData, 'after ap call')
+      console.log(resultData, 'after ap call')
       if(resultData){
           toast.success("subcategory created successfully");
          
