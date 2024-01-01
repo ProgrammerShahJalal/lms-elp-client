@@ -3,21 +3,29 @@ import { baseApi } from "./baseApi";
 export const EXAMS_URL = "/exams";
 
 export const examsApi = baseApi.injectEndpoints({
-    endpoints: (build) => ({
-        getAllExams: build.query({
-            query: (arg) => ({
-                url: EXAMS_URL,
-                method: "GET",
-                params: arg,
-            }),
-            transformResponse: (response, meta) => {
-                return {
-                    exams: response,
-                    meta,
-                };
-            },
-            providesTags: ["exams"],
-        }),
+
+  endpoints: (build) => ({
+    getAllExams: build.query({
+      query: (arg) => ({
+        url: EXAMS_URL,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          exams: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["exams"],
+    }),
+    payForExam: build.mutation({
+      query: (data) => ({
+        url: "/exam-payments",
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["exam-payments"],
 
         getSingleExam: build.query({
             query: (id) => ({
@@ -57,6 +65,8 @@ export const examsApi = baseApi.injectEndpoints({
             invalidatesTags: ["exams"],
           }),
     }),
+  }),
 });
 
-export const { useGetAllExamsQuery ,useGetSingleExamQuery, useDeleteExamMutation ,useUpdateExamMutation,useAddAllExamsMutation} = examsApi;
+export const { useGetAllExamsQuery ,useGetSingleExamQuery, useDeleteExamMutation ,useUpdateExamMutation,useAddAllExamsMutation, usePayForExamMutation} = examsApi;
+

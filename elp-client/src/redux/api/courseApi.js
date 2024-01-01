@@ -1,8 +1,8 @@
 import { baseApi } from "./baseApi";
 
-
-
 export const COURSES_URL = "/courses";
+export const COURSE_SUBSCRIPTIONS_URL = "/subscriptions";
+export const COURSE_SUBSCRIPTIONS_HISTORY_URL = "/subscription-histories";
 
 export const courseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -35,7 +35,7 @@ export const courseApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: COURSES_URL,
         method: "POST",
-        contentType:"multipart/form-data",
+        contentType: "multipart/form-data",
         data: data,
       }),
       invalidatesTags: ["courses"],
@@ -47,9 +47,36 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
-
-
+    getAllSubscriptions: build.query({
+      query: (arg) => ({
+        url: COURSE_SUBSCRIPTIONS_URL,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          subscriptions: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["subscriptions"],
+    }),
+    subscribeToCourse: build.mutation({
+      query: (data) => ({
+        url: COURSE_SUBSCRIPTIONS_HISTORY_URL,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["subscription-histories"],
+    }),
   }),
 });
 
-export const { useGetAllCoursesQuery, useGetSingleCourseQuery, useAddCourseMutation, useDeleteCoursesMutation } = courseApi;
+export const {
+  useGetAllCoursesQuery,
+  useGetSingleCourseQuery,
+  useAddCourseMutation,
+  useDeleteCoursesMutation,
+  useGetAllSubscriptionsQuery,
+  useSubscribeToCourseMutation,
+} = courseApi;
