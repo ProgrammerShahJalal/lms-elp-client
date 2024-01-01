@@ -2,17 +2,86 @@
 
 import Commonbanner from "@/components/banners/Commonbanner";
 
-import { addToCart, removeFromCart, removeOneBook } from "@/redux/features/cart/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  removeOneBook,
+} from "@/redux/features/cart/cartSlice";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { useAddToCartMutation, useDeletecartMutation, useGetAllCartsByUserQuery } from "@/redux/api/cartApi";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const Cart = () => {
-  const { books, total } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const { data: cart } = useGetAllCartsByUserQuery();
+  const cartLength = cart?.carts;
+  const [addToCart] = useAddToCartMutation()
+  // console.log(cartLength)
 
+ 
+  const [deletecart] = useDeletecartMutation()
+
+
+  const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to delete this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      });
   
+      if (result.isConfirmed) {
+        // User confirmed deletion
+        const res = await deletecart(id);
+        // console.log(res)
+  
+        if (res?.data?._id === id) {
+          // Item deleted successfully
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+         
+        } else {
+          // Something went wrong with deletion
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong with deletion.",
+            icon: "error"
+          });
+         
+        }
+      }
+    } catch (err) {
+      // Handle any errors that occur during the process
+      toast.error(err.message);
+    }
+  };
+
+  const handleIncrement = async (book_id,quantity) => {
+    const res = await addToCart({ book_id ,quantity: quantity + 1 });
+    // console.log(res, 'increment')
+  
+ 
+    // if (res?.data?.quantity && res.data.quantity > 1) {
+    //   toast.success('Book has already been added to your cart. Please check your cart.');
+    // } else {
+    //   toast.success('Book added to your cart successfully.');
+    // } 
+  }
+  const handleDecrement = async (book_id,quantity) => {
+    const res = await addToCart({ book_id , quantity:  Math.max(1, quantity - 1) });
+    // console.log(res, 'decrement')
+  }
+
   const breadcrumbItems = [
     { label: "হোম", link: "/" },
     { label: "অল বুকস্", link: "/books" },
@@ -27,47 +96,58 @@ const Cart = () => {
         <div className="">
           <div className="flex items-center mb-10 space-x-5">
             <h2 className="font-bold text-2xl text-bluePrimary">Your Cart</h2>
-            <h2 className="font-bold text-xl "> {books?.length} Items</h2>
+            <h2 className="font-bold text-xl "> {cartLength?.length} Items</h2>
           </div>
           <div className="bg-white px-4 py-5 border rounded shadow-md ">
             <div className=" grid grid-cols-4 gap-10">
               <div>
-                <h2 className="font-bold text-xl text-gray-400 py-4">Product Details</h2>
+                <h2 className="font-bold text-xl text-gray-400 py-4">
+                  Product Details
+                </h2>
               </div>
               <div>
-                <h2 className="font-bold text-xl text-gray-400 py-4">Quantity</h2>
+                <h2 className="font-bold text-xl text-gray-400 py-4">
+                  Quantity
+                </h2>
               </div>
               <div>
-                <h2 className="font-bold text-xl text-gray-400 py-4">Per Price</h2>
+                <h2 className="font-bold text-xl text-gray-400 py-4">
+                  Per Price
+                </h2>
               </div>
               <div>
-                <h2 className="font-bold text-xl text-gray-400 py-4">Total Price</h2>
+                <h2 className="font-bold text-xl text-gray-400 py-4">
+                  Total Price
+                </h2>
               </div>
             </div>
             <div className="grid grid-cols-4 gap-10">
-              {books?.length === 0 ? (
-                <div className="   font-bold text-red-400 text-xl"> Your Cart Is Empty</div>
+              {cartLength?.length === 0 ? (
+                <div className="   font-bold text-red-400 text-xl">
+                  {" "}
+                  Your Cart Is Empty
+                </div>
               ) : (
                 <>
-                  {books?.map((item) => (
+                  {cartLength?.map((item) => (
                     <>
                       <div className="">
                         <div className="flex  items-center">
                           <div className="pr-7">
                             <Image
                               className="rounded"
-                              src="https://i.ibb.co/G9hnB13/course-1.webp"
-                              alt="course"
+                              src={item?.book_id?.cover_page}
+                              alt="book img"
                               width={100}
                               height={50}
                             />
                           </div>
 
                           <div className="">
-                            <h2>{item?.name} </h2>
+                            <h2>{item?.book_id?.title} </h2>
                             <button
                               className="text-red-500 font-bold"
-                              onClick={() => dispatch(removeFromCart(item))}
+                              onClick={()=> handleDelete(item?._id)}
                             >
                               Remove
                             </button>
@@ -76,13 +156,16 @@ const Cart = () => {
                       </div>
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <button className="border px-2" onClick={() => dispatch(addToCart(item))}>
+                          <button
+                            className="border px-2"
+                            onClick={() => handleIncrement(item?.book_id?._id, item?.quantity)}
+                          >
                             +
                           </button>
                           <h5>{item?.quantity}</h5>
                           <button
                             className="border px-2"
-                            onClick={() => dispatch(removeOneBook(item))}
+                            onClick={() => handleDecrement(item?.book_id?._id, item?.quantity)}
                           >
                             {" "}
                             -
@@ -91,13 +174,13 @@ const Cart = () => {
                       </div>
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <h5>{item?.price} TK</h5>
+                          <h5>{item?.book_id?.price} TK</h5>
                         </div>
                       </div>
 
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <h5>{item?.quantity * item?.price} TK</h5>
+                          <h5>{item?.quantity * item?.book_id?.price} TK</h5>
                         </div>
                       </div>
                     </>
@@ -108,10 +191,14 @@ const Cart = () => {
 
             <hr className="my-5" />
             <div className="flex justify-between items-center ">
-              <h2 className="font-bold text-xl text-bluePrimary">Order Summary</h2>
+              <h2 className="font-bold text-xl text-bluePrimary">
+                Order Summary
+              </h2>
               <div>
                 <h2 className="font-bold text-xl text-gray-400">Total </h2>
-                <h2 className="font-bold text-xl text-bluePrimary">{total.toFixed(2)}</h2>
+                <h2 className="font-bold text-xl text-bluePrimary">
+                  {/* {total.toFixed(2)} */}
+                </h2>
               </div>
             </div>
             <div></div>

@@ -14,16 +14,14 @@ const BookSectionCard = ({item}) => {
   const handleAddBook = async (item) => {
 
     const res = await addToCart({book_id: item?._id, quantity: 1 });
-    console.log(res, 'from book section');
-    console.log(res?.data?.book_id?._id, 'from book section');
+  
+ 
     if (res?.data?.quantity && res.data.quantity > 1) {
       toast.success('Book has already been added to your cart. Please check your cart.');
     } else {
       toast.success('Book added to your cart successfully.');
     }
-    // console.log(item)
-    // dispatch(addToCart(item));
-    // toast.success('Book added in your cart')
+   
     
   }
 

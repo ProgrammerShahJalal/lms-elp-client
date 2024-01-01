@@ -56,17 +56,17 @@ export const cartApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["carts"],
     }),
-    // deleteBooks: build.mutation({
-    //   query: (categoryId) => ({
-    //     url: `${BOOKS_URL}/${categoryId}`,
-    //     method: 'DELETE'
-    //   }),
-    //   invalidatesTags: ['books']
-    // })
+    deletecart: build.mutation({
+      query: (id) => ({
+        url: `${CART_URL}/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['carts']
+    })
     
 
 
   }),
 });
 
-export const {useAddToCartMutation , useGetAllCartsQuery, useGetAllCartsByUserQuery} = cartApi;
+export const {useAddToCartMutation , useGetAllCartsQuery, useGetAllCartsByUserQuery, useDeletecartMutation} = cartApi;
