@@ -5,11 +5,38 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import EmptyContent from "@/components/Loader/EmptyContent";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 
 const Courses = () => {
   const { data, isError, isLoading } = useGetAllCoursesQuery();
 
   const coursesData = data?.courses?.data;
+
+  const breakpoints = {
+    
+    480: {
+        slidesPerView: 1,
+       spaceBetween: 30,
+      },
+    576: {
+        slidesPerView: 2,
+       spaceBetween: 30,
+      },
+      786: {
+     slidesPerView: 3,
+        spaceBetween: 30,
+     },
+      1024: {
+      slidesPerView: 3,
+        spaceBetween: 30,
+       },
+     }
+
+
   
 
   let content = null;
@@ -36,7 +63,7 @@ const Courses = () => {
   }
 
   if (!isLoading && !isError && coursesData?.length > 0) {
-    content = coursesData?.map((item) => <CourseCard key={item?._id} item={item} />);
+    content = coursesData?.map((item) => <SwiperSlide><CourseCard key={item?._id} item={item} /></SwiperSlide>);
   }
 
   return (
@@ -48,7 +75,29 @@ const Courses = () => {
         </Link>
       </div>
       
-      <div className="grid lg:grid-cols-3  gap-4">{content}</div>
+      {/* <div className="grid lg:grid-cols-3  gap-4">{content}</div> */}
+      <div className="">
+      <Swiper
+        // pagination={{
+        //   type: 'progressbar',
+        // }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        breakpoints= {breakpoints}
+        className="mySwiper"
+      >
+{content}
+      </Swiper>
+        
+        {/* <Swiper
+        // pagination={{
+        //   dynamicBullets: false,
+        // }}
+        // modules={[Pagination]}
+        breakpoints= {breakpoints}
+        className="mySwiper"
+      ></Swiper> */}
+        </div>
     </div>
   );
 };

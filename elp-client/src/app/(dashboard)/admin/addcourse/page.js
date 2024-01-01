@@ -1,16 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
-import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-import {
-  useAddCourseMutation,
-  useGetAllCoursesQuery,
-} from "@/redux/api/courseApi";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+// import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+// import {
+//   useAddCourseMutation,
+//   useDeleteCoursesMutation,
+//   useGetAllCoursesQuery,
+// } from "@/redux/api/courseApi";
+// import "react-quill/dist/quill.snow.css";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import { useAddCourseMutation, useDeleteCoursesMutation, useGetAllCoursesQuery } from "@/redux/api/courseApi";
+
 const AddCourseForm = () => {
   const {
     data: categories,
@@ -23,18 +29,37 @@ const AddCourseForm = () => {
     isLoading: isLoadingSubcategories,
     isError: isErrorSubcategories,
   } = useGetAllSubcategoriesQuery();
-  const allSubcategory =subcategories?.subcategories
+  const allSubcategory =subcategories?.subcategories;
 
   const { data: courses, isLoading: isSubcategoryLoading } =
     useGetAllCoursesQuery();
   const allCourses = courses?.courses?.data;
  const[addCourse] = useAddCourseMutation();
+ const [deleteCourses] = useDeleteCoursesMutation();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, setValue } = useForm();
+
+//   const toolbarOptions = [
+//     ['bold', 'italic', 'underline', 'strike'],
+//     ['blockquote', 'code-block'],
+//     [{ 'header': 1 }, { 'header': 2 }],
+//     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+//     [{ 'script': 'sub' }, { 'script': 'super' }],
+//     [{ 'indent': '-1' }, { 'indent': '+1' }],
+//     [{ 'direction': 'rtl' }],
+//     [{ 'size': ['small', false, 'large', 'huge'] }],
+//     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+//     [{ 'color': [] }, { 'background': [] }],
+//     [{ 'font': [] }],
+//     [{ 'align': [] }],
+   
+//     ['clean']
+// ];
+
 
 
 const onSubmit = async (data) => {
-    console.log(data, 'input daa');
+    // console.log(data, 'input daa');
     
 
     const content = { ...data };
@@ -49,8 +74,9 @@ const onSubmit = async (data) => {
     formData.append("data", result);
     // console.log(formData, 'formdaata')
     try {
+  
       const resultData = await addCourse(formData);
-    //   console.log(resultData, "after ap call");
+    
       if (resultData) {
         toast.success("course created successfully");
       }
@@ -65,12 +91,13 @@ const onSubmit = async (data) => {
 
   // handle delete course function
 
-  const handleDelete = async (categoryId) => {
+  const handleDelete = async (courseId) => {
     try {
-      console.log(categoryId);
-      await deleteSubCategory(categoryId);
+      
+      const result = await deleteCourses(courseId);
+      // console.log(result)
 
-      // toast.success("Category deleted successfully");
+      toast.success("Category deleted successfully");
     } catch (error) {
       toast.error("Failed to delete category");
     }
@@ -141,16 +168,7 @@ const onSubmit = async (data) => {
           </select>
         </div>
 
-        {/* <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Membership Type:</label>
-                    <input
-                        type="text"
-                        name="membership_type"
-                        value={formData.membership_type}
-                        onChange={handleInputChange}
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-                    />
-                </div> */}
+       
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
             Membership Type:
@@ -168,16 +186,12 @@ const onSubmit = async (data) => {
           </select>
         </div>
 
+       
 
-        {/* <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Description:</label>
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-                    />
-                </div> */}
+
+
+
+     
         <div className="mb-4">
         <label
               htmlFor="description"
@@ -185,9 +199,11 @@ const onSubmit = async (data) => {
             >
               Description:
             </label>
-            <textarea
+            <input
               id="description"
               name="description"
+              // theme="snow"
+              // modules={{ toolbar: toolbarOptions }}
               {...register("description", { required: true })}
               className="mt-1 p-2 border rounded-md w-full"
             />
@@ -201,6 +217,7 @@ const onSubmit = async (data) => {
             id="syllabus"
             name="syllabus"
             {...register("syllabus", { required: true })}
+
             className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
           />
         </div>
@@ -239,6 +256,8 @@ const onSubmit = async (data) => {
           Add Course
         </button>
       </form>
+
+
 
       <h1 className="text-2xl font-bold mb-4 mt-12">
         Admin Update & Delete Courses

@@ -11,7 +11,7 @@ const CourseCard = ({ item }) => {
       <div className="card shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
         <figure className="relative">
           <Image
-            className="rounded"
+            className="rounded h-48"
             src={item?.banner}
             alt="course"
             width={400}

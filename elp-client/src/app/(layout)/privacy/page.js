@@ -3,7 +3,7 @@ export const metadata = {
 }
 const PrivactPage = () => {
   return (
-    <div className="mx-14 py-10">
+    <div className="mx-14 py-10 space-y-5">
       <h1>Privacy Policy</h1>
       <p>Last updated: December 23, 2023</p>
       <p>

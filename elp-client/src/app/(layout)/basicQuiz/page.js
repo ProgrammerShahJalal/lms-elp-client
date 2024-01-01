@@ -1,10 +1,12 @@
 "use client";
 
+import Commonbanner from "@/components/banners/Commonbanner";
 import Quiz from "@/components/ui/Home/Quiz";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const quizData = [
   {
@@ -40,31 +42,74 @@ const quizData = [
   // Add more quiz data...
 ];
 
+const calculateCorrectAnswers = (userAnswers) => {
+  return quizData.reduce((count, question, index) => {
+    return userAnswers[index] === question.correctAnswer ? count + 1 : count;
+  }, 0);
+};
 const BasicQuizPage = () => {
   const {userId} = getUserInfo();
   const {data} = useGetSingleUserQuery(userId)
   const [showResults, setShowResults] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
 
+  // const handleSubmit = (answers) => {
+  //   setUserAnswers(answers);
+  //   setShowResults(true);
+  // };
+  const breadcrumbItems = [
+    { label: 'হোম', link: '/' },
+    { label: 'বেসিক কুইজ' },
+  ];
+  
+
   const handleSubmit = (answers) => {
     setUserAnswers(answers);
     setShowResults(true);
+
+    const correctAnswersCount = calculateCorrectAnswers(answers);
+    const correctAnswersLength = quizData.length;
+
+    let message = '';
+    if (correctAnswersCount === correctAnswersLength) {
+      message = `Excellent! Perfect Score! You answered all ${correctAnswersLength} questions correctly.`;
+    } else if (correctAnswersCount >= 4) {
+      message = `Good Job! You answered ${correctAnswersCount} out of ${correctAnswersLength} questions correctly.`;
+    } else if (correctAnswersCount >= 3) {
+      message = `Not Bad! You answered ${correctAnswersCount} out of ${correctAnswersLength} questions correctly. Keep improving!`;
+    } else {
+      message = `Please read more and try again! You answered only ${correctAnswersCount} out of ${correctAnswersLength} questions correctly.`;
+    }
+
+    Swal.fire({
+      title: "Congratulations!!!",
+      text: message,
+      icon: "success"
+    });
   };
 
   return (
-    <div className=" px-14 text-center">
-      <div className="py-16">
-      <h2 className="text-2xl font-bold text-center">Welcome {data?.name} </h2>
+    <>
+    <Commonbanner title="বেসিক কুইজ" breadcrumbItems={breadcrumbItems}/>
+      <div className=" px-14 text-center">
+      <div className="py-16 bg-white rounded shadow-lg my-4">
+      <h2 className="text-2xl font-bold text-center text-yellowPrimary">Welcome {data?.name} </h2>
         {!showResults ? (
           <Quiz quizData={quizData} onSubmit={handleSubmit} />
         ) : (
           <div>
-            <h2 className="text-2xl font-bold pb-5"> Congratulation!!! Your Results:</h2>
-            <ul className="pb-10 ">
+            <h2 className="text-2xl font-bold pb-5"> Congratulation!!! Your Results </h2>
+            <ul className="pb-10 text-start px-10 ">
               {quizData.map((question, index) => (
-                <li key={index}>
-                  {question.question} - Your Answer: {userAnswers[index]}, Correct Answer:{" "}
-                  {question.correctAnswer}
+                <li key={index} className="py-2 ">
+                  {index +1} . {' '}
+                  {question.question} 
+                  <span className="text-red-400">
+                  - Your Answer: {userAnswers[index]},
+                  </span>
+                  {"   "}
+                   <span className="text-green-600">Correct Answer:{" "}
+                  {question.correctAnswer}</span>
                 </li>
               ))}
             </ul>
@@ -74,6 +119,8 @@ const BasicQuizPage = () => {
         )}
       </div>
     </div>
+    </>
+  
   );
 };
 
