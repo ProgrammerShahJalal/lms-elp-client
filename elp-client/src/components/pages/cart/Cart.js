@@ -11,19 +11,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import { useAddToCartMutation, useDeletecartMutation, useGetAllCartsByUserQuery } from "@/redux/api/cartApi";
+import {
+  useAddToCartMutation,
+  useDeletecartMutation,
+  useGetAllCartsByUserQuery,
+} from "@/redux/api/cartApi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const Cart = () => {
   const { data: cart } = useGetAllCartsByUserQuery();
   const cartLength = cart?.carts;
-  const [addToCart] = useAddToCartMutation()
+  const [addToCart] = useAddToCartMutation();
   // console.log(cartLength)
+  const [total, setTotal] = useState(0); // State to hold the total price
 
- 
-  const [deletecart] = useDeletecartMutation()
+  useEffect(() => {
+    // Calculate total when the cart changes
+    if (cartLength) {
+      const newTotal = cartLength.reduce(
+        (acc, item) => acc + item.quantity * item.book_id.price,
+        0
+      );
+      setTotal(newTotal);
+    }
+  }, [cartLength]);
 
+  const [deletecart] = useDeletecartMutation();
 
   const handleDelete = async (id) => {
     try {
@@ -34,30 +49,28 @@ const Cart = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes, delete it!",
       });
-  
+
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deletecart(id);
         // console.log(res)
-  
+
         if (res?.data?._id === id) {
           // Item deleted successfully
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
-            icon: "success"
+            icon: "success",
           });
-         
         } else {
           // Something went wrong with deletion
           Swal.fire({
             title: "Error!",
             text: "Something went wrong with deletion.",
-            icon: "error"
+            icon: "error",
           });
-         
         }
       }
     } catch (err) {
@@ -66,21 +79,20 @@ const Cart = () => {
     }
   };
 
-  const handleIncrement = async (book_id,quantity) => {
-    const res = await addToCart({ book_id ,quantity: quantity + 1 });
-    // console.log(res, 'increment')
+  const handleIncrement = async (book_id) => {
+     await addToCart({ book_id, quantity: 1 });
+  };
   
- 
-    // if (res?.data?.quantity && res.data.quantity > 1) {
-    //   toast.success('Book has already been added to your cart. Please check your cart.');
-    // } else {
-    //   toast.success('Book added to your cart successfully.');
-    // } 
-  }
-  const handleDecrement = async (book_id,quantity) => {
-    const res = await addToCart({ book_id , quantity:  Math.max(1, quantity - 1) });
-    // console.log(res, 'decrement')
-  }
+
+  const handleDecrement = async (book_id, quantity) => {
+    if (quantity > 1) {
+       await addToCart({ book_id, quantity: -1 });
+     
+    } else {
+     
+      toast.success("Quantity is already 1, cannot decrement further");
+    }
+  };
 
   const breadcrumbItems = [
     { label: "হোম", link: "/" },
@@ -147,7 +159,7 @@ const Cart = () => {
                             <h2>{item?.book_id?.title} </h2>
                             <button
                               className="text-red-500 font-bold"
-                              onClick={()=> handleDelete(item?._id)}
+                              onClick={() => handleDelete(item?._id)}
                             >
                               Remove
                             </button>
@@ -158,14 +170,24 @@ const Cart = () => {
                         <div className="flex items-center space-x-3 font-semibold">
                           <button
                             className="border px-2"
-                            onClick={() => handleIncrement(item?.book_id?._id, item?.quantity)}
+                            onClick={() =>
+                              handleIncrement(
+                                item?.book_id?._id,
+                                item?.quantity
+                              )
+                            }
                           >
                             +
                           </button>
                           <h5>{item?.quantity}</h5>
                           <button
                             className="border px-2"
-                            onClick={() => handleDecrement(item?.book_id?._id, item?.quantity)}
+                            onClick={() =>
+                              handleDecrement(
+                                item?.book_id?._id,
+                                item?.quantity
+                              )
+                            }
                           >
                             {" "}
                             -
@@ -197,7 +219,7 @@ const Cart = () => {
               <div>
                 <h2 className="font-bold text-xl text-gray-400">Total </h2>
                 <h2 className="font-bold text-xl text-bluePrimary">
-                  {/* {total.toFixed(2)} */}
+                  {total.toFixed(2)}
                 </h2>
               </div>
             </div>
