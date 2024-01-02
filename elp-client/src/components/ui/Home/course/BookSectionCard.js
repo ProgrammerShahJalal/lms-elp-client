@@ -3,17 +3,25 @@ import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-
 import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
+import { useAddToCartMutation } from "@/redux/api/cartApi";
 
 const BookSectionCard = ({item}) => {
-  const dispatch = useDispatch();
+  const [addToCart] = useAddToCartMutation()
+  // const dispatch = useDispatch();
 
-  const handleAddBook = (item) => {
-    // console.log(item)
-    dispatch(addToCart(item));
-    toast.success('Book added in your cart')
+  const handleAddBook = async (item) => {
+
+    const res = await addToCart({book_id: item?._id, quantity: 1 });
+  
+ 
+    if (res?.data?.quantity && res.data.quantity > 1) {
+      toast.success('Book has already been added to your cart. Please check your cart.');
+    } else {
+      toast.success('Book added to your cart successfully.');
+    }
+   
     
   }
 

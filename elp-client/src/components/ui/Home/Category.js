@@ -68,7 +68,7 @@ const Category = () => {
   }
 
   if (!isLoading && !isError && categoriesData?.length > 0) {
-    content = categoriesData?.map((item) =><SwiperSlide>  <Link href={`/courses/category/${item?._id}`} key={item?._id} className=" ">
+    content = categoriesData?.map((item) =><SwiperSlide key={item?._id}>  <Link href={`/courses/category/${item?._id}`}  className=" ">
     <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
       <div className="text-center flex justify-center items-center">
       <div className="pt-4">

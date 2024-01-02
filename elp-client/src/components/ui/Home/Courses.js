@@ -63,7 +63,7 @@ const Courses = () => {
   }
 
   if (!isLoading && !isError && coursesData?.length > 0) {
-    content = coursesData?.map((item) => <SwiperSlide><CourseCard key={item?._id} item={item} /></SwiperSlide>);
+    content = coursesData?.map((item) => <SwiperSlide key={item?._id}><CourseCard  item={item} /></SwiperSlide>);
   }
 
   return (

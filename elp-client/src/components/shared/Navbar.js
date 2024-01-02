@@ -19,6 +19,7 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import avatar from "../../assets/images/avatar.png";
+import { useGetAllCartsByUserQuery, useGetAllCartsQuery } from "@/redux/api/cartApi";
 
 const Navbar = () => {
   // const ClickableDropdown = () => {
@@ -30,7 +31,10 @@ const Navbar = () => {
 
   const { data: courseCategoryData } = useGetAllCategoriesQuery();
   const categoriesData = courseCategoryData?.categories;
-  const { books } = useSelector((state) => state.cart);
+  const {data:cart} = useGetAllCartsByUserQuery();
+  // console.log(cart?.carts, 'from navbaer');
+  const cartLength = cart?.carts;
+  // const { books } = useSelector((state) => state.cart);
 
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
@@ -182,7 +186,7 @@ const Navbar = () => {
 
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold" />{" "}
-              <sup className="text-md font-bold">{books?.length}</sup>
+              <sup className="text-md font-bold">{cartLength?.length}</sup>
             </Link>
 
             {/* <!-- Dropdown menu --> */}
@@ -311,7 +315,7 @@ const Navbar = () => {
             </div>
           ))}
           <div className="flex justify-center">
-          <Link href="/cart" className="flex items-center"><IoCartOutline className="text-2xl font-bold text-white" /> <sup className="text-md font-bold text-white">{books?.length}</sup></Link>
+          <Link href="/cart" className="flex items-center"><IoCartOutline className="text-2xl font-bold text-white" /> <sup className="text-md font-bold text-white">{cartLength?.length}</sup></Link>
           </div>
           <div className=" ">
           {userLoggedIn ? (
