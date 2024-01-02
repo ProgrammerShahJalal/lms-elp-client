@@ -18,12 +18,25 @@ import {
 } from "@/redux/api/cartApi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const Cart = () => {
   const { data: cart } = useGetAllCartsByUserQuery();
   const cartLength = cart?.carts;
   const [addToCart] = useAddToCartMutation();
   // console.log(cartLength)
+  const [total, setTotal] = useState(0); // State to hold the total price
+
+  useEffect(() => {
+    // Calculate total when the cart changes
+    if (cartLength) {
+      const newTotal = cartLength.reduce(
+        (acc, item) => acc + item.quantity * item.book_id.price,
+        0
+      );
+      setTotal(newTotal);
+    }
+  }, [cartLength]);
 
   const [deletecart] = useDeletecartMutation();
 
@@ -67,7 +80,7 @@ const Cart = () => {
   };
 
   const handleIncrement = async (book_id) => {
-     const res = await addToCart({ book_id, quantity: 1 });
+     await addToCart({ book_id, quantity: 1 });
   };
   
 
@@ -206,7 +219,7 @@ const Cart = () => {
               <div>
                 <h2 className="font-bold text-xl text-gray-400">Total </h2>
                 <h2 className="font-bold text-xl text-bluePrimary">
-                  {/* {total.toFixed(2)} */}
+                  {total.toFixed(2)}
                 </h2>
               </div>
             </div>
