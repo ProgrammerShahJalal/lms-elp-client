@@ -15,6 +15,7 @@ function CourseSubscriptions({ course_id }) {
     course_id,
   });
   const subscriptionData = data?.subscriptions?.data;
+  console.log(subscriptionData, 'fron sourse subd')
 
   const [subscribeToCourse] = useSubscribeToCourseMutation();
 
@@ -26,7 +27,7 @@ function CourseSubscriptions({ course_id }) {
     Cookies.set("creationPayload", JSON.stringify(coursePaymentPayload));
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/bkash/payment/create",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
       {
         amount: `${subscription?.cost}`,
       },

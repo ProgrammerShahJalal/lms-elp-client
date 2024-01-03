@@ -46,8 +46,8 @@ const CourseCard = ({ item }) => {
               {" "}
               <span className="pr-5">মেম্বারশিপ ধরন</span>  <span className="bg-blue-200 font-bold px-2 py-1 rounded">{item?.membership_type}</span>
             </p>
-            <Link href= '/subscribe' className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
-              সাবস্ক্রাইব করুন
+            <Link href= {`/courses/details/${item?._id}/subscribe`} className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+              কোর্সটি কিনুন
             </Link>
           </div>
          
