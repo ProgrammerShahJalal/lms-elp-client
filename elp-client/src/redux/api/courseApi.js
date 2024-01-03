@@ -47,6 +47,8 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
+
+    // alll subscript get
     getAllSubscriptions: build.query({
       query: (arg) => ({
         url: COURSE_SUBSCRIPTIONS_URL,
@@ -60,6 +62,22 @@ export const courseApi = baseApi.injectEndpoints({
         };
       },
       providesTags: ["subscriptions"],
+    }),
+
+    // alll subscript history get
+    getAllCourseSubscriptionsHistory: build.query({
+      query: (arg) => ({
+        url: `${COURSE_SUBSCRIPTIONS_HISTORY_URL}/my-subscription-histories`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          courseSubscription: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["subscription-histories"],
     }),
     subscribeToCourse: build.mutation({
       query: (data) => ({
@@ -79,4 +97,5 @@ export const {
   useDeleteCoursesMutation,
   useGetAllSubscriptionsQuery,
   useSubscribeToCourseMutation,
+  useGetAllCourseSubscriptionsHistoryQuery
 } = courseApi;
