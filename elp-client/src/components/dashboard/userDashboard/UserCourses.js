@@ -5,11 +5,11 @@ import Image from "next/image"
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
-const UserCourses = ({params}) => {
+const UserCourses = () => {
   // const { data } = useGetAllQuestionsQuery();
   // const allQuiz = data?.categories?.data;
-  const {id} = params;
-  console.log(id, 'from params')
+  // const {id} = params;
+  // console.log(id, 'from params')
 
   // const {data:coursePlaylists} = useGetSingleCoursePlaylistQuery({id: params?.id});
   // console.log(coursePlaylists, 'from api single coures playlist data')

@@ -15,7 +15,7 @@ function CourseSubscriptions({ course_id }) {
     course_id,
   });
   const subscriptionData = data?.subscriptions?.data;
-  console.log(subscriptionData, 'fron sourse subd')
+  // console.log(subscriptionData, 'fron sourse subd')
 
   const [subscribeToCourse] = useSubscribeToCourseMutation();
 
