@@ -65,7 +65,7 @@ export const courseApi = baseApi.injectEndpoints({
     }),
 
     // alll subscript history get
-    getAllCourseSubscriptionsHistory: build.query({
+    getMyCourseSubscriptionsHistory: build.query({
       query: (arg) => ({
         url: `${COURSE_SUBSCRIPTIONS_HISTORY_URL}/my-subscription-histories`,
         method: "GET",
@@ -97,5 +97,5 @@ export const {
   useDeleteCoursesMutation,
   useGetAllSubscriptionsQuery,
   useSubscribeToCourseMutation,
-  useGetAllCourseSubscriptionsHistoryQuery
+  useGetMyCourseSubscriptionsHistoryQuery
 } = courseApi;

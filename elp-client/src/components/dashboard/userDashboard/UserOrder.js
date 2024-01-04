@@ -1,6 +1,11 @@
+'use client'
+import { useGetMyAllOrdersDeatilsQuery } from "@/redux/api/orderApi"
 
 
 const UserOrder = () => {
+
+  const {data} = useGetMyAllOrdersDeatilsQuery();
+  // console.log(data, 'form user order')
   return (
     <div className="border">
 <div className="overflow-x-auto">
