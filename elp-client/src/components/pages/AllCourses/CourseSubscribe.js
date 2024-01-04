@@ -5,16 +5,22 @@ import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
-import { useGetAllSubscriptionsQuery } from "@/redux/api/courseApi";
+import { useGetAllSubscriptionsQuery, useGetSingleCourseQuery } from "@/redux/api/courseApi";
 import { getUserInfo } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const CourseSubscribe = () => {
+const CourseSubscribe = ({course_id}) => {
+  const {data:singleCourse} = useGetSingleCourseQuery(course_id);
+ 
+  // const singleCourseId = singleCourse?._id;
+  // console.log(singleCourse,"single course");
+
+
     const router = useRouter();
-  const { data, isError, isLoading } = useGetAllSubscriptionsQuery();
+  const { data, isError, isLoading } = useGetAllSubscriptionsQuery({course_id});
 //   console.log(data?.subscriptions?.data, "from sub page");
   const allSubsCourses = data?.subscriptions?.data;
 

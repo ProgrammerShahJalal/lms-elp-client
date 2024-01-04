@@ -5,10 +5,11 @@ export const metadata = {
     title: "কোর্স সাবস্ক্রাইব ",
   };
 
-const SubscribePage = () => {
+const SubscribePage = ({params}) => {
+    const id = params?.id;
     return (
         <div>
-            <CourseSubscribe/>
+            <CourseSubscribe course_id={id}/>
         </div>
     );
 };
