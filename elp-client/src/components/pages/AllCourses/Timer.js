@@ -34,11 +34,22 @@ const Timer = ({expireDate}) => {
     return (
         <div>
              <h2 className="py-5 font-semibold">
-      {timeLeft.days > 0 && <span>{timeLeft.days} days </span>}
-      {timeLeft.hours > 0 && <span>{timeLeft.hours} hours </span>}
-      {timeLeft.minutes > 0 && <span>{timeLeft.minutes} minutes </span>}
-      {timeLeft.seconds > 0 && <span>{timeLeft.seconds} seconds </span>}
-      {timeLeft.days <= 0 && timeLeft.hours <= 0 && timeLeft.minutes <= 0 && timeLeft.seconds <= 0 && <span>Expired</span>}
+             {timeLeft.days > 0 && <span>{timeLeft.days} দিন বাকি </span>}
+      {timeLeft.days === 1 && (
+        <>
+          {timeLeft.hours > 0 && <span>{timeLeft.hours} hours </span>}
+          {timeLeft.minutes > 0 && <span>{timeLeft.minutes} minutes </span>}
+          {timeLeft.seconds > 0 && <span>{timeLeft.seconds} seconds </span>}
+        </>
+      )}
+      {timeLeft.days <= 0 && (
+        <>
+          {timeLeft.hours > 0 && <span>{timeLeft.hours} hours </span>}
+          {timeLeft.minutes > 0 && <span>{timeLeft.minutes} minutes </span>}
+          {timeLeft.seconds > 0 && <span>{timeLeft.seconds} seconds </span>}
+          {timeLeft.days <= 0 && timeLeft.hours <= 0 && timeLeft.minutes <= 0 && timeLeft.seconds <= 0 && <span>Expired</span>}
+        </>
+      )}
     </h2>
         </div>
     );

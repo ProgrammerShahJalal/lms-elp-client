@@ -1,11 +1,16 @@
 'use client'
+import { useGetMyCourseVedioPlaylistQuery } from "@/redux/api/videoApi";
 import { useParams } from "next/navigation";
 
 
-const CoursePag = () => {
+const CourseVedioPlaylistPage = () => {
     
-    const params = useParams()
-    console.log(params,'from details page');
+    const params = useParams();
+    const id = params?.id;
+    // console.log(params.id,'from details page');
+
+    const {data} = useGetMyCourseVedioPlaylistQuery(id);
+    // console.log(data, 'data vedio')
     return (
         <div>
             <h2>hello  </h2>
@@ -13,4 +18,4 @@ const CoursePag = () => {
     );
 };
 
-export default CoursePag;
+export default CourseVedioPlaylistPage;

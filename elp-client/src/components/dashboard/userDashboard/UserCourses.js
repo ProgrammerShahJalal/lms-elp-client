@@ -18,8 +18,9 @@ import ReactPlayer from "react-player";
 const UserCourses = () => {
   const { data, isLoading, isError } =
     useGetMyCourseSubscriptionsHistoryQuery()
-  // console.log(data?.courseSubscription, "from usercourses fggfh");
+ 
   const courseSubs = data?.courseSubscription;
+
 
   let content = null;
 
@@ -51,11 +52,12 @@ const UserCourses = () => {
       <div className="card-body">
         <h2 className="card-title"> {item?.course_id?.title}</h2>
         <p><progress className="progress progress-primary w-56" value="10" max="100"> </progress> 0%</p>
-        <p>{item?.expire_date}</p>
+       
         <Timer expireDate={item?.expire_date}/>
+        
         <hr></hr>
         <div className="card-actions justify-center">
-          <Link href={`/user/mycourses/${item?.course_id?._id}`} className="text-lg text-yellowPrimary cursor-pointer"> কোর্সটি শুরু করুন</Link>
+          <Link href={`/user/mycourses/details/${item?.course_id?._id}`} className="text-lg text-yellowPrimary cursor-pointer"> কোর্সটি শুরু করুন</Link>
         </div>
       </div>
     </div>
@@ -179,7 +181,9 @@ const UserCourses = () => {
         )}
       </div> */}
       {/* from here i show quiz question to the student */}
-
+      {/* <Link href={`/user/mycourses/details/${item?.course_id?._id}`}>
+              continue
+              </Link> */}
 
       {/* <div className="card card-compact w-72 bg-base-100 shadow-xl ml-10">
         <figure><Image src="https://i.ibb.co/G9hnB13/course-1.webp" alt="course" width={300} height={100} /></figure>
