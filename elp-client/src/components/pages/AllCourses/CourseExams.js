@@ -13,6 +13,7 @@ function CourseExams({ course_id }) {
   });
 
   const enrollToExam = async (exam) => {
+  
     const examPaymentPayload = {
       user_id: getUserInfo()?.userId,
       exam_id: exam?.id,
@@ -20,7 +21,7 @@ function CourseExams({ course_id }) {
 
     Cookies.set("creationPayload", JSON.stringify(examPaymentPayload));
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/bkash/payment/create",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
       {
         amount: `${exam?.fee}`,
       },

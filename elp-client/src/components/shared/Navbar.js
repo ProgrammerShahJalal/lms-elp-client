@@ -186,7 +186,7 @@ const Navbar = () => {
 
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold" />{" "}
-              <sup className="text-md font-bold">{cartLength?.length}</sup>
+              {userLoggedIn && <sup className="text-md font-bold">{cartLength?.length}</sup>}
             </Link>
 
             {/* <!-- Dropdown menu --> */}
