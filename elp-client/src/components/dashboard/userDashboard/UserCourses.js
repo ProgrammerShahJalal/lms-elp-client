@@ -1,21 +1,26 @@
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import { useGetAllCourseSubscriptionsHistoryQuery } from "@/redux/api/courseApi";
+import Timer from "@/components/pages/AllCourses/Timer";
+import { useGetMyCourseSubscriptionsHistoryQuery } from "@/redux/api/courseApi";
+
 import { useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
 import {
   useGetAllPlaylistQuery,
   useGetSingleCoursePlaylistQuery,
 } from "@/redux/api/videoApi";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-
+///subscription-histories//my-subscription-histories
+// /courses-playlists/course/:course_id
 const UserCourses = () => {
   const { data, isLoading, isError } =
-    useGetAllCourseSubscriptionsHistoryQuery();
-  console.log(data?.courseSubscription, "from usercourses fggfh");
+    useGetMyCourseSubscriptionsHistoryQuery()
+ 
   const courseSubs = data?.courseSubscription;
+
 
   let content = null;
 
@@ -42,23 +47,20 @@ const UserCourses = () => {
 
   if (!isLoading && !isError && courseSubs?.length > 0) {
     content = courseSubs?.map((item) => (
-      <div key={item?._id} className=" ">
-        <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
-          <div className="text-center flex justify-center items-center">
-            <div className="pt-4">
-              <Image
-                src={item?.course_id?.banner}
-                alt="img"
-                width={50}
-                height={20}
-              />
-              <h2 className="py-5 font-semibold ">{item?.course_id?.title} </h2>
-              <h2 className="py-5 font-semibold ">{item?.expire_date} </h2>
-            </div>
-            {/* <h2 className="py-5 font-semibold ">{item?.icon} </h2> */}
-          </div>
+      <div key={item?._id} className="card card-compact w-72  shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer">
+      <figure><Image src={item?.course_id?.banner} alt="course" width={300} height={100} /></figure>
+      <div className="card-body">
+        <h2 className="card-title"> {item?.course_id?.title}</h2>
+        <p><progress className="progress progress-primary w-56" value="10" max="100"> </progress> 0%</p>
+       
+        <Timer expireDate={item?.expire_date}/>
+        
+        <hr></hr>
+        <div className="card-actions justify-center">
+          <Link href={`/user/mycourses/details/${item?.course_id?._id}`} className="text-lg text-yellowPrimary cursor-pointer"> কোর্সটি শুরু করুন</Link>
         </div>
       </div>
+    </div>
     ));
   }
 
@@ -110,7 +112,7 @@ const UserCourses = () => {
   // from here i show quiz question to the student
 
   return (
-    <div className="rounded-lg py-5 border border-gray-200">
+    <div className="">
       <div className="grid lg:grid-cols-2 gap-4">{content}</div>
 
       {/* this is video playlist */}
@@ -179,9 +181,11 @@ const UserCourses = () => {
         )}
       </div> */}
       {/* from here i show quiz question to the student */}
+      {/* <Link href={`/user/mycourses/details/${item?.course_id?._id}`}>
+              continue
+              </Link> */}
 
-
-      <div className="card card-compact w-72 bg-base-100 shadow-xl ml-10">
+      {/* <div className="card card-compact w-72 bg-base-100 shadow-xl ml-10">
         <figure><Image src="https://i.ibb.co/G9hnB13/course-1.webp" alt="course" width={300} height={100} /></figure>
         <div className="card-body">
           <h2 className="card-title"> Learning Course</h2>
@@ -190,8 +194,8 @@ const UserCourses = () => {
             <button className="btn btn-primary"> 60 days left</button>
           </div>
         </div>
-      </div>
-      <h1 className="text-2xl font-bold mb-4">Quiz Questions</h1>
+      </div> */}
+      <h6 className="text-2xl font-bold my-20">Quiz Questions</h6>
     </div>
   );
 };

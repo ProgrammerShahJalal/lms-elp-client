@@ -21,5 +21,6 @@ export const baseApi = createApi({
     "carts",
     "subscriptions",
     "subscription-histories",
+    "orders"
   ],
 });

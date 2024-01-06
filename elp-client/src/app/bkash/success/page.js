@@ -18,7 +18,7 @@ function Success() {
     if (payloadString) {
       const payload = JSON.parse(payloadString);
       payload.trx_id = trx_id;
-      console.log(payload);
+      // console.log(payload);
       if (payload?.exam_id) {
         payForExam(payload);
         toast("Success!");
@@ -41,6 +41,12 @@ function Success() {
         href="/"
       >
         Go to Home
+      </Link>
+      <Link
+        className="mt-8 bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+        href="/"
+      >
+        Go to your Dashboard
       </Link>
     </div>
   );
