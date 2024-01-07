@@ -6,12 +6,17 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
+import {  isLoggedIn } from "@/services/auth.service";
 
 const BookSectionCard = ({item}) => {
-  const [addToCart] = useAddToCartMutation()
+  const [addToCart] = useAddToCartMutation();
+  const userLoggedIn = isLoggedIn();
   // const dispatch = useDispatch();
 
   const handleAddBook = async (item) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy a book");
+    }
 
     const res = await addToCart({book_id: item?._id, quantity: 1 });
   

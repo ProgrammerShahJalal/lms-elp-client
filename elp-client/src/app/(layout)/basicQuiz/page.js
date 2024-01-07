@@ -93,7 +93,7 @@ const BasicQuizPage = () => {
     <Commonbanner title="বেসিক কুইজ" breadcrumbItems={breadcrumbItems}/>
       <div className=" px-14 text-center">
       <div className="py-16 bg-white rounded shadow-lg my-4">
-      <h2 className="text-2xl font-bold text-center text-yellowPrimary">Welcome {data?.name} </h2>
+      {/* <h2 className="text-2xl font-bold text-center text-yellowPrimary">Welcome {data?.name} </h2> */}
         {!showResults ? (
           <Quiz quizData={quizData} onSubmit={handleSubmit} />
         ) : (

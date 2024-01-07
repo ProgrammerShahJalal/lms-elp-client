@@ -96,6 +96,12 @@ function Success() {
       >
         Go to Home
       </Link>
+      <Link
+        className="mt-8 bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+        href="/"
+      >
+        Go to your Dashboard
+      </Link>
     </div>
   );
 }

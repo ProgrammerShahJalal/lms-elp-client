@@ -15,6 +15,7 @@ function CourseSubscriptions({ course_id }) {
     course_id,
   });
   const subscriptionData = data?.subscriptions?.data;
+  // console.log(subscriptionData, 'fron sourse subd')
 
   const enrollToCourse = async (subscription) => {
     const coursePaymentPayload = {

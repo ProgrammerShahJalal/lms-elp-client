@@ -21,6 +21,18 @@ export const makeQuizApi = baseApi.injectEndpoints({
             },
             providesTags: ["course-playlists"],
         }),
+
+        getMyCourseVedioPlaylist: build.query({
+            query: (course_id) => {
+                return {
+                    url: `${COURSE_PLAYLIST}/course/${course_id}`,
+                    method: "GET",
+                   
+                };
+            },
+           
+            providesTags: ["course-playlists"],
+        }),
         getSingleCoursePlaylist: build.query({
             query: (id) => ({
               url: `${COURSE_PLAYLIST}/${id}`,
@@ -42,4 +54,4 @@ export const makeQuizApi = baseApi.injectEndpoints({
     }),
 });
 
-export const {  useAddPlaylistVideoMutation,useGetSingleCoursePlaylistQuery, useGetAllPlaylistQuery } = makeQuizApi;
+export const {  useAddPlaylistVideoMutation,useGetSingleCoursePlaylistQuery, useGetMyCourseVedioPlaylistQuery, useGetAllPlaylistQuery } = makeQuizApi;

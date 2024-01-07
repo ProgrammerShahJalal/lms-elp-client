@@ -88,7 +88,7 @@ const Cart = () => {
   const breadcrumbItems = [
     { label: "হোম", link: "/" },
     { label: "অল বুকস্", link: "/books" },
-    { label: "বুকস্ Details", link: "/books/:id" },
+    // { label: "বুকস্ Details", link: "/books/:id" },
     { label: "Cart" },
   ];
 
@@ -126,7 +126,7 @@ const Cart = () => {
             </div>
             <div className="grid grid-cols-4 gap-10">
               {cartLength?.length === 0 ? (
-                <div className="   font-bold text-red-400 text-xl">
+                <div className="font-bold text-red-400 text-xl">
                   {" "}
                   Your Cart Is Empty
                 </div>
