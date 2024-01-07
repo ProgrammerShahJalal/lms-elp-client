@@ -2,14 +2,8 @@
 
 import Commonbanner from "@/components/banners/Commonbanner";
 
-import {
-  addToCart,
-  removeFromCart,
-  removeOneBook,
-} from "@/redux/features/cart/cartSlice";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import {
   useAddToCartMutation,
@@ -80,16 +74,13 @@ const Cart = () => {
   };
 
   const handleIncrement = async (book_id) => {
-     await addToCart({ book_id, quantity: 1 });
+    await addToCart({ book_id, quantity: 1 });
   };
-  
 
   const handleDecrement = async (book_id, quantity) => {
     if (quantity > 1) {
-       await addToCart({ book_id, quantity: -1 });
-     
+      await addToCart({ book_id, quantity: -1 });
     } else {
-     
       toast.success("Quantity is already 1, cannot decrement further");
     }
   };
