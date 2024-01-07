@@ -1,8 +1,5 @@
 import { baseApi } from "./baseApi";
 
-
-
-
 export const CART_URL = "/carts";
 
 export const cartApi = baseApi.injectEndpoints({
@@ -41,13 +38,6 @@ export const cartApi = baseApi.injectEndpoints({
       providesTags: ["carts"],
     }),
 
-    // getSingleBook: build.query({
-    //   query: (id) => ({
-    //     url: `${BOOKS_URL}/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["books"],
-    // }),
     addToCart: build.mutation({
       query: (data) => ({
         url: CART_URL,
@@ -56,17 +46,20 @@ export const cartApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["carts"],
     }),
+
     deletecart: build.mutation({
       query: (id) => ({
         url: `${CART_URL}/${id}`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
-      invalidatesTags: ['carts']
-    })
-    
-
-
+      invalidatesTags: ["carts"],
+    }),
   }),
 });
 
-export const {useAddToCartMutation , useGetAllCartsQuery, useGetAllCartsByUserQuery, useDeletecartMutation} = cartApi;
+export const {
+  useAddToCartMutation,
+  useGetAllCartsQuery,
+  useGetAllCartsByUserQuery,
+  useDeletecartMutation,
+} = cartApi;

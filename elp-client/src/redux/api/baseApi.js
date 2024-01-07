@@ -10,6 +10,7 @@ export const baseApi = createApi({
 
   tagTypes: [
     "users",
+    "shipping-addresses",
     "courses",
     "books",
     "course-playlists",
@@ -21,6 +22,7 @@ export const baseApi = createApi({
     "carts",
     "subscriptions",
     "subscription-histories",
+    "settings",
     "orders"
   ],
 });

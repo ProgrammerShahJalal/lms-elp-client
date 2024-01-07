@@ -18,9 +18,10 @@ function CourseExams({ course_id }) {
       exam_id: exam?.id,
     };
 
+    Cookies.set("order_type", "exam");
     Cookies.set("creationPayload", JSON.stringify(examPaymentPayload));
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/bkash/payment/create",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
       {
         amount: `${exam?.fee}`,
       },
