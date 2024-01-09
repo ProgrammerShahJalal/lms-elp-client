@@ -185,16 +185,7 @@ const UserCourses = () => {
               continue
               </Link> */}
 
-      {/* <div className="card card-compact w-72 bg-base-100 shadow-xl ml-10">
-        <figure><Image src="https://i.ibb.co/G9hnB13/course-1.webp" alt="course" width={300} height={100} /></figure>
-        <div className="card-body">
-          <h2 className="card-title"> Learning Course</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary"> 60 days left</button>
-          </div>
-        </div>
-      </div> */}
+     
       <h6 className="text-2xl font-bold my-20">Quiz Questions</h6>
     </div>
   );

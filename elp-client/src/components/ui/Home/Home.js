@@ -1,3 +1,4 @@
+'use client'
 import MemeberShipPlan from "@/components/ohters/MemeberShipPlan";
 import Benefits from "./Benefits";
 import BookSection from "./BookSection";
@@ -11,8 +12,13 @@ import ScrollToTopButton from "./ScrollToTopButton";
 import SelectCarreer from "./SelectCarreer";
 import Testing from "./Testing";
 import Faq from "./Faq";
+import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 
 const HomePage = () => {
+  // const {data} = useGetAllCoursesQuery({
+  //   title:"Course title here"
+  // });
+  // console.log(data)
   return (
     <div className="">
       <Hero/>

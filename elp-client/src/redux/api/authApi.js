@@ -19,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      invalidatesTags: ["users"],
+      invalidatesTags: ["users","carts"],
     }),
     
 // get single user

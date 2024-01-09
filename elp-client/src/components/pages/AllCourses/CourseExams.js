@@ -13,6 +13,7 @@ function CourseExams({ course_id }) {
   });
 
   const enrollToExam = async (exam) => {
+  
     const examPaymentPayload = {
       user_id: getUserInfo()?.userId,
       exam_id: exam?.id,

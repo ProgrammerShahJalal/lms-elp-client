@@ -83,6 +83,7 @@ const Courses = () => {
         // }}
         navigation={true}
         modules={[Pagination, Navigation]}
+        
         breakpoints= {breakpoints}
         className="mySwiper"
       >
