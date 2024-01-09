@@ -213,15 +213,15 @@ const Navbar = () => {
               <div
                 className={`${
                   isOpen ? "block" : "hidden"
-                } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
+                } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow `}
               >
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                <ul className="py-4 px-10 text-sm text-gray-700 dark:text-gray-200">
                   {userLoggedIn ? (
                     <>
                       <li>
                         <Link
                           href="/"
-                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block  py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           <p className="text-lg font-bold">{data?.name}</p>
                         </Link>
@@ -229,7 +229,7 @@ const Navbar = () => {
                       <li>
                         <Link
                           href="/profile"
-                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block  py-2 text-lg hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           প্রোফাইল
                         </Link>

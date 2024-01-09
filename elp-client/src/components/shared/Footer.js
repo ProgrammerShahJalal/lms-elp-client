@@ -85,7 +85,7 @@ const Footer = () => {
       </footer>
       <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">
         <aside>
-          <p>Copyright © 2023 - All right reserved by ইজি লার্নিং প্লাটফর্ম</p>
+          <p>Copyright © 2024 - All right reserved by ইজি লার্নিং প্লাটফর্ম</p>
         </aside>
       </footer>
     </div>
