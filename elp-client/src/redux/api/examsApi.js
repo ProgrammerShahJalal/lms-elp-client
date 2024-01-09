@@ -18,6 +18,8 @@ export const examsApi = baseApi.injectEndpoints({
       },
       providesTags: ["exams"],
     }),
+
+
     payForExam: build.mutation({
       query: (data) => ({
         url: "/exam-payments",
@@ -25,7 +27,7 @@ export const examsApi = baseApi.injectEndpoints({
         data: data,
       }),
       invalidatesTags: ["exam-payments"],
-
+    }),
       getSingleExam: build.query({
         query: (id) => ({
           url: `${EXAMS_URL}/${id}`,
@@ -60,7 +62,7 @@ export const examsApi = baseApi.injectEndpoints({
         }),
         invalidatesTags: ["exams"],
       }),
-    }),
+    
   }),
 });
 

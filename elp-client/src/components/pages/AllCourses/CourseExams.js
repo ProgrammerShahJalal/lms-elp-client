@@ -3,8 +3,9 @@ import { useGetAllExamsQuery } from "@/redux/api/examsApi";
 import { getUserInfo } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 function CourseExams({ course_id }) {
   const router = useRouter();
@@ -14,6 +15,7 @@ function CourseExams({ course_id }) {
 
   const enrollToExam = async (exam) => {
   
+    console.log(exam, 'from enroll')
     const examPaymentPayload = {
       user_id: getUserInfo()?.userId,
       exam_id: exam?.id,
