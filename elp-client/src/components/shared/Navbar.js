@@ -19,7 +19,10 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import avatar from "../../assets/images/avatar.png";
-import { useGetAllCartsByUserQuery, useGetAllCartsQuery } from "@/redux/api/cartApi";
+import {
+  useGetAllCartsByUserQuery,
+  useGetAllCartsQuery,
+} from "@/redux/api/cartApi";
 
 const Navbar = () => {
   // const ClickableDropdown = () => {
@@ -31,7 +34,7 @@ const Navbar = () => {
 
   const { data: courseCategoryData } = useGetAllCategoriesQuery();
   const categoriesData = courseCategoryData?.categories;
-  const {data:cart} = useGetAllCartsByUserQuery();
+  const { data: cart } = useGetAllCartsByUserQuery();
   // console.log(cart?.carts, 'from navbaer');
   const cartLength = cart?.carts;
   // const { books } = useSelector((state) => state.cart);
@@ -109,10 +112,10 @@ const Navbar = () => {
     { link: "যোগাযোগ", path: "contact" },
   ];
   const navItems = userLoggedIn
-  ? [...commonRoutes, { link: "ড্যাসবোর্ড", path: "profile" }]
-  : commonRoutes; 
+    ? [...commonRoutes, { link: "ড্যাসবোর্ড", path: "profile" }]
+    : commonRoutes;
   return (
-    <header className="w-full bg-white md:bg-transparent sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
+    <header className="w-full bg-white sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
       <nav
         className={`py-4  px-4 ${
           isSticky
@@ -228,7 +231,7 @@ const Navbar = () => {
                           href="/profile"
                           className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
-                         প্রোফাইল
+                          প্রোফাইল
                         </Link>
                       </li>
 
@@ -315,30 +318,33 @@ const Navbar = () => {
             </div>
           ))}
           <div className="flex justify-center">
-          <Link href="/cart" className="flex items-center"><IoCartOutline className="text-2xl font-bold text-white" /> <sup className="text-md font-bold text-white">{cartLength?.length}</sup></Link>
+            <Link href="/cart" className="flex items-center">
+              <IoCartOutline className="text-2xl font-bold text-white" />{" "}
+              <sup className="text-md font-bold text-white">
+                {cartLength?.length}
+              </sup>
+            </Link>
           </div>
           <div className=" ">
-          {userLoggedIn ? (
+            {userLoggedIn ? (
               <>
-              <p className="font-bold text-lg text-white">{data?.name}</p>
-              
-              <button
-                onClick={logout}
-                className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
-              >
-                লগআউট
-              </button>
+                <p className="font-bold text-lg text-white">{data?.name}</p>
+
+                <button
+                  onClick={logout}
+                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+                >
+                  লগআউট
+                </button>
               </>
             ) : (
               <Link
                 href="/login"
                 className="hidden lg:flex items-center text-white hover:text-white font-bold"
               >
-                লগইন 
+                লগইন
               </Link>
             )}
-           
-            
           </div>
         </div>
       </nav>
