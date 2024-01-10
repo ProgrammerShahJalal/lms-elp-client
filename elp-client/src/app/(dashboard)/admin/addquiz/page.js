@@ -98,6 +98,7 @@ const AddQuiz = () => {
         };
         fetchExams();
     }, [selectedCourse]);
+    
     const handleCheckboxChange = (questionId, option) => {
         setSelectedOptions((prevOptions) => ({
             ...prevOptions,

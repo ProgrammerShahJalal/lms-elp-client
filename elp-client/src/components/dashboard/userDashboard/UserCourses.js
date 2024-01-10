@@ -71,7 +71,7 @@ const UserCourses = () => {
       
 
      
-      <h6 className="text-2xl font-bold my-20">Quiz Questions</h6>
+      {/* <h6 className="text-2xl font-bold my-20">Quiz Questions</h6> */}
     </div>
   );
 };
