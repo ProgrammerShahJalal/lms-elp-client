@@ -34,27 +34,13 @@ const AddCourseForm = () => {
   const { data: courses, isLoading: isSubcategoryLoading } =
     useGetAllCoursesQuery();
   const allCourses = courses?.courses?.data;
+  // console.log(allCourses,'from courses')
  const[addCourse] = useAddCourseMutation();
  const [deleteCourses] = useDeleteCoursesMutation();
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
-//   const toolbarOptions = [
-//     ['bold', 'italic', 'underline', 'strike'],
-//     ['blockquote', 'code-block'],
-//     [{ 'header': 1 }, { 'header': 2 }],
-//     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-//     [{ 'script': 'sub' }, { 'script': 'super' }],
-//     [{ 'indent': '-1' }, { 'indent': '+1' }],
-//     [{ 'direction': 'rtl' }],
-//     [{ 'size': ['small', false, 'large', 'huge'] }],
-//     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-//     [{ 'color': [] }, { 'background': [] }],
-//     [{ 'font': [] }],
-//     [{ 'align': [] }],
-   
-//     ['clean']
-// ];
+
 
 
 
@@ -97,7 +83,9 @@ const onSubmit = async (data) => {
       const result = await deleteCourses(courseId);
       // console.log(result)
 
+    if(result){
       toast.success("Category deleted successfully");
+    }
     } catch (error) {
       toast.error("Failed to delete category");
     }
@@ -272,7 +260,7 @@ const onSubmit = async (data) => {
                 <th className="py-2 px-4 border-b">Title</th>
                 <th className="py-2 px-4 border-b">Author</th>
                 <th className="py-2 px-4 border-b">Membership Type</th>
-                <th className="py-2 px-4 border-b">Category</th>
+                {/* <th className="py-2 px-4 border-b">Category</th> */}
                 <th className="py-2 px-4 border-b">Banner</th>
                 <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
@@ -281,18 +269,19 @@ const onSubmit = async (data) => {
             <tbody>
               {allCourses?.map((course) => (
                 <tr key={course._id}>
-                  <td className="py-2 px-4 border-b">{course?.title}</td>
+                  <td className="py-2 px-1 border-b">{course?.title}</td>
                   <td className="py-2 px-4 border-b">{course?.author}</td>
                   <td className="py-2 px-4 border-b">
-                    {course?.membership_type}
+                    {/* {course?.membership_type} */}
+                    {course?.membership_type === "1" ? "Paid" : "Free"}
                   </td>
-                  <td className="py-2 px-4 border-b">
+                  {/* <td className="py-2 px-4 border-b">
                     {course?.category_id?.title}
-                  </td>
+                  </td> */}
                   <td className="py-2 px-4 border-b">
                     <Image
                       src={course.banner}
-                      alt={`Banner for ${course.title}`}
+                      alt={`Banner for ${course?.title}`}
                       width={400}
                       height={300}
                     />

@@ -21,6 +21,7 @@ const DashBoardLayout = ({ children }) => {
 
 
   const { data: user } = useGetSingleUserQuery(userId);
+  const shouldShowWelcomeComponent = !(role === "admin" || role === "super_admin");
 
   useEffect(() => {
     // if(role !== 'admin' || role !== 'super_admin'){
@@ -43,12 +44,12 @@ const DashBoardLayout = ({ children }) => {
     <>
       <div className="">
         <DashNavbar />
-        <div className=" grid  lg:grid-cols-2  bg-gray-200">
-          <div className="bg-white  mt-5 border border-gray-300 rounded ml-5 ">
+        <div className=" grid  lg:grid-cols-2  z-0">
+          <div className="bg-white  mt-5  rounded ml-5 ">
             <UserSidebar />
           </div>
           <div className="bg-white   mt-5 rounded px-10 pt-10 lg:mr-10 lg:ml-[-300px]" >
-            <UserWelcome />
+          {shouldShowWelcomeComponent && <UserWelcome />}
             <br />
             {children}
 
