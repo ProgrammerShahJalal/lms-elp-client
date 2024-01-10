@@ -221,7 +221,7 @@ const Navbar = () => {
                       <li>
                         <Link
                           href="/"
-                          className="block  py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block  py-2 hover:bg-gray-100  "
                         >
                           <p className="text-lg font-bold">{data?.name}</p>
                         </Link>
@@ -229,7 +229,7 @@ const Navbar = () => {
                       <li>
                         <Link
                           href="/profile"
-                          className="block  py-2 text-lg hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block  py-2 text-lg hover:bg-gray-100 "
                         >
                           প্রোফাইল
                         </Link>
