@@ -215,7 +215,7 @@ const Navbar = () => {
                   isOpen ? "block" : "hidden"
                 } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow `}
               >
-                <ul className="py-4 px-10 text-sm text-gray-700 dark:text-gray-200">
+                <ul className="py-4 px-10 text-sm text-gray-700 dark:text-black">
                   {userLoggedIn ? (
                     <>
                       <li>

@@ -29,7 +29,9 @@ const UserCourses = () => {
   }
 
   if (!isLoading && isError) {
-    content = <Error />;
+    content = <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
+    <h5>You don't  buy course yet now</h5>
+  </div>;
   }
 
   if (!isLoading && !isError && courseSubs?.length === 0) {

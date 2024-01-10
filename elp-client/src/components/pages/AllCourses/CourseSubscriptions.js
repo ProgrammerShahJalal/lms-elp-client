@@ -18,6 +18,7 @@ function CourseSubscriptions({ course_id }) {
   // console.log(subscriptionData, 'fron sourse subd')
 
   const enrollToCourse = async (subscription) => {
+    
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
       subscription_id: subscription?.id,
