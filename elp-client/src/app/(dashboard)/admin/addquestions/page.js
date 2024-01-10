@@ -64,7 +64,7 @@ const AddQuestions = () => {
           onSubmit={handleSubmit}
           className="max-w-md mx-auto bg-white p-8 border rounded shadow"
         >
-          <h2 className="text-2xl font-semibold mb-4">Quiz Questions</h2>
+          <h2 className="text-2xl font-semibold mb-4">Add Broad questions</h2>
           <div className="mb-4">
             <label
               htmlFor="examId"

@@ -69,10 +69,10 @@ const Category = () => {
 
   if (!isLoading && !isError && categoriesData?.length > 0) {
     content = categoriesData?.map((item) =><SwiperSlide key={item?._id}>  <Link href={`/courses/category/${item?._id}`}  className=" ">
-    <div className="bg-transparent rounded-lg shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 hover:rounded-lg">
+    <div className="bg-bluePrimary bg-opacity-50  rounded-lg shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 hover:rounded-lg">
       <div className="text-center flex justify-center items-center">
-      <div className="pt-4">
-      <Image src={icon1} alt="img" width={50} height={20}/>
+      <div className="pt-4 h-52">
+      <Image src={item?.icon} alt="img" width={90} height={20} className=" pt-5" />
         <h2 className="py-5 font-semibold ">{item?.title} </h2>
       </div>
         {/* <h2 className="py-5 font-semibold ">{item?.icon} </h2> */}

@@ -24,7 +24,7 @@ const HomePage = () => {
       <Hero/>
       <Category/>
       <Courses/> 
-      <MemeberShipPlan/>
+      {/* <MemeberShipPlan/> */}
       <FreeCourse/>
       <BookSection/>
       <FreeSeminar/>

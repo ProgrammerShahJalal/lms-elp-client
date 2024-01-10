@@ -35,11 +35,11 @@ const Footer = () => {
               </Link>
             </p>
             <p className="bg-gray-700 p-4  rounded transition-all duration-300  hover:bg-bluePrimary text-center cursor-pointer">
-              <Link href="/">
+              <a href="https://www.linkedin.com/in/ProgrammerShahJalal" target="_blank">
                 <span>
                   <FaLinkedinIn className="text-white text-xl" />
                 </span>
-              </Link>
+              </a>
             </p>
             <p className="bg-gray-700 p-4  rounded transition-all duration-300  hover:bg-bluePrimary text-center cursor-pointer">
               <Link href="/">
@@ -85,7 +85,7 @@ const Footer = () => {
       </footer>
       <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">
         <aside>
-          <p>Copyright © 2023 - All right reserved by ইজি লার্নিং প্লাটফর্ম</p>
+          <p>Copyright © 2024 - All right reserved Developed by Elite Developer Unity</p>
         </aside>
       </footer>
     </div>

@@ -9,13 +9,14 @@ const UserProfileInfo = () => {
   const { userId, email } = getUserInfo();
   // console.log(getUserInfo())
   const { data } = useGetSingleUserQuery(userId);
+  // console.log(data)
 
 
   return (
     <div className=" rounded-lg py-5 border border-gray-200 ">
       <div className="flex items-center justify-between px-10">
         <div>
-          <h2 className="text-2xl font-bold">{data?.name} </h2>
+          <h2 className="text-2xl font-bold">আপনার নামঃ {data?.name} </h2>
 
         </div>
         <div>
@@ -30,28 +31,28 @@ const UserProfileInfo = () => {
 
 
       <div className="pl-10 w-96">
-        <h5 className="text-lg font-semibold py-3">{data?.contact_no}</h5>
+        <h5 className="text-lg font-semibold py-3">মোবাইল নাম্বার: {data?.contact_no}</h5>
 
         <div className="flex justify-between items-center">
           <div>
-            <h3 className="text-lg font-semibold py-1">ইমেইল</h3>
-            <h5 className="text-md font-semibold py-1">{data?.email}</h5>
+            {/* <h3 className="text-lg font-semibold py-1">ইমেইল</h3> */}
+            <h5 className="text-md font-semibold py-1">ইমেইল: {data?.email}</h5>
           </div>
-          <div className="text-left">
+          {/* <div className="text-left">
             <h3 className="text-lg font-semibold py-1">জন্ম তারিখ</h3>
             <h5 className="text-md font-semibold py-1" >12-05-1993</h5>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex justify-between items-center mt-3">
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold py-1">আপনি একজন </h3>
             <h5 className="text-md font-semibold py-1">নারী</h5>
-          </div>
-          <div className="">
+          </div> */}
+          {/* <div className="">
             <h3 className="text-lg font-semibold py-1 " > ঠিকানা</h3>
             <h5 className="text-md font-semibold py-1" >abdduy</h5>
-          </div>
+          </div> */}
         </div>
       </div>
 

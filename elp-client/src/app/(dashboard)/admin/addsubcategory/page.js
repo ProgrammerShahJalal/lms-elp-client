@@ -124,9 +124,9 @@ const AdminAddSubCategory = () => {
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
             <thead className="hidden md:table-header-group">
-              <tr>
+              <tr className="text-left">
                 <th className="py-2 px-4 border-b">Title</th>
-                <th className="py-2 px-4 border-b">Icon</th>
+                {/* <th className="py-2 px-4 border-b">Icon</th> */}
                 <th className="py-2 px-4 border-b">Category</th>
                 <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
@@ -136,9 +136,9 @@ const AdminAddSubCategory = () => {
               {allSubcategory?.map((subcategory, i) => (
                 <tr key={subcategory?._id} className="block md:table-row">
                   <td className="py-2 px-4 border-b md:table-cell">{i + 1}) {subcategory?.title}</td>
-                  <td className="py-2 px-4 border-b md:table-cell">
+                  {/* <td className="py-2 px-4 border-b md:table-cell">
                     <img src={subcategory?.icon} alt="Subcategory Icon" className="w-10 h-10" />
-                  </td>
+                  </td> */}
                   <td className="py-2 px-4 border-b md:table-cell">{subcategory?.category_id?.title}</td>
                   <td className="py-2 px-4 border-b md:table-cell">
                     <button className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</button>

@@ -125,20 +125,20 @@ const AdminAddCategory = () => {
             {allCategory?.map((category, i) => (
               <li
                 key={category.id}
-                className="mb-4 flex items-center justify-between"
+                className="mb-4 flex items-center justify-between space-x-10 border py-3 px-5 rounded w-96"
               >
                 <div className=" flex items-center ">
                   <h2 className="text-xl font-bold  pr-5">
                     {i + 1}) {category.title}
                   </h2>
-                  {category.icon && (
+                  {/* {category.icon && (
                     <img
                       src={category.icon}
                       // alt='category img'
                       alt={`Icon for ${category.title}`}
                       className="w-8 h-8 object-cover rounded-full"
                     />
-                  )}
+                  )} */}
                 </div>
                 <div>
                   <Link href={`/admin/addcategory/edit/${category?._id}`} className="mx-4">

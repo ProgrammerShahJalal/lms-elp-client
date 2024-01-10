@@ -1,10 +1,33 @@
 "use client";
 
+import { useAddToCartMutation } from "@/redux/api/cartApi";
+import { isLoggedIn } from "@/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
 
 const BookDetailsData = ({ data, isError, isLoading }) => {
-  console.log(data)
+  const [addToCart] = useAddToCartMutation();
+  const userLoggedIn = isLoggedIn();
+  // const dispatch = useDispatch();
+
+  const handleAddBook = async (item) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy a book");
+    }
+
+    const res = await addToCart({book_id: item?._id, quantity: 1 });
+  
+ 
+    if (res?.data?.quantity && res.data.quantity > 1) {
+      toast.success('Book has already been added to your cart. Please check your cart.');
+    } else {
+      toast.success('Book added to your cart successfully.');
+    }
+   
+    
+  }
+
+  // console.log(data)
   let content = null;
 
   if (isLoading) {
@@ -26,7 +49,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
           <div className="space-y-4 mb-10">
             
             <Image
-              className="rounded"
+              className="rounded h-60"
               src={data?.cover_page}
               alt="course"
               width={600}
@@ -54,6 +77,9 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
             </p>
             {/* <p>{data?.pdf_link}</p> */}
             <p>{data?.price} TK</p>
+            <button onClick={() => handleAddBook(item)}  className="bg-yellowPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+              এড টু কার্ড
+            </button>
             
           </div>
           </div>
