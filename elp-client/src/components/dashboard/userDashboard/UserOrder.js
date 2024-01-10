@@ -1,12 +1,23 @@
 'use client'
-import { useGetMyAllOrdersDeatilsQuery } from "@/redux/api/orderApi"
+import { useGetMyAllOrdersDetailsQuery } from "@/redux/api/orderApi"
 
 
 const UserOrder = () => {
 
-  const {data} = useGetMyAllOrdersDeatilsQuery();
-  // console.log(data, 'form user order')
+  const {data} = useGetMyAllOrdersDetailsQuery();
+  console.log(data, 'form user order');
+  const bookOrdersData = data?.orders;
+
   return (
+    <>
+   <div className="grid grid-cols-1 gap-2">
+   {bookOrdersData?.map((item)=><div key={item?.id}>
+      <div>
+        {/* <p>{JSON.parse(item?.orders)?.}</p> */}
+      </div>
+    </div>)}
+
+   </div>
     <div className="border">
 <div className="overflow-x-auto">
   <table className="table">
@@ -53,6 +64,7 @@ const UserOrder = () => {
 </div>
 
     </div>
+    </>
   )
 }
 

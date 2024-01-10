@@ -81,10 +81,7 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
                 </a>
               </div>
             </div>
-            <div className="space-y-4 bg-white rounded border py-10 px-5 mt-4">
-              <h2 className="text-xl font-bold">Exams on this course:</h2>
-              {data && <CourseExams course_id={data?._id} />}
-            </div>
+          
           </div>
         </div>
 
@@ -119,6 +116,10 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
               </div>
             </div>
           </div>
+          <div className="space-y-4 bg-white rounded border py-10 px-5 mt-4">
+              <h2 className="text-xl font-bold">Exams on this course:</h2>
+              {data && <CourseExams course_id={data?._id} />}
+            </div>
         </div>
       </div>
     );

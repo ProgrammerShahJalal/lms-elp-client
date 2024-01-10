@@ -135,6 +135,15 @@ const UserSidebar = () => {
                 <br />
                 <li>
                   <Link
+                    href="/user/myexams"
+                    className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 "
+                  >
+                    <SiCoursera fontSize={18} /> আমার পরিক্ষাসমুহ
+                  </Link>
+                </li>
+                <br />
+                <li>
+                  <Link
                     href="/user/userorder"
                     className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 "
                   >

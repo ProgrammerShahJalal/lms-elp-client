@@ -34,8 +34,19 @@ export const questionsApi = baseApi.injectEndpoints({
             invalidatesTags: ["questions"],
         }),
 
+        // alll subscript history get {{local_url}}/questions/exam/:exam_id
+    getMyQuestionsEnrollHistory: build.query({
+        query: (id) => ({
+          url: `${QUESTIONS_URL}/exam/${id}`,
+          method: "GET",
+         
+        }),
+        
+        providesTags: ["questions"],
+      }),
+
 
     }),
 });
 
-export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useDeleteQuestionsMutation } = questionsApi;
+export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useDeleteQuestionsMutation , useGetMyQuestionsEnrollHistoryQuery} = questionsApi;

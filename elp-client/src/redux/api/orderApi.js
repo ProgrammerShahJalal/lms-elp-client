@@ -5,8 +5,8 @@ export const ORDERS_URL = "/order-details";
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    // all courses
-    getMyAllOrdersDeatils: build.query({
+    // all courses order-details/my-order-details
+    getMyAllOrdersDetails: build.query({
       query: (arg) => {
         return {
           url: `${ORDERS_URL}/my-order-details`,
@@ -28,5 +28,5 @@ export const orderApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetMyAllOrdersDeatilsQuery
+  useGetMyAllOrdersDetailsQuery
 } = orderApi;
