@@ -117,11 +117,10 @@ const Navbar = () => {
   return (
     <header className="w-full bg-white sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
       <nav
-        className={`py-4  px-4 ${
-          isSticky
+        className={`py-4  px-4 ${isSticky
             ? " bg-white sticky top-0 left-0 right-0 border-b duration-300"
             : ""
-        }`}
+          }`}
       >
         <div className="flex justify-between items-center text-base gap-8">
           <Link
@@ -147,17 +146,16 @@ const Navbar = () => {
                   <div
                     className="relative inline-block  hover:text-bluePrimary font-bold cursor-pointer"
                     onClick={toggleCoursesDropdown}
-                    //   onMouseEnter={openCoursesDropdown}
-                    //   onMouseLeave={closeCoursesDropdown}
+                  //   onMouseEnter={openCoursesDropdown}
+                  //   onMouseLeave={closeCoursesDropdown}
                   >
                     <span className="flex items-center ">
                       {" "}
                       {link} <IoIosArrowDown />{" "}
                     </span>
                     <div
-                      className={`absolute ${
-                        isCoursesDropdownOpen ? "block" : "hidden"
-                      } space-y-2 text-white bg-bluePrimary left-0 mt-5 text-left cursor-pointer w-48 py-5 `}
+                      className={`absolute ${isCoursesDropdownOpen ? "block" : "hidden"
+                        } space-y-2 text-white bg-bluePrimary left-0 mt-5 text-left cursor-pointer w-48 py-5 `}
                     >
                       {dropdown.map(({ sublink, subpath }) => (
                         <Link
@@ -211,9 +209,8 @@ const Navbar = () => {
               </button>
 
               <div
-                className={`${
-                  isOpen ? "block" : "hidden"
-                } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow `}
+                className={`${isOpen ? "block" : "hidden"
+                  } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow `}
               >
                 <ul className="py-4 px-10 text-sm text-gray-700 dark:text-gray-200">
                   {userLoggedIn ? (
@@ -270,11 +267,10 @@ const Navbar = () => {
 
         {/* nav items for mobile devices */}
         <div
-          className={`space-y-4  mt-16 py-7 bg-bluePrimary ${
-            isMenuOpen
+          className={`space-y-4  mt-16 py-7 bg-bluePrimary ${isMenuOpen
               ? "block fixed top-0 right-0 left-0 text-center"
               : "hidden"
-          }`}
+            }`}
         >
           <ToggleTheme />
           {navItems.map(({ link, path, dropdown }) => (
@@ -283,17 +279,16 @@ const Navbar = () => {
                 <div
                   className="relative inline-block  hover:text-yellowPrimary font-bold cursor-pointer text-white"
                   onClick={toggleCoursesDropdown}
-                  //   onMouseEnter={openCoursesDropdown}
-                  //   onMouseLeave={closeCoursesDropdown}
+                //   onMouseEnter={openCoursesDropdown}
+                //   onMouseLeave={closeCoursesDropdown}
                 >
                   <span className="flex items-center text-white">
                     {" "}
                     {link} <IoIosArrowDown />{" "}
                   </span>
                   <div
-                    className={`absolute ${
-                      isCoursesDropdownOpen ? "block" : "hidden"
-                    } space-y-2 text-bluePrimary bg-white left-24  text-left cursor-pointer w-24 `}
+                    className={`absolute ${isCoursesDropdownOpen ? "block" : "hidden"
+                      } space-y-2 text-bluePrimary bg-white left-24  text-left cursor-pointer w-24 `}
                   >
                     {dropdown.map(({ sublink, subpath }) => (
                       <Link
