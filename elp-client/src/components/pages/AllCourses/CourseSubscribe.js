@@ -5,30 +5,51 @@ import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
-import { useGetAllSubscriptionsQuery, useGetSingleCourseQuery } from "@/redux/api/courseApi";
+import {
+  useGetAllSubscriptionsQuery,
+  useGetMyCourseSubscriptionsHistoryQuery,
+} from "@/redux/api/courseApi";
+
 import { getUserInfo } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-const CourseSubscribe = ({course_id}) => {
-  const {data:singleCourse} = useGetSingleCourseQuery(course_id);
- 
-  // const singleCourseId = singleCourse?._id;
-  // console.log(singleCourse,"single course");
+const CourseSubscribe = ({ course_id }) => {
+  const router = useRouter();
 
-
-    const router = useRouter();
-  const { data, isError, isLoading } = useGetAllSubscriptionsQuery({course_id});
-//   console.log(data?.subscriptions?.data, "from sub page");
+  // redux rtk querries
+  const { data: mySubscriptions } = useGetMyCourseSubscriptionsHistoryQuery();
+  const { data, isError, isLoading } = useGetAllSubscriptionsQuery({
+    course_id,
+  });
   const allSubsCourses = data?.subscriptions?.data;
 
+  // states
+  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
+
+  useEffect(() => {
+    if (mySubscriptions) {
+      const matched = mySubscriptions?.courseSubscription?.find(
+        (mySubscription) => mySubscription?.course_id?._id === course_id
+      );
+      if (matched) setAlreadySubscribed(true);
+    }
+  }, [mySubscriptions]);
+
   const enrollToCourse = async (subscription) => {
+    if (alreadySubscribed) {
+      toast.success("আপনার কোর্সটি কেনা আছে। কোর্সটি করতে ড্যাসবোর্ডে যান।");
+      return;
+    }
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
       subscription_id: subscription?.id,
     };
+    Cookies.set("order_type", "subscription");
     Cookies.set("creationPayload", JSON.stringify(coursePaymentPayload));
 
     const { data } = await axios.post(
@@ -90,7 +111,8 @@ const CourseSubscribe = ({course_id}) => {
               Category: {item?.course_id?.category_id?.title}
             </p>
             <p className="opacity-75 py-2">Support : yes</p>
-            <button  onClick={() => enrollToCourse(item)}
+            <button
+              onClick={() => enrollToCourse(item)}
               className="bg-bluePrimary text-white py-3 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary "
               href="/subscribe"
             >
