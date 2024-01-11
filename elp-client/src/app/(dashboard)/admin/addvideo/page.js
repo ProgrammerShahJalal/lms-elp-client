@@ -32,7 +32,7 @@ const AddVideo = () => {
 
     return (
         <div className="container mx-auto my-8 lg:space-x-48">
-            <h2 className="text-2xl font-bold mb-4">Form</h2>
+          
             <form>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">Name:</label>

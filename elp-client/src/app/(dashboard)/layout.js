@@ -44,11 +44,11 @@ const DashBoardLayout = ({ children }) => {
     <>
       <div className="">
         <DashNavbar />
-        <div className=" grid  lg:grid-cols-2  z-0">
-          <div className="bg-white  mt-5  rounded ml-5 ">
+        <div className=" lg:flex   z-0">
+          <div className="  mt-5 rounded lg:mr-60 ">
             <UserSidebar />
           </div>
-          <div className="bg-white   mt-5 rounded px-10 pt-10 lg:mr-10 lg:ml-[-300px]" >
+          <div className=" mt-5 rounded px-10 pt-10 " >
           {shouldShowWelcomeComponent && <UserWelcome />}
             <br />
             {children}

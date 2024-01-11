@@ -19,7 +19,7 @@ const DashNavbar = () => {
   };
 
   return (
-    <div className=" border-b border-b-gray-300 sticky top-0 z-10">
+    <div className=" bg-gray-200 border-b border-b-gray-300 sticky top-0 z-10">
       <div className="navbar px-5">
         <div className="navbar-start ">
           <Link href="/" className="text-lg text-cyan-900">

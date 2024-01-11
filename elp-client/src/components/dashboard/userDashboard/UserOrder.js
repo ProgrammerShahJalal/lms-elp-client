@@ -2,6 +2,9 @@
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useGetMyAllOrdersDetailsQuery } from "@/redux/api/orderApi"
+import { useEffect, useState } from "react";
+import BookSingleOrders from "./BookSingleOrders";
+import SingleOrderDetails from "./SingleOrderDetails";
 
 
 const UserOrder = () => {
@@ -9,6 +12,7 @@ const UserOrder = () => {
   const {data, isLoading, isError} = useGetMyAllOrdersDetailsQuery();
   // console.log(data, 'form user order');
   const bookOrdersData = data?.orders;
+  
 
   let content = null;
 
@@ -20,8 +24,11 @@ const UserOrder = () => {
     );
   }
 
-  if (!isLoading && isError) {
-    content = <Error/>;
+  if (!isLoading && !isError) {
+    // content = <Error/>;
+    content = <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 my-5 px-3 rounded text-lg">
+    <h5>Your Order is Empty Now</h5>
+  </tr>;
   }
 
   if (!isLoading && !isError && bookOrdersData?.length === 0) {
@@ -36,26 +43,13 @@ const UserOrder = () => {
   }
 
   if (!isLoading && !isError && bookOrdersData?.length > 0) {
-    content = bookOrdersData?.map((item)=> <tr key={item?.id} className="hover">
-    <th>প্রাইমারী </th>
-    <td>{item?.total_price
-}</td>
-    <td>{item?.createdAt}</td>
-    <td>৪ ফেব্রুয়ারি ২০২৪</td>
-    <td>{item?.trx_id
-}</td>
-    <td>paid</td>
-  </tr>);
+    content = bookOrdersData?.map((item)=> <SingleOrderDetails key={item?.id} item={item}/>);
   }
 
   return (
     <>
    <div className="grid grid-cols-1 gap-2">
-   {/* {bookOrdersData?.map((item)=><div key={item?.id}>
-      <div>
-        <p>{JSON.parse(item?.orders)}</p>
-      </div>
-    </div>)} */}
+  
 
    </div>
     <div className="border">
@@ -63,11 +57,10 @@ const UserOrder = () => {
   <table className="table">
     {/* head */}
     <thead>
-      <tr>
+      <tr className="">
         <th>বইয়ের নাম </th>
-        <th>বইয়ের  মূল্য</th>
+        <th> সর্বমোট  মূল্য</th>
         <th>কেনার তারিখ</th>
-        <th>পরিমান</th>
         <th>ট্রান্সজেকশন আইডি</th>
         <th>পেমেন্ট</th>
       </tr>
@@ -76,14 +69,7 @@ const UserOrder = () => {
 
       {content}
       
-      {/* <tr className="hover">
-        <th>প্রাইমারী কোর্স </th>
-        <td>২০০০</td>
-        <td>৪ ডিসেম্বর ২০২৩</td>
-        <td>৪ ফেব্রুয়ারি ২০২৪</td>
-        <td>Accepted</td>
-        <td>paid</td>
-      </tr> */}
+     
      
      
       
