@@ -11,9 +11,12 @@ import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 
 const CourseSubscribe = ({course_id}) => {
   const {data:singleCourse} = useGetSingleCourseQuery(course_id);
+
+  const userLoggedIn = isLoggedIn();
  
   // const singleCourseId = singleCourse?._id;
   // console.log(singleCourse,"single course");
@@ -25,6 +28,11 @@ const CourseSubscribe = ({course_id}) => {
   const allSubsCourses = data?.subscriptions?.data;
 
   const enrollToCourse = async (subscription) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy a subscribe course");
+    }
+
+
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
       subscription_id: subscription?.id,
