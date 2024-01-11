@@ -2,11 +2,11 @@ import BookSingleOrders from "./BookSingleOrders";
 
 const SingleOrderDetails = ({ item }) => {
   const dateObject = new Date(item?.createdAt);
-  const humanReadableFormatLocal = dateObject.toLocaleString();
-  console.log(item, "from singlefgbf");
+  const humanReadableFormatLocal = dateObject.toLocaleDateString();
+  
 
   return (
-    <tr className="hover">
+    <tr className="hover border">
       <th>
         <BookSingleOrders key={item?.id} bookOrder={item} />{" "}
       </th>

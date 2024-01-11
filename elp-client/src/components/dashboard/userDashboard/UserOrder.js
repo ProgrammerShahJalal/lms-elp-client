@@ -49,7 +49,7 @@ const UserOrder = () => {
   return (
     <>
    <div className="grid grid-cols-1 gap-2">
-   {/* {bookOrdersData && bookOrdersData?.map((item)=><BookSingleOrders key={item?.id} bookOrder={item}/>)} */}
+  
 
    </div>
     <div className="border">
@@ -57,11 +57,10 @@ const UserOrder = () => {
   <table className="table">
     {/* head */}
     <thead>
-      <tr>
+      <tr className="">
         <th>বইয়ের নাম </th>
-        <th>বইয়ের  মূল্য</th>
+        <th> সর্বমোট  মূল্য</th>
         <th>কেনার তারিখ</th>
-        <th>পরিমান</th>
         <th>ট্রান্সজেকশন আইডি</th>
         <th>পেমেন্ট</th>
       </tr>
@@ -70,14 +69,7 @@ const UserOrder = () => {
 
       {content}
       
-      {/* <tr className="hover">
-        <th>প্রাইমারী কোর্স </th>
-        <td>২০০০</td>
-        <td>৪ ডিসেম্বর ২০২৩</td>
-        <td>৪ ফেব্রুয়ারি ২০২৪</td>
-        <td>Accepted</td>
-        <td>paid</td>
-      </tr> */}
+     
      
      
       

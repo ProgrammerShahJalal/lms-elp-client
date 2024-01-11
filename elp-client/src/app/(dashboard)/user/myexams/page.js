@@ -2,6 +2,7 @@
 
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import SinglePaymentDetails from "@/components/dashboard/userDashboard/SinglePaymentDetails";
 
 import { useGetMyExamPaymentQuery } from "@/redux/api/examsApi";
 
@@ -42,24 +43,13 @@ const MyExamPages = () => {
   }
 
   if (!isLoading && !isError && paymentsData?.length > 0) {
-    content = paymentsData?.map((item) => (
-      <tr key={item?.id} className="hover">
-        <th>{item?.exam_id?.course_id?.title} </th>
-        <td>{item?.exam_id?.title}</td>
-        <td>{item?.exam_id?.fee}</td>
-        <td>{item?.exam_id?.exam_type === "0" ? 'Quiz' : 'Questions'}</td>
-        <td>{item?.createdAt}</td>
-        <td>{item?.trx_id}</td>
-        <td>paid</td>
-        <td>
-        <Link href={`/user/myexams/details/${item?.exam_id?.id}`}className="text-red-500 font-bold">পরিক্ষা দিন</Link>
-        </td>
-      </tr>
+    content = paymentsData?.map((item) => (<SinglePaymentDetails key={item?.id} item={item}/>
+     
     ));
   }
 
-  const allExamsId = payments?.payments?.map((item) => item?.exam_id?._id);
-  // console.log(allExamsId)
+ 
+ 
 
   return (
     <div>

@@ -29,6 +29,7 @@ const CourseSubscribe = ({course_id}) => {
       user_id: getUserInfo()?.userId,
       subscription_id: subscription?.id,
     };
+    Cookies.set("order_type", "subscription");
     Cookies.set("creationPayload", JSON.stringify(coursePaymentPayload));
 
     const { data } = await axios.post(
