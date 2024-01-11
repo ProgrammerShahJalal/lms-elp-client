@@ -1,4 +1,5 @@
 'use client'
+import { useGetAllCoursesQuery } from '@/redux/api/courseApi';
 import { useGetAllQuestionsQuery } from '@/redux/api/questionsApi';
 import { useAddPlaylistVideoMutation, useGetAllPlaylistQuery } from '@/redux/api/videoApi';
 import React, { useState } from 'react';
@@ -7,7 +8,9 @@ const AddVideo = () => {
     const { data } = useGetAllPlaylistQuery()
     const course = data?.courses;
 
-    const { data:allVedio } = useGetAllQuestionsQuery();
+    const { data: allVedio } = useGetAllQuestionsQuery();
+    const { data: allCourse } = useGetAllCoursesQuery();
+    const courses = allCourse?.courses?.data;
     // const allQuiz = data?.categories?.data;
     // console.log(allVedio, 'from api')
     const initialFormData = {
@@ -38,21 +41,28 @@ const AddVideo = () => {
                     <label className="block text-sm font-medium text-gray-600">Name:</label>
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="title"
+                        value={formData.title}
                         onChange={handleInputChange}
                         className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
                     />
                 </div>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">Course</label>
-                    <input
-                        type="text"
+                    <select
                         name="course_id"
-                        value={formData.course_id}
+                        // value={formData.course_id}
                         onChange={handleInputChange}
                         className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-                    />
+                    >
+                        <option value="">Select a course</option>
+                        {courses &&
+                            courses.map((course) => (
+                                <option key={course.id} value={course.id}>
+                                    {course.title}
+                                </option>
+                            ))}
+                    </select>
                 </div>
 
                 <div className="mb-4">
