@@ -5,6 +5,7 @@ import InitialLoader from "@/components/Loader/InitialLoader";
 import UserExam from "@/components/dashboard/userDashboard/UserExam";
 import { useGetMyExamPaymentQuery } from "@/redux/api/examsApi";
 import { useGetMyQuestionsEnrollHistoryQuery } from "@/redux/api/questionsApi";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const MyExamPages = () => {
@@ -49,7 +50,7 @@ const MyExamPages = () => {
         <td>{item?.trx_id}</td>
         <td>paid</td>
         <td>
-            <button className="text-red-500 font-bold">পরিক্ষা দিন</button>
+        <Link href={`/user/myexams/details/${item?.exam_id?.id}`}className="text-red-500 font-bold">পরিক্ষা দিন</Link>
         </td>
       </tr>
     ));

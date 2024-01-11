@@ -34,7 +34,7 @@ const AddCourseForm = () => {
   const { data: courses, isLoading: isSubcategoryLoading } =
     useGetAllCoursesQuery();
   const allCourses = courses?.courses?.data;
-  // console.log(allCourses,'from courses')
+  console.log(allCourses,'from courses')
  const[addCourse] = useAddCourseMutation();
  const [deleteCourses] = useDeleteCoursesMutation();
 
@@ -260,7 +260,7 @@ const onSubmit = async (data) => {
                 <th className="py-2 px-4 border-b">Title</th>
                 <th className="py-2 px-4 border-b">Author</th>
                 <th className="py-2 px-4 border-b">Membership Type</th>
-                {/* <th className="py-2 px-4 border-b">Category</th> */}
+                <th className="py-2 px-4 border-b">Category</th>
                 <th className="py-2 px-4 border-b">Banner</th>
                 <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
@@ -275,9 +275,9 @@ const onSubmit = async (data) => {
                     {/* {course?.membership_type} */}
                     {course?.membership_type === "1" ? "Paid" : "Free"}
                   </td>
-                  {/* <td className="py-2 px-4 border-b">
-                    {course?.category_id?.title}
-                  </td> */}
+                  <td className="py-2 px-4 border-b">
+                    {course?.sub_category_id?.category_id?.title}
+                  </td>
                   <td className="py-2 px-4 border-b">
                     <Image
                       src={course.banner}

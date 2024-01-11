@@ -2,6 +2,9 @@
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useGetMyAllOrdersDetailsQuery } from "@/redux/api/orderApi"
+import { useEffect, useState } from "react";
+import BookSingleOrders from "./BookSingleOrders";
+import SingleOrderDetails from "./SingleOrderDetails";
 
 
 const UserOrder = () => {
@@ -9,6 +12,7 @@ const UserOrder = () => {
   const {data, isLoading, isError} = useGetMyAllOrdersDetailsQuery();
   // console.log(data, 'form user order');
   const bookOrdersData = data?.orders;
+  
 
   let content = null;
 
@@ -36,26 +40,13 @@ const UserOrder = () => {
   }
 
   if (!isLoading && !isError && bookOrdersData?.length > 0) {
-    content = bookOrdersData?.map((item)=> <tr key={item?.id} className="hover">
-    <th>প্রাইমারী </th>
-    <td>{item?.total_price
-}</td>
-    <td>{item?.createdAt}</td>
-    <td>৪ ফেব্রুয়ারি ২০২৪</td>
-    <td>{item?.trx_id
-}</td>
-    <td>paid</td>
-  </tr>);
+    content = bookOrdersData?.map((item)=> <SingleOrderDetails key={item?.id} item={item}/>);
   }
 
   return (
     <>
    <div className="grid grid-cols-1 gap-2">
-   {/* {bookOrdersData?.map((item)=><div key={item?.id}>
-      <div>
-        <p>{JSON.parse(item?.orders)}</p>
-      </div>
-    </div>)} */}
+   {/* {bookOrdersData && bookOrdersData?.map((item)=><BookSingleOrders key={item?.id} bookOrder={item}/>)} */}
 
    </div>
     <div className="border">
