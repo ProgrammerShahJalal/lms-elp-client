@@ -257,9 +257,9 @@ const UserExamPage = ({ params }) => {
 
     Swal.fire({
       title: 'Quiz Summary',
-      html: `<p>Total Questions: ${totalQuestions}</p>
-             <p>Total Correct Answers: ${totalCorrectAnswers}</p>
-             <p>Total Wrong Answers: ${totalWrongAnswers}</p>`,
+      html: `<p>Your have answered: ${totalQuestions}</p>
+             <p>Your Correct Answers: ${totalCorrectAnswers}</p>
+             <p>Your Wrong Answers: ${totalWrongAnswers}</p>`,
       icon: 'info',
     });
   
@@ -336,11 +336,11 @@ const UserExamPage = ({ params }) => {
          
 
           <div className="mt-2">
-            {data.map((quiz,index) => (<>
-              <p key={quiz.id}>
-                Question {index}: Correct Answer - {correctAnswers[quiz.id]}
+            {data.map((quiz,i) => (<>
+              <p key={quiz.id} className="text-green-400">
+                Question {i + 1}: Correct Answer - {correctAnswers[quiz.id]}
               </p>
-              <p> Your Answer - {selectedOptions[quiz.id] && Object.keys(selectedOptions[quiz.id])[0]}</p>
+              <p className="text-red-400"> Your Answer - {selectedOptions[quiz.id] && Object.keys(selectedOptions[quiz.id])[0] ? selectedOptions[quiz.id] && Object.keys(selectedOptions[quiz.id])[0] :" you don't given answer"}</p>
               </>
             ))}
           </div>
