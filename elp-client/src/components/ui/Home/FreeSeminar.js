@@ -14,7 +14,7 @@ const FreeSeminar = () => {
             {/* <a href="https://www.youtube.com/watch?v=CitLPrSS1w0" target="_blank" rel="noopener noreferrer">
             <SiYoutubemusic className="text-6xl text-white "/>
             </a> */}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/CitLPrSS1w0?si=GTpGRpu6sXHvQsac" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+            <iframe width="560" height="315" className="hidden lg:block" src="https://www.youtube.com/embed/CitLPrSS1w0?si=GTpGRpu6sXHvQsac" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
           </div>
           <div className="lg:pt-20 text-white space-y-6">

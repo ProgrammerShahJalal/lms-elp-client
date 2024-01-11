@@ -1,16 +1,19 @@
 'use client'
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
 import { useGetAllExamsQuery } from "@/redux/api/examsApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 const CourseAllExams = ({course_id}) => {
+  const userLoggedIn = isLoggedIn();
     const router = useRouter();
     const { data: dataExams , isLoading, isError} = useGetAllExamsQuery({
       course_id: course_id,
@@ -20,7 +23,9 @@ const CourseAllExams = ({course_id}) => {
   
     const enrollToExam = async (exam) => {
     
-      console.log(exam, 'from enroll')
+      if (!userLoggedIn) {
+        return toast.error("Please signin to buy exam ");
+      }
       const examPaymentPayload = {
         user_id: getUserInfo()?.userId,
         exam_id: exam?.id,
@@ -60,7 +65,7 @@ let content = null;
       <>
         {" "}
         <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg mt-5">
-      <h5>There is No Quiz In this course now</h5>
+      <h5>There is No exam In this course now</h5>
     </div>
       </>
     );
@@ -83,8 +88,13 @@ let content = null;
           </td>
         </tr>
       ))}
-
+      const breadcrumbItems = [
+        { label: "হোম", link: "/" }, 
+        { label:  "কোর্স সমূহ", link: "/" },
+      { label: " সব পরীক্ষা সমূহ" }];
     return (
+      <>
+      <Commonbanner title="All Courses" breadcrumbItems={breadcrumbItems} />
         <div className="mx-20 py-20 ">
              <div className="overflow-x-auto">
       <table className="table">
@@ -123,6 +133,7 @@ let content = null;
       </table>
     </div>
         </div>
+        </>
     );
 };
 

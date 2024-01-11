@@ -35,13 +35,13 @@ const UserSidebar = () => {
         ☰
       </button>
       <div
-        className={` h-screen w-64 fixed top-0 left-0 overflow-y-auto transition-transform transform lg:transform-none ${
+        className={`bg-gray-200 h-screen w-64 fixed top-0 left-0 overflow-y-auto transition-transform transform lg:transform-none ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-4 flex justify-between items-center mt-16">
           {isOpen && (
-            <button className="text-white" onClick={closeSidebar}>
+            <button className="text-black font-bold text-xl" onClick={closeSidebar}>
               ✕
             </button>
           )}

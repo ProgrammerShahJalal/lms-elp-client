@@ -6,18 +6,7 @@ import OrdersBooksData from "./OrdersBooksData";
 const BookSingleOrders = ({bookOrder}) => {
    
     const allOrders= JSON.parse(bookOrder?.orders);
-    // console.log(allOrders, 'from singlre order')
- 
-
-//   useEffect(()=>{
-//     //   if(bookOrdersData){
-//     //     console.log(bookOrdersData)
-//     //     // setBookOrders(JSON.parse(bookOrders?.orders))
-//     //   }
-
-//   },[bookOrdersData])
-
-//   console.log(bookOrders,'from useef')
+    
     return (
         <div>
             <table className="table">
