@@ -130,7 +130,7 @@ const Navbar = () => {
           >
             <Image
               src={logo}
-              alt="logo"
+              alt="Easy Learning Platform"
               className="w-14 inline-block items-center"
             />
             <span className="dark:text-cyanPrimary hover:text-bluePrimary">
@@ -189,7 +189,9 @@ const Navbar = () => {
 
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold" />{" "}
-              {userLoggedIn && <sup className="text-md font-bold">{cartLength?.length}</sup>}
+              {userLoggedIn && (
+                <sup className="text-md font-bold">{cartLength?.length}</sup>
+              )}
             </Link>
 
             {/* <!-- Dropdown menu --> */}
@@ -207,6 +209,7 @@ const Navbar = () => {
                   width={20}
                   height={50}
                   className="rounded "
+                  alt="Profile"
                 />
               </button>
 
