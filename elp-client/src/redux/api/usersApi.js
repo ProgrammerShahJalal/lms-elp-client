@@ -53,6 +53,15 @@ export const usersApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["shipping-addresses"],
     }),
+
+
+    deleteUser: build.mutation({
+      query: (id) => ({
+        url: `${USERS_URL}/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['users']
+    })
   }),
 });
 
@@ -62,4 +71,5 @@ export const {
   useAddShippingAddressMutation,
   useGetMyShippingAddressQuery,
   useUpdateShippingAddressMutation,
+  useDeleteUserMutation
 } = usersApi;

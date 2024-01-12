@@ -58,7 +58,7 @@ const UserOrder = () => {
     {/* head */}
     <thead>
       <tr className="">
-        <th>বইয়ের নাম </th>
+        <th>আপনার কেনা বইসমুহ </th>
         <th> সর্বমোট  মূল্য</th>
         <th>কেনার তারিখ</th>
         <th>ট্রান্সজেকশন আইডি</th>

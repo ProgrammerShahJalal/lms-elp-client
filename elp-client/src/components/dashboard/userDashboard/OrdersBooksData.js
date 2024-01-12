@@ -9,8 +9,8 @@ const OrdersBooksData = ({bookId,quantity, price}) => {
      
             <tr className="hover">
         <th>{data?.title} </th>
-        <td>{price}</td>
-        <td>{quantity}</td>
+        <td>৳  {" "}{price}</td>
+        <td>{quantity}টি</td>
        
       </tr>
         

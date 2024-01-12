@@ -123,8 +123,8 @@ const UserSidebar = () => {
                     <ImProfile fontSize={20} /> প্রোফাইল
                   </Link>
                 </li>
-                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
-                  <Link href={"/superAdmin/allusers"} className="">ব্যবহারকারী</Link>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-2 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/superAdmin/allusers"} className=""> <ImProfile fontSize={20} />ব্যবহারকারী</Link>
                 </li>
                 <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900  px-2 py-2 my-3 hover:text-white rounded flex items-center gap-3 bg-gray-200">
                   <Link href={"/admin/addcategory"}>

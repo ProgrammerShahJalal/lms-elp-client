@@ -10,7 +10,7 @@ const SingleOrderDetails = ({ item }) => {
       <th>
         <BookSingleOrders key={item?.id} bookOrder={item} />{" "}
       </th>
-      <td>{item?.total_price}</td>
+      <td>৳  {" "}{item?.total_price}</td>
       <td>{humanReadableFormatLocal}</td>
       <td>{item?.trx_id}</td>
       <td>paid</td>
