@@ -5,13 +5,15 @@ import {
   useGetAllSubscriptionsQuery,
   useSubscribeToCourseMutation,
 } from "@/redux/api/courseApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function CourseSubscriptions({ course_id }) {
+  const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const { data, isError, isLoading } = useGetAllSubscriptionsQuery({
     course_id,
@@ -20,6 +22,9 @@ function CourseSubscriptions({ course_id }) {
   // console.log(subscriptionData, 'fron sourse subd')
 
   const enrollToCourse = async (subscription) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy a subscribe course");
+    }
     
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
