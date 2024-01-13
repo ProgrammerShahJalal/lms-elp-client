@@ -1,21 +1,27 @@
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
 import { useGetAllExamsQuery } from "@/redux/api/examsApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function CourseExams({ course_id }) {
+  const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const { data: dataExams, isError,isLoading } = useGetAllExamsQuery({
     course_id: course_id,
   });
 
   const enrollToExam = async (exam) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy exam ");
+    }
   
    
     const examPaymentPayload = {
@@ -85,7 +91,11 @@ function CourseExams({ course_id }) {
       </tr>
     ));
   }
+
+ 
   return (
+    <>
+    
     <div className="overflow-x-auto">
       <table className="table">
         {/* head */}
@@ -122,6 +132,7 @@ function CourseExams({ course_id }) {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
 

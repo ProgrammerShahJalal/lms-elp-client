@@ -4,18 +4,19 @@ import { useAddToCartMutation } from "@/redux/api/cartApi";
 import { isLoggedIn } from "@/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const BookDetailsData = ({ data, isError, isLoading }) => {
   const [addToCart] = useAddToCartMutation();
   const userLoggedIn = isLoggedIn();
   // const dispatch = useDispatch();
 
-  const handleAddBook = async (item) => {
+  const handleAddBook = async (data) => {
     if (!userLoggedIn) {
       return toast.error("Please signin to buy a book");
     }
 
-    const res = await addToCart({book_id: item?._id, quantity: 1 });
+    const res = await addToCart({book_id: data?.item?._id, quantity: 1 });
   
  
     if (res?.data?.quantity && res.data.quantity > 1) {
@@ -77,7 +78,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
             </p>
             {/* <p>{data?.pdf_link}</p> */}
             <p>{data?.price} TK</p>
-            <button onClick={() => handleAddBook(item)}  className="bg-yellowPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+            <button onClick={() => handleAddBook(data)}  className="bg-yellowPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
               এড টু কার্ড
             </button>
             

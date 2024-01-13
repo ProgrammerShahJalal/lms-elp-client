@@ -34,7 +34,8 @@ export const questionsApi = baseApi.injectEndpoints({
             invalidatesTags: ["questions"],
         }),
 
-        // alll subscript history get {{local_url}}/questions/exam/:exam_id
+        // all subscript history get {{local_url}}/questions/exam/:exam_id
+        // {{local_url}}/exams/658ff9579106ca03ff6d8aa8/questions
     getMyQuestionsEnrollHistory: build.query({
         query: (id) => ({
           url: `${QUESTIONS_URL}/exam/${id}`,

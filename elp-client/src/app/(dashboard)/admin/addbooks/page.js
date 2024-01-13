@@ -216,8 +216,8 @@ const AddBooks = () => {
         {isBooksLoading ? (
           <p className="text-center text-xl">Loading books...</p>
         ) : (
-          <div className="">
-            <table className=" bg-white border border-gray-300">
+          <div className="overflow-x-auto mt-10">
+            <table className=" min-w-full bg-white border border-gray-300">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">Title</th>
