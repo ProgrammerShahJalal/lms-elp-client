@@ -72,7 +72,7 @@ const AddQuestions = () => {
             >
               Exam ID
             </label>
-            <select
+            <select required
               id="examId"
               name="examId"
               value={newQuestion.exam_id}
@@ -81,13 +81,13 @@ const AddQuestions = () => {
               }
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             >
-              <option value="" disabled>
+              <option value="" disabled >
                 Select Exam
               </option>
               {filteredAllData &&
-                filteredAllData.map((exam) => (
+                filteredAllData?.map((exam) => (
                   <option key={exam.id} value={exam.id}>
-                    {exam.title}
+                    {exam?.title}
                   </option>
                 ))}
             </select>
@@ -100,7 +100,7 @@ const AddQuestions = () => {
             >
               Question
             </label>
-            <input
+            <input required
               type="text"
               id="question"
               name="question"
@@ -118,7 +118,7 @@ const AddQuestions = () => {
             >
               Mark
             </label>
-            <input
+            <input required
               type="number"
               id="mark"
               name="mark"

@@ -22,7 +22,7 @@ const UserProfileInfo = () => {
         <div>
           <Link
             href={`/profile/edit/${data?._id}`}
-            className="flex items-center gap-3 bg-sky-900 text-white transition-all  hover:bg-blue-900 cursor-pointer px-5 py-2 rounded"
+            className="flex items-center gap-3 bg-sky-900 text-white transition-all  hover:bg-blue-900 cursor-pointer px-5 py-2 ml-10 rounded"
           >
             <span>এডিট করুন</span> <MdModeEditOutline />
           </Link>
