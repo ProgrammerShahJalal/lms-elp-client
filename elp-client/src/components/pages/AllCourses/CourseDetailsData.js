@@ -33,7 +33,7 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
               {" "}
               <span className=" text-bluePrimary pr-10 font-semibold">
                 {" "}
-                Category: {data?.sub_category_id?.title}{" "}
+                Category: {data?.sub_category_id?.category_id?.title}{" "}
               </span>{" "}
               Sub Category:{" "}
               <span className=" text-yellowPrimary">

@@ -6,12 +6,13 @@ import InitialLoader from "@/components/Loader/InitialLoader";
 import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
 import { useGetAllSubscriptionsQuery, useGetSingleCourseQuery } from "@/redux/api/courseApi";
-import { getUserInfo } from "@/services/auth.service";
+
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { getUserInfo, isLoggedIn } from "@/services/auth.service";
+import toast from "react-hot-toast";
 
 const CourseSubscribe = ({course_id}) => {
   const {data:singleCourse} = useGetSingleCourseQuery(course_id);

@@ -47,6 +47,7 @@ const BookSection = () => {
         </Link>
       </div>
       <div className="grid lg:grid-cols-3  gap-4">{content}</div>
+     
     </div>
   );
 };

@@ -160,7 +160,7 @@ const UserSidebar = () => {
                     পরীক্ষা যোগ করুন
                   </Link>
                 </li>
-                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3"> 
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900    py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3"> 
                   <Link href={"/admin/addquiz"}>
                     <MdQuiz /> কুইজ যোগ করুন
                   </Link>
