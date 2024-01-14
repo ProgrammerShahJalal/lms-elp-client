@@ -15,38 +15,40 @@ import { useForm } from "react-hook-form";
 // import 'react-quill/dist/quill.snow.css';
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-import { useAddCourseMutation, useDeleteCoursesMutation, useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import {
+  useAddCourseMutation,
+  useDeleteCoursesMutation,
+  useGetAllCoursesQuery,
+} from "@/redux/api/courseApi";
 
 const AddCourseForm = () => {
+  const [selectedCategory, setSelectedCategory] = useState("");
   const {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
   } = useGetAllCategoriesQuery();
- 
+
   const {
     data: subcategories,
     isLoading: isLoadingSubcategories,
     isError: isErrorSubcategories,
-  } = useGetAllSubcategoriesQuery();
-  const allSubcategory =subcategories?.subcategories;
+  } = useGetAllSubcategoriesQuery({
+    category_id: selectedCategory,
+  });
+  const allSubcategory = subcategories?.subcategories;
 
   const { data: courses, isLoading: isSubcategoryLoading } =
     useGetAllCoursesQuery();
   const allCourses = courses?.courses?.data;
-  console.log(allCourses,'from courses')
- const[addCourse] = useAddCourseMutation();
- const [deleteCourses] = useDeleteCoursesMutation();
+
+  const [addCourse] = useAddCourseMutation();
+  const [deleteCourses] = useDeleteCoursesMutation();
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
-
-
-
-
-const onSubmit = async (data) => {
+  const onSubmit = async (data) => {
     // console.log(data, 'input daa');
-    
 
     const content = { ...data };
 
@@ -60,9 +62,8 @@ const onSubmit = async (data) => {
     formData.append("data", result);
     // console.log(formData, 'formdaata')
     try {
-  
       const resultData = await addCourse(formData);
-    
+      // console.log(resultData,'from api')
       if (resultData) {
         toast.success("course created successfully");
       }
@@ -72,20 +73,16 @@ const onSubmit = async (data) => {
     }
   };
 
-
-
-
   // handle delete course function
 
   const handleDelete = async (courseId) => {
     try {
-      
       const result = await deleteCourses(courseId);
       // console.log(result)
 
-    if(result){
-      toast.success("Category deleted successfully");
-    }
+      if (result) {
+        toast.success("Category deleted successfully");
+      }
     } catch (error) {
       toast.error("Failed to delete category");
     }
@@ -94,34 +91,62 @@ const onSubmit = async (data) => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Add New Course</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Course Title:
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            {...register("title", { required: true })}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Author:
-          </label>
-          <input
-            type="text"
-            id="author"
-            name="author"
-            {...register("author", { required: true })}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Category</label>
-          <select
+      <div className="border px-5 py-5">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Course Title:
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              {...register("title", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Author:
+            </label>
+            <input
+              type="text"
+              id="author"
+              name="author"
+              {...register("author", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2">Category</label>
+            {/* <select
+            {...register("category_id", { required: true })}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setValue("sub_category_id", ""); // Reset subcategory when category changes
+            }}
+            value={selectedCategory}
+            className="w-full border border-gray-300 p-2 rounded-md"
+          ></select> */}
+            <select
+              {...register("category_id", { required: true })}
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+                setValue("sub_category_id", ""); // Reset subcategory when category changes
+              }}
+              value={selectedCategory}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              <option value="" disabled>
+                Select a category
+              </option>
+              {categories?.categories?.map((category) => (
+                <option key={category?.id} value={category?.id}>
+                  {category?.title}
+                </option>
+              ))}
+            </select>
+            {/* <select
 
             {...register("category_id", { required: true })}
 
@@ -135,53 +160,44 @@ const onSubmit = async (data) => {
                 {category?.title}
               </option>
             ))}
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Sub Category</label>
-          <select
-
-            {...register("sub_category_id", { required: true })}
-
-            className="w-full border border-gray-300 p-2 rounded-md"
-          >
-            <option value="" disabled>
-              Select a category
-            </option>
-            {allSubcategory?.map((subCategory) => (
-              <option key={subCategory?.id} value={subCategory?.id}>
-                {subCategory?.title}
+          </select> */}
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2">Sub Category</label>
+            <select
+              {...register("sub_category_id", { required: true })}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              <option value="" disabled>
+                Select a category
               </option>
-            ))}
-          </select>
-        </div>
+              {allSubcategory?.map((subCategory) => (
+                <option key={subCategory?.id} value={subCategory?.id}>
+                  {subCategory?.title}
+                </option>
+              ))}
+            </select>
+          </div>
 
-       
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Membership Type:
-          </label>
-          <select
-            name="membership_type"
-            {...register("membership_type", { required: true })}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          >
-            <option value="" disabled>
-              Select membership type
-            </option>
-            <option value="0">Paid</option>
-            <option value="1">Free</option>
-          </select>
-        </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Membership Type:
+            </label>
+            <select
+              name="membership_type"
+              {...register("membership_type", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            >
+              <option value="" disabled>
+                Select membership type
+              </option>
+              <option value="0">Paid</option>
+              <option value="1">Free</option>
+            </select>
+          </div>
 
-       
-
-
-
-
-     
-        <div className="mb-4">
-        <label
+          <div className="mb-4">
+            <label
               htmlFor="description"
               className="block text-sm font-medium text-gray-600"
             >
@@ -195,33 +211,32 @@ const onSubmit = async (data) => {
               {...register("description", { required: true })}
               className="mt-1 p-2 border rounded-md w-full"
             />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Syllabus:
-          </label>
-          <input
-            type="text"
-            id="syllabus"
-            name="syllabus"
-            {...register("syllabus", { required: true })}
-
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-          Study Materials:
-          </label>
-          <input
-            type="text"
-            id="study_materials"
-            name="study_materials"
-            {...register("study_materials", { required: true })}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
-        <div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Syllabus:
+            </label>
+            <input
+              type="text"
+              id="syllabus"
+              name="syllabus"
+              {...register("syllabus", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Study Materials:
+            </label>
+            <input
+              type="text"
+              id="study_materials"
+              name="study_materials"
+              {...register("study_materials", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div>
             <label
               htmlFor="banner"
               className="block text-sm font-medium text-gray-600"
@@ -236,16 +251,15 @@ const onSubmit = async (data) => {
               className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
-        <button
-          type="submit"
-        //   onClick={handleAddCourse}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
-        >
-          Add Course
-        </button>
-      </form>
-
-
+          <button
+            type="submit"
+            //   onClick={handleAddCourse}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+          >
+            Add Course
+          </button>
+        </form>
+      </div>
 
       <h1 className="text-2xl font-bold mb-4 mt-12">
         Admin Update & Delete Courses
@@ -282,7 +296,7 @@ const onSubmit = async (data) => {
                     <Image
                       src={course.banner}
                       alt={`Banner for ${course?.title}`}
-                      width={400}
+                      width={100}
                       height={300}
                     />
                   </td>

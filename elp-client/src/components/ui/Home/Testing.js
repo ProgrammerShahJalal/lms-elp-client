@@ -4,7 +4,15 @@ const Testing = () => {
   return (
     <div>
 
+      {/* courses 
       
+      
+      
+      
+      
+      
+      
+      */}
 
 {/* <div className="grid grid-cols-3 gap-4">
   <div className="mb-4">
