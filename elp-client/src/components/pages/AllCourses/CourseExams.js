@@ -14,7 +14,11 @@ import toast from "react-hot-toast";
 function CourseExams({ course_id }) {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-  const { data: dataExams, isError,isLoading } = useGetAllExamsQuery({
+  const {
+    data: dataExams,
+    isError,
+    isLoading,
+  } = useGetAllExamsQuery({
     course_id: course_id,
   });
 
@@ -22,8 +26,7 @@ function CourseExams({ course_id }) {
     if (!userLoggedIn) {
       return toast.error("Please signin to buy exam ");
     }
-  
-   
+
     const examPaymentPayload = {
       user_id: getUserInfo()?.userId,
       exam_id: exam?.id,
@@ -46,19 +49,18 @@ function CourseExams({ course_id }) {
 
   const examsData = dataExams?.exams?.data;
 
-
   let content = null;
 
   if (isLoading) {
     content = (
       <>
-        <InitialLoader/>
+        <InitialLoader />
       </>
     );
   }
 
   if (!isLoading && isError) {
-    content = <Error/>;
+    content = <Error />;
   }
 
   if (!isLoading && !isError && examsData?.length === 0) {
@@ -66,8 +68,8 @@ function CourseExams({ course_id }) {
       <>
         {" "}
         <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-      <h5>There is No exam in this course</h5>
-    </div>
+          <h5>There is No exam in this course</h5>
+        </div>
       </>
     );
   }
@@ -92,46 +94,24 @@ function CourseExams({ course_id }) {
     ));
   }
 
- 
   return (
     <>
-    
-    <div className="overflow-x-auto">
-      <table className="table">
-        {/* head */}
-        <thead>
-          <tr>
-            <th></th>
-            <th>Exam Title</th>
-            <th>Exam Type</th>
-            <th>Total Marks</th>
-            <th>Fee</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {content}
-          {/* {!!examsData &&
-            examsData?.map((exam) => (
-              <tr className="hover" key={exam?._id}>
-                <th className="text-gray-400">#</th>
-                <td>{exam?.title}</td>
-                <td>{exam?.exam_type == "0" ? "MCQ" : "Written"}</td>
-                <td>{exam?.total_marks}</td>
-                <td>{exam?.fee}</td>
-                <td>
-                  <p
-                    onClick={() => enrollToExam(exam)}
-                    className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
-                  >
-                    Enroll
-                  </p>
-                </td>
-              </tr>
-            ))} */}
-        </tbody>
-      </table>
-    </div>
+      <div className="overflow-x-auto">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th></th>
+              <th>Exam Title</th>
+              <th>Exam Type</th>
+              <th>Total Marks</th>
+              <th>Fee</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>{content}</tbody>
+        </table>
+      </div>
     </>
   );
 }

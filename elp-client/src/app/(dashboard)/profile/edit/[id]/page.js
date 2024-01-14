@@ -2,7 +2,7 @@
 
 import { useGetSingleUserQuery, useUpdateUserMutation } from "@/redux/api/authApi";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -10,20 +10,45 @@ const UserProfileEditPage = ({params}) => {
   const router = useRouter()
   const {id} = params;
   const {data} = useGetSingleUserQuery(id);
-  // console.log(data,'single user')
 
-  const { register, handleSubmit,setValue } = useForm();
+  const [name , setName] = useState("");
+  const [email , setEmail] = useState("");
+  const [contact_no , setContact_no] = useState("");
+  // const [name , setName] = useState("");
+  // console.log(data,'single user')
+  const defaultValues = {
+    name: data?.name,
+    email: data?.email,
+    contact_no: data?.contact_no,
+    // password: data?.password
+    
+  };
+  const { register, handleSubmit,setValue } = useForm({
+    defaultValues: defaultValues
+  });
 
   const [updateUser] = useUpdateUserMutation();
 
+useEffect(()=>{
+  setName(data?.name) ;
+  setEmail(data?.email) ;
+  setContact_no(data?.contact_no) 
+},[data])
+  
 
-  const onSubmit = async (values) => {
+
+  const onHandleSubmit = async (e) => {
+    e.preventDefault()
     // console.log(values)
     try {
-       const res = await updateUser({id, body:values});
+      // console.log(name,contact_no,email)
+       const res = await updateUser({
+        id, name, email, contact_no
+       });
+      //  console.log(res, 'afetr api')
        if(res){
         toast.success("Profile updated successfully");
-        router.push("/profile");
+        // router.push("/profile");
        }
        else{
         toast.error("Something is wrong to update user")
@@ -36,47 +61,45 @@ const UserProfileEditPage = ({params}) => {
     }
   };
 
-  const defaultValues = {
-    name: data?.name,
-    email: data?.email,
-    contact_no: data?.contact_no,
-    // password: data?.password
-    
-  };
-
+ 
   // const onSubmit = (data) => console.log(data);
   return (
     <>
     <div className="bg-white rounded-lg py-6 border border-gray-200 px-10 ">
-      <form onSubmit={handleSubmit(onSubmit)} defaultValues={defaultValues} >
+      <form onSubmit={onHandleSubmit} >
       
-        {data?.name && (
+       
           <input
-          {...register("name")}
+          // {...register("name")}
           type="text"
-          defaultValue={data?.name}
+          value={name}
+          onChange={(e)=> setName(e.target.value)}
           placeholder="আপনার নাম"
           className="input input-bordered input-md w-full max-w-xs mr-5 outline-none mb-4"
         />
-        )}
-        {data?.email && (
+        
+      
           <input
-          {...register("email")}
+          // {...register("email")}
           type="email"
-          defaultValue={data?.email}
+          value={email}
+          // defaultValue={data?.email}
+          onChange={(e)=> setEmail(e.target.value)}
           placeholder="আপনার ইমেইল"
           className="input input-bordered input-md w-full max-w-xs mb-4 mr-5"
         />
-        )}
-        {data?.contact_no && (
+       
+      
           <input
-          {...register("contact_no")}
+          // {...register("contact_no")}
           type="number"
-          defaultValue={data?.contact_no}
+          value={contact_no}
+          // defaultValue={data?.contact_no}
+          onChange={(e)=> setContact_no(e.target.value)}
           placeholder="আপনার মোবাইল নাম্বার"
           className="input input-bordered input-md w-full max-w-xs mb-4 mr-5"
         />
-        )}
+        
         {/* {data?.password && (
           <input
           {...register("password")}

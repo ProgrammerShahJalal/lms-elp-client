@@ -45,7 +45,7 @@ export const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: `${USERS_URL}/${data?.id}`,
         method: "PATCH",
-        data: data.body,
+        data: data,
       }),
       invalidatesTags: ['users']
     }),
