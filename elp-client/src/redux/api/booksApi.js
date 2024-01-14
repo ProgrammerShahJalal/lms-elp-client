@@ -41,8 +41,8 @@ export const booksApi = baseApi.injectEndpoints({
       invalidatesTags: ["books"],
     }),
     deleteBooks: build.mutation({
-      query: (categoryId) => ({
-        url: `${BOOKS_URL}/${categoryId}`,
+      query: (id) => ({
+        url: `${BOOKS_URL}/${id}`,
         method: 'DELETE'
       }),
       invalidatesTags: ['books']

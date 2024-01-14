@@ -61,6 +61,7 @@ const AddQuiz = () => {
             exam_type: selectedExam.exam_type,
         };
         const res = await addQuizPlaylist(newData);
+        // console.log(res)
         if(res){
           toast.success("Quiz added successfully")
         }
@@ -376,6 +377,12 @@ const AddQuiz = () => {
                     </div>
                 </form>
             </div>
+
+
+
+
+
+            
             {/* here i make show quiz question */}
             {filteredQuestions?.map((quiz, index) => (
                 <div key={quiz.id} className="mb-6 p-4  rounded">

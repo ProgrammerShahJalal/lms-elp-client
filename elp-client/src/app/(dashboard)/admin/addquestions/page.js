@@ -1,14 +1,34 @@
 "use client";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useGetAllExamsQuery } from "@/redux/api/examsApi";
 import { useAddQuizPlaylistMutation, useDeleteQuestionsMutation, useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
+import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 
 const AddQuestions = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [selectedCourse, setSelectedCourse] = useState(null);
   const [addQuizPlaylist] = useAddQuizPlaylistMutation();
   const { data } = useGetAllExamsQuery();
+  const { data: categories } = useGetAllCategoriesQuery(undefined);
+    const { data: subCategories, refetch: refetchSubCategories } =
+        useGetAllSubcategoriesQuery({
+            category_id: selectedCategory,
+        });
+    const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
+        sub_category_id: selectedSubcategory,
+    });
+    const allCourse = courses?.courses?.data;
+    const { data: exams, refetch: refetchExams } = useGetAllExamsQuery({
+        course_id: selectedCourse, exam_type:1
+    });
+    const allExams = exams?.exams?.data;
+
   const allData = data?.categories?.data;
   const filteredAllData = allData?.filter((quiz) => quiz.exam_type === "1");
   const { data: questions } = useGetAllQuestionsQuery();
@@ -21,6 +41,29 @@ const AddQuestions = () => {
     mark: 0,
     exam_id: "",
   });
+
+
+  useEffect(() => {
+    const fetchSubCategory = async () => {
+        await refetchSubCategories({ category_id: selectedCategory });
+    };
+    fetchSubCategory();
+}, [selectedCategory]);
+
+useEffect(() => {
+    const fetchSubCategories = async () => {
+        await refetchCourses({ sub_category_id: selectedSubcategory });
+    };
+    fetchSubCategories();
+}, [selectedSubcategory]);
+
+useEffect(() => {
+    const fetchExams = async () => {
+         await refetchExams({ course_id: selectedCourse });
+        
+    };
+    fetchExams();
+}, [selectedCourse]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -65,7 +108,125 @@ const AddQuestions = () => {
           className="max-w-md mx-auto bg-white p-8 border rounded shadow"
         >
           <h2 className="text-2xl font-semibold mb-4">Add Broad questions</h2>
-          <div className="mb-4">
+           {/* Category selection field */}
+           <div className="mb-4">
+                            <label
+                                htmlFor="categories"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Categories
+                            </label>
+                            <select
+                                id="categories"
+                                name="categories"
+                                className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+                                onChange={(e) => setSelectedCategory(e.target.value)}
+                            >
+                                <option value="" disabled selected>
+                                    Select a category
+                                </option>
+                                {categories &&
+                                    categories?.categories?.map((category) => (
+                                        <option key={category?.id} value={category?.id}>
+                                            {category.title}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+
+                        {/* Sub category selection field */}
+                        <div className="mb-4">
+                            <label
+                                htmlFor="subcategories"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Subcategories
+                            </label>
+                            <select
+                                id="subcategories"
+                                name="subcategories"
+                                className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+                                disabled={!selectedCategory}
+                                onChange={(e) => setSelectedSubcategory(e.target.value)}
+                            >
+                                <option value="" disabled selected>
+                                    Select a sub category
+                                </option>
+                                {!!subCategories &&
+                                    subCategories?.subcategories?.map((subCategory) => (
+                                        <option key={subCategory?.id} value={subCategory?.id}>
+                                            {subCategory?.title}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+
+                        {/* Course selection field */}
+                        <div className="mb-4">
+                            <label
+                                htmlFor="courses"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Select Courses
+                            </label>
+                            <select
+                                id="courses"
+                                name="courses"
+                                disabled={!selectedSubcategory}
+                                onChange={(e) => setSelectedCourse(e.target.value)}
+                                className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+                            >
+                                <option value="" disabled selected>
+                                    Select a course
+                                </option>
+                                {allCourse?.length === 0 ? (
+                                    <option value="" disabled>
+                                        No courses available
+                                    </option>
+                                ) : (
+                                    allCourse?.map((course) => (
+                                        <option key={course.id} value={course.id}>
+                                            {course.title}
+                                        </option>
+                                    ))
+                                )}
+                            </select>
+                        </div>
+
+                        {/* Exam Selection field */}
+                        <div className="mb-4">
+                            <label
+                                htmlFor="exam"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Select Exam
+                            </label>
+                            <select
+                                id="exam"
+                                name="exam"
+                                className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+                                disabled={!selectedCourse}
+
+                                value={newQuestion.exam_id}
+                                onChange={(e) => setNewQuestion({ ...newQuestion, exam_id: e.target.value })}
+                            >
+                                <option value="" disabled selected>
+                                    Select an Exam
+                                </option>
+                                {exams?.exams?.data.length === 0 ? (
+                                    <option value="" disabled>
+                                        No exam available
+                                    </option>
+                                ) : (
+                                    exams?.exams?.data?.map((exam) => (
+                                        <option key={exam.id} value={exam.id}>
+                                            {exam.title}
+                                        </option>
+                                    ))
+                                )}
+                            </select>
+                        </div>
+          {/* <div className="mb-4">
             <label
               htmlFor="examId"
               className="block text-sm font-medium text-gray-600"
@@ -91,7 +252,7 @@ const AddQuestions = () => {
                   </option>
                 ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label
@@ -138,6 +299,18 @@ const AddQuestions = () => {
             </button>
           </div>
         </form>
+
+
+
+
+
+
+
+
+
+
+
+
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
             <thead>

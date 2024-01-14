@@ -8,6 +8,7 @@ import {
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import Swal from "sweetalert2";
 
 const AddBooks = () => {
   const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery();
@@ -48,13 +49,51 @@ const AddBooks = () => {
   };
   
   // book delete function
-  const handleDelete = async (categoryId) => {
+  const handleDelete = async (id) => {
     try {
-      await deleteBooks(categoryId);
-    } catch (error) {
-      toast.error("Failed to delete category");
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to delete this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        // User confirmed deletion
+        const res = await deleteBooks(id);
+        // console.log(res?.data)
+
+        if (res?.data?._id === id) {
+          // Item deleted successfully
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } else {
+          // Something went wrong with deletion
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong with deletion.",
+            icon: "error",
+          });
+        }
+      }
+    } catch (err) {
+      // Handle any errors that occur during the process
+      toast.error(err.message);
     }
   };
+  // const handleDelete = async (categoryId) => {
+  //   try {
+  //     await deleteBooks(categoryId);
+  //   } catch (error) {
+  //     toast.error("Failed to delete category");
+  //   }
+  // };
   return (
     <>
       <div className="container mx-auto mt-8 p-6">
