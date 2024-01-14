@@ -185,7 +185,7 @@ const Navbar = () => {
 
           {/* btn for large device */}
           <div className="space-x-4 hidden lg:flex items-center">
-            <ToggleTheme />
+            {/* <ToggleTheme /> */}
 
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold" />{" "}
@@ -195,6 +195,8 @@ const Navbar = () => {
             </Link>
 
             {/* <!-- Dropdown menu --> */}
+
+          {userLoggedIn ? <>
             <div className="relative inline-block text-left">
               <button
                 type="button"
@@ -218,8 +220,8 @@ const Navbar = () => {
                   isOpen ? "block" : "hidden"
                 } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow `}
               >
-                <ul className="py-4 px-10 text-sm text-gray-700 dark:text-black">
-                  {userLoggedIn ? (
+                <ul className="py-4 pl-5 text-sm text-gray-700 dark:text-black">
+              
                     <>
                       <li>
                         <Link
@@ -247,17 +249,17 @@ const Navbar = () => {
                         </button>
                       </li>
                     </>
-                  ) : (
-                    <Link
-                      href="/login"
-                      className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
-                    >
-                      লগইন
-                    </Link>
-                  )}
+                 
                 </ul>
               </div>
             </div>
+          
+          </>:  <Link
+                      href="/login"
+                      className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
+                    >
+                      লগইন/রেজিস্টার করুন
+                    </Link>}
           </div>
 
           {/* menu btn for only mobile devices */}
@@ -279,7 +281,7 @@ const Navbar = () => {
               : "hidden"
           }`}
         >
-          <ToggleTheme />
+          {/* <ToggleTheme /> */}
           {navItems.map(({ link, path, dropdown }) => (
             <div key={path}>
               {dropdown ? (
@@ -345,7 +347,7 @@ const Navbar = () => {
                 href="/login"
                 className="hidden lg:flex items-center text-white hover:text-white font-bold"
               >
-                লগইন
+                 লগইন/রেজিস্টার করুন
               </Link>
             )}
           </div>

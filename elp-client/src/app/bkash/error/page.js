@@ -1,5 +1,7 @@
 "use client";
 
+import Footer from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -10,18 +12,28 @@ function Error() {
   Cookies.remove("creationPayload");
 
   return (
+    <>
+    <Navbar/>
     <div className="h-screen flex  flex-col justify-center items-center">
-      <div className="flex justify-center flex-col items-center border w-fit p-12 bg-red-200">
-        <h3>Payment not completed. Error paying!</h3>
+      <div className=" items-center border w-fit py-12 px-10 rounded bg-red-400 text-white  text-xl space-y-5">
+        <h1 className="text-4xl">OOOPS!!!</h1>
+        <h3 className="text-red-900 text-3xl">Payment not completed. Error paying!</h3>
+
         <p>{message}</p>
+        
+        <p className=" bg-red-600 py-4 px-8 rounded text-white  text-xl">Please, Try again</p>
+
+       
       </div>
       <Link
-        className="mt-8 bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+        className="mt-8 bg-bluePrimary text-white py-4 px-14 text-2xl transition-all duration-300 rounded hover:bg-cyanPrimary"
         href="/"
       >
         Go to home
       </Link>
     </div>
+    <Footer/>
+    </>
   );
 }
 

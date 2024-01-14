@@ -8,7 +8,7 @@ const CourseCard = ({ item }) => {
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
-      <div className="card shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white border border-yellowPrimary">
+      <div className="card shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white ">
         <figure className="relative">
           <Image
             className="rounded h-48"

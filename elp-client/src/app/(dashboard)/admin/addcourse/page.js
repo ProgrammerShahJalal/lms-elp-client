@@ -20,6 +20,7 @@ import {
   useDeleteCoursesMutation,
   useGetAllCoursesQuery,
 } from "@/redux/api/courseApi";
+import Swal from "sweetalert2";
 
 const AddCourseForm = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -74,19 +75,58 @@ const AddCourseForm = () => {
   };
 
   // handle delete course function
-
-  const handleDelete = async (courseId) => {
+  // book delete function
+  const handleDelete = async (id) => {
     try {
-      const result = await deleteCourses(courseId);
-      // console.log(result)
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to delete this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
 
-      if (result) {
-        toast.success("Category deleted successfully");
+      if (result.isConfirmed) {
+        // User confirmed deletion
+        const res = await deleteCourses(id);
+        // console.log(res?.data)
+
+        if (res?.data?._id === id) {
+          // Item deleted successfully
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } else {
+          // Something went wrong with deletion
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong with deletion.",
+            icon: "error",
+          });
+        }
       }
-    } catch (error) {
-      toast.error("Failed to delete category");
+    } catch (err) {
+      // Handle any errors that occur during the process
+      toast.error(err.message);
     }
   };
+
+  // const handleDelete = async (courseId) => {
+  //   try {
+  //     const result = await deleteCourses(courseId);
+  //     // console.log(result)
+
+  //     if (result) {
+  //       toast.success("Category deleted successfully");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Failed to delete category");
+  //   }
+  // };
 
   return (
     <div className="container mx-auto p-4">
@@ -191,8 +231,8 @@ const AddCourseForm = () => {
               <option value="" disabled>
                 Select membership type
               </option>
-              <option value="0">Paid</option>
-              <option value="1">Free</option>
+              <option value="0">Free</option>
+              <option value="1">Paid</option>
             </select>
           </div>
 

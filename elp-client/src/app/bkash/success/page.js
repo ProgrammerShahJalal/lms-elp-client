@@ -13,6 +13,11 @@ import {
 } from "@/redux/api/usersApi";
 import { getUserInfo } from "@/services/auth.service";
 import { useAddOrderMutation } from "@/redux/api/ordersApi";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
+import Swal from "sweetalert2";
+import successImg  from '../../../assets/images/success.svg'
+import Image from "next/image";
 
 function Success() {
   const user_id = getUserInfo()?.userId;
@@ -34,11 +39,25 @@ function Success() {
           payload.trx_id = trx_id;
 
           if (orderType === "subscription") {
-            await subscribeToCourse(payload);
-            toast("Success!");
+            const res =await subscribeToCourse(payload);
+            if(res){
+              Swal.fire({
+                title: "Congratulations! Payment Successful",
+                text: "You  can now continue your buying subscribe course!",
+                icon: "success"
+              });
+            }
+            // toast("Success!");
           } else if (orderType === "exam") {
-            await payForExam(payload);
-            toast("Success!");
+            const res= await payForExam(payload);
+            if(res){
+              Swal.fire({
+                title: "Congratulations! Payment Successful",
+                text: "You  can now continue your buying exam!",
+                icon: "success"
+              });
+            }
+            // toast("Success!");
           } else if (orderType === "hard copy") {
             const shippingAddressPayload = {
               user_id,
@@ -59,7 +78,14 @@ function Success() {
               shipping_address: JSON.stringify(shippingAddressPayload),
             });
             if (!!order) {
-              toast("Order successfull!");
+              
+                Swal.fire({
+                  title: "Congratulations! Payment Successful",
+                  text: " Your order has been successfully.!",
+                  icon: "success"
+                });
+              
+              // toast("Order successfull!");
             } else {
               toast.error("Order creation failed!");
             }
@@ -71,7 +97,12 @@ function Success() {
           });
 
           if (!!order) {
-            toast("Order successfull!");
+            Swal.fire({
+              title: "Congratulations! Payment Successful",
+              text: " Your order has been successfully.!",
+              icon: "success"
+            });
+            // toast("Order successfull!");
           } else {
             toast.error("Order creation failed!");
           }
@@ -86,23 +117,34 @@ function Success() {
   }, []);
 
   return (
+    <>
+    <Navbar/>
     <div className="h-screen flex  flex-col justify-center items-center">
       <div className="flex justify-center flex-col items-center border w-fit p-12 bg-green-200">
-        <h3>Payment successfull!</h3>
-      </div>
-      <Link
-        className="mt-8 bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+         <div className="space-y-5">
+          <div className="flex justify-center">
+          <Image src={successImg} alt='success-img' width={400} height={200}/>
+          </div>
+         <h3 className="text-5xl text-yellowPrimary pb-8"> Your Payment is  successful!</h3>
+         <p className="pb-10 text-xl">You Can continue our paid services which have bought</p>
+        <Link
+        className="mt-8 bg-bluePrimary text-white py-5 px-10 transition-all duration-300 rounded hover:bg-cyanPrimary mr-5"
         href="/"
       >
         Go to Home
       </Link>
       <Link
-        className="mt-8 bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+        className="mt-8 bg-yellowPrimary text-white py-5 px-10 transition-all duration-300 rounded hover:bg-cyanPrimary"
         href="/profile"
       >
         Go to your Dashboard
       </Link>
+         </div>
+      </div>
+      
     </div>
+    <Footer/>
+    </>
   );
 }
 
