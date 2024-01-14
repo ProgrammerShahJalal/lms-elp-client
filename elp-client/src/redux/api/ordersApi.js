@@ -1,9 +1,28 @@
 import { baseApi } from "./baseApi";
 
 export const ORDERS_URL = "/orders";
+export const ORDERS_DETAILS_URL = "/order-details";
 
 export const ordersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+     // all orders
+     getAllOrders: build.query({
+      query: (arg) => {
+        return {
+          url: ORDERS_DETAILS_URL,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response, meta) => {
+        return {
+          orders: response,
+          meta,
+        };
+      },
+      providesTags: ["orders"],
+    }),
+    
     addOrder: build.mutation({
       query: (data) => ({
         url: ORDERS_URL,
@@ -23,6 +42,7 @@ export const ordersApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetAllOrdersQuery,
   useAddOrderMutation,
   useGetAllSettingsQuery,
   useDeleteSettingsMutation,

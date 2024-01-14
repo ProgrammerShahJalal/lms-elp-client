@@ -141,7 +141,7 @@ const AddVideo = () => {
                     </thead>
                     <tbody>
                         {course?.map((playlist) => (
-                            <tr key={playlist._id}>
+                            <tr key={playlist._id} className=''>
                                 <td className="py-2 px-4 border-b">{playlist?.title}</td>
                                 <td className="py-2 px-4 border-b">{playlist?.course_id?.title}</td>
                                 <td className="py-2 pl-2 border-b">

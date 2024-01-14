@@ -4,6 +4,7 @@ import React from 'react';
 const SinglePaymentDetails = ({item}) => {
     const dateObject = new Date(item?.createdAt);
   const localData = dateObject.toLocaleDateString();
+  // console.log(item)
     return (
         <tr  className="hover">
         <th>{item?.exam_id?.course_id?.title} </th>

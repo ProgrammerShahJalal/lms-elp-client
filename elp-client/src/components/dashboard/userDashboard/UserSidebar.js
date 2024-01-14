@@ -50,7 +50,7 @@ const UserSidebar = () => {
         <ul className="menu ">
           {role === "admin" ? (
             <>
-              <ul className=" ">
+              <ul className=" text-start">
               <li>
                   <Link
                     href="/profile"
@@ -110,11 +110,32 @@ const UserSidebar = () => {
                     বই যোগ করুন
                   </Link>
                 </li>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/admin/allorders"}>
+                    {" "}
+                    <FaBookOpen />
+                    সব অর্ডার সমূহ
+                  </Link>
+                </li>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900    py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/admin/alluserscourses"}>
+                    {" "}
+                    <FaBookOpen />
+                    সব কেনা কোর্স সমূহ
+                  </Link>
+                </li>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/admin/allexams"}>
+                    {" "}
+                    <FaBookOpen />
+                    সব পরিক্ষা  সমূহ
+                  </Link>
+                </li>
               </ul>
             </>
           ) : role === "super_admin" ? (
             <>
-              <ul className="">
+              <ul className="text-right">
               <li>
                   <Link
                     href="/profile"
@@ -177,6 +198,27 @@ const UserSidebar = () => {
                     বই যোগ করুন
                   </Link>
                 </li>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/admin/allorders"}>
+                    {" "}
+                    <FaBookOpen />
+                    সব অর্ডার সমূহ
+                  </Link>
+                </li>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900    py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/admin/alluserscourses"}>
+                    {" "}
+                    <FaBookOpen />
+                    সব কেনা কোর্স সমূহ
+                  </Link>
+                </li>
+                <li className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 bg-gray-200 my-3">
+                  <Link href={"/admin/allexams"}>
+                    {" "}
+                    <FaBookOpen />
+                    সব পরিক্ষা  সমূহ
+                  </Link>
+                </li>
               </ul>
             </>
           ) : (
@@ -206,6 +248,14 @@ const UserSidebar = () => {
                     className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3 "
                   >
                     <SiCoursera fontSize={18} /> আমার পরিক্ষাসমুহ
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/user/myresults"
+                    className="transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-2 hover:text-white rounded flex items-center gap-3  mt-3"
+                  >
+                    <SiCoursera fontSize={18} /> আমার রেজাল্টসমূহ
                   </Link>
                 </li>
                 <br />

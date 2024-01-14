@@ -9,8 +9,8 @@ const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick })
     return (
         <div>
             <div className='flex justify-between items-center' onClick={toggleCollapse}>
-                <span className="text-2xl md:text-4xl cursor-pointer" >{course && course.length > 0 && course[currentPlaylistIndex]?.title}
-                </span>
+                <h5 className="text-2xl  cursor-pointer " >{course && course.length > 0 && course[currentPlaylistIndex]?.title}
+                </h5>
                 <span className='text-xl mr-12'>{isCollapsed ? <FaChevronUp /> : <FaChevronDown />}</span>
             </div>
 
@@ -19,7 +19,7 @@ const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick })
                     {videos.map((video, index) => (
                         <div key={index}>
                             <p
-                                className={`cursor-pointer py-2 px-6 rounded-md border-b border-blue-300 ${currentPlaylistIndex === index ? 'bg-blue-300' : ''} text-md md:text-2xl`}
+                                className={`cursor-pointer py-2 px-6 rounded-md border-b border-blue-300  text-lg ${currentPlaylistIndex === index ? 'bg-blue-300' : ''} `}
                                 onClick={() => onVideoClick(video.videoId, index)}
                             >
                                 {index + 1}) {video.title}

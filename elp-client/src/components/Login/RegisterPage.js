@@ -16,6 +16,7 @@ const RegisterPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -23,10 +24,11 @@ const RegisterPage = () => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const res = await userSignup({ ...data }).unwrap();
 
       if (res?.accessToken) {
-        console.log(res, " from res");
+        // console.log(res, " from res");
         storeUserInfo({ accessToken: res?.accessToken });
         toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
         router.push("/");
@@ -35,6 +37,9 @@ const RegisterPage = () => {
       }
     } catch (err) {
       toast.error(err.message);
+    }
+    finally {
+      setLoading(false); 
     }
   };
   return (
@@ -46,6 +51,17 @@ const RegisterPage = () => {
 
         <div className="mb-10">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+          {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="relative inline-flex">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-pulse"></div>
+                </div>
+              </div>
+            ) : (
+              "  "
+            )}
             <div className="flex justify-center">
               <input
                 type="text"

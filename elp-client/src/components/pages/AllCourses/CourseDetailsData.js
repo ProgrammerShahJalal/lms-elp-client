@@ -107,12 +107,12 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
                   সেমিনারে অংশ নেন
                 </a>
                 <br /> <br />
-                <Link
+                {/* <Link
                   href="/subscribe"
                   className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
                 >
                   এখনই মেম্বারশিপ হোন
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
