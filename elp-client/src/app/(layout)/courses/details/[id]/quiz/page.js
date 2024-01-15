@@ -1,7 +1,7 @@
 import CourseAllExams from "@/components/pages/AllCourses/CourseAllExams";
 
 export const metadata = { 
-    title: "কোর্স কুইজ ",
+    title: "কোর্স পরিক্ষা ",
   };
 
 const CourseQuizPage = ({params}) => {

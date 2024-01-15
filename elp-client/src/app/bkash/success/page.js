@@ -119,7 +119,7 @@ function Success() {
   return (
     <>
     <Navbar/>
-    <div className="h-screen flex  flex-col justify-center items-center">
+    <div className=" flex  flex-col justify-center items-center my-10">
       <div className="flex justify-center flex-col items-center border w-fit p-12 bg-green-200">
          <div className="space-y-5">
           <div className="flex justify-center">

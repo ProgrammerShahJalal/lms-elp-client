@@ -35,11 +35,11 @@ const AllCourses = () => {
   if (!isLoading && !isError && coursesData?.length > 0) {
     content = coursesData?.map((item) => <CourseCard key={item?._id} item={item} />);
   }
-  const breadcrumbItems = [{ label: "হোম", link: "/" }, { label: " All Courses" }];
+  const breadcrumbItems = [{ label: "হোম", link: "/" }, { label: " সব কোর্স" }];
 
   return (
     <>
-      <Commonbanner title="All Courses" breadcrumbItems={breadcrumbItems} />
+      <Commonbanner title="সব কোর্স" breadcrumbItems={breadcrumbItems} />
       <div className="px-14 py-10">
         <div className="">
           <h2 className="text-2xl font-bold  rounded text-center py-10"> কোর্স</h2>

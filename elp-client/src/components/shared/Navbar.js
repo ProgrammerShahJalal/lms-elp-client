@@ -258,7 +258,7 @@ const Navbar = () => {
                       href="/login"
                       className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
                     >
-                      লগইন/রেজিস্টার করুন
+                      লগইন/রেজিস্টার
                     </Link>}
           </div>
 
@@ -347,7 +347,7 @@ const Navbar = () => {
                 href="/login"
                 className="hidden lg:flex items-center text-white hover:text-white font-bold"
               >
-                 লগইন/রেজিস্টার করুন
+                 লগইন/রেজিস্টার 
               </Link>
             )}
           </div>

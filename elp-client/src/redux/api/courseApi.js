@@ -63,6 +63,20 @@ export const courseApi = baseApi.injectEndpoints({
       },
       providesTags: ["subscriptions"],
     }),
+    getAllSubscriptionsHistory: build.query({
+      query: (arg) => ({
+        url: COURSE_SUBSCRIPTIONS_HISTORY_URL,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          subscriptionsHistory: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["subscription-histories"],
+    }),
 
     // alll subscript history get
     getMyCourseSubscriptionsHistory: build.query({
@@ -96,6 +110,7 @@ export const {
   useAddCourseMutation,
   useDeleteCoursesMutation,
   useGetAllSubscriptionsQuery,
+  useGetAllSubscriptionsHistoryQuery,
   useSubscribeToCourseMutation,
   useGetMyCourseSubscriptionsHistoryQuery
 } = courseApi;

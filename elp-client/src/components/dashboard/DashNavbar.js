@@ -37,7 +37,7 @@ const DashNavbar = () => {
           <p className="px-3 text-lg font-bold">{role}</p>
         </div>
         <div className="navbar-end">
-          <ToggleTheme />
+          {/* <ToggleTheme /> */}
           {userLoggedIn ? (
             <div
               className="flex items-center gap-3 bg-yellowPrimary text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 ml-2 text-sm rounded"

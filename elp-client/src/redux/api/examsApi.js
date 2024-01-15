@@ -64,6 +64,21 @@ export const examsApi = baseApi.injectEndpoints({
       invalidatesTags: ["exams"],
     }),
     //{{local_url}}/exam-payments/my-exam-payments
+
+    getAllUserExams: build.query({
+      query: (arg) => ({
+        url: EXAM_PAYMENTS_URL,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          exams: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["exam-payments"],
+    }),
     getMyExamPayment: build.query({
       query: (arg) => ({
         url: `${EXAM_PAYMENTS_URL}/my-exam-payments`,
@@ -95,5 +110,6 @@ export const {
   useAddAllExamsMutation,
   usePayForExamMutation,
   useGetMyExamPaymentQuery,
+  useGetAllUserExamsQuery,
   useGetMyDueExamsQuery,
 } = examsApi;
