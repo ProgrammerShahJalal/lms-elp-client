@@ -1,6 +1,7 @@
 "use client";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
 import {
   useGetAllExamsQuery,
@@ -96,8 +97,11 @@ const CourseAllExams = ({ course_id }) => {
       </tr>
     ));
   }
+  const breadcrumbItems = [{ label: "হোম", link: "/" }, { label: " সব কোর্স",link: "/courses"  }, {label:"পরিক্ষা/ কুইজ"}];
 
   return (
+    <>
+     <Commonbanner title="পরিক্ষা/ কুইজ" breadcrumbItems={breadcrumbItems} />
     <div className="mx-20 py-20 ">
       <div className="overflow-x-auto">
         <table className="table">
@@ -136,6 +140,7 @@ const CourseAllExams = ({ course_id }) => {
         </table>
       </div>
     </div>
+    </>
   );
 };
 

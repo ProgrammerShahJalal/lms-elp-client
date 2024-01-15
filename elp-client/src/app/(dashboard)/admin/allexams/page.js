@@ -1,7 +1,9 @@
+import AllUserExams from "@/components/dashboard/admin/AllUserExams";
+
 const AllExamsPage = () => {
     return (
         <div>
-              <h2>All Exams page page</h2>
+              <AllUserExams/>
         </div>
     );
 };

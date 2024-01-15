@@ -2,17 +2,17 @@
 
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Timer from "@/components/pages/AllCourses/Timer";
-import { useGetAllSubscriptionsQuery } from "@/redux/api/courseApi";
+import { useGetAllSubscriptionsHistoryQuery, useGetAllSubscriptionsQuery } from "@/redux/api/courseApi";
 import Image from "next/image";
 import Link from "next/link";
 import AllBuyingCourseDetails from "./AllBuyingCourseDetails";
 
 const AllBuyingCourses = () => {
     const { data, isLoading, isError } =
-    useGetAllSubscriptionsQuery();
-    console.log(data?.subscriptions?.data)
+    useGetAllSubscriptionsHistoryQuery();
+    console.log(data?.subscriptionsHistory?.data)
 
-  const courseSubs = data?.subscriptions?.data;
+  const courseSubs = data?.subscriptionsHistory?.data;
 
   let content = null;
 

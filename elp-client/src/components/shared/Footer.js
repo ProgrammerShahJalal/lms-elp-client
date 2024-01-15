@@ -65,7 +65,8 @@ const Footer = () => {
             </span>{" "}
           </a>
           <a  href="/terms"className="link link-hover">টার্মস এন্ড কন্ডিশন</a>
-          <a className="link link-hover" href="/support">প্লেসমেন্ট সাপোর্ট</a>
+          <a className="link link-hover" href="/policy">প্লেসমেন্ট সাপোর্ট</a>
+          {/* <a className="link link-hover" href="/support">প্লেসমেন্ট সাপোর্ট</a> */}
           <a className="link link-hover" href="/privacy">প্রাইভেসি পলিসি</a>
         </nav>
         <nav>

@@ -62,7 +62,7 @@ const CourseCard = ({ item }) => {
               href={`/courses/details/${item?._id}/quiz`}
               className="text-red-500 "
             >
-              কুইজে অংশগ্রহন করুন
+              পরিক্ষা/কুইজে অংশগ্রহন করুন
             </Link>{" "}
             </div>
           </p>
