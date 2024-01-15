@@ -24,6 +24,7 @@ export const baseApi = createApi({
     "subscription-histories",
     "settings",
     "orders",
-    "exam-payments"
+    "exam-payments",
+    "exam-results"
   ],
 });
