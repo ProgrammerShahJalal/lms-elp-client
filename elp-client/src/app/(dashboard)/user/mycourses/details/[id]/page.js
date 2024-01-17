@@ -9,28 +9,28 @@
 //   const id = params?.id;
 //   // console.log(params.id,'from details page');
 
-//   const { data:course } = useGetMyCourseVedioPlaylistQuery(id);
+//   const { data: course } = useGetMyCourseVedioPlaylistQuery(id);
 //   // console.log(course, "data vedio");
 //   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-//     const showPreviousVideo = () => {
-//         setCurrentVideoIndex((prevIndex) => (prevIndex === 0 ? course.length - 1 : prevIndex - 1));
-//     };
+//   const showPreviousVideo = () => {
+//     setCurrentVideoIndex((prevIndex) => (prevIndex === 0 ? course.length - 1 : prevIndex - 1));
+//   };
 
-//     const showNextVideo = () => {
-//         setCurrentVideoIndex((prevIndex) => (prevIndex === course.length - 1 ? 0 : prevIndex + 1));
-//     };
-
-
-
-//     const selectVideo = (index) => {
-//         setCurrentVideoIndex(index);
-//     };
+//   const showNextVideo = () => {
+//     setCurrentVideoIndex((prevIndex) => (prevIndex === course.length - 1 ? 0 : prevIndex + 1));
+//   };
 
 
- 
+
+//   const selectVideo = (index) => {
+//     setCurrentVideoIndex(index);
+//   };
+
+
+
 //   return (
 //     <div>
-      
+
 
 //       <div>
 //         {course?.length > 0 && (
@@ -79,9 +79,8 @@
 //                   {course?.map((video, index) => (
 //                     <li
 //                       key={video._id}
-//                       className={`cursor-pointer py-2 px-6 rounded-md border-b border-blue-300 ${
-//                         currentVideoIndex === index ? "bg-blue-300" : ""
-//                       } text-xl`}
+//                       className={`cursor-pointer py-2 px-6 rounded-md border-b border-blue-300 ${currentVideoIndex === index ? "bg-blue-300" : ""
+//                         } text-xl`}
 //                       onClick={() => selectVideo(index)}
 //                     >
 //                       {index + 1}. {video?.title}
@@ -108,7 +107,6 @@ import React, { useEffect, useState } from 'react';
 import YouTube from 'react-youtube';
 import axios from 'axios';
 import YoutubePlaylist from './playlist';
-
 
 const Play = () => {
   const params = useParams();
@@ -167,20 +165,29 @@ const Play = () => {
     setSelectedVideo(videoId);
     setCurrentPlaylistIndex(index);
   };
+
   const opts = {
     width: '600',
     height: '360',
     playerVars: {
       autoplay: 1,
+      controls: 1, // Show video controls (play/pause)
+      modestbranding: 1, // Remove YouTube logo
+      fs: 1, // Show full-screen button
+      autohide: 1, // Auto-hide video controls
+      rel: 0, // Disable related videos at the end
+      showinfo: 0, // Hide video information
+      iv_load_policy: 3, // Disable annotations
     },
   };
+
+
 
   return (
     <div className="lg:flex mt-14">
       <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3">
         {videos && videos.length > 0 && videos[currentPlaylistIndex]?.title}
-        <YouTube key={selectedVideo || 'defaultKey'} videoId={selectedVideo || ''} opts={opts}  className='md:w-full'/>
-
+        <YouTube key={selectedVideo || 'defaultKey'} videoId={selectedVideo || ''} opts={opts} className='md:w-full' />
         <div className="flex justify-between mt-4">
           <button
             onClick={showPreviousPlaylist}
