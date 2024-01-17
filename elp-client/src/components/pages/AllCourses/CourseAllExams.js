@@ -7,7 +7,7 @@ import {
   useGetAllExamsQuery,
   useGetMyDueExamsQuery,
 } from "@/redux/api/examsApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const CourseAllExams = ({ course_id }) => {
+  const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const {
     data: dataExams,
@@ -24,7 +25,11 @@ const CourseAllExams = ({ course_id }) => {
     course_id: course_id,
   });
   const { data: dueExamIds } = useGetMyDueExamsQuery();
+
   const enrollToExam = async (exam) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy exam");
+    }
     if (dueExamIds && dueExamIds?.length) {
       const isExamDue = dueExamIds.find((dueExamId) => dueExamId === exam?.id);
       if (isExamDue) {

@@ -13,6 +13,13 @@ import SelectCarreer from "./SelectCarreer";
 import Testing from "./Testing";
 import Faq from "./Faq";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import BcsPrili from "./course/BcsPrili";
+import BcsWritten from "./course/BcsWritten";
+import BankPrili from "./course/BankPrili";
+import BankWritten from "./course/BankWritten";
+import NtrcaPrili from "./course/NtrcaPrili";
+import NtrcaWritten from "./course/NtrcaWritten";
+import PrimaryPrili from "./course/PrimaryPrili";
 
 const HomePage = () => {
   // const {data} = useGetAllCoursesQuery({
@@ -24,6 +31,13 @@ const HomePage = () => {
       <Hero/>
       <Category/>
       <Courses/> 
+      <BcsPrili/>
+      <BcsWritten/>
+      <BankPrili/>
+      <BankWritten/>
+      <NtrcaPrili/>
+      <NtrcaWritten/>
+      <PrimaryPrili/>
       {/* <MemeberShipPlan/> */}
       <FreeCourse/>
       <BookSection/>

@@ -75,7 +75,7 @@ const AddCourseForm = () => {
   };
 
   // handle delete course function
-  // book delete function
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -115,18 +115,7 @@ const AddCourseForm = () => {
     }
   };
 
-  // const handleDelete = async (courseId) => {
-  //   try {
-  //     const result = await deleteCourses(courseId);
-  //     // console.log(result)
-
-  //     if (result) {
-  //       toast.success("Category deleted successfully");
-  //     }
-  //   } catch (error) {
-  //     toast.error("Failed to delete category");
-  //   }
-  // };
+  
 
   return (
     <div className="container mx-auto p-4">
@@ -159,20 +148,12 @@ const AddCourseForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Category</label>
-            {/* <select
-            {...register("category_id", { required: true })}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-              setValue("sub_category_id", ""); // Reset subcategory when category changes
-            }}
-            value={selectedCategory}
-            className="w-full border border-gray-300 p-2 rounded-md"
-          ></select> */}
+           
             <select
               {...register("category_id", { required: true })}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
-                setValue("sub_category_id", ""); // Reset subcategory when category changes
+                setValue("sub_category_id", ""); 
               }}
               value={selectedCategory}
               className="w-full border border-gray-300 p-2 rounded-md"
