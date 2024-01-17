@@ -10,13 +10,15 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Error from "@/components/Loader/Error";
 import CourseCard from "./CourseCard";
+import { bcsPriliSubId } from "@/utils/subCategoryId";
 
 const BcsPrili = () => {
   const { data, isError, isLoading } = useGetAllCoursesQuery({
-    // sub_category_id:"প্রিলিমিনারি"
+    sub_category_id:bcsPriliSubId
   });
 
   const filteredCourses = data?.courses?.data;
+ 
 //   const filteredCourses = coursesData?.filter((item) => item?.membership_type === "1");
 
   const breakpoints = {

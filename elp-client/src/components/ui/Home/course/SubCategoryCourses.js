@@ -2,6 +2,7 @@
 
 "use client";
 import Link from "next/link";
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -11,15 +12,17 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Error from "@/components/Loader/Error";
 import CourseCard from "./CourseCard";
-import { bcsWrittenSubId } from "@/utils/subCategoryId";
+import EmptyContent from "@/components/Loader/EmptyContent";
 
-const BcsWritten = () => {
+
+const SubCategoryCourses = ({sub_category_id}) => {
   const { data, isError, isLoading } = useGetAllCoursesQuery({
-    sub_category_id:bcsWrittenSubId
+    sub_category_id
   });
 
   const filteredCourses = data?.courses?.data;
-  // const filteredCourses = coursesData?.filter((item) => item?.membership_type === "1");
+ 
+//   const filteredCourses = coursesData?.filter((item) => item?.membership_type === "1");
 
   const breakpoints = {
     
@@ -72,13 +75,8 @@ const BcsWritten = () => {
   }
 
   return (
-    <div className="px-14 py-10">
-      <div className="flex gap-5 py-10">
-        <h2 className="text-2xl font-bold px-2  rounded">সকল বিসিএস লিখিত কোর্স</h2>
-        <Link href="/courses" className="mb-5 bg-bluePrimary hover:bg-cyanPrimary w-44 text-white px-7 py-3 rounded transition-all duration-500 delay-200">
-          সব কোর্স দেখুন
-        </Link>
-      </div>
+    <div className="px-14 py-10 ">
+     
       
      
       <div className="">
@@ -99,4 +97,4 @@ const BcsWritten = () => {
   );
 };
 
-export default BcsWritten;
+export default SubCategoryCourses;

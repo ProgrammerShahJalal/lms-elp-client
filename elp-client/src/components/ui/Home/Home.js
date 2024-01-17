@@ -20,6 +20,9 @@ import BankWritten from "./course/BankWritten";
 import NtrcaPrili from "./course/NtrcaPrili";
 import NtrcaWritten from "./course/NtrcaWritten";
 import PrimaryPrili from "./course/PrimaryPrili";
+import SubCategoryCourses from "./course/SubCategoryCourses";
+import { bankPriliSubId, bankWrittenSubId, bcsPriliSubId, bcsWrittenSubId, ntrcaPriliSubId, ntrcaWrittenSubId, primaryPriliSubId } from "@/utils/subCategoryId";
+import FilteringCourseBooks from "./FilteringCourseBooks";
 
 const HomePage = () => {
   // const {data} = useGetAllCoursesQuery({
@@ -31,13 +34,20 @@ const HomePage = () => {
       <Hero/>
       <Category/>
       <Courses/> 
-      <BcsPrili/>
+      <FilteringCourseBooks sub_category_id={bcsPriliSubId}/>
+      <FilteringCourseBooks sub_category_id={bcsWrittenSubId}/>
+      <FilteringCourseBooks sub_category_id={bankPriliSubId}/>
+      <FilteringCourseBooks sub_category_id={bankWrittenSubId}/>
+      <FilteringCourseBooks sub_category_id={ntrcaPriliSubId}/>
+      <FilteringCourseBooks sub_category_id={ntrcaWrittenSubId}/>
+      <FilteringCourseBooks sub_category_id={primaryPriliSubId}/>
+      {/* <BcsPrili />
       <BcsWritten/>
       <BankPrili/>
       <BankWritten/>
       <NtrcaPrili/>
       <NtrcaWritten/>
-      <PrimaryPrili/>
+      <PrimaryPrili/> */}
       {/* <MemeberShipPlan/> */}
       <FreeCourse/>
       <BookSection/>

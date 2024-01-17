@@ -18,6 +18,15 @@ export const subcategoryApi = baseApi.injectEndpoints({
             },
             providesTags: ["sub-categories"],
         }),
+
+        getSingleSubCategory: build.query({
+            query: (id) => ({
+              url: `${SUBCATEGORIES_URL}/${id}`,
+              method: "GET",
+            }),
+            providesTags: ["sub-categories"],
+          }),
+
         addSubcategory: build.mutation({
             query: (data) => ({
                 url: SUBCATEGORIES_URL,
@@ -37,4 +46,4 @@ export const subcategoryApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetAllSubcategoriesQuery, useAddSubcategoryMutation, useDeleteSubCategoryMutation } = subcategoryApi;
+export const { useGetAllSubcategoriesQuery, useAddSubcategoryMutation,useGetSingleSubCategoryQuery ,useDeleteSubCategoryMutation } = subcategoryApi;

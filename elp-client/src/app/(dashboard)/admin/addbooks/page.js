@@ -53,14 +53,14 @@ const AddBooks = () => {
     // console.log(file)
     // delete content['file'];
     const result = JSON.stringify(content);
-    // console.log(result, "json")
+    console.log(result, "json")
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
     // console.log(formData, 'formdaata')
     try {
       const resultData = await addBooks(formData);
-      //   console.log(resultData, "after ap call");
+        console.log(resultData, "after ap call");
       if (resultData) {
         toast.success("Book created successfully");
       }
@@ -287,7 +287,7 @@ const AddBooks = () => {
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Sub Category</label>
             <select
-              {...register("sub_category_id")}
+              {...register("sub_category_id")} disabled={!selectedCategory}
               onChange={(e) => {
                 setSelectedSubcategory(e.target.value);
                 setValue("course_id", ""); // Reset the selected course when the subcategory changes
@@ -307,7 +307,7 @@ const AddBooks = () => {
           </div>
           <div className="">
             <label className="block text-sm font-bold mb-2">Course</label>
-            <select
+            <select disabled={!selectedSubcategory}
               {...register("course_id")}
               className="w-full border border-gray-300 p-2 rounded-md"
             >
