@@ -224,7 +224,7 @@ const AddCourseForm = () => {
             >
               Description:
             </label>
-            <input
+            <textarea rows={10}
               id="description"
               name="description"
               // theme="snow"

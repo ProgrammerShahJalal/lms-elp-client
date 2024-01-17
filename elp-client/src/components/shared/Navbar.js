@@ -110,6 +110,7 @@ const Navbar = () => {
     },
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
+    { link: "ক্লাস রুটিন ", path: "/" },
   ];
   const navItems = userLoggedIn
     ? [...commonRoutes, { link: "ড্যাসবোর্ড", path: "profile" }]
@@ -189,9 +190,12 @@ const Navbar = () => {
 
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold" />{" "}
-              {userLoggedIn && (
+              {/* {userLoggedIn && (
                 <sup className="text-md font-bold">{cartLength?.length}</sup>
-              )}
+              )} */}
+            
+                <sup className="text-md font-bold">{cartLength?.length}</sup>
+              
             </Link>
 
             {/* <!-- Dropdown menu --> */}

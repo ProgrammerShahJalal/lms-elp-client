@@ -12,9 +12,9 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
   // const dispatch = useDispatch();
 
   const handleAddBook = async (data) => {
-    if (!userLoggedIn) {
-      return toast.error("Please signin to buy a book");
-    }
+    // if (!userLoggedIn) {
+    //   return toast.error("Please signin to buy a book");
+    // }
 
     const res = await addToCart({book_id: data?.item?._id, quantity: 1 });
   

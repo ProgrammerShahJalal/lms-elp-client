@@ -14,9 +14,9 @@ const BookSectionCard = ({item}) => {
   // const dispatch = useDispatch();
 
   const handleAddBook = async (item) => {
-    if (!userLoggedIn) {
-      return toast.error("Please signin to buy a book");
-    }
+    // if (!userLoggedIn) {
+    //   return toast.error("Please signin to buy a book");
+    // }
 
     const res = await addToCart({book_id: item?._id, quantity: 1 });
   
@@ -41,6 +41,8 @@ const BookSectionCard = ({item}) => {
             width={400}
             height={100}
           />
+           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p>
         </figure>
 
         <div  className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
