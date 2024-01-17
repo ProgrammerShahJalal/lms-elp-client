@@ -3,11 +3,27 @@
 import { useGetAllOrdersQuery } from "@/redux/api/ordersApi";
 import AllOrdersDetials from "./AllOrdersDetials";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import { useState } from "react";
 
 const AllOrders = () => {
+  const [filterValue, setFilterValue] = useState('');
+
+  const handleFilterChange = (event) => {
+    setFilterValue(event.target.value);
+  };
   const { data, isLoading, isError } = useGetAllOrdersQuery();
+  // const { data, isLoading, isError } = useGetAllOrdersQuery();
   const ordersData = data?.orders?.data;
-  console.log(data?.orders?.data);
+
+  const filteredOrders = ordersData?.filter((order) =>
+    order?.user_id?.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
+
+ 
+  const allName = ordersData?.map((item)=><div key={item?.id}>
+    {item?.user_id?.name}
+  </div>)
+  // console.log(allName)
 
   let content = null;
 
@@ -28,7 +44,7 @@ const AllOrders = () => {
     );
   }
 
-  if (!isLoading && !isError && ordersData?.length === 0) {
+  if (!isLoading && !isError && filteredOrders?.length === 0) {
     content = (
       <>
         {" "}
@@ -38,15 +54,27 @@ const AllOrders = () => {
       </>
     );
   }
+ 
 
-  if (!isLoading && !isError && ordersData?.length > 0) {
-    content = ordersData?.map((item) => (
+  if (!isLoading && !isError && filteredOrders?.length > 0) {
+    content = filteredOrders?.map((item) => (
       <AllOrdersDetials key={item?.id} item={item} />
     ));
   }
 
   return (
     <div>
+     
+      <input
+        type="text"
+        placeholder="Filter by user name"
+        value={filterValue}
+        onChange={handleFilterChange} className="border px-4 py-2 bg-gray-200 rounded outline-none mb-5"
+      />
+
+      {ordersData?.map((item)=><div key={item?.id}>
+    {item?.user_id?.name}
+  </div>)}
       <div className="border">
         <div className="overflow-x-auto">
           <table className="table">
