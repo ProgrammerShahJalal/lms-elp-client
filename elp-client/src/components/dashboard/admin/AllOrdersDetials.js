@@ -7,6 +7,7 @@ const AllOrdersDetials = ({item}) => {
   const humanReadableFormatLocal = dateObject.toLocaleDateString();
     return (
         <tr className="hover border">
+          <th>{item?.user_id?.name}</th>
       <th>
         <AllOrderBookDetails key={item?.id} bookOrder={item} />{" "} 
       </th>

@@ -51,8 +51,9 @@ const AllOrders = () => {
         <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
-            <thead>
+            <thead> 
               <tr className="">
+                <th>নাম </th>
                 <th>অর্ডার কৃত বইসমুহ </th>
                 <th> সর্বমোট মূল্য</th>
                 <th>কেনার তারিখ</th>
