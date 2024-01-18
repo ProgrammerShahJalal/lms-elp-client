@@ -37,49 +37,10 @@ const Cart = () => {
   // }, [cartLength]);
 
   const [deletecart] = useDeletecartMutation();
-  const handleDelete = async (dispatch, id) => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-  
-      if (result.isConfirmed) {
-        // User confirmed deletion
-  
-        // Dispatch the removeFromCart action
-        dispatch(removeFromCart({ _id: id, price: 0, quantity: 0 }));
-  
-        // const res = await deletecart(id);
-  
-        // if (res?.data?._id === id) {
-          // Item deleted successfully
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
-
-        // } 
-        // else {
-        //   // Something went wrong with deletion
-        //   Swal.fire({
-        //     title: "Error!",
-        //     text: "Something went wrong with deletion.",
-        //     icon: "error",
-        //   });
-        // }
-      }
-    } catch (err) {
-      // Handle any errors that occur during the process
-      toast.error(err.message);
-    }
-  };
+  // const handleDelete =  (item) => {
+  //  dispatch(removeFromCart(item))
+  //    toast("your cart's book deleted")
+  // };
 
   // const handleDelete = async (id) => {
   //   try {
@@ -197,8 +158,8 @@ const Cart = () => {
                             <h2>{item?.title} </h2>
                             <button
                               className="text-red-500 font-bold"
-                              onClick={() => handleDelete(dispatch, item?._id)}
-                              // onClick={() => dispatch(removeFromCart(item))}
+                              // onClick={() => handleDelete( item)}
+                              onClick={() => dispatch(removeFromCart(item))}
                               // onClick={() => handleDelete(item?._id)}
                             >
                               Remove
