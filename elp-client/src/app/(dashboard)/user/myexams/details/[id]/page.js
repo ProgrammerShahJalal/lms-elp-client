@@ -419,7 +419,7 @@ const UserExamPage = ({ params }) => {
   return (
     <div>
       <div className="flex justify-end">
-        <p className={` text-2xl font-bold fixed  ${isWarningTime ? 'bg-red-500' : 'bg-transparent'}`}>End In: {minutes} minutes: {seconds} second left</p>
+        {/* <p className={` text-2xl font-bold fixed  ${isWarningTime ? 'bg-red-500' : 'bg-transparent'}`}>End In: {minutes} minutes: {seconds} second left</p> */}
       </div>
       {content}
       <button

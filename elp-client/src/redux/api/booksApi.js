@@ -31,6 +31,14 @@ export const booksApi = baseApi.injectEndpoints({
       }),
       providesTags: ["books"],
     }),
+    ///books/sub-category/:sub_category_id
+    getSubCategoryBook: build.query({
+      query: (id) => ({
+        url: `${BOOKS_URL}/sub-category/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["books"],
+    }),
     addBooks: build.mutation({
       query: (data) => ({
         url: BOOKS_URL,
@@ -60,4 +68,4 @@ export const booksApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllBooksQuery, useGetSingleBookQuery, useAddBooksMutation, useDeleteBooksMutation } = booksApi;
+export const { useGetAllBooksQuery, useGetSingleBookQuery, useGetSubCategoryBookQuery, useAddBooksMutation, useDeleteBooksMutation } = booksApi;

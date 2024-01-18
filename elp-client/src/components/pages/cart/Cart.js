@@ -229,16 +229,27 @@ const Cart = () => {
                 Continue Shopping
               </Link>
               {cartLength?.length > 0 && (
-          <Link
-            href="/checkout"
-            className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
-          >
-            Process to Checkout{" "}
-            <span className="font-bold pl-3">
-              <FaArrowRightLong />
-            </span>
-          </Link>
-        )}
+                <Link
+                  href="/checkout"
+                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
+                >
+                  Process to Checkout{" "}
+                  <span className="font-bold pl-3">
+                    <FaArrowRightLong />
+                  </span>
+                </Link>
+              )}
+             
+                {/* <Link
+                  href="/checkout"
+                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
+                >
+                  Process to Checkout{" "}
+                  <span className="font-bold pl-3">
+                    <FaArrowRightLong />
+                  </span>
+                </Link> */}
+             
             </div>
           </div>
         </div>

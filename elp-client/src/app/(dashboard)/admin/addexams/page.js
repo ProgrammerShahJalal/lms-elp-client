@@ -63,10 +63,10 @@ const AdminAddExams = () => {
         is_active: newQuestion.is_active === "true",
         course_id: selectedCourse,
       };
-      console.log(selectedCourse,'after couse')
-      console.log(formattedQuestion,'after api')
+      // console.log(selectedCourse,'after couse')
+      // console.log(formattedQuestion,'after api')
       const result = addAllExams(formattedQuestion);
-      console.log(result,'api')
+      // console.log(result,'api')
       if (result) {
         toast.success("Exam added successfully");
       }

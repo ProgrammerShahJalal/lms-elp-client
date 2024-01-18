@@ -9,16 +9,38 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 
 const AddBooks = () => {
   const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery();
   const allBook = allBooks?.books?.data;
   const [deleteBooks] = useDeleteBooksMutation();
   const [addBooks] = useAddBooksMutation();
-  const { data: courses, isLoading, isError } = useGetAllCoursesQuery();
-  const courseData = courses?.courses?.data;
+  // const { data: courses, isLoading, isError } = useGetAllCoursesQuery();
+  // const courseData = courses?.courses?.data;
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+  } = useGetAllCategoriesQuery();
 
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    data: subcategories,
+    isLoading: isLoadingSubcategories,
+    isError: isErrorSubcategories,
+  } = useGetAllSubcategoriesQuery({
+    category_id: selectedCategory,
+  });
+  const allSubcategory = subcategories?.subcategories;
+  const { data} = useGetAllCoursesQuery({
+    sub_category_id: selectedSubcategory,
+  });
+  const allCourse = data?.courses?.data;
+
+  const { register, handleSubmit, reset, watch, setValue } = useForm();
 
   const onSubmit = async (data) => {
     // console.log(data);
@@ -31,14 +53,14 @@ const AddBooks = () => {
     // console.log(file)
     // delete content['file'];
     const result = JSON.stringify(content);
-    // console.log(result, "json")
+    console.log(result, "json")
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
     // console.log(formData, 'formdaata')
     try {
       const resultData = await addBooks(formData);
-      //   console.log(resultData, "after ap call");
+
       if (resultData) {
         toast.success("Book created successfully");
       }
@@ -87,13 +109,6 @@ const AddBooks = () => {
       toast.error(err.message);
     }
   };
-  // const handleDelete = async (categoryId) => {
-  //   try {
-  //     await deleteBooks(categoryId);
-  //   } catch (error) {
-  //     toast.error("Failed to delete category");
-  //   }
-  // };
   return (
     <>
       <div className="container mx-auto mt-8 p-6">
@@ -177,6 +192,43 @@ const AddBooks = () => {
             />
           </div>
           <div>
+  <label
+    htmlFor="format"
+    className="block text-sm font-medium text-gray-600"
+  >
+    Format:
+  </label>
+  <select
+    id="format"
+    name="format"
+    {...register("format", { required: true })}
+    className="mt-1 p-2 border rounded-md w-full"
+  >
+    <option value="hard copy">Hard Copy</option>
+    <option value="pdf">PDF</option>
+  </select>
+</div>
+
+{/* Conditionally render PDF Link input based on the selected format */}
+{watch("format") === "pdf" && (
+  <div>
+    <label
+      htmlFor="pdf_link"
+      className="block text-sm font-medium text-gray-600"
+    >
+      PDF Link:
+    </label>
+    <input
+      type="text"
+      id="pdf_link"
+      name="pdf_link"
+      {...register("pdf_link", { required: true })}
+      className="mt-1 p-2 border rounded-md w-full"
+    />
+  </div>
+)}
+
+          {/* <div>
             <label
               htmlFor="format"
               className="block text-sm font-medium text-gray-600"
@@ -191,22 +243,6 @@ const AddBooks = () => {
             >
               <option value="pdf">PDF</option>
               <option value="hard copy">Hard Copy</option>
-            </select>
-          </div>
-          <div className="">
-            <label className="block text-sm font-bold mb-2">COurse</label>
-            <select
-              {...register("course_id", { required: true })}
-              className="w-full border border-gray-300 p-2 rounded-md"
-            >
-              <option value="" disabled>
-                Select a Course
-              </option>
-              {courseData?.map((course) => (
-                <option key={course?.id} value={course?._id}>
-                  {course?.title}
-                </option>
-              ))}
             </select>
           </div>
 
@@ -224,7 +260,73 @@ const AddBooks = () => {
               {...register("pdf_link", { required: true })}
               className="mt-1 p-2 border rounded-md w-full"
             />
+          </div> */}
+
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2">Category</label>
+
+            <select
+              {...register("category_id")}
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+                setValue("sub_category_id", "");
+              }}
+              value={selectedCategory}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              <option value="" disabled>
+                Select a category
+              </option>
+              {categories?.categories?.map((category) => (
+                <option key={category?.id} value={category?.id}>
+                  {category?.title}
+                </option>
+              ))}
+            </select>
           </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2">Sub Category</label>
+            <select
+              {...register("sub_category_id")} disabled={!selectedCategory}
+              onChange={(e) => {
+                setSelectedSubcategory(e.target.value);
+                setValue("course_id", ""); // Reset the selected course when the subcategory changes
+              }}
+              value={selectedSubcategory}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              <option value="" disabled>
+                Select a category
+              </option>
+              {allSubcategory?.map((subCategory) => (
+                <option key={subCategory?.id} value={subCategory?.id}>
+                  {subCategory?.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="">
+            <label className="block text-sm font-bold mb-2">Course</label>
+            <select disabled={!selectedSubcategory}
+              {...register("course_id")}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              
+              {allCourse?.length === 0 ? (
+                <option value="" disabled>
+                  No courses available
+                </option>
+              ) : (
+                allCourse?.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course?.title}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+
+        
           <div>
             <label
               htmlFor="cover_page"
