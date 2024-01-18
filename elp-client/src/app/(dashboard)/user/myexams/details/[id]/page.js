@@ -351,7 +351,7 @@ const UserExamPage = ({ params }) => {
     if (isTimeUp) {
       data.forEach((quiz) => {
         if (!selectedOptions[quiz.id]) {
-          handleCheckboxChange(quiz.id, quiz.options[0]);
+          handleCheckboxChange(quiz.id);
         }
       });
     }
@@ -411,18 +411,19 @@ const UserExamPage = ({ params }) => {
   const [hasAutoSubmitted, setHasAutoSubmitted] = useState(false);
 
   useEffect(() => {
-    if (examTimeInMinutes && time > 0) {
+    if (examTimeInMinutes && time > 0 && !quizSubmitted) {
       const timerId = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
 
       return () => clearInterval(timerId);
-    } else if (time === 0 && !hasAutoSubmitted) {
+    } else if (time === 0 && !hasAutoSubmitted && !quizSubmitted) {
       // Auto-submit the quiz when the timer reaches 0 minutes and 0 seconds
       handleSubmit();
       setHasAutoSubmitted(true); // Set the flag to avoid repeated submissions
     }
-  }, [examTimeInMinutes, time, handleSubmit, hasAutoSubmitted]);
+  }, [examTimeInMinutes, time, handleSubmit, hasAutoSubmitted, quizSubmitted]);
+
   const isWarningTime = time <= 60;
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -494,7 +495,6 @@ const UserExamPage = ({ params }) => {
       >
         Submit
       </button>
-
       {quizSubmitted && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Quiz Results</h2>
