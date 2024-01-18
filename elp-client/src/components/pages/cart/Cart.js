@@ -37,8 +37,7 @@ const Cart = () => {
   // }, [cartLength]);
 
   const [deletecart] = useDeletecartMutation();
-
-  const handleDelete = async (id) => {
+  const handleDelete = async (dispatch, id) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
@@ -49,27 +48,32 @@ const Cart = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       });
-
+  
       if (result.isConfirmed) {
         // User confirmed deletion
-        const res = await deletecart(id);
-        // console.log(res)
-
-        if (res?.data?._id === id) {
+  
+        // Dispatch the removeFromCart action
+        dispatch(removeFromCart({ _id: id, price: 0, quantity: 0 }));
+  
+        // const res = await deletecart(id);
+  
+        // if (res?.data?._id === id) {
           // Item deleted successfully
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success",
           });
-        } else {
-          // Something went wrong with deletion
-          Swal.fire({
-            title: "Error!",
-            text: "Something went wrong with deletion.",
-            icon: "error",
-          });
-        }
+
+        // } 
+        // else {
+        //   // Something went wrong with deletion
+        //   Swal.fire({
+        //     title: "Error!",
+        //     text: "Something went wrong with deletion.",
+        //     icon: "error",
+        //   });
+        // }
       }
     } catch (err) {
       // Handle any errors that occur during the process
@@ -77,17 +81,56 @@ const Cart = () => {
     }
   };
 
-  const handleIncrement = async (book_id) => {
-    await addToCart({ book_id, quantity: 1 });
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const result = await Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "You won't be able to delete this!",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, delete it!",
+  //     });
 
-  const handleDecrement = async (book_id, quantity) => {
-    if (quantity > 1) {
-      await addToCart({ book_id, quantity: -1 });
-    } else {
-      toast.success("Quantity is already 1, cannot decrement further");
-    }
-  };
+  //     if (result.isConfirmed) {
+  //       // User confirmed deletion
+  //       const res = await deletecart(id);
+  //       // console.log(res)
+
+  //       if (res?.data?._id === id) {
+  //         // Item deleted successfully
+  //         Swal.fire({
+  //           title: "Deleted!",
+  //           text: "Your file has been deleted.",
+  //           icon: "success",
+  //         });
+  //       } else {
+  //         // Something went wrong with deletion
+  //         Swal.fire({
+  //           title: "Error!",
+  //           text: "Something went wrong with deletion.",
+  //           icon: "error",
+  //         });
+  //       }
+  //     }
+  //   } catch (err) {
+  //     // Handle any errors that occur during the process
+  //     toast.error(err.message);
+  //   }
+  // };
+
+  // const handleIncrement = async (book_id) => {
+  //   await addToCart({ book_id, quantity: 1 });
+  // };
+
+  // const handleDecrement = async (book_id, quantity) => {
+  //   if (quantity > 1) {
+  //     await addToCart({ book_id, quantity: -1 });
+  //   } else {
+  //     toast.success("Quantity is already 1, cannot decrement further");
+  //   }
+  // };
 
   const breadcrumbItems = [
     { label: "হোম", link: "/" },
@@ -154,7 +197,8 @@ const Cart = () => {
                             <h2>{item?.title} </h2>
                             <button
                               className="text-red-500 font-bold"
-                              onClick={() => dispatch(removeFromCart(item))}
+                              onClick={() => handleDelete(dispatch, item?._id)}
+                              // onClick={() => dispatch(removeFromCart(item))}
                               // onClick={() => handleDelete(item?._id)}
                             >
                               Remove
