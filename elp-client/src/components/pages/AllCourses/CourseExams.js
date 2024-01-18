@@ -21,7 +21,7 @@ function CourseExams({ course_id }) {
   } = useGetAllExamsQuery({
     course_id: course_id,
   });
-
+  console.log(dataExams, "this is finding");
   const enrollToExam = async (exam) => {
     if (!userLoggedIn) {
       return toast.error("Please signin to buy exam ");
