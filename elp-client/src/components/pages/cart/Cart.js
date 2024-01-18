@@ -13,24 +13,28 @@ import {
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart, removeOneBook,addToCart } from "@/redux/features/cart/cartSlice";
 
 const Cart = () => {
   const { data: cart } = useGetAllCartsByUserQuery();
   const cartLength = cart?.carts;
-  const [addToCart] = useAddToCartMutation();
-  // console.log(cartLength)
-  const [total, setTotal] = useState(0); // State to hold the total price
+  // const [addToCart] = useAddToCartMutation();
+  const { books, total } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+//  console.log(books)
+  // const [total, setTotal] = useState(0); // State to hold the total price
 
-  useEffect(() => {
-    // Calculate total when the cart changes
-    if (cartLength) {
-      const newTotal = cartLength.reduce(
-        (acc, item) => acc + item.quantity * item.book_id.price,
-        0
-      );
-      setTotal(newTotal);
-    }
-  }, [cartLength]);
+  // useEffect(() => {
+  //   // Calculate total when the cart changes
+  //   if (cartLength) {
+  //     const newTotal = cartLength.reduce(
+  //       (acc, item) => acc + item.quantity * item.book_id.price,
+  //       0
+  //     );
+  //     setTotal(newTotal);
+  //   }
+  // }, [cartLength]);
 
   const [deletecart] = useDeletecartMutation();
 
@@ -99,7 +103,7 @@ const Cart = () => {
         <div className="">
           <div className="flex items-center mb-10 space-x-5">
             <h2 className="font-bold text-2xl text-bluePrimary">Your Cart</h2>
-            <h2 className="font-bold text-xl "> {cartLength?.length} Items</h2>
+            <h2 className="font-bold text-xl "> {books?.length} Items</h2>
           </div>
           <div className="bg-white px-4 py-5 border rounded shadow-md ">
             <div className=" grid grid-cols-4 gap-10">
@@ -125,21 +129,21 @@ const Cart = () => {
               </div>
             </div>
             <div className="grid grid-cols-4 gap-10">
-              {cartLength?.length === 0 ? (
+              {books?.length === 0 ? (
                 <div className="font-bold text-red-400 text-xl">
                   {" "}
                   Your Cart Is Empty
                 </div>
               ) : (
                 <>
-                  {cartLength?.map((item) => (
+                  {books?.map((item) => (
                     <>
-                      <div className="">
+                      <div className="" key={item?.id}>
                         <div className="flex  items-center">
                           <div className="pr-7">
                             <Image
                               className="rounded"
-                              src={item?.book_id?.cover_page}
+                              src={item?.cover_page}
                               alt="book img"
                               width={100}
                               height={50}
@@ -147,10 +151,11 @@ const Cart = () => {
                           </div>
 
                           <div className="">
-                            <h2>{item?.book_id?.title} </h2>
+                            <h2>{item?.title} </h2>
                             <button
                               className="text-red-500 font-bold"
-                              onClick={() => handleDelete(item?._id)}
+                              onClick={() => dispatch(removeFromCart(item))}
+                              // onClick={() => handleDelete(item?._id)}
                             >
                               Remove
                             </button>
@@ -161,24 +166,26 @@ const Cart = () => {
                         <div className="flex items-center space-x-3 font-semibold">
                           <button
                             className="border px-2"
-                            onClick={() =>
-                              handleIncrement(
-                                item?.book_id?._id,
-                                item?.quantity
-                              )
-                            }
+                            onClick={() => dispatch(addToCart(item))}
+                            // onClick={() =>
+                            //   handleIncrement(
+                            //     item?.book_id?._id,
+                            //     item?.quantity
+                            //   )
+                            // }
                           >
                             +
                           </button>
                           <h5>{item?.quantity}</h5>
                           <button
                             className="border px-2"
-                            onClick={() =>
-                              handleDecrement(
-                                item?.book_id?._id,
-                                item?.quantity
-                              )
-                            }
+                            onClick={() => dispatch(removeOneBook(item))}
+                            // onClick={() =>
+                            //   handleDecrement(
+                            //     item?.book_id?._id,
+                            //     item?.quantity
+                            //   )
+                            // }
                           >
                             {" "}
                             -
@@ -187,13 +194,13 @@ const Cart = () => {
                       </div>
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <h5>{item?.book_id?.price} TK</h5>
+                          <h5>{item?.price} TK</h5>
                         </div>
                       </div>
 
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <h5>{item?.quantity * item?.book_id?.price} TK</h5>
+                          <h5>{item?.quantity * item?.price} TK</h5>
                         </div>
                       </div>
                     </>
@@ -228,7 +235,7 @@ const Cart = () => {
                 </span>
                 Continue Shopping
               </Link>
-              {cartLength?.length > 0 && (
+              {books?.length > 0 && (
                 <Link
                   href="/checkout"
                   className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"

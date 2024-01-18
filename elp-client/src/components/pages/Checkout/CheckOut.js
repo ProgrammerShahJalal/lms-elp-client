@@ -5,7 +5,7 @@ import CheckoutCart from "./CheckoutCart";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 import { useForm } from "react-hook-form";
 import { useGetAllCartsByUserQuery } from "@/redux/api/cartApi";
@@ -17,8 +17,11 @@ import axios from "axios";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const CheckOut = () => {
+  const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const user_id = getUserInfo()?.userId;
   const {
@@ -37,6 +40,9 @@ const CheckOut = () => {
   const { data: carts, isLoading: cartLoading } = useGetAllCartsByUserQuery();
   const cartData = carts?.carts;
 
+  const { books, total } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -46,42 +52,42 @@ const CheckOut = () => {
   const [isDefault, setIsDefault] = useState(false);
   const [selectedOutsideDhaka, setSelectedOutsideDhaka] = useState(true);
   const [shippingCharge, setShippingCharge] = useState(100);
-  const [total, setTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
 
   const handleDefaultChange = () => {
     setIsDefault(!isDefault);
   };
 
   // set shipping charge based on hard copy book ordered, and inside or outside dhaka
-  useEffect(() => {
-    // if there is any hard copy book ordered
-    const hardCopyBooks = cartData?.find(
-      (cart) => cart?.book_id?.format === "hard copy"
-    );
-    if (!!hardCopyBooks) {
-      if (selectedOutsideDhaka) {
-        setShippingCharge(shippingChargeOutsideDhaka);
-      } else {
-        setShippingCharge(shippingChargeInsideDhaka);
-      }
-    } else {
-      setShippingCharge(0);
-    }
+  // useEffect(() => {
+  //   // if there is any hard copy book ordered
+  //   const hardCopyBooks = cartData?.find(
+  //     (cart) => cart?.book_id?.format === "hard copy"
+  //   );
+  //   if (!!hardCopyBooks) {
+  //     if (selectedOutsideDhaka) {
+  //       setShippingCharge(shippingChargeOutsideDhaka);
+  //     } else {
+  //       setShippingCharge(shippingChargeInsideDhaka);
+  //     }
+  //   } else {
+  //     setShippingCharge(0);
+  //   }
 
-    // calculating total price
-    if (cartData) {
-      const newTotal = cartData.reduce(
-        (acc, item) => acc + item.quantity * item.book_id.price,
-        0
-      );
-      setTotal(newTotal);
-    }
-  }, [
-    cartData,
-    shippingChargeInsideDhaka,
-    shippingChargeOutsideDhaka,
-    selectedOutsideDhaka,
-  ]);
+  //   // calculating total price
+  //   if (cartData) {
+  //     const newTotal = cartData.reduce(
+  //       (acc, item) => acc + item.quantity * item.book_id.price,
+  //       0
+  //     );
+  //     setTotal(newTotal);
+  //   }
+  // }, [
+  //   cartData,
+  //   shippingChargeInsideDhaka,
+  //   shippingChargeOutsideDhaka,
+  //   selectedOutsideDhaka,
+  // ]);
 
   useEffect(() => {
     refetch();
@@ -94,6 +100,10 @@ const CheckOut = () => {
   ];
 
   const handleFormSubmit = async (data) => {
+
+    if (!userLoggedIn) {
+          return toast.error("Please signin to buy a book");
+      }
     Cookies.set("order_type", shippingCharge ? "hard copy" : "pdf");
     if (shippingCharge) {
       Cookies.set(

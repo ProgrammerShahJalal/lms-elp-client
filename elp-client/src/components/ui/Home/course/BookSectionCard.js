@@ -9,26 +9,34 @@ import { useAddToCartMutation } from "@/redux/api/cartApi";
 import {  isLoggedIn } from "@/services/auth.service";
 
 const BookSectionCard = ({item}) => {
-  const [addToCart] = useAddToCartMutation();
-  const userLoggedIn = isLoggedIn();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const handleAddBook = async (item) => {
-    if (!userLoggedIn) {
-      return toast.error("Please signin to buy a book");
-    }
-
-    const res = await addToCart({book_id: item?._id, quantity: 1 });
-  
- 
-    if (res?.data?.quantity && res.data.quantity > 1) {
-      toast.success('Book has already been added to your cart. Please check your cart.');
-    } else {
-      toast.success('Book added to your cart successfully.');
-    }
-   
+  const handleAddBook = (item) => {
+    // console.log(item)
+    dispatch(addToCart(item));
+    toast.success('Book added in your cart')
     
   }
+  // const [addToCart] = useAddToCartMutation();
+  // const userLoggedIn = isLoggedIn();
+  //  const dispatch = useDispatch();
+
+  // const handleAddBook = async (item) => {
+  //   if (!userLoggedIn) {
+  //     return toast.error("Please signin to buy a book");
+  //   }
+
+  //   const res = await addToCart({book_id: item?._id, quantity: 1 });
+  
+ 
+  //   if (res?.data?.quantity && res.data.quantity > 1) {
+  //     toast.success('Book has already been added to your cart. Please check your cart.');
+  //   } else {
+  //     toast.success('Book added to your cart successfully.');
+  //   }
+   
+    
+  // }
 
   return (
     <>
@@ -69,7 +77,7 @@ const BookSectionCard = ({item}) => {
               {" "}
               কোর্সের মূল্যঃ <del className="text-gray-400  "> -{item?.discount_price} </del> <span className="font-bold pl-2">{item?.price}</span> Tk
             </p>
-            <button onClick={() => handleAddBook(item)}  className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+            <button onClick={() => handleAddBook(item)}   className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
               এড টু কার্ড
             </button>
           </div>

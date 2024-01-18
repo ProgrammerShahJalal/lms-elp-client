@@ -39,6 +39,7 @@ const AddBooks = () => {
     sub_category_id: selectedSubcategory,
   });
   const allCourse = data?.courses?.data;
+  console.log(variable);
 
   const { register, handleSubmit, reset, watch, setValue } = useForm();
 
