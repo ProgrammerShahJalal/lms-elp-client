@@ -104,23 +104,47 @@
 import { useGetAllOrdersQuery } from "@/redux/api/ordersApi";
 import AllOrdersDetials from "./AllOrdersDetials";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AllOrders = () => {
-  const [filterValue, setFilterValue] = useState('');
-  const [selectedUser, setSelectedUser] = useState(null);
+  // const [filterValue, setFilterValue] = useState('');
+  // const [selectedUser, setSelectedUser] = useState(null);
+  const [sortedOrder, setSortedOrder] = useState([]);
 
-  const handleFilterChange = (event) => {
-    setFilterValue(event.target.value);
-    setSelectedUser(null); // Reset selected user when filter changes
-  };
+  // const handleFilterChange = (event) => {
+  //   setFilterValue(event.target.value);
+  //   setSelectedUser(null); // Reset selected user when filter changes
+  // };
 
-  const handleUserSelect = (userId) => {
-    setSelectedUser(userId);
-  };
+  // const handleUserSelect = (userId) => {
+  //   setSelectedUser(userId);
+  // };
 
   const { data, isLoading, isError } = useGetAllOrdersQuery();
   const ordersData = data?.orders?.data;
+  useEffect(() => {
+    if (ordersData) {
+      const sortedOrders = [...ordersData].sort((a, b) => {
+        const nameA = a.user_id?.name.toUpperCase();
+        const nameB = b.user_id?.name.toUpperCase();
+  
+        if (nameA < nameB) {
+          return -1;
+        }
+  
+        if (nameA > nameB) {
+          return 1;
+        }
+  
+        return 0;
+      });
+  
+      // Update the state or use the sortedOrders as needed
+      setSortedOrder(sortedOrders);
+    }
+  }, [ordersData]);
+  
+  
 
   const filteredOrders = ordersData?.filter((order) =>
     order?.user_id?.name.toLowerCase().includes(filterValue.toLowerCase())
@@ -146,7 +170,7 @@ const AllOrders = () => {
     );
   }
 
-  if (!isLoading && !isError && filteredOrders?.length === 0) {
+  if (!isLoading && !isError && sortedOrder?.length === 0) {
     content = (
       <>
         {" "}
@@ -157,8 +181,8 @@ const AllOrders = () => {
     );
   }
 
-  if (!isLoading && !isError && filteredOrders?.length > 0) {
-    content = filteredOrders?.map((item) => (
+  if (!isLoading && !isError && sortedOrder?.length > 0) {
+    content = sortedOrder?.map((item) => (
       <AllOrdersDetials key={item?.id} item={item} />
     ));
   }
@@ -166,7 +190,7 @@ const AllOrders = () => {
   return (
     <div>
       <div className="flex mb-5">
-        <input
+        {/* <input
           type="text"
           placeholder="Filter by user name"
           value={filterValue}
@@ -186,19 +210,19 @@ const AllOrders = () => {
               {userName}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
 
-      {selectedUser && (
+      {/* {selectedUser && (
         <div className="mt-3">
           <h2 className="text-lg font-semibold mb-2">{`Orders for ${selectedUser}`}</h2>
           {filteredOrders
             .filter((order) => order?.user_id?.name === selectedUser)
             .map((item) => (
               <AllOrdersDetials key={item?.id} item={item} />
-            ))}
-        </div>
-      )}
+            ))} */}
+        {/* </div>
+      )} */}
 
       <div className="border">
         <div className="overflow-x-auto">

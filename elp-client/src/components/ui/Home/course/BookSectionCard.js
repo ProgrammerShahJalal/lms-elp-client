@@ -14,9 +14,9 @@ const BookSectionCard = ({item}) => {
   // const dispatch = useDispatch();
 
   const handleAddBook = async (item) => {
-    // if (!userLoggedIn) {
-    //   return toast.error("Please signin to buy a book");
-    // }
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy a book");
+    }
 
     const res = await addToCart({book_id: item?._id, quantity: 1 });
   
