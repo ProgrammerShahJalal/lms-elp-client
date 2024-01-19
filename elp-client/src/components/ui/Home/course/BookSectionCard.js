@@ -49,8 +49,8 @@ const BookSectionCard = ({item}) => {
             width={400}
             height={100}
           />
-           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
-          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p>
+           {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p> */}
         </figure>
 
         <div  className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
@@ -69,7 +69,16 @@ const BookSectionCard = ({item}) => {
             
           </div>
 
-          <p className="py-2">{item?.description}<Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
+          <div className="flex justify-between items-center">
+            <div>
+            <p className="py-2">{item?.description}
+          <Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
+            </div>
+            <div>
+            {/* <p>বইটি পড়ুন <iframe src={item?.pdf_link} width="100%" height="600px" frameborder="0"></iframe></p> */}
+            </div>
+
+          </div>
           
           <hr />
           <div className="flex justify-between items-center mt-3">
@@ -78,7 +87,7 @@ const BookSectionCard = ({item}) => {
               কোর্সের মূল্যঃ <del className="text-gray-400  "> -{item?.discount_price} </del> <span className="font-bold pl-2">{item?.price}</span> Tk
             </p>
             <button onClick={() => handleAddBook(item)}   className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
-              এড টু কার্ড
+            ঝুড়িতে যোগ করুন
             </button>
           </div>
           {/* <div className=" card-actions justify-start ">

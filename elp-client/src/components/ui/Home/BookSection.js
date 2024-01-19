@@ -5,11 +5,33 @@ import { useGetAllBooksQuery } from "@/redux/api/booksApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 const BookSection = () => {
   const { data, isError, isLoading } = useGetAllBooksQuery();
 
   const booksData = data?.books?.data;
+  console.log(booksData)
+  const breakpoints = {
+    
+    480: {
+        slidesPerView: 1,
+       spaceBetween: 30,
+      },
+    576: {
+        slidesPerView: 2,
+       spaceBetween: 30,
+      },
+      786: {
+     slidesPerView: 3,
+        spaceBetween: 30,
+     },
+      1024: {
+      slidesPerView: 3,
+        spaceBetween:20,
+       },
+     }
 
 
   let content = null;
@@ -36,7 +58,7 @@ const BookSection = () => {
   }
 
   if (!isLoading && !isError && booksData?.length > 0) {
-    content = booksData?.map((item) => <BookSectionCard key={item?._id} item={item} />);
+    content = booksData?.map((item) => <SwiperSlide key={item?._id}><BookSectionCard  item={item} /></SwiperSlide>);
   }
   return (
     <div className="px-14 py-20">
@@ -46,7 +68,21 @@ const BookSection = () => {
           সব বই দেখুন
         </Link>
       </div>
-      <div className="grid lg:grid-cols-3  gap-4">{content}</div>
+      <Swiper
+        // pagination={{
+        //   type: 'progressbar',
+        // }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        
+        breakpoints= {breakpoints}
+        className="mySwiper"
+      >
+{content}
+      </Swiper>
+      {/* <div className="grid lg:grid-cols-3  gap-4">{content}
+      
+      </div> */}
      
     </div>
   );

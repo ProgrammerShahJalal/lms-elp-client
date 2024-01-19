@@ -169,20 +169,7 @@ const Cart = () => {
                       </div>
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <button
-                            className="border px-2"
-                            onClick={() => dispatch(addToCart(item))}
-                            // onClick={() =>
-                            //   handleIncrement(
-                            //     item?.book_id?._id,
-                            //     item?.quantity
-                            //   )
-                            // }
-                          >
-                            +
-                          </button>
-                          <h5>{item?.quantity}</h5>
-                          <button
+                        <button
                             className="border px-2"
                             onClick={() => dispatch(removeOneBook(item))}
                             // onClick={() =>
@@ -194,6 +181,20 @@ const Cart = () => {
                           >
                             {" "}
                             -
+                          </button>
+                          
+                          <h5>{item?.quantity}</h5>
+                          <button
+                            className="border px-2"
+                            onClick={() => dispatch(addToCart(item))}
+                            // onClick={() =>
+                            //   handleIncrement(
+                            //     item?.book_id?._id,
+                            //     item?.quantity
+                            //   )
+                            // }
+                          >
+                            +
                           </button>
                         </div>
                       </div>
