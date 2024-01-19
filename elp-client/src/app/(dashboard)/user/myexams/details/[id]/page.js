@@ -227,38 +227,110 @@ const UserExamPage = ({ params }) => {
   const { data, isLoading, isError } = useGetMyQuestionsEnrollHistoryQuery(id);
   const { data: exam, isLoading: loading, isError: error } = useGetSingleExamQuery(id);
   const examTimeInMinutes = exam?.duration_in_minutes;
-  const [time, setTime] = useState(examTimeInMinutes * 60);
+  const [time, setTime] = useState(examTimeInMinutes ? examTimeInMinutes * 60 : 0);
 
-  useEffect(() => {
-    if (time > 0) {
-      const timerId = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
+  // useEffect(() => {
+  //   if (examTimeInMinutes && time > 0) {
+  //     const timerId = setInterval(() => {
+  //       setTime((prevTime) => prevTime - 1);
+  //     }, 1000);
 
-      return () => clearInterval(timerId);
-    }
-  }, [time]);
-  const isWarningTime = time <= 60;
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+  //     return () => clearInterval(timerId);
+  //   } else if (time === 0) {
+  //     // Auto-submit the quiz when the timer reaches 0 minutes and 0 seconds
+  //     handleSubmit();
+  //   }
+  // }, [examTimeInMinutes, time, handleSubmit]);
 
+  // const isWarningTime = time <= 60;
+  // const minutes = Math.floor(time / 60);
+  // const seconds = time % 60;
   const [selectedOptions, setSelectedOptions] = useState({});
   const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState({});
-
   // Calculate totalQuestions when needed
   const totalQuestions = Object.keys(selectedOptions).length;
 
   const handleCheckboxChange = (questionId, option) => {
     setSelectedOptions((prevOptions) => ({
       ...prevOptions,
-      [questionId]: { [option]: true },
+      // [questionId]: { [option]: true },
+      [questionId]: option,
     }));
     setSubmitButtonDisabled(false);
   };
+  // const handleSubmit = async () => {
+  //   const totalCorrectAnswers = data.reduce((total, quiz) => {
+  //     const selectedOption = selectedOptions[quiz.id];
+  //     const correctOption = quiz.correct_answer;
+
+  //     setCorrectAnswers((prevCorrectAnswers) => ({
+  //       ...prevCorrectAnswers,
+  //       [quiz.id]: correctOption,
+  //     }));
+
+  //     if (selectedOption && selectedOption[correctOption]) {
+  //       return total + 1;
+  //     }
+
+  //     return total;
+  //   }, 0);
+
+  //   const totalWrongAnswers = totalQuestions - totalCorrectAnswers;
+  //   const submissionData = {
+  //     user_id: userId,
+  //     exam_id: id,
+  //     exam_type: "0",
+  //     answer: JSON.stringify(data.map((quiz) => {
+  //       const selectedOption = selectedOptions[quiz.id];
+  //       return {
+  //         question: quiz.question,
+  //         options: quiz.options.map((opt) => Object.values(opt)[0]),
+  //         answer: selectedOption || "you don't give an answer",
+  //         is_correct: correctAnswers[quiz.id] === selectedOption ? 1 : 0,
+  //       };
+  //     })),
+  //     total_marks: totalQuestions,
+  //     total_correct_answer: totalCorrectAnswers,
+  //     total_wrong_answer: totalWrongAnswers,
+  //     isApproved: true
+  //   };
+
+  //   // Make an API request to save the user's submission
+  //   try {
+  //     const response = await submitExamUser(submissionData);
+  //     // Assuming your backend returns some acknowledgment
+  //     if (!!response) {
+  //       Swal.fire({
+  //         title: 'Quiz Summary',
+  //         html: `<p>Your have answered: ${totalQuestions}</p>
+  //                <p>Your Correct Answers: ${totalCorrectAnswers}</p>
+  //                <p>Your Wrong Answers: ${totalWrongAnswers}</p>`,
+  //         icon: 'info',
+  //       });
+
+  //       setQuizSubmitted(true);
+  //     } else {
+  //       // Handle the case when the submission fails
+  //       Swal.fire({
+  //         title: 'Submission Failed',
+  //         text: 'There was an error submitting your quiz. Please try again.',
+  //         icon: 'error',
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('Submission error:', error);
+  //     // Handle the case when the submission fails
+  //     Swal.fire({
+  //       title: 'Opps!!!! ',
+  //       text: 'There was an error submitting your quiz. Please try again.',
+  //       icon: 'error',
+  //     });
+  //   }
+  // };
   const handleSubmit = async () => {
-    const totalCorrectAnswers = data.reduce((total, quiz) => {
+    const totalCorrectAnswers = data?.reduce((total, quiz) => {
       const selectedOption = selectedOptions[quiz.id];
       const correctOption = quiz.correct_answer;
 
@@ -273,27 +345,31 @@ const UserExamPage = ({ params }) => {
 
       return total;
     }, 0);
+    const isTimeUp = time <= 0;
+
+    // If time is up, automatically select remaining unanswered questions
+    if (isTimeUp) {
+      data.forEach((quiz) => {
+        if (!selectedOptions[quiz.id]) {
+          handleCheckboxChange(quiz.id);
+        }
+      });
+    }
 
     const totalWrongAnswers = totalQuestions - totalCorrectAnswers;
-
-    // Prepare data to send to the server
     const submissionData = {
       user_id: userId,
       exam_id: id,
-      exam_type: "0", // You might need to get this from your data or user input
-      answer: JSON.stringify(data.map(quiz => ({
-        question: quiz.question,
-        a: quiz.a,
-        b: quiz.b,
-        c: quiz.c,
-        d: quiz.d,
-        answer: selectedOptions[quiz.id] && Object.keys(selectedOptions[quiz.id])[0]
-          ? selectedOptions[quiz.id] && Object.keys(selectedOptions[quiz.id])[0]
-          : "you don't given answer",
-        is_correct: correctAnswers[quiz.id] === selectedOptions[quiz.id]
-          ? 1
-          : 0
-      }))),
+      exam_type: "0",
+      answer: JSON.stringify(data.map((quiz) => {
+        const selectedOption = selectedOptions[quiz.id];
+        return {
+          question: quiz.question,
+          options: quiz.options.map((opt) => Object.values(opt)[0]),
+          answer: selectedOption || "you don't give an answer",
+          is_correct: correctAnswers[quiz.id] === selectedOption ? 1 : 0,
+        };
+      })),
       total_marks: totalQuestions,
       total_correct_answer: totalCorrectAnswers,
       total_wrong_answer: totalWrongAnswers,
@@ -332,39 +408,25 @@ const UserExamPage = ({ params }) => {
       });
     }
   };
+  const [hasAutoSubmitted, setHasAutoSubmitted] = useState(false);
 
-  // const handleSubmit = () => {
-  //   const totalCorrectAnswers = data.reduce((total, quiz) => {
-  //     const selectedOption = selectedOptions[quiz.id];
-  //     const correctOption = quiz.correct_answer;
+  useEffect(() => {
+    if (examTimeInMinutes && time > 0 && !quizSubmitted) {
+      const timerId = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
 
-  //     setCorrectAnswers((prevCorrectAnswers) => ({
-  //       ...prevCorrectAnswers,
-  //       [quiz.id]: correctOption,
-  //     }));
+      return () => clearInterval(timerId);
+    } else if (time === 0 && !hasAutoSubmitted && !quizSubmitted) {
+      // Auto-submit the quiz when the timer reaches 0 minutes and 0 seconds
+      handleSubmit();
+      setHasAutoSubmitted(true); // Set the flag to avoid repeated submissions
+    }
+  }, [examTimeInMinutes, time, handleSubmit, hasAutoSubmitted, quizSubmitted]);
 
-  //     if (selectedOption && selectedOption[correctOption]) {
-  //       return total + 1;
-  //     }
-
-  //     return total;
-  //   }, 0);
-
-  //   const totalWrongAnswers = totalQuestions - totalCorrectAnswers;
-
-  //   Swal.fire({
-  //     title: 'Quiz Summary',
-  //     html: `<p>Your have answered: ${totalQuestions}</p>
-  //            <p>Your Correct Answers: ${totalCorrectAnswers}</p>
-  //            <p>Your Wrong Answers: ${totalWrongAnswers}</p>`,
-  //     icon: 'info',
-  //   });
-
-  //   setQuizSubmitted(true);
-  // };
-  // setQuizSubmitted(true);
-
-
+  const isWarningTime = time <= 60;
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
   let content = null;
 
   if (isLoading) {
@@ -397,17 +459,19 @@ const UserExamPage = ({ params }) => {
           Question {i + 1}: {quiz.question}
         </p>
         <div>
-          {["a", "b", "c", "d"].map((option) => (
-            <div key={option} className="mb-2">
+          {quiz?.options?.map((option, index) => (
+            <div key={index} className="mb-2">
               <label className="flex items-center">
                 <input
                   type="radio"
                   className="mr-2 h-7 w-5"
                   name={`answer_${quiz.id}`}
-                  checked={selectedOptions[quiz.id]?.[option]}
+                  // checked={selectedOptions[quiz.id]?.[option]}
+                  checked={selectedOptions[quiz.id] === option}
                   onChange={() => handleCheckboxChange(quiz.id, option)}
                 />
-                <span>{quiz[option]}</span>
+                {/* <span>{quiz?.options?.find((o) => o.hasOwnProperty(option))?.[option]}</span> */}
+                <span>{Object.values(option)[0]}</span>
               </label>
             </div>
           ))}
@@ -419,17 +483,18 @@ const UserExamPage = ({ params }) => {
   return (
     <div>
       <div className="flex justify-end">
-        {/* <p className={` text-2xl font-bold fixed  ${isWarningTime ? 'bg-red-500' : 'bg-transparent'}`}>End In: {minutes} minutes: {seconds} second left</p> */}
+        <p className={`text-xl font-bold px-2 rounded-sm  fixed ${isWarningTime ? 'bg-red-500' : 'bg-transparent'}`}>
+          {examTimeInMinutes ? `End In: ${minutes} minutes: ${seconds} seconds left` : 'Exam duration not available'}
+        </p>
       </div>
       {content}
       <button
         onClick={handleSubmit}
-        disabled={isSubmitButtonDisabled}
+        disabled={isSubmitButtonDisabled || time === 0}
         className={`py-2 px-4 rounded ${isSubmitButtonDisabled ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
       >
         Submit
       </button>
-
       {quizSubmitted && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Quiz Results</h2>
@@ -451,4 +516,3 @@ const UserExamPage = ({ params }) => {
 };
 
 export default UserExamPage;
-
