@@ -37,7 +37,7 @@ const Navbar = () => {
   const { data: cart } = useGetAllCartsByUserQuery();
   // console.log(cart?.carts, 'from navbaer');
   const cartLength = cart?.carts;
-  // const { books } = useSelector((state) => state.cart);
+   const { books } = useSelector((state) => state.cart);
 
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
@@ -194,7 +194,7 @@ const Navbar = () => {
                 <sup className="text-md font-bold">{cartLength?.length}</sup>
               )} */}
             
-                <sup className="text-md font-bold">{cartLength?.length}</sup>
+                <sup className="text-md font-bold">{books?.length}</sup>
               
             </Link>
 
@@ -330,7 +330,7 @@ const Navbar = () => {
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold text-white" />{" "}
               <sup className="text-md font-bold text-white">
-                {cartLength?.length}
+                {books?.length}
               </sup>
             </Link>
           </div>

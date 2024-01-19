@@ -1,20 +1,23 @@
 "use client";
 import { useGetAllCartsByUserQuery } from "@/redux/api/cartApi";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const CheckoutCart = ({ shippingCharge, total }) => {
-  const { data: cart } = useGetAllCartsByUserQuery();
-  const cartLength = cart?.carts;
+const CheckoutCart = ({ shippingCharge }) => {
+  // const { data: cart } = useGetAllCartsByUserQuery();
+  // const cartLength = cart?.carts;
+  const { books, total } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   return (
     <div>
       <div className="bg-white border rounded py-10">
         <div className="px-6">
-          {cartLength?.map((item) => (
+          {books?.map((item) => (
             <div key={item?._id}>
               <div className="flex justify-between items-center pb-5">
-                <h2>{item?.book_id?.title}</h2>
-                <h2>{item?.quantity * item?.book_id?.price} TK</h2>
+                <h2>{item?.title}</h2>
+                <h2>{item?.quantity * item?.price} TK</h2>
               </div>
             </div>
           ))}
