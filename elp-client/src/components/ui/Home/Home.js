@@ -33,6 +33,8 @@ const HomePage = () => {
     <div className="">
       <Hero/>
       <Category/>
+      {/* <iframe src="https://drive.google.com/file/d/1PCWbhKm2n6FCSSPhvHt3eqE7MSiyAm39/preview" width="640" height="480" allow="autoplay"></iframe> */}
+      {/* <iframe src="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" width="640" height="480" allow="autoplay"></iframe> */}
       <Courses/> 
       <FilteringCourseBooks sub_category_id={bcsPriliSubId}/>
       <FilteringCourseBooks sub_category_id={bcsWrittenSubId}/>

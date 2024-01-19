@@ -7,6 +7,12 @@ import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
 import {  isLoggedIn } from "@/services/auth.service";
+// import { Document,Page } from 'react-pdf/dist/esm/entry.webpack';
+
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
 
 const BookSectionCard = ({item}) => {
   const dispatch = useDispatch();
@@ -40,6 +46,7 @@ const BookSectionCard = ({item}) => {
 
   return (
     <>
+     
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
         <figure className="relative">
           <Image
@@ -75,7 +82,12 @@ const BookSectionCard = ({item}) => {
           <Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
             </div>
             <div>
-            {/* <p>বইটি পড়ুন <iframe src={item?.pdf_link} width="100%" height="600px" frameborder="0"></iframe></p> */}
+            {/* {item?.pdf_link} */}
+            <p>বইটি পড়ুন  <iframe src="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" width="640" height="480" allow="autoplay"></iframe></p>
+            {/* <p>বইটি পড়ুন  <iframe src={item?.pdf_link} width="640" height="480" allow="autoplay"></iframe></p> */}
+            {/* <iframe src={item?.pdf_link} width="100%" height="600px" frameborder="0"></iframe> */}
+            {/* <iframe src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${item?.pdf_link}`} width="100%" height="600px" frameborder="0"></iframe>
+            <iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://drive.google.com/file/d/1pynwq8cL-xYy78OEPUb9KuQtQIq3OdmM/view" width="100%" height="600px" frameborder="0"></iframe> */}
             </div>
 
           </div>
@@ -96,6 +108,9 @@ const BookSectionCard = ({item}) => {
             </button>
           </div> */}
         </div>
+        {/* <iframe src="https://drive.google.com/file/d/1PCWbhKm2n6FCSSPhvHt3eqE7MSiyAm39/preview" width="640" height="480" allow="autoplay"></iframe> */}
+        {/* <iframe src="https://drive.google.com/file/d/1pynwq8cL-xYy78OEPUb9KuQtQIq3OdmM/preview" width="640" height="480" allow="autoplay"></iframe> */}
+        {/* <iframe src={item?.pdf_link} width="640" height="480" allow="autoplay"></iframe> */}
       </div>
     </>
   );
