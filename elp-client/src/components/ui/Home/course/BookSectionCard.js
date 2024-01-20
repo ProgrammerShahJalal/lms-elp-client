@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
@@ -7,8 +8,20 @@ import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
 import {  isLoggedIn } from "@/services/auth.service";
+import { useState } from "react";
+import PDFViewerModal from "@/components/ohters/PDFViewerModal";
+
 
 const BookSectionCard = ({item}) => {
+ 
+  const [showPDFModal, setShowPDFModal] = useState(false);
+  const openPDFModal = () => {
+    setShowPDFModal(true);
+  };
+
+  const closePDFModal = () => {
+    setShowPDFModal(false);
+  };
   const dispatch = useDispatch();
 
   const handleAddBook = (item) => {
@@ -40,7 +53,18 @@ const BookSectionCard = ({item}) => {
 
   return (
     <>
+     <div>
+     {!showPDFModal && (
+          <button onClick={openPDFModal} className="text-bluePrimary cursor-pointer">
+            বইটি একটু পড়ুন
+          </button>
+        )}
+             {/* "https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" */}
+            </div>
+      <PDFViewerModal isOpen={showPDFModal} onClose={closePDFModal} pdfSrc={item?.pdf_link} />
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
+     
+     
         <figure className="relative">
           <Image
             className="rounded w-full h-72"
@@ -49,8 +73,8 @@ const BookSectionCard = ({item}) => {
             width={400}
             height={100}
           />
-           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
-          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p>
+           {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p> */}
         </figure>
 
         <div  className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
@@ -69,7 +93,18 @@ const BookSectionCard = ({item}) => {
             
           </div>
 
-          <p className="py-2">{item?.description}<Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
+          <div className="flex justify-between items-center">
+            <div>
+            <p className="py-2">{item?.description}
+          <Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
+            </div>
+            <div>
+           
+            {/* <p>বইটি পড়ুন  <iframe src="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" width="640" height="480" allow="autoplay"></iframe></p> */}
+           
+            </div>
+
+          </div>
           
           <hr />
           <div className="flex justify-between items-center mt-3">
@@ -78,7 +113,7 @@ const BookSectionCard = ({item}) => {
               কোর্সের মূল্যঃ <del className="text-gray-400  "> -{item?.discount_price} </del> <span className="font-bold pl-2">{item?.price}</span> Tk
             </p>
             <button onClick={() => handleAddBook(item)}   className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
-              এড টু কার্ড
+            ঝুড়িতে যোগ করুন
             </button>
           </div>
           {/* <div className=" card-actions justify-start ">
@@ -87,7 +122,10 @@ const BookSectionCard = ({item}) => {
             </button>
           </div> */}
         </div>
+       
       </div>
+
+     
     </>
   );
 };

@@ -35,11 +35,11 @@ const AddBooks = () => {
     category_id: selectedCategory,
   });
   const allSubcategory = subcategories?.subcategories;
-  const { data} = useGetAllCoursesQuery({
+  const { data } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
   });
   const allCourse = data?.courses?.data;
-  console.log(variable);
+  // console.log(variable);
 
   const { register, handleSubmit, reset, watch, setValue } = useForm();
 
@@ -54,7 +54,7 @@ const AddBooks = () => {
     // console.log(file)
     // delete content['file'];
     const result = JSON.stringify(content);
-    console.log(result, "json")
+    // console.log(result, "json");
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
@@ -112,7 +112,7 @@ const AddBooks = () => {
   };
   return (
     <>
-      <div className="container mx-auto mt-8 p-6">
+      <div className="container mx-auto  p-6">
         <h2 className="text-2xl font-semibold mb-6">Add Book</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -192,42 +192,58 @@ const AddBooks = () => {
               className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
-          <div>
-  <label
-    htmlFor="format"
-    className="block text-sm font-medium text-gray-600"
-  >
-    Format:
-  </label>
-  <select
-    id="format"
-    name="format"
-    {...register("format", { required: true })}
-    className="mt-1 p-2 border rounded-md w-full"
-  >
-    <option value="hard copy">Hard Copy</option>
-    <option value="pdf">PDF</option>
-  </select>
-</div>
 
-{/* Conditionally render PDF Link input based on the selected format */}
-{watch("format") === "pdf" && (
-  <div>
-    <label
-      htmlFor="pdf_link"
-      className="block text-sm font-medium text-gray-600"
-    >
-      PDF Link:
-    </label>
-    <input
-      type="text"
-      id="pdf_link"
-      name="pdf_link"
-      {...register("pdf_link", { required: true })}
-      className="mt-1 p-2 border rounded-md w-full"
-    />
-  </div>
-)}
+          <div>
+            <label
+              htmlFor="pdf_link"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Sample PDF Link:
+            </label>
+            <input
+              type="text"
+              id="sample_pdf_link"
+              name="sample_pdf_link"
+              {...register("sample_pdf_link", { required: true })}
+              className="mt-1 p-2 border rounded-md w-full"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="format"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Format:
+            </label>
+            <select
+              id="format"
+              name="format"
+              {...register("format", { required: true })}
+              className="mt-1 p-2 border rounded-md w-full"
+            >
+              <option value="hard copy">Hard Copy</option>
+              <option value="pdf">PDF</option>
+            </select>
+          </div>
+
+          {/* Conditionally render PDF Link input based on the selected format */}
+          {watch("format") === "pdf" && (
+            <div>
+              <label
+                htmlFor="pdf_link"
+                className="block text-sm font-medium text-gray-600"
+              >
+                PDF Link:
+              </label>
+              <input
+                type="text"
+                id="pdf_link"
+                name="pdf_link"
+                {...register("pdf_link", { required: true })}
+                className="mt-1 p-2 border rounded-md w-full"
+              />
+            </div>
+          )}
 
           {/* <div>
             <label
@@ -288,7 +304,8 @@ const AddBooks = () => {
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Sub Category</label>
             <select
-              {...register("sub_category_id")} disabled={!selectedCategory}
+              {...register("sub_category_id")}
+              disabled={!selectedCategory}
               onChange={(e) => {
                 setSelectedSubcategory(e.target.value);
                 setValue("course_id", ""); // Reset the selected course when the subcategory changes
@@ -308,11 +325,11 @@ const AddBooks = () => {
           </div>
           <div className="">
             <label className="block text-sm font-bold mb-2">Course</label>
-            <select disabled={!selectedSubcategory}
+            <select
+              disabled={!selectedSubcategory}
               {...register("course_id")}
               className="w-full border border-gray-300 p-2 rounded-md"
             >
-              
               {allCourse?.length === 0 ? (
                 <option value="" disabled>
                   No courses available
@@ -327,7 +344,6 @@ const AddBooks = () => {
             </select>
           </div>
 
-        
           <div>
             <label
               htmlFor="cover_page"
