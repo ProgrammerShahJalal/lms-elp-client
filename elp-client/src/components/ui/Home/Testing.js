@@ -8,11 +8,17 @@ const Testing = () => {
       
       
       
+       {/* <p>বইটি পড়ুন  <iframe src={item?.pdf_link} width="640" height="480" allow="autoplay"></iframe></p> */}
+            {/* <iframe src={item?.pdf_link} width="100%" height="600px" frameborder="0"></iframe> */}
+            {/* <iframe src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${item?.pdf_link}`} width="100%" height="600px" frameborder="0"></iframe>
+            <iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://drive.google.com/file/d/1pynwq8cL-xYy78OEPUb9KuQtQIq3OdmM/view" width="100%" height="600px" frameborder="0"></iframe> */}
+             {/* <iframe src="https://drive.google.com/file/d/1PCWbhKm2n6FCSSPhvHt3eqE7MSiyAm39/preview" width="640" height="480" allow="autoplay"></iframe> */}
+        {/* <iframe src="https://drive.google.com/file/d/1pynwq8cL-xYy78OEPUb9KuQtQIq3OdmM/preview" width="640" height="480" allow="autoplay"></iframe> */}
+        {/* <iframe src={item?.pdf_link} width="640" height="480" allow="autoplay"></iframe> */}
       
       
       
-      
-      */}
+   
 
 {/* <div className="grid grid-cols-3 gap-4">
   <div className="mb-4">
