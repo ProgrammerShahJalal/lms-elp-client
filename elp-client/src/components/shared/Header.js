@@ -31,26 +31,22 @@ import {
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const ref = useRef();
- 
   const [isSticky, setIsSticky] = useState(false);
-  const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
-  const [isCoursesRoutineOpen, setIsCoursesRoutineOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  const { data: courseCategoryData } = useGetAllCategoriesQuery();
-  const categoriesData = courseCategoryData?.categories;
+  const { data: categories } = useGetAllCategoriesQuery();
+  const categoriesData = categories?.categories;
+
+  const { data: subCategories } = useGetAllSubcategoriesQuery();
+  const subCategoriesData = subCategories?.subcategories;
+
+  const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
+  const [showCategories, setShowCategories] = useState(false);
+  const [showSubcategories, setShowSubcategories] = useState(false);
   const { data: routines } = useGetAllCoursesRoutineQuery();
-  // console.log(routines?.routines
-  //   , 'fron header')
+
+
   const allRoutines = routines?.routines;
   const { data: courses } = useGetAllCoursesQuery();
   const { data: cart } = useGetAllCartsByUserQuery();
-  const { data: subCategories } = useGetAllSubcategoriesQuery({
-    category_id: selectedCategory,
-  });
-
-  const subCategoriesData = subCategories?.subcategories;
 
   const cartLength = cart?.carts;
   const { books } = useSelector((state) => state.cart);
@@ -61,67 +57,25 @@ const Header = () => {
 
   const { data } = useGetSingleUserQuery(userId);
 
-  const clickBtn = () =>{
-    if(ref.current){
-      clearTimeout(ref.current)
-      ref.current = null
-    }
-     
-  }
-  // const handleMouseEnter = () => {
-  //     clickBtn();
-  //     isCoursesDropdownOpen(true)
-  // }
-  // const handleMouseLeave = () => {
-  //     clickBtn();
-  //     ref.current = setTimeout(()=>{
-  //       isCoursesDropdownOpen(false)
-  //     },200)
-   
-  // }
+  useEffect(() => {
+    let timeoutId;
 
-  // useEffect(()=>{
-  //  return ()=> {
-  //   clickBtn()
-  //  }
-  // },[])
+    if (hoveredCategoryId !== null) {
+      timeoutId = setTimeout(() => {
+        setShowSubcategories(true);
+      }, 200); // Adjust the delay time (in milliseconds) as needed
+    } else {
+      setShowSubcategories(false);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [hoveredCategoryId]);
 
   // logoute
 
   const logout = () => {
     removeUserInfo(authKey);
     router.push("/login");
-  };
-
-  const toggleCoursesDropdown = () => {
-    setIsCoursesDropdownOpen(!isCoursesDropdownOpen);
-    setSelectedCategory(null); // Reset selected category when courses dropdown is toggled
-    setSelectedSubCategory(null); // Reset selected subcategory when courses dropdown is toggled
-  };
-
-  const toggleCoursesRotine = () => {
-    setIsCoursesRoutineOpen(!isCoursesRoutineOpen);
-  };
-  // Add subcategories state
-
-  // Update the selectCategory function to reset selected subcategory
-  const selectCategory = (category) => {
-    setSelectedCategory(category);
-    setSelectedSubCategory(null); // Reset selected subcategory
-  };
-
-  // Add selectSubCategory function
-  const selectSubCategory = (subCategory) => {
-    setSelectedSubCategory(subCategory);
-  };
-
-  const openCoursesDropdown = () => {
-    setIsCoursesDropdownOpen(true);
-  };
-
-  const closeCoursesDropdown = () => {
-    setIsCoursesDropdownOpen(false);
-    setSelectedCategory(null);
   };
 
   // set toggle
@@ -183,48 +137,39 @@ const Header = () => {
             >
               হোম
             </Link>
-            <div className="relative inline-block text-left">
-              <button
-                onClick={toggleCoursesDropdown}
-                // onMouseEnter={handleMouseEnter}
-                // onMouseLeave={handleMouseLeave}
-                className="dark:text-black hover:text-bluePrimary focus:outline-none font-bold"
-              >
-                কোর্সসমূহ <IoIosArrowDown className="inline-block text-xl" />
-              </button>
-
-              {isCoursesDropdownOpen && (
-                <div className="absolute z-10 mt-2 w-40 left-0 text-white bg-bluePrimary divide-y divide-gray-100 rounded-lg shadow">
-                  <ul className="py-2 pl-2">
-                    {categoriesData?.map((category) => (
-                      <li key={category?.id}>
-                        <button
-                          onClick={() => selectedCategory(category)}
-                          className={`block py-1 hover:text-yellowPrimary focus:outline-none ${
-                            selectedCategory === category ? "font-bold" : ""
-                          }`}
-                        >
-                          {category?.title}
-                        </button>
-
-                        {/* Subcategories dropdown */}
-                        {selectedCategory === category && (
-                          <ul className="py-2 pl-2 bg-red-900">
-                            sub category
-                            {category?.subCategories?.map((subCategory) => (
-                              <li key={subCategory?.id}>
+            <li className="relative group">
+            <span className="cursor-pointer flex items-center  hover:text-bluePrimary font-bold">কোর্সসমূহ <IoIosArrowDown /></span>
+            {categoriesData && (
+              <ul className={`absolute hidden  px-4 text-white bg-bluePrimary py-2 space-y-2 shadow-md group-hover:block text-left ${
+                showSubcategories ? 'block' : ''
+              }`}>
+                {categoriesData?.map((category,index) => (
+                  <li
+                    key={category.id}
+                    className="group"
+                    onMouseEnter={() => setHoveredCategoryId(category.id)}
+                    onMouseLeave={() => setHoveredCategoryId(null)}
+                  >
+                    <span className="cursor-pointer flex items-center">{category?.title}<IoIosArrowDown />  </span>
+                    {hoveredCategoryId === category.id && subCategoriesData && (
+                      <ul className={`absolute top-0 left-20 space-y-2 text-white bg-bluePrimary py-2  shadow-md ${index = category}`}>
+                        {subCategoriesData
+                          .filter((subCategory) => subCategory?.category_id?._id === category.id)
+                          .map((subCategory) => (
+                            <lii key={subCategory?.id}>
+                              <Link href={`/courses/category/subcategory/${subCategory?._id}`} className="block    px-5">
                                 {subCategory?.title}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
+                              </Link>
+                              
+                            </lii>
+                          ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
             <Link
               href="/contact"
               className="block dark:text-black hover:text-bluePrimary font-bold"
@@ -237,37 +182,33 @@ const Header = () => {
             >
               যোগাযোগ
             </Link>
-            <div className="">
-              <button onClick={toggleCoursesRotine}>ক্লাস রুটিন</button>
 
-              <ul>
-                {allRoutines?.map((category) => (
-                  <li key={category?._id}>
-                    {category?.title}
-                    <ul>
-                      {category?.subCategories?.map((subCategory) => (
-                        <li key={subCategory?._id}>
-                          {subCategory.title}
-                          <ul>
-                            {subCategory?.courses.map((course) => (
-                              <li key={course?._id}>
-                                <a
-                                  href={course?.syllabus}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {course?.title}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
+            <li className="relative group">
+            <span className="cursor-pointer block dark:text-black hover:text-bluePrimary font-bold">ক্লাস রুটিন</span>
+            {allRoutines && (
+              <ul
+                className={`absolute hidden  px-4 text-white bg-bluePrimary py-2 space-y-2 shadow-md group-hover:block text-left ${
+                  showCategories ? 'block' : ''
+                }`}
+                onMouseEnter={() => {
+                  setShowCategories(true);
+                  setShowSubcategories(false);
+                }}
+                onMouseLeave={() => {
+                  setShowCategories(false);
+                }}
+              >
+                {categoriesData?.map((category) => (
+                  <li key={category.id}>
+                    <Link href={`/category/${category.id}`} className="cursor-pointer">
+                      {category.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            )}
+          </li>
+
             {userLoggedIn && (
               <Link
                 href="/profile"

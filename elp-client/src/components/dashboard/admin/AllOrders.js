@@ -107,7 +107,7 @@ import InitialLoader from "@/components/Loader/InitialLoader";
 import { useEffect, useState } from "react";
 
 const AllOrders = () => {
-  // const [filterValue, setFilterValue] = useState('');
+  const [filterValue, setFilterValue] = useState('');
   // const [selectedUser, setSelectedUser] = useState(null);
   const [sortedOrder, setSortedOrder] = useState([]);
 

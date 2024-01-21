@@ -9,7 +9,7 @@ const CourseSubCategoryPages = ({params}) => {
     
     return (
         <div>
-           
+         
             <SubCategory id={id}/>
         </div>
     );
