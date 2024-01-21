@@ -128,8 +128,8 @@ const AdminAddSubCategory = () => {
                 <th className="py-2 px-4 border-b">Title</th>
                 {/* <th className="py-2 px-4 border-b">Icon</th> */}
                 <th className="py-2 px-4 border-b">Category</th>
-                <th className="py-2 px-4 border-b">Update</th>
-                <th className="py-2 px-4 border-b">Delete</th>
+                {/* <th className="py-2 px-4 border-b">Update</th>
+                <th className="py-2 px-4 border-b">Delete</th> */}
               </tr>
             </thead>
             <tbody>
@@ -140,12 +140,12 @@ const AdminAddSubCategory = () => {
                     <img src={subcategory?.icon} alt="Subcategory Icon" className="w-10 h-10" />
                   </td> */}
                   <td className="py-2 px-4 border-b md:table-cell">{subcategory?.category_id?.title}</td>
-                  <td className="py-2 px-4 border-b md:table-cell">
+                  {/* <td className="py-2 px-4 border-b md:table-cell">
                     <button className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</button>
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">
                     <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory?.id)}>Delete</button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

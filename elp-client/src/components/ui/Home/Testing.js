@@ -29,6 +29,7 @@ const Testing = () => {
           </li>
         ))}
       </ul>
+
            {!showPDFModal && (
           <button onClick={openPDFModal} className="text-bluePrimary cursor-pointer">
             বইটি একটু পড়ুন
@@ -233,6 +234,56 @@ const Testing = () => {
         //     </ul>
 
         // </div> */}
+
+
+
+
+
+
+        {/* navabr
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        const { data: routines } = useGetAllCoursesRoutineQuery();
+  const routinesData = routines?.routines;
+        
+        
+        
+         <span className="cursor-pointer block dark:text-black hover:text-bluePrimary font-bold">ক্লাস রুটিন</span>
+            {allRoutines && (
+              <ul
+                className={`absolute hidden  px-4 text-white bg-bluePrimary py-2 space-y-2 shadow-md group-hover:block text-left ${
+                  showCategories ? 'block' : ''
+                }`}
+                onMouseEnter={() => {
+                  setShowCategories(true);
+                  setShowSubcategories(false);
+                }}
+                onMouseLeave={() => {
+                  setShowCategories(false);
+                }}
+              >
+                {categoriesData?.map((category) => (
+                  <li key={category.id}>
+                    <Link href={`/category/${category.id}`} className="cursor-pointer">
+                      {category.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+        
+        */}
 
     </div>
   )
