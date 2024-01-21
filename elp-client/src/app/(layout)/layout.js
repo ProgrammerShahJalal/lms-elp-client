@@ -10,8 +10,8 @@ import NavigationMenu from "@/components/shared/NavigationMenu";
 export default function RootLayout({ children }) {
   return (
     <>
-      {/* <Navbar /> */}
-      <Header/>
+      <Navbar />
+      {/* <Header/> */}
       {/* <Header1 /> */}
       {/* <NavigationMenu/> */}
 

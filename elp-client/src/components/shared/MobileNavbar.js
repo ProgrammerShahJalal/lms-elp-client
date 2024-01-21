@@ -14,6 +14,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import avatar from "../../assets/images/avatar.png";
 import Link from "next/link";
+import Header1 from "./Header1";
 
 const MobileNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -148,29 +149,7 @@ const MobileNavbar = () => {
             </Link>
 
             <li className="relative group">
-            <span className="cursor-pointer block dark:text-black hover:text-white font-bold">ক্লাস রুটিন</span>
-            {allRoutines && (
-              <ul
-                className={`absolute hidden  px-4 text-white bg-bluePrimary py-2 space-y-2 shadow-md group-hover:block text-left ${
-                  showCategories ? 'block' : ''
-                }`}
-                onMouseEnter={() => {
-                  setShowCategories(true);
-                  setShowSubcategories(false);
-                }}
-                onMouseLeave={() => {
-                  setShowCategories(false);
-                }}
-              >
-                {categoriesData?.map((category) => (
-                  <li key={category.id}>
-                    <Link href={`/category/${category.id}`} className="cursor-pointer">
-                      {category.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+           <Header1/>
           </li>
 
             {userLoggedIn && (
