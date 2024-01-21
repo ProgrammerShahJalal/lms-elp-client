@@ -19,7 +19,7 @@
 //     order?.user_id?.name.toLowerCase().includes(filterValue.toLowerCase())
 //   );
 
- 
+
 //   const allName = ordersData?.map((item)=><div key={item?.id}>
 //     {item?.user_id?.name}
 //   </div>)
@@ -54,7 +54,7 @@
 //       </>
 //     );
 //   }
- 
+
 
 //   if (!isLoading && !isError && filteredOrders?.length > 0) {
 //     content = filteredOrders?.map((item) => (
@@ -64,7 +64,7 @@
 
 //   return (
 //     <div>
-     
+
 //       <input
 //         type="text"
 //         placeholder="Filter by user name"
@@ -127,30 +127,30 @@ const AllOrders = () => {
       const sortedOrders = [...ordersData].sort((a, b) => {
         const nameA = a.user_id?.name.toUpperCase();
         const nameB = b.user_id?.name.toUpperCase();
-  
+
         if (nameA < nameB) {
           return -1;
         }
-  
+
         if (nameA > nameB) {
           return 1;
         }
-  
+
         return 0;
       });
-  
+
       // Update the state or use the sortedOrders as needed
       setSortedOrder(sortedOrders);
     }
   }, [ordersData]);
-  
-  
 
-  const filteredOrders = ordersData?.filter((order) =>
-    order?.user_id?.name.toLowerCase().includes(filterValue.toLowerCase())
-  );
 
-  const uniqueUserNames = [...new Set(ordersData?.map((item) => item?.user_id?.name))];
+
+  // const filteredOrders = ordersData?.filter((order) =>
+  //   order?.user_id?.name.toLowerCase().includes(filterValue.toLowerCase())
+  // );
+
+  // const uniqueUserNames = [...new Set(ordersData?.map((item) => item?.user_id?.name))];
 
   let content = null;
 
@@ -221,7 +221,7 @@ const AllOrders = () => {
             .map((item) => (
               <AllOrdersDetials key={item?.id} item={item} />
             ))} */}
-        {/* </div>
+      {/* </div>
       )} */}
 
       <div className="border">
@@ -235,6 +235,7 @@ const AllOrders = () => {
                 <th>কেনার তারিখ</th>
                 <th>ট্রান্সজেকশন আইডি</th>
                 <th>স্ট্যাটাস</th>
+                <th>স্ট্যাটাস পরিবর্তন</th>
                 <th>পেমেন্ট</th>
               </tr>
             </thead>
