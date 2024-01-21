@@ -5,6 +5,128 @@ const Testing = () => {
     <div>
 
       {/* courses 
+      {/* 
+          <ul>
+        {categories.map((category) => (
+          <li key={category._id}>
+            {category.title}
+            <ul>
+              {category.subCategories.map((subCategory) => (
+                <li key={subCategory._id}>
+                  {subCategory.title}
+                  <ul>
+                    {subCategory.courses.map((course) => (
+                      <li key={course._id}>
+                        <a href={course.syllabus} target="_blank" rel="noopener noreferrer">
+                          {course.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+           {!showPDFModal && (
+          <button onClick={openPDFModal} className="text-bluePrimary cursor-pointer">
+            বইটি একটু পড়ুন
+          </button>
+        )}
+             "https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview"
+            </div>
+      <PDFViewerModal isOpen={showPDFModal} onClose={closePDFModal} pdfSrc="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" />
+          
+          */}
+      {/* nav items for mobile devices */}
+        <div
+          className={`space-y-4  mt-16 py-7 bg-bluePrimary ${
+            isMenuOpen
+              ? "block fixed top-0 right-0 left-0 text-center"
+              : "hidden"
+          }`}
+        >
+          {/* <ToggleTheme /> */}
+          {/* {navItems.map(({ link, path, dropdown }) => (
+            <div key={path}>
+              {dropdown ? (
+                <div
+                  className="relative inline-block  hover:text-yellowPrimary font-bold cursor-pointer text-white"
+                  onClick={toggleCoursesDropdown}
+                  //   onMouseEnter={openCoursesDropdown}
+                  //   onMouseLeave={closeCoursesDropdown}
+                >
+                  <span className="flex items-center text-white">
+                    {" "}
+                    {link} <IoIosArrowDown />{" "}
+                  </span>
+                  <div
+                    className={`absolute ${
+                      isCoursesDropdownOpen ? "block" : "hidden"
+                    } space-y-2 text-bluePrimary bg-white left-24  text-left cursor-pointer w-24 `}
+                  >
+                    {dropdown.map(({ sublink, subpath }) => (
+                      <Link
+                        href={subpath}
+                        key={subpath}
+                        className="block px-3  hover:text-white cursor-pointer"
+                      >
+                        {sublink}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  href={path}
+                  key={path}
+                  className="block text-white hover:text-bluePrimary font-bold"
+                >
+                  {link}
+                </Link>
+              )}
+            </div>
+          ))} */}
+          <ul>
+            <Link
+              href="/"
+              className="block text-decoration-none text-gray-500 hover:bg-gray-200 hover:text-orangePrimary py-1  rounded"
+            >
+              Home
+            </Link>
+          </ul>
+
+          <div className="flex justify-center">
+            <Link href="/cart" className="flex items-center">
+              <IoCartOutline className="text-2xl font-bold text-white" />{" "}
+              <sup className="text-md font-bold text-white">
+                {books?.length}
+              </sup>
+            </Link>
+          </div>
+          <div className=" ">
+            {userLoggedIn ? (
+              <>
+                <p className="font-bold text-lg text-white">{data?.name}</p>
+
+                <button
+                  onClick={logout}
+                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+                >
+                  লগআউট
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden lg:flex items-center text-white hover:text-white font-bold"
+              >
+                লগইন/রেজিস্টার
+              </Link>
+            )}
+          </div>
+        </div>
       
       
       

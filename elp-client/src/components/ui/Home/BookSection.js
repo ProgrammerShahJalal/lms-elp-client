@@ -7,12 +7,34 @@ import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import PDFViewerModal from "@/components/ohters/PDFViewerModal";
+import { useState } from "react";
 
 const BookSection = () => {
   const { data, isError, isLoading } = useGetAllBooksQuery();
+  const [openPDFModals, setOpenPDFModals] = useState([]);
+  const [showPDFModal, setShowPDFModal] = useState(false);
+  // const openPDFModal = () => {
+  //   setShowPDFModal(true);
+  // };
+
+  // const closePDFModal = () => {
+  //   setShowPDFModal(false);
+  // };
+  const openPDFModal = (index) => {
+    const updatedModals = [...openPDFModals];
+    updatedModals[index] = true;
+    setOpenPDFModals(updatedModals);
+  };
+
+  const closePDFModal = (index) => {
+    const updatedModals = [...openPDFModals];
+    updatedModals[index] = false;
+    setOpenPDFModals(updatedModals);
+  };
 
   const booksData = data?.books?.data;
-  console.log(booksData)
+ 
   const breakpoints = {
     
     480: {
@@ -58,7 +80,7 @@ const BookSection = () => {
   }
 
   if (!isLoading && !isError && booksData?.length > 0) {
-    content = booksData?.map((item) => <SwiperSlide key={item?._id}><BookSectionCard  item={item} /></SwiperSlide>);
+    content = booksData?.map((item, index) => <SwiperSlide key={item?._id}><BookSectionCard  item={item} onOpenPDFModal={() => openPDFModal(index)}/></SwiperSlide>);
   }
   return (
     <div className="px-14 py-20">
@@ -68,6 +90,9 @@ const BookSection = () => {
           সব বই দেখুন
         </Link>
       </div>
+      <div>
+        
+    </div>
       <Swiper
         // pagination={{
         //   type: 'progressbar',
@@ -78,11 +103,18 @@ const BookSection = () => {
         breakpoints= {breakpoints}
         className="mySwiper"
       >
+        
 {content}
       </Swiper>
-      {/* <div className="grid lg:grid-cols-3  gap-4">{content}
       
-      </div> */}
+      {openPDFModals.map((isOpen, index) => (
+        <PDFViewerModal
+          key={index}
+          isOpen={isOpen}
+          onClose={() => closePDFModal(index)}
+          pdfSrc={data?.books?.data[index]?.pdf_link}
+        />
+      ))}
      
     </div>
   );

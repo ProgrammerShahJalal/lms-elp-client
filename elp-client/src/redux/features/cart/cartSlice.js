@@ -53,15 +53,17 @@ const cartSlice = createSlice({
 
       if (existingBook && existingBook.quantity > 1) {
         existingBook.quantity = existingBook.quantity - 1;
+        state.total -= action.payload.price;
+         // Update localStorage with the new cart data
+      localStorage.setItem("cart", JSON.stringify(state));
        
       } else {
         toast.error(
           "You cannot remove more because this quantity is less than 0"
         );
       }
-      state.total -= action.payload.price;
-      // Update localStorage with the new cart data
-      localStorage.setItem("cart", JSON.stringify(state));
+    
+     
     },
   },
 });

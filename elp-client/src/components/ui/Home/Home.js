@@ -23,6 +23,7 @@ import PrimaryPrili from "./course/PrimaryPrili";
 import SubCategoryCourses from "./course/SubCategoryCourses";
 import { bankPriliSubId, bankWrittenSubId, bcsPriliSubId, bcsWrittenSubId, ntrcaPriliSubId, ntrcaWrittenSubId, primaryPriliSubId } from "@/utils/subCategoryId";
 import FilteringCourseBooks from "./FilteringCourseBooks";
+import Header from "@/components/shared/Header";
 
 const HomePage = () => {
   // const {data} = useGetAllCoursesQuery({
@@ -31,6 +32,7 @@ const HomePage = () => {
   // console.log(data)
   return (
     <div className="">
+      {/* <Header/> */}
       <Hero/>
       <Category/>
       {/* <iframe src="https://drive.google.com/file/d/1PCWbhKm2n6FCSSPhvHt3eqE7MSiyAm39/preview" width="640" height="480" allow="autoplay"></iframe> */}
