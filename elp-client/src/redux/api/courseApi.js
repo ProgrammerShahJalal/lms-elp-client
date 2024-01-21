@@ -24,6 +24,23 @@ export const courseApi = baseApi.injectEndpoints({
       providesTags: ["courses"],
     }),
 
+    getAllCoursesRoutine: build.query({
+      query: (arg) => {
+        return {
+          url: `${COURSES_URL}/routines`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response, meta) => {
+        return {
+          routines: response,
+          meta,
+        };
+      },
+      providesTags: ["courses"],
+    }),
+
     getSingleCourse: build.query({
       query: (id) => ({
         url: `${COURSES_URL}/${id}`,
@@ -106,6 +123,7 @@ export const courseApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllCoursesQuery,
+  useGetAllCoursesRoutineQuery,
   useGetSingleCourseQuery,
   useAddCourseMutation,
   useDeleteCoursesMutation,

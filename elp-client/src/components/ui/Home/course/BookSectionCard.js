@@ -12,7 +12,7 @@ import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 
 
-const BookSectionCard = ({item}) => {
+const BookSectionCard = ({item,onOpenPDFModal }) => {
  
   const [showPDFModal, setShowPDFModal] = useState(false);
   const openPDFModal = () => {
@@ -54,14 +54,10 @@ const BookSectionCard = ({item}) => {
   return (
     <>
      <div>
-     {!showPDFModal && (
-          <button onClick={openPDFModal} className="text-bluePrimary cursor-pointer">
+          <button onClick={onOpenPDFModal} className="text-bluePrimary cursor-pointer">
             বইটি একটু পড়ুন
           </button>
-        )}
-             {/* "https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" */}
-            </div>
-      <PDFViewerModal isOpen={showPDFModal} onClose={closePDFModal} pdfSrc={item?.pdf_link} />
+        </div>
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
      
      

@@ -52,7 +52,7 @@ const CourseCard = ({ item }) => {
               __html: item?.description.substring(0, 30),
             }}
           ></p>
-          <p className="py-3">
+          <div className="py-3">
             {/* {item?.description}{" "} */}
             <div className="flex justify-between">
             <Link
@@ -68,7 +68,7 @@ const CourseCard = ({ item }) => {
               পরিক্ষা/কুইজে অংশগ্রহন করুন
             </Link>{" "}
             </div>
-          </p>
+          </div>
           <hr />
           <div className="flex justify-between mt-3">
             <p className="text-sm font-semibold py-3 ">
