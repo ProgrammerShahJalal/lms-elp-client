@@ -1,3 +1,4 @@
+'use client'
 import MemeberShipPlan from "@/components/ohters/MemeberShipPlan";
 import Benefits from "./Benefits";
 import BookSection from "./BookSection";
@@ -11,14 +12,47 @@ import ScrollToTopButton from "./ScrollToTopButton";
 import SelectCarreer from "./SelectCarreer";
 import Testing from "./Testing";
 import Faq from "./Faq";
+import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import BcsPrili from "./course/BcsPrili";
+import BcsWritten from "./course/BcsWritten";
+import BankPrili from "./course/BankPrili";
+import BankWritten from "./course/BankWritten";
+import NtrcaPrili from "./course/NtrcaPrili";
+import NtrcaWritten from "./course/NtrcaWritten";
+import PrimaryPrili from "./course/PrimaryPrili";
+import SubCategoryCourses from "./course/SubCategoryCourses";
+import { bankPriliSubId, bankWrittenSubId, bcsPriliSubId, bcsWrittenSubId, ntrcaPriliSubId, ntrcaWrittenSubId, primaryPriliSubId } from "@/utils/subCategoryId";
+import FilteringCourseBooks from "./FilteringCourseBooks";
+import Header from "@/components/shared/Header";
 
 const HomePage = () => {
+  // const {data} = useGetAllCoursesQuery({
+  //   title:"Course title here"
+  // });
+  // console.log(data)
   return (
     <div className="">
+      {/* <Header/> */}
       <Hero/>
       <Category/>
+      {/* <iframe src="https://drive.google.com/file/d/1PCWbhKm2n6FCSSPhvHt3eqE7MSiyAm39/preview" width="640" height="480" allow="autoplay"></iframe> */}
+      {/* <iframe src="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" width="640" height="480" allow="autoplay"></iframe> */}
       <Courses/> 
-      <MemeberShipPlan/>
+      <FilteringCourseBooks sub_category_id={bcsPriliSubId}/>
+      <FilteringCourseBooks sub_category_id={bcsWrittenSubId}/>
+      <FilteringCourseBooks sub_category_id={bankPriliSubId}/>
+      <FilteringCourseBooks sub_category_id={bankWrittenSubId}/>
+      <FilteringCourseBooks sub_category_id={ntrcaPriliSubId}/>
+      <FilteringCourseBooks sub_category_id={ntrcaWrittenSubId}/>
+      <FilteringCourseBooks sub_category_id={primaryPriliSubId}/>
+      {/* <BcsPrili />
+      <BcsWritten/>
+      <BankPrili/>
+      <BankWritten/>
+      <NtrcaPrili/>
+      <NtrcaWritten/>
+      <PrimaryPrili/> */}
+      {/* <MemeberShipPlan/> */}
       <FreeCourse/>
       <BookSection/>
       <FreeSeminar/>

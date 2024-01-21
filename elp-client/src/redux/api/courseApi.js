@@ -24,6 +24,23 @@ export const courseApi = baseApi.injectEndpoints({
       providesTags: ["courses"],
     }),
 
+    getAllCoursesRoutine: build.query({
+      query: (arg) => {
+        return {
+          url: `${COURSES_URL}/routines`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response, meta) => {
+        return {
+          routines: response,
+          meta,
+        };
+      },
+      providesTags: ["courses"],
+    }),
+
     getSingleCourse: build.query({
       query: (id) => ({
         url: `${COURSES_URL}/${id}`,
@@ -47,6 +64,8 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
+
+    // alll subscript get
     getAllSubscriptions: build.query({
       query: (arg) => ({
         url: COURSE_SUBSCRIPTIONS_URL,
@@ -61,6 +80,36 @@ export const courseApi = baseApi.injectEndpoints({
       },
       providesTags: ["subscriptions"],
     }),
+    getAllSubscriptionsHistory: build.query({
+      query: (arg) => ({
+        url: COURSE_SUBSCRIPTIONS_HISTORY_URL,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          subscriptionsHistory: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["subscription-histories"],
+    }),
+
+    // alll subscript history get
+    getMyCourseSubscriptionsHistory: build.query({
+      query: (arg) => ({
+        url: `${COURSE_SUBSCRIPTIONS_HISTORY_URL}/my-subscription-histories`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response) => {
+        return {
+          courseSubscription: response,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["subscription-histories"],
+    }),
     subscribeToCourse: build.mutation({
       query: (data) => ({
         url: COURSE_SUBSCRIPTIONS_HISTORY_URL,
@@ -74,9 +123,12 @@ export const courseApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllCoursesQuery,
+  useGetAllCoursesRoutineQuery,
   useGetSingleCourseQuery,
   useAddCourseMutation,
   useDeleteCoursesMutation,
   useGetAllSubscriptionsQuery,
+  useGetAllSubscriptionsHistoryQuery,
   useSubscribeToCourseMutation,
+  useGetMyCourseSubscriptionsHistoryQuery
 } = courseApi;

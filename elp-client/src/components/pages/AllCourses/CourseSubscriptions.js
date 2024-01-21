@@ -1,32 +1,40 @@
+import Error from "@/components/Loader/Error";
+import InitialLoader from "@/components/Loader/InitialLoader";
 import { authKey } from "@/constants/storage";
 import {
   useGetAllSubscriptionsQuery,
   useSubscribeToCourseMutation,
 } from "@/redux/api/courseApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function CourseSubscriptions({ course_id }) {
+  const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const { data, isError, isLoading } = useGetAllSubscriptionsQuery({
     course_id,
   });
   const subscriptionData = data?.subscriptions?.data;
-
-  const [subscribeToCourse] = useSubscribeToCourseMutation();
+  // console.log(subscriptionData, 'fron sourse subd')
 
   const enrollToCourse = async (subscription) => {
+    if (!userLoggedIn) {
+      return toast.error("Please signin to buy a subscribe course");
+    }
+    
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
       subscription_id: subscription?.id,
     };
+    Cookies.set("order_type", "subscription");
     Cookies.set("creationPayload", JSON.stringify(coursePaymentPayload));
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/bkash/payment/create",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
       {
         amount: `${subscription?.cost}`,
       },
@@ -37,6 +45,49 @@ function CourseSubscriptions({ course_id }) {
     );
     router.push(data?.data);
   };
+  let content = null;
+
+  if (isLoading) {
+    content = (
+      <>
+        <InitialLoader/>
+      </>
+    );
+  }
+
+  if (!isLoading && isError) {
+    content = <Error/>;
+  }
+
+  if (!isLoading && !isError && subscriptionData?.length === 0) {
+    content = (
+      <>
+        {" "}
+        <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
+      <h5>There is No Subscription course</h5>
+    </div>
+      </>
+    );
+  }
+
+  if (!isLoading && !isError && subscriptionData?.length > 0) {
+    content = subscriptionData?.map((subscription) => (
+      <tr className="hover" key={subscription?._id}>
+        <th className="text-gray-400">#</th>
+        <td>{subscription?.name}</td>
+        <td>{subscription?.subscription_duration_in_months} Months</td>
+        <td>{subscription?.cost}</td>
+        <td>
+          <p
+            onClick={() => enrollToCourse(subscription)}
+            className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
+          >
+            Enroll
+          </p>
+        </td>
+      </tr>
+    ));
+  }
 
   return (
     <div>
@@ -53,7 +104,8 @@ function CourseSubscriptions({ course_id }) {
           </tr>
         </thead>
         <tbody>
-          {!!subscriptionData &&
+          {content}
+          {/* {!!subscriptionData &&
             subscriptionData?.map((subscription) => (
               <tr className="hover" key={subscription?._id}>
                 <th className="text-gray-400">#</th>
@@ -69,7 +121,7 @@ function CourseSubscriptions({ course_id }) {
                   </p>
                 </td>
               </tr>
-            ))}
+            ))} */}
         </tbody>
       </table>
     </div>

@@ -21,6 +21,18 @@ export const makeQuizApi = baseApi.injectEndpoints({
             },
             providesTags: ["course-playlists"],
         }),
+
+        getMyCourseVedioPlaylist: build.query({
+            query: (course_id) => {
+                return {
+                    url: `${COURSE_PLAYLIST}/course/${course_id}`,
+                    method: "GET",
+                   
+                };
+            },
+           
+            providesTags: ["course-playlists"],
+        }),
         getSingleCoursePlaylist: build.query({
             query: (id) => ({
               url: `${COURSE_PLAYLIST}/${id}`,
@@ -37,9 +49,17 @@ export const makeQuizApi = baseApi.injectEndpoints({
                 method: "POST",
                 data: data,
             }),
-            invalidatesTags: ["users"],
+            invalidatesTags: ["course-playlists"],
         }),
+
+        deleteVideoPlaylist: build.mutation({
+            query: (id) => ({
+              url: `${COURSE_PLAYLIST}/${id}`,
+              method: 'DELETE'
+            }),
+            invalidatesTags: ['course-playlists']
+          })
     }),
 });
 
-export const {  useAddPlaylistVideoMutation,useGetSingleCoursePlaylistQuery, useGetAllPlaylistQuery } = makeQuizApi;
+export const {  useAddPlaylistVideoMutation,useGetSingleCoursePlaylistQuery, useGetMyCourseVedioPlaylistQuery, useGetAllPlaylistQuery, useDeleteVideoPlaylistMutation } = makeQuizApi;

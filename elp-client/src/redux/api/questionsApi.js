@@ -34,8 +34,20 @@ export const questionsApi = baseApi.injectEndpoints({
             invalidatesTags: ["questions"],
         }),
 
+        // all subscript history get {{local_url}}/questions/exam/:exam_id
+        // {{local_url}}/exams/658ff9579106ca03ff6d8aa8/questions
+    getMyQuestionsEnrollHistory: build.query({
+        query: (id) => ({
+          url: `${QUESTIONS_URL}/exam/${id}`,
+          method: "GET",
+         
+        }),
+        
+        providesTags: ["questions"],
+      }),
+
 
     }),
 });
 
-export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useDeleteQuestionsMutation } = questionsApi;
+export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useDeleteQuestionsMutation , useGetMyQuestionsEnrollHistoryQuery} = questionsApi;

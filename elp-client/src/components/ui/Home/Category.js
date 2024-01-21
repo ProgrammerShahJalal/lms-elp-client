@@ -11,75 +11,83 @@ import InitialLoader from "@/components/Loader/InitialLoader";
 import Error from "@/components/Loader/Error";
 import EmptyContent from "@/components/Loader/EmptyContent";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 
 const Category = () => {
   const { data, isError, isLoading } = useGetAllCategoriesQuery();
   const categoriesData = data?.categories;
   // console.log(categoriesData)
 
-
   const breakpoints = {
-    
     480: {
-        slidesPerView: 3,
-       spaceBetween: 30,
-      },
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
     576: {
-        slidesPerView: 3,
-       spaceBetween: 30,
-      },
-      786: {
-     slidesPerView: 4,
-        spaceBetween: 30,
-     },
-      1024: {
-      slidesPerView: 4,
-        spaceBetween: 30,
-       },
-     }
-
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
+    786: {
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
+    1024: {
+      slidesPerView: 5,
+      spaceBetween: 30,
+    },
+  };
 
   let content = null;
 
   if (isLoading) {
     content = (
       <>
-        <InitialLoader/>
+        <InitialLoader />
       </>
     );
   }
 
   if (!isLoading && isError) {
-    content = <Error/>;
+    content = <Error />;
   }
 
   if (!isLoading && !isError && categoriesData?.length === 0) {
     content = (
       <>
         {" "}
-       <EmptyContent/>
+        <EmptyContent />
       </>
     );
   }
 
   if (!isLoading && !isError && categoriesData?.length > 0) {
-    content = categoriesData?.map((item) =><SwiperSlide key={item?._id}>  <Link href={`/courses/category/${item?._id}`}  className=" ">
-    <div className="bg-transparent rounded shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 bo">
-      <div className="text-center flex justify-center items-center">
-      <div className="pt-4">
-      <Image src={icon1} alt="img" width={50} height={20}/>
-        <h2 className="py-5 font-semibold ">{item?.title} </h2>
-      </div>
-        {/* <h2 className="py-5 font-semibold ">{item?.icon} </h2> */}
-      
-      </div>
-    </div>
-  </Link></SwiperSlide>);
+    content = categoriesData?.map((item) => (
+      <SwiperSlide key={item?._id}>
+        {" "}
+        <Link href={`/courses/category/${item?._id}`} className=" ">
+          <div className="bg-bluePrimary bg-opacity-50  rounded-lg shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 hover:rounded-lg">
+            <div className="text-center flex justify-center items-center">
+              <div className="pt-4 h-52">
+                <Image
+                  src={item?.icon}
+                  alt="img"
+                  width={90}
+                  height={20}
+                  className=" pt-5"
+                />
+                <h2 className="py-5 font-semibold ">{item?.title} </h2>
+              </div>
+              {/* <h2 className="py-5 font-semibold ">{item?.icon} </h2> */}
+            </div>
+          </div>
+        </Link>
+      </SwiperSlide>
+    ));
   }
 
   return (
@@ -93,6 +101,7 @@ const Category = () => {
             দেশসেরা ইন্সট্রাক্টরদের সেরা সব কোর্স এখন এক প্ল্যাটফর্মে।
           </h5>
         </div>
+
         {/* <button className="bg-transparent border-0 ">
           <Link
             href="/"
@@ -102,19 +111,18 @@ const Category = () => {
           </Link>{" "}
         </button> */}
       </div>
-{/* grid lg:grid-cols-4 gap-4 pt-10 lg:pt-4 */}
+     
       <div className="">
-      <Swiper
-        // pagination={{
-        //   dynamicBullets: false,
-        // }}
-        // modules={[Pagination]}
-        breakpoints= {breakpoints}
-        className="mySwiper"
-      >
-        {content}
-      </Swiper>
-        
+        <Swiper
+          // pagination={{
+          //   dynamicBullets: false,
+          // }}
+          // modules={[Pagination]}
+          breakpoints={breakpoints}
+          className="mySwiper"
+        >
+          {content}
+        </Swiper>
 
         {/* <Link href="/" className="relative  overflow-hidden  ">
           <div className="bg-white rounded shadow-lg">

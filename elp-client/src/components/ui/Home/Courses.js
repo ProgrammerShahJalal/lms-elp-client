@@ -15,6 +15,7 @@ const Courses = () => {
   const { data, isError, isLoading } = useGetAllCoursesQuery();
 
   const coursesData = data?.courses?.data;
+  const filteredCourses = coursesData?.filter((item) => item?.membership_type === "1");
 
   const breakpoints = {
     
@@ -53,7 +54,7 @@ const Courses = () => {
     content = <Error/>;
   }
 
-  if (!isLoading && !isError && coursesData?.length === 0) {
+  if (!isLoading && !isError && filteredCourses?.length === 0) {
     content = (
       <>
         {" "}
@@ -62,8 +63,8 @@ const Courses = () => {
     );
   }
 
-  if (!isLoading && !isError && coursesData?.length > 0) {
-    content = coursesData?.map((item) => <SwiperSlide key={item?._id}><CourseCard  item={item} /></SwiperSlide>);
+  if (!isLoading && !isError && filteredCourses?.length > 0) {
+    content = filteredCourses?.map((item) => <SwiperSlide key={item?._id}><CourseCard  item={item} /></SwiperSlide>);
   }
 
   return (
@@ -83,6 +84,7 @@ const Courses = () => {
         // }}
         navigation={true}
         modules={[Pagination, Navigation]}
+        
         breakpoints= {breakpoints}
         className="mySwiper"
       >

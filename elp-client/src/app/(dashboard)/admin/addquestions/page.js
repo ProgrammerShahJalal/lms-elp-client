@@ -1,16 +1,47 @@
 "use client";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useGetAllExamsQuery } from "@/redux/api/examsApi";
-import { useAddQuizPlaylistMutation, useDeleteQuestionsMutation, useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
+import {
+  useAddQuizPlaylistMutation,
+  useDeleteQuestionsMutation,
+  useGetAllQuestionsQuery,
+} from "@/redux/api/questionsApi";
+import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import Swal from "sweetalert2";
 
 const AddQuestions = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedExam, setSelectedExam] = useState(null);
+  const [question, setQuestion] = useState(null);
+  const [mark, setMark] = useState(null);
   const [addQuizPlaylist] = useAddQuizPlaylistMutation();
-  const { data } = useGetAllExamsQuery();
-  const allData = data?.categories?.data;
-  const filteredAllData = allData?.filter((quiz) => quiz.exam_type === "1");
+
+  // const { data:exams } = useGetAllExamsQuery({
+  //   course_id:selectedCourse, exam_type:1
+  // });
+  const { data: categories } = useGetAllCategoriesQuery(undefined);
+  const { data: subCategories, refetch: refetchSubCategories } =
+    useGetAllSubcategoriesQuery({
+      category_id: selectedCategory,
+    });
+  const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
+    sub_category_id: selectedSubcategory,
+  });
+  const allCourse = courses?.courses?.data;
+  const { data: exams, refetch: refetchExams } = useGetAllExamsQuery({
+    course_id: selectedCourse,
+    exam_type: 1,
+  });
+  const allExams = exams?.exams?.data;
+
+  // const allData = data?.categories?.data;
+  // const filteredAllData = allData?.filter((quiz) => quiz.exam_type === "1");
   const { data: questions } = useGetAllQuestionsQuery();
   const allQuiz = questions?.categories?.data;
   const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
@@ -22,40 +53,86 @@ const AddQuestions = () => {
     exam_id: "",
   });
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    const fetchSubCategory = async () => {
+      await refetchSubCategories({ category_id: selectedCategory });
+    };
+    fetchSubCategory();
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      await refetchCourses({ sub_category_id: selectedSubcategory });
+    };
+    fetchSubCategories();
+  }, [selectedSubcategory]);
+
+  useEffect(() => {
+    const fetchExams = async () => {
+      await refetchExams({ course_id: selectedCourse });
+    };
+    fetchExams();
+  }, [selectedCourse]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const convertMark = parseInt(mark);
+
     try {
-        const selectedExam = allData?.find(
-            (exam) => exam?.id === newQuestion?.exam_id
-          );
-          console.log(selectedExam.id);
-          const newData = {
-            question: newQuestion.question,
-            mark: parseInt(newQuestion.mark),
-            exam_id: selectedExam.id,
-            exam_type: selectedExam.exam_type,
-          };
-          const result = addQuizPlaylist(newData);
-          if(result){
-              console.log(newData);
-              toast.success("question added successfully")
-          }
-      
+      const res = await addQuizPlaylist({
+        question,
+        convertMark,
+        exam_type: "1",
+        exam_id: selectedExam,
+      });
+
+      if (res) {
+        toast.success("question added successfully");
+      }
     } catch (error) {
-        // Handle the error here
-        toast.error("An error occurred:", error);
-        // console.error(error)
-        // You can also perform additional actions or show user-friendly messages
-    }
-    
-  };
-  const handleDelete = async (categoryId) => {
-    try {
-      await deleteQuestions(categoryId);
-    } catch (error) {
-      toast.error("Failed to delete category");
+      toast.error("An error occurred:", error);
     }
   };
+   // question delete function
+   const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to delete this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        // User confirmed deletion
+        const res = await deleteQuestions(id);
+        // console.log(res?.data)
+
+        if (res?.data?._id === id) {
+          // Item deleted successfully
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } else {
+          // Something went wrong with deletion
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong with deletion.",
+            icon: "error",
+          });
+        }
+      }
+    } catch (err) {
+      // Handle any errors that occur during the process
+      toast.error(err.message);
+    }
+  };;
 
   return (
     <>
@@ -64,15 +141,132 @@ const AddQuestions = () => {
           onSubmit={handleSubmit}
           className="max-w-md mx-auto bg-white p-8 border rounded shadow"
         >
-          <h2 className="text-2xl font-semibold mb-4">Quiz Questions</h2>
+          <h2 className="text-2xl font-semibold mb-4">Add Broad questions</h2>
+          {/* Category selection field */}
           <div className="mb-4">
+            <label
+              htmlFor="categories"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Categories
+            </label>
+            <select
+              id="categories"
+              name="categories"
+              className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="" disabled selected>
+                Select a category
+              </option>
+              {categories &&
+                categories?.categories?.map((category) => (
+                  <option key={category?.id} value={category?.id}>
+                    {category.title}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* Sub category selection field */}
+          <div className="mb-4">
+            <label
+              htmlFor="subcategories"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Subcategories
+            </label>
+            <select
+              id="subcategories"
+              name="subcategories"
+              className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+              disabled={!selectedCategory}
+              onChange={(e) => setSelectedSubcategory(e.target.value)}
+            >
+              <option value="" disabled selected>
+                Select a sub category
+              </option>
+              {!!subCategories &&
+                subCategories?.subcategories?.map((subCategory) => (
+                  <option key={subCategory?.id} value={subCategory?.id}>
+                    {subCategory?.title}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* Course selection field */}
+          <div className="mb-4">
+            <label
+              htmlFor="courses"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Select Courses
+            </label>
+            <select
+              id="courses"
+              name="courses"
+              disabled={!selectedSubcategory}
+              onChange={(e) => setSelectedCourse(e.target.value)}
+              className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+            >
+              <option value="" disabled selected>
+                Select a course
+              </option>
+              {allCourse?.length === 0 ? (
+                <option value="" disabled>
+                  No courses available
+                </option>
+              ) : (
+                allCourse?.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.title}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+
+          {/* Exam Selection field */}
+          <div className="mb-4">
+            <label
+              htmlFor="exam"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Select Exam
+            </label>
+            <select
+              id="exam"
+              name="exam"
+              className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+              disabled={!selectedCourse}
+              value={selectedExam}
+              onChange={(e) => setSelectedExam(e.target.value)}
+            >
+              <option value="" disabled selected>
+                Select an Exam
+              </option>
+              {allExams?.length === 0 ? (
+                <option value="" disabled>
+                  No exam available
+                </option>
+              ) : (
+                allExams?.map((exam) => (
+                  <option key={exam.id} value={exam.id}>
+                    {exam?.title}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+          {/* <div className="mb-4">
             <label
               htmlFor="examId"
               className="block text-sm font-medium text-gray-600"
             >
               Exam ID
             </label>
-            <select
+            <select required
               id="examId"
               name="examId"
               value={newQuestion.exam_id}
@@ -81,17 +275,17 @@ const AddQuestions = () => {
               }
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             >
-              <option value="" disabled>
+              <option value="" disabled >
                 Select Exam
               </option>
               {filteredAllData &&
-                filteredAllData.map((exam) => (
+                filteredAllData?.map((exam) => (
                   <option key={exam.id} value={exam.id}>
-                    {exam.title}
+                    {exam?.title}
                   </option>
                 ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label
@@ -101,13 +295,12 @@ const AddQuestions = () => {
               Question
             </label>
             <input
+              required
               type="text"
               id="question"
               name="question"
-              value={newQuestion.question}
-              onChange={(e) =>
-                setNewQuestion({ ...newQuestion, question: e.target.value })
-              }
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             />
           </div>
@@ -119,13 +312,12 @@ const AddQuestions = () => {
               Mark
             </label>
             <input
+              required
               type="number"
               id="mark"
               name="mark"
-              value={newQuestion.mark}
-              onChange={(e) =>
-                setNewQuestion({ ...newQuestion, mark: e.target.value })
-              }
+              value={mark}
+              onChange={(e) => setMark(e.target.value)}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             />
           </div>
@@ -138,6 +330,7 @@ const AddQuestions = () => {
             </button>
           </div>
         </form>
+
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
             <thead>

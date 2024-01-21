@@ -19,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      invalidatesTags: ["users"],
+      invalidatesTags: ["users","carts"],
     }),
     
 // get single user
@@ -45,7 +45,7 @@ export const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: `${USERS_URL}/${data?.id}`,
         method: "PATCH",
-        data: data.body,
+        data: data,
       }),
       invalidatesTags: ['users']
     }),

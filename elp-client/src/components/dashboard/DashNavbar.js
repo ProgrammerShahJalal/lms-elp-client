@@ -19,7 +19,7 @@ const DashNavbar = () => {
   };
 
   return (
-    <div className=" border-b border-b-gray-300 sticky top-0 z-10">
+    <div className=" bg-gray-200 border-b border-b-gray-300 sticky top-0 z-10">
       <div className="navbar px-5">
         <div className="navbar-start ">
           <Link href="/" className="text-lg text-cyan-900">
@@ -37,7 +37,7 @@ const DashNavbar = () => {
           <p className="px-3 text-lg font-bold">{role}</p>
         </div>
         <div className="navbar-end">
-          <ToggleTheme />
+          {/* <ToggleTheme /> */}
           {userLoggedIn ? (
             <div
               className="flex items-center gap-3 bg-yellowPrimary text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 ml-2 text-sm rounded"

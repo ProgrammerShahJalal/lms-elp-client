@@ -19,7 +19,10 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import avatar from "../../assets/images/avatar.png";
-import { useGetAllCartsByUserQuery, useGetAllCartsQuery } from "@/redux/api/cartApi";
+import {
+  useGetAllCartsByUserQuery,
+  useGetAllCartsQuery,
+} from "@/redux/api/cartApi";
 
 const Navbar = () => {
   // const ClickableDropdown = () => {
@@ -31,10 +34,10 @@ const Navbar = () => {
 
   const { data: courseCategoryData } = useGetAllCategoriesQuery();
   const categoriesData = courseCategoryData?.categories;
-  const {data:cart} = useGetAllCartsByUserQuery();
+  const { data: cart } = useGetAllCartsByUserQuery();
   // console.log(cart?.carts, 'from navbaer');
   const cartLength = cart?.carts;
-  // const { books } = useSelector((state) => state.cart);
+   const { books } = useSelector((state) => state.cart);
 
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
@@ -107,12 +110,13 @@ const Navbar = () => {
     },
     { link: "আমাদের সম্পর্কে", path: "about" },
     { link: "যোগাযোগ", path: "contact" },
+    { link: "ক্লাস রুটিন ", path: "/" },
   ];
   const navItems = userLoggedIn
-  ? [...commonRoutes, { link: "ড্যাসবোর্ড", path: "profile" }]
-  : commonRoutes; 
+    ? [...commonRoutes, { link: "ড্যাসবোর্ড", path: "profile" }]
+    : commonRoutes;
   return (
-    <header className="w-full bg-white md:bg-transparent sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
+    <header className="w-full bg-white sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
       <nav
         className={`py-4  px-4 ${
           isSticky
@@ -127,7 +131,7 @@ const Navbar = () => {
           >
             <Image
               src={logo}
-              alt="logo"
+              alt="Easy Learning Platform"
               className="w-14 inline-block items-center"
             />
             <span className="dark:text-cyanPrimary hover:text-bluePrimary">
@@ -182,14 +186,21 @@ const Navbar = () => {
 
           {/* btn for large device */}
           <div className="space-x-4 hidden lg:flex items-center">
-            <ToggleTheme />
+            {/* <ToggleTheme /> */}
 
             <Link href="/cart" className="flex items-center">
               <IoCartOutline className="text-2xl font-bold" />{" "}
-              <sup className="text-md font-bold">{cartLength?.length}</sup>
+              {/* {userLoggedIn && (
+                <sup className="text-md font-bold">{cartLength?.length}</sup>
+              )} */}
+            
+                <sup className="text-md font-bold">{books?.length}</sup>
+              
             </Link>
 
             {/* <!-- Dropdown menu --> */}
+
+          {userLoggedIn ? <>
             <div className="relative inline-block text-left">
               <button
                 type="button"
@@ -204,21 +215,22 @@ const Navbar = () => {
                   width={20}
                   height={50}
                   className="rounded "
+                  alt="Profile"
                 />
               </button>
 
               <div
                 className={`${
                   isOpen ? "block" : "hidden"
-                } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
+                } absolute z-10 mt-4 w-44 left-[-130px] bg-gray-200 divide-y divide-gray-100 rounded-lg shadow `}
               >
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                  {userLoggedIn ? (
+                <ul className="py-4 pl-5 text-sm text-gray-700 dark:text-black">
+              
                     <>
                       <li>
                         <Link
                           href="/"
-                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block  py-2 hover:bg-gray-100  "
                         >
                           <p className="text-lg font-bold">{data?.name}</p>
                         </Link>
@@ -226,9 +238,9 @@ const Navbar = () => {
                       <li>
                         <Link
                           href="/profile"
-                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block  py-2 text-lg hover:bg-gray-100 "
                         >
-                         প্রোফাইল
+                          প্রোফাইল
                         </Link>
                       </li>
 
@@ -241,17 +253,17 @@ const Navbar = () => {
                         </button>
                       </li>
                     </>
-                  ) : (
-                    <Link
-                      href="/login"
-                      className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
-                    >
-                      লগইন
-                    </Link>
-                  )}
+                 
                 </ul>
               </div>
             </div>
+          
+          </>:  <Link
+                      href="/login"
+                      className="hidden lg:flex items-center text-cyanPrimary hover:text-bluePrimary font-bold"
+                    >
+                      লগইন/রেজিস্টার
+                    </Link>}
           </div>
 
           {/* menu btn for only mobile devices */}
@@ -273,7 +285,7 @@ const Navbar = () => {
               : "hidden"
           }`}
         >
-          <ToggleTheme />
+          {/* <ToggleTheme /> */}
           {navItems.map(({ link, path, dropdown }) => (
             <div key={path}>
               {dropdown ? (
@@ -315,30 +327,33 @@ const Navbar = () => {
             </div>
           ))}
           <div className="flex justify-center">
-          <Link href="/cart" className="flex items-center"><IoCartOutline className="text-2xl font-bold text-white" /> <sup className="text-md font-bold text-white">{cartLength?.length}</sup></Link>
+            <Link href="/cart" className="flex items-center">
+              <IoCartOutline className="text-2xl font-bold text-white" />{" "}
+              <sup className="text-md font-bold text-white">
+                {books?.length}
+              </sup>
+            </Link>
           </div>
           <div className=" ">
-          {userLoggedIn ? (
+            {userLoggedIn ? (
               <>
-              <p className="font-bold text-lg text-white">{data?.name}</p>
-              
-              <button
-                onClick={logout}
-                className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
-              >
-                লগআউট
-              </button>
+                <p className="font-bold text-lg text-white">{data?.name}</p>
+
+                <button
+                  onClick={logout}
+                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
+                >
+                  লগআউট
+                </button>
               </>
             ) : (
               <Link
                 href="/login"
                 className="hidden lg:flex items-center text-white hover:text-white font-bold"
               >
-                লগইন 
+                 লগইন/রেজিস্টার 
               </Link>
             )}
-           
-            
           </div>
         </div>
       </nav>
