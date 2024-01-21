@@ -241,6 +241,14 @@ const UserSidebar = () => {
                     <SiCoursera fontSize={18} /> আমার কোর্স
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/user/mypdfbook"
+                    className="transition-all text-cyan-900  text-lg hover:bg-blue-900  py-2 hover:text-white rounded flex items-center gap-3 mt-2"
+                  >
+                    <SiCoursera fontSize={18} /> আমার কেনা  বইসমুহ
+                  </Link> 
+                </li>
                 <br />
                 <li>
                   <Link

@@ -167,21 +167,7 @@ const AddCourseForm = () => {
                 </option>
               ))}
             </select>
-            {/* <select
-
-            {...register("category_id", { required: true })}
-
-            className="w-full border border-gray-300 p-2 rounded-md"
-          >
-            <option value="" disabled>
-              Select a category
-            </option>
-            {categories?.categories?.map((category) => (
-              <option key={category?.id} value={category?.id}>
-                {category?.title}
-              </option>
-            ))}
-          </select> */}
+            
           </div>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Sub Category</label>
@@ -242,6 +228,18 @@ const AddCourseForm = () => {
               id="syllabus"
               name="syllabus"
               {...register("syllabus", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Class Routine:
+            </label>
+            <input
+              type="text"
+              id="routine"
+              name="syllabus"
+              {...register("routine", { required: true })}
               className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
             />
           </div>
