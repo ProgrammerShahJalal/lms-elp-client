@@ -29,6 +29,7 @@ const Testing = () => {
           </li>
         ))}
       </ul>
+
            {!showPDFModal && (
           <button onClick={openPDFModal} className="text-bluePrimary cursor-pointer">
             বইটি একটু পড়ুন
@@ -233,6 +234,33 @@ const Testing = () => {
         //     </ul>
 
         // </div> */}
+
+
+
+
+
+
+        {/* navabr
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        */}
 
     </div>
   )

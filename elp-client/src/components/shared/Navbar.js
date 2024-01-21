@@ -23,6 +23,7 @@ import {
   useGetAllCartsByUserQuery,
   useGetAllCartsQuery,
 } from "@/redux/api/cartApi";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
   // const ClickableDropdown = () => {
@@ -278,6 +279,7 @@ const Navbar = () => {
         </div>
 
         {/* nav items for mobile devices */}
+       
         <div
           className={`space-y-4  mt-16 py-7 bg-bluePrimary ${
             isMenuOpen

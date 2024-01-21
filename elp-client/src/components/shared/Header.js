@@ -28,6 +28,7 @@ import {
   useGetAllCoursesQuery,
   useGetAllCoursesRoutineQuery,
 } from "@/redux/api/courseApi";
+import MobileNavbar from "./MobileNavbar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -309,6 +310,17 @@ const Header = () => {
               {isMenuOpen ? <FaXmark className="h-6 w-6 " /> : <FaBars />}
             </button>
           </div>
+        </div>
+        {/* nav items for mobile devices */}
+        <div
+          className={`space-y-4  mt-16 py-7 bg-bluePrimary ${
+            isMenuOpen
+              ? "block fixed top-0 right-0 left-0 text-center"
+              : "hidden"
+          }`}
+        >
+          {/* <ToggleTheme /> */}
+         <MobileNavbar/>
         </div>
       </nav>
     </header>
