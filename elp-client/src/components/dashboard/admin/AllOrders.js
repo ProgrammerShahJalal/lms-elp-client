@@ -4,6 +4,7 @@ import { useGetAllOrdersQuery } from "@/redux/api/ordersApi";
 import AllOrdersDetials from "./AllOrdersDetials";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useEffect, useState } from "react";
+import { useGetAllOrderStatusQuery } from "@/redux/api/orderStatusApi";
 
 const AllOrders = () => {
   const [filterValue, setFilterValue] = useState("");
@@ -13,6 +14,12 @@ const AllOrders = () => {
 
   const { data, isLoading, isError } = useGetAllOrdersQuery();
   const ordersData = data?.orders?.data;
+  const { data: statusData } = useGetAllOrderStatusQuery();
+  const allOrdersStatus= statusData?.allStatus?.data;
+
+ 
+
+
   useEffect(() => {
     if (ordersData) {
       const sortedOrders = [...ordersData].sort((a, b) => {
@@ -38,10 +45,9 @@ const AllOrders = () => {
   }, [ordersData, sortOrder, sortField]);
   const handleSortClick = (field) => {
     setSortField(field);
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
-  
   useEffect(() => {
     if (ordersData) {
       const sortedOrders = [...ordersData].sort((a, b) => {
@@ -102,7 +108,7 @@ const AllOrders = () => {
 
   if (!isLoading && !isError && sortedOrder?.length > 0) {
     content = sortedOrder?.map((item) => (
-      <AllOrdersDetials key={item?.id} item={item} />
+      <AllOrdersDetials key={item?.id} item={item}  allOrdersStatus={allOrdersStatus} />
     ));
   }
 

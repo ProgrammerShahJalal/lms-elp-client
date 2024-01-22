@@ -2,10 +2,15 @@ import React from 'react';
 
 import AllOrderBookDetails from './AllOrderBookDetails';
 
-const AllOrdersDetials = ({item}) => {
+const AllOrdersDetials = ({item,allOrdersStatus}) => {
     const dateObject = new Date(item?.createdAt);
   const humanReadableFormatLocal = dateObject.toLocaleDateString();
-  
+
+  const getStatusLabel = (status) => {
+    // Assuming that allOrdersStatus contains objects with a "label" property
+    const statusObj = allOrdersStatus.find((s) => s.label === status);
+    return statusObj ? statusObj.label : 'Unknown';
+  };
   
     return (
         <tr className="hover border">
@@ -16,7 +21,7 @@ const AllOrdersDetials = ({item}) => {
       <td>৳ {" "}{item?.total_price}</td>
       <td>{humanReadableFormatLocal}</td>
       <td>{item?.trx_id}</td>
-      <td>pending</td>
+      <td>{getStatusLabel(item?.status)}</td>
       <td>paid</td>
     </tr>
     );
