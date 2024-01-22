@@ -10,10 +10,13 @@ import Link from "next/link";
 
 
 const MyExamPages = () => {
- 
+
   const { data: payments, isError, isLoading } = useGetMyExamPaymentQuery();
   const paymentsData = payments?.payments;
- 
+  // const filteredArray = paymentsData?.filter(item => {
+  //   return item?.exam_id?.exam_type === "1"
+  // });
+  // console.log(filteredArray, 'this is filtered data');
   let content = null;
 
   if (isLoading) {
@@ -26,9 +29,9 @@ const MyExamPages = () => {
 
   if (!isLoading && isError) {
     // content = <Error />;
-     content = <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 px-3  my-5 rounded text-lg">
-     <h5>Your don't buy any exam right now</h5>
-   </tr>;
+    content = <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 px-3  my-5 rounded text-lg">
+      <h5>Your don't buy any exam right now</h5>
+    </tr>;
   }
 
   if (!isLoading && !isError && paymentsData?.length === 0) {
@@ -43,13 +46,13 @@ const MyExamPages = () => {
   }
 
   if (!isLoading && !isError && paymentsData?.length > 0) {
-    content = paymentsData?.map((item) => (<SinglePaymentDetails key={item?.id} item={item}/>
-     
+    content = paymentsData?.map((item) => (<SinglePaymentDetails key={item?.id} item={item} />
+
     ));
   }
 
- 
- 
+
+
 
   return (
     <div>
@@ -72,12 +75,12 @@ const MyExamPages = () => {
             <tbody>
               {content}
 
-             
+
             </tbody>
           </table>
         </div>
       </div>
-     
+
     </div>
   );
 };
