@@ -41,7 +41,7 @@ const GetInTouch = () => {
               </div>
 
               <h2 className="font-bold text-xl">Email Us</h2>
-              <p className="">eglms@gmail.com</p>
+              <p className="">easyjobpreperation@gmail.com</p>
             </div>
           </div>
           <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">

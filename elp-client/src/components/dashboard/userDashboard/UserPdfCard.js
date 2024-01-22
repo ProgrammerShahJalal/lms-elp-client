@@ -3,15 +3,19 @@
 import Image from "next/image";
 import book from '../../../assets/images/book.jpg'
 import { useState } from "react";
+import UserPdfCardShow from "./UserPdfCardShow";
 
 const UserPdfCard = ({item,onOpenPDFModal}) => {
-    const MyallOrders = JSON.parse(item?.orders);
+    const myAllOrders = JSON.parse(item?.orders);
+
+    // console.log(MyallOrders)
   
 
    
     return (
         <div className="border rounded w-80">
             <div>
+            
                 <Image src={book} width={400}/>
                  <div className="px-5 mb-6">
                  <h2 className="text-xl font-bold py-4">বইয়ের নাম</h2> 
@@ -19,15 +23,14 @@ const UserPdfCard = ({item,onOpenPDFModal}) => {
                  </div>
 
             </div>
-           {/* {MyallOrders &&
-          MyallOrders?.map((order) => (
-            <AllOrdersSingleBookData
+           {myAllOrders &&
+          myAllOrders?.map((order) => (
+            <UserPdfCardShow
               key={order?.id}
               bookId={order?.book_id}
-              price={order?.unit_price}
-              quantity={order?.book_quantity}
+             order={order}
             />
-          ))} */}
+          ))}
         </div>
     );
 };
