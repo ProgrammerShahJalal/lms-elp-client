@@ -73,15 +73,15 @@ const Footer = () => {
           <header className=" text-white text-lg font-bold pb-3">প্রয়োজনীয় লিংক সমূহ</header>
           <a className="link link-hover"href="/about">আমাদের সম্পর্কে</a>
           <a className="link link-hover"href="/contact">যোগাযোগ</a>
-          <a className="link link-hover"href="/books">All Books</a>
-          <a className="link link-hover"href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank">Join Free Seminar</a>
+          <a className="link link-hover"href="/books">আমাদের সব বই সমূহ</a>
+          <a className="link link-hover"href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank"> ফ্রী সেমিনারে অংশ নেন </a>
           
-        </nav>
+        </nav> 
         <nav>
-          <header className=" text-white text-lg font-bold pb-3">Contact Info</header>
+          <header className=" text-white text-lg font-bold pb-3">যোগাযোগ তথ্য</header>
           <a className="link link-hover">Dhaka</a>
           <a className="link link-hover">+8801752650246</a>
-          <a className="link link-hover">abc@gmail.com</a>
+          <a className="link link-hover">easyjobpreperation@gmail.com</a>
         </nav>
       </footer>
       <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">

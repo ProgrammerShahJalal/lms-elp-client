@@ -70,14 +70,15 @@ const MyPurchasePdfPage = () => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2 mb-20">{content}</div>
+      <div className="grid lg:grid-cols-2 gap-4 mb-20">{content}</div>
 
       {openPDFModals?.map((isOpen, index) => (
         <PDFViewerModal
           key={index}
           isOpen={isOpen}
           onClose={() => closePDFModal(index)}
-          pdfSrc={data?.books?.data[index]?.pdf_link}
+          // pdfSrc={data?.books?.data[index]?.pdf_link}
+          pdfSrc="https://drive.google.com/file/d/1_hqXWDM0tzBM2WX9Sg4_pn7W0yaCTVPk/preview"
         />
       ))}
     </>

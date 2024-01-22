@@ -118,6 +118,24 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["subscription-histories"],
     }),
+
+
+    getAllCoursesBundles: build.query({
+      query: (arg) => {
+        return {
+          url: `${COURSES_URL}/total-cost-of-all-courses-of-a-sub-cat`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response, meta) => {
+        return {
+          courses: response,
+          meta,
+        };
+      },
+      providesTags: ["courses"],
+    }),
   }),
 });
 

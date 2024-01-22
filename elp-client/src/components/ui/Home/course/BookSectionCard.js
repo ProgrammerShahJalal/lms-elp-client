@@ -53,13 +53,13 @@ const BookSectionCard = ({item,onOpenPDFModal }) => {
 
   return (
     <>
-     <div>
+    
+      <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
+      <div>
           <button onClick={onOpenPDFModal} className="text-bluePrimary cursor-pointer">
             বইটি একটু পড়ুন
           </button>
         </div>
-      <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
-     
      
         <figure className="relative">
           <Image
@@ -91,8 +91,10 @@ const BookSectionCard = ({item,onOpenPDFModal }) => {
 
           <div className="flex justify-between items-center">
             <div>
-            <p className="py-2">{item?.description}
-          <Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> </p>
+            <p className="py-2"  dangerouslySetInnerHTML={{
+              __html: item?.description?.substring(0, 30),
+            }}></p>
+          <Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> 
             </div>
             <div>
            
