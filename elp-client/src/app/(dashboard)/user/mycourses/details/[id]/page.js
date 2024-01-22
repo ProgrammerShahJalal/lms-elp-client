@@ -1,105 +1,3 @@
-// "use client";
-// import { useGetMyCourseVedioPlaylistQuery } from "@/redux/api/videoApi";
-// import { useParams } from "next/navigation";
-// import { useEffect, useState } from "react";
-// import ReactPlayer from "react-player";
-
-// const CourseVedioPlaylistPage = () => {
-//   const params = useParams();
-//   const id = params?.id;
-//   // console.log(params.id,'from details page');
-
-//   const { data: course } = useGetMyCourseVedioPlaylistQuery(id);
-//   // console.log(course, "data vedio");
-//   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-//   const showPreviousVideo = () => {
-//     setCurrentVideoIndex((prevIndex) => (prevIndex === 0 ? course.length - 1 : prevIndex - 1));
-//   };
-
-//   const showNextVideo = () => {
-//     setCurrentVideoIndex((prevIndex) => (prevIndex === course.length - 1 ? 0 : prevIndex + 1));
-//   };
-
-
-
-//   const selectVideo = (index) => {
-//     setCurrentVideoIndex(index);
-//   };
-
-
-
-//   return (
-//     <div>
-
-
-//       <div>
-//         {course?.length > 0 && (
-//           <div className="container mx-auto my-8">
-//             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 place-items-center gap-4">
-//               <div>
-//                 <h1 className="text-2xl font-bold mb-4">Video List</h1>
-
-//                 <div className="bg-white p-4 rounded-md shadow-md">
-//                   <h2 className="text-lg font-semibold mb-2">
-//                     {course[currentVideoIndex]?.title}
-//                   </h2>
-//                   <div id="youtube-player">
-//                     <ReactPlayer
-//                       width={500}
-//                       controls
-//                       key={course[currentVideoIndex]?.playlist_link}
-//                       volume
-//                       url={course[currentVideoIndex].playlist_link}
-//                     />
-//                   </div>
-
-//                   <div className="flex justify-end space-x-4 mt-4">
-//                     <button
-//                       onClick={showPreviousVideo}
-//                       className="bg-orange-500 text-white px-4 py-2 rounded"
-//                       disabled={currentVideoIndex === 0}
-//                     >
-//                       Previous
-//                     </button>
-//                     <button
-//                       onClick={showNextVideo}
-//                       className="bg-orange-500 text-white px-4 py-2 rounded"
-//                       disabled={currentVideoIndex === course.length - 1}
-//                     >
-//                       Next
-//                     </button>
-//                   </div>
-//                 </div>
-//               </div>
-//               <div>
-//                 <h2 className="text-2xl font-bold  mb-4 text-blue-500">
-//                   All Video Names
-//                 </h2>
-//                 <ol className="pl-4 border-t border-b border-blue-300">
-//                   {course?.map((video, index) => (
-//                     <li
-//                       key={video._id}
-//                       className={`cursor-pointer py-2 px-6 rounded-md border-b border-blue-300 ${currentVideoIndex === index ? "bg-blue-300" : ""
-//                         } text-xl`}
-//                       onClick={() => selectVideo(index)}
-//                     >
-//                       {index + 1}. {video?.title}
-//                     </li>
-//                   ))}
-//                 </ol>
-//               </div>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CourseVedioPlaylistPage;
-
-
-
 'use client'
 import { useGetMyCourseVedioPlaylistQuery } from '@/redux/api/videoApi';
 import { useParams } from 'next/navigation';
@@ -107,8 +5,16 @@ import React, { useEffect, useState } from 'react';
 import YouTube from 'react-youtube';
 import axios from 'axios';
 import YoutubePlaylist from './playlist';
+import { getUserInfo } from '@/services/auth.service';
+import { useGetSingleUserQuery } from '@/redux/api/authApi';
 
 const Play = () => {
+
+// Disable right-click
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+});
+
   const params = useParams();
   const id = params?.id;
   const { data: course } = useGetMyCourseVedioPlaylistQuery(id);
@@ -166,28 +72,49 @@ const Play = () => {
     setCurrentPlaylistIndex(index);
   };
 
-  const opts = {
+  let opts;
+
+if (window.innerWidth >= 1024) {
+  opts = {
     width: '600',
-    height: '360',
+    height: '340',
     playerVars: {
       autoplay: 1,
-      controls: 1, // Show video controls (play/pause)
-      modestbranding: 1, // Remove YouTube logo
-      fs: 1, // Show full-screen button
-      autohide: 1, // Auto-hide video controls
-      rel: 0, // Disable related videos at the end
-      showinfo: 0, // Hide video information
-      iv_load_policy: 3, // Disable annotations
+      controls: 1,
+      modestbranding: 1,
+      fs: 1,
+      autohide: 1,
+      rel: 0,
+      showinfo: 0,
+      iv_load_policy: 3,
     },
   };
+} else { // For smaller screens like phones
+  opts = {
+    width: '100%',
+    height: '300',
+    playerVars: {
+      autoplay: 1,
+      controls: 1,
+      modestbranding: 1,
+      fs: 1,
+      autohide: 1,
+      rel: 0,
+      showinfo: 0,
+      iv_load_policy: 3,
+    },
+  };
+}
 
-
+const { userId, email } = getUserInfo();
+const { data } = useGetSingleUserQuery(userId);
 
   return (
-    <div className="lg:flex mt-14">
-      <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-14 select-none	">
+      <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3 relative ">
         {videos && videos.length > 0 && videos[currentPlaylistIndex]?.title}
-        <YouTube key={selectedVideo || 'defaultKey'} videoId={selectedVideo || ''} opts={opts} className='md:w-full' />
+        <YouTube key={selectedVideo || 'defaultKey'} videoId={selectedVideo || ''} opts={opts} />
+        <small className='z-50 absolute font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-600 shadow-sm'> {data?.contact_no}</small> 
         <div className="flex justify-between mt-4">
           <button
             onClick={showPreviousPlaylist}
