@@ -41,6 +41,7 @@ const Navbar = () => {
   const subCategoriesData = subCategories?.subcategories;
 
   const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
+  const [hoveredSubCategoryId, setHoveredSubCategoryId] = useState(null);
   const [showCategories, setShowCategories] = useState(false);
   const [showSubcategories, setShowSubcategories] = useState(false);
   const { data: routines } = useGetAllCoursesRoutineQuery();
@@ -143,35 +144,53 @@ const Navbar = () => {
             <li className="relative group">
             <span className="cursor-pointer flex items-center  hover:text-bluePrimary font-bold">কোর্সসমূহ <IoIosArrowDown /></span>
             {categoriesData && (
-              <ul className={`absolute hidden  px-4 text-white bg-bluePrimary py-2 space-y-2 shadow-md group-hover:block text-left ${
-                showSubcategories ? 'block' : ''
-              }`}>
-                {categoriesData?.map((category,index) => (
-                  <li
-                    key={category.id}
-                    className="group"
-                    onMouseEnter={() => setHoveredCategoryId(category.id)}
-                    onMouseLeave={() => setHoveredCategoryId(null)}
-                  >
-                    <span className="cursor-pointer flex items-center">{category?.title}<IoIosArrowDown />  </span>
-                    {hoveredCategoryId === category.id && subCategoriesData && (
-                      <ul className={`absolute top-0 left-20 space-y-2 text-white bg-bluePrimary py-2  shadow-md ${index = category}`}>
-                        {subCategoriesData
-                          .filter((subCategory) => subCategory?.category_id?._id === category.id)
-                          .map((subCategory) => (
-                            <lii key={subCategory?.id}>
-                              <Link href={`/courses/category/subcategory/${subCategory?._id}`} className="block    px-5">
-                                {subCategory?.title}
-                              </Link>
-                              
-                            </lii>
-                          ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
+        <ul
+          className={`absolute hidden min-w-[10em] px-4 text-white py-2 space-y-2 shadow-md group-hover:block text-left rounded-md transition-all duration-300 bg-bluePrimary`}
+        >
+          {categoriesData?.map((category) => (
+            <li
+              key={category.id}
+              className="group relative"
+              onMouseEnter={() => setHoveredCategoryId(category.id)}
+              onMouseLeave={() => setHoveredCategoryId(null)}
+            >
+              <span className="cursor-pointer flex items-center">
+                {category?.title}
+                <IoIosArrowDown />
+              </span>
+              {hoveredCategoryId === category.id && subCategoriesData && (
+                <ul
+                  className={`absolute top-0 left-full space-y-2 text-white bg-bluePrimary py-2 shadow-md rounded-md`}
+                >
+                  {subCategoriesData
+                    .filter(
+                      (subCategory) =>
+                        subCategory?.category_id?._id === category.id
+                    )
+                    .map((subCategory) => (
+                      <li
+                        key={subCategory?.id}
+                        className="group relative"
+                        onMouseEnter={() =>
+                          setHoveredSubCategoryId(subCategory.id)
+                        }
+                        onMouseLeave={() => setHoveredSubCategoryId(null)}
+                      >
+                        <Link
+                          href={`/courses/category/subcategory/${subCategory?._id}`}
+                          className="block px-4 py-2"
+                        >
+                          {subCategory?.title}
+                        </Link>
+                        
+                      </li>
+                    ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
           </li>
             <Link
               href="/contact"

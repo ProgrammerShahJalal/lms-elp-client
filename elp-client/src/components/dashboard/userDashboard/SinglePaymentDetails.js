@@ -4,7 +4,7 @@ import React from 'react';
 const SinglePaymentDetails = ({item}) => {
     const dateObject = new Date(item?.createdAt);
   const localData = dateObject.toLocaleDateString();
-  console.log(item)
+ 
     return (
         <tr  className="hover">
         <th>{item?.exam_id?.course_id?.title} </th>
@@ -15,7 +15,7 @@ const SinglePaymentDetails = ({item}) => {
         <td>{item?.trx_id}</td>
         <td>paid</td>
         <td>
-        <Link href={`/user/myexams/details/${item?.exam_id?.id}`}className="text-red-500 font-bold">পরিক্ষা দিন</Link>
+        <Link href={`/user/myexams/details/${item?.exam_id?.id}`}className="text-red-500 font-bold">  {item?.exam_id?.exam_type === "1" ? 'Questions' : 'পরিক্ষা দিন'}</Link>
         </td>
       </tr>
     );
