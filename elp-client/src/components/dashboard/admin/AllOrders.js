@@ -14,8 +14,7 @@ const AllOrders = () => {
 
   const { data, isLoading, isError } = useGetAllOrdersQuery();
   const ordersData = data?.orders?.data;
-  const { data: statusData } = useGetAllOrderStatusQuery();
-  const allOrdersStatus= statusData?.allStatus?.data;
+  
 
  
 
@@ -100,7 +99,7 @@ const AllOrders = () => {
       <>
         {" "}
         <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-          <h5>All Orders table are Empty Now</h5>
+          <h5>All Orders table is Empty Now</h5>
         </div>
       </>
     );
@@ -108,7 +107,7 @@ const AllOrders = () => {
 
   if (!isLoading && !isError && sortedOrder?.length > 0) {
     content = sortedOrder?.map((item) => (
-      <AllOrdersDetials key={item?.id} item={item}  allOrdersStatus={allOrdersStatus} />
+      <AllOrdersDetials key={item?.id} item={item}   />
     ));
   }
 
