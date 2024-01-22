@@ -87,9 +87,10 @@ if (window.innerWidth >= 1024) {
       rel: 0,
       showinfo: 0,
       iv_load_policy: 3,
+      disablekb: 1,
     },
   };
-} else { // For smaller screens like phones
+} else { 
   opts = {
     width: '100%',
     height: '300',
@@ -102,11 +103,12 @@ if (window.innerWidth >= 1024) {
       rel: 0,
       showinfo: 0,
       iv_load_policy: 3,
+      disablekb: 1,
     },
   };
 }
 
-const { userId, email } = getUserInfo();
+const { userId } = getUserInfo();
 const { data } = useGetSingleUserQuery(userId);
 
   return (

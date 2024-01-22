@@ -7,7 +7,7 @@ const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick })
     };
 
     return (
-        <div className='md:pl-36 pl-0'>
+        <div className='md:pl-24 pl-0'>
             <div className='flex justify-between items-center' onClick={toggleCollapse}>
                 <h5 className="text-2xl  cursor-pointer " >{course && course.length > 0 && course[currentPlaylistIndex]?.title}
                 </h5>
