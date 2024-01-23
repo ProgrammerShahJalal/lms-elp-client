@@ -54,7 +54,7 @@ const RoutinesPage = () => {
              </button>
            </a>
             ) : (
-              <p className="text-black">রুটিন শীঘ্রই আসছে</p>
+              <p className="text-orange-600">রুটিন শীঘ্রই আসছে</p>
             )}
           </div>
         ))}
