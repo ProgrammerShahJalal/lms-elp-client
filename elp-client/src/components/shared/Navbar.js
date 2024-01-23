@@ -193,7 +193,7 @@ const Navbar = () => {
       )}
           </li>
             <Link
-              href="/contact"
+              href="/about"
               className="block dark:text-black hover:text-bluePrimary font-bold"
             >
               আমাদের সম্পর্কে
