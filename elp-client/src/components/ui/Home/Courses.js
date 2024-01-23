@@ -76,12 +76,10 @@ const Courses = () => {
         </Link>
       </div>
       
-      {/* <div className="grid lg:grid-cols-3  gap-4">{content}</div> */}
+   
       <div className="">
       <Swiper
-        // pagination={{
-        //   type: 'progressbar',
-        // }}
+        
         navigation={true}
         modules={[Pagination, Navigation]}
         
@@ -91,14 +89,7 @@ const Courses = () => {
 {content}
       </Swiper>
         
-        {/* <Swiper
-        // pagination={{
-        //   dynamicBullets: false,
-        // }}
-        // modules={[Pagination]}
-        breakpoints= {breakpoints}
-        className="mySwiper"
-      ></Swiper> */}
+      
         </div>
     </div>
   );
