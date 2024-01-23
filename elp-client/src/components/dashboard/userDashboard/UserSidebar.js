@@ -148,6 +148,9 @@ const UserSidebar = () => {
                   <Link href={"/superAdmin/allusers"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  px-6  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "> <ImProfile fontSize={20} />ব্যবহারকারী</Link>
                 </li>
                 <li >
+                  <Link href={"/superAdmin/alladmin"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  px-6  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "> <ImProfile fontSize={20} />সকল এডমিন</Link>
+                </li>
+                <li >
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
