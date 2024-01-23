@@ -8,11 +8,7 @@ const AllOrdersDetials = ({item}) => {
     const dateObject = new Date(item?.createdAt);
   const humanReadableFormatLocal = dateObject.toLocaleDateString();
 
-  // const getStatusLabel = (status) => {
-  //   // Assuming that allOrdersStatus contains objects with a "label" property
-  //   const statusObj = allOrdersStatus.find((s) => s.label === status);
-  //   return statusObj ? statusObj.label : 'Unknown';
-  // };
+
   
     return (
         <tr className="hover border">

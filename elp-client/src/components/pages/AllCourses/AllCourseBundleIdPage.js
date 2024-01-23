@@ -4,7 +4,7 @@ import { useGetAllCoursesBundlesQuery } from "@/redux/api/courseApi";
 import BundleCourse from "./BundleCourse";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Error from "@/components/Loader/Error";
-import Image from "next/image";
+
 
 
 const AllCourseBundleIdPage = ({id}) => {
@@ -44,7 +44,7 @@ const AllCourseBundleIdPage = ({id}) => {
   
     return (
         <div className="py-20">
-             {/* {allBundles && allBundles?.map((bundle)=><BundleCourse bundle={bundle}/>)} */}
+           
              <div className="grid  lg:grid-cols-2 gap-4">
                 {content}
 
