@@ -20,7 +20,7 @@ const AllOrdersDetials = ({item}) => {
       <td>{humanReadableFormatLocal}</td>
       <td>{item?.trx_id}</td>
       <td><SingleOrderStatus  orderDetailsId={item?.id}/></td>
-      <td>paid</td>
+      {/* <td>paid</td> */}
     </tr>
     );
 };

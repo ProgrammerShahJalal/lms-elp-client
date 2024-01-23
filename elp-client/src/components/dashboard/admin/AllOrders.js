@@ -142,7 +142,7 @@ const AllOrders = () => {
                 </th>
                 <th>ট্রান্সজেকশন আইডি</th>
                 <th>স্ট্যাটাস</th>
-                <th>পেমেন্ট</th>
+                {/* <th>পেমেন্ট</th> */}
               </tr>
             </thead>
             <tbody>{content}</tbody>
