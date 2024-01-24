@@ -130,7 +130,7 @@ export const courseApi = baseApi.injectEndpoints({
       },
       transformResponse: (response, meta) => {
         return {
-          courses: response,
+          bundles: response,
           meta,
         };
       },
@@ -148,5 +148,6 @@ export const {
   useGetAllSubscriptionsQuery,
   useGetAllSubscriptionsHistoryQuery,
   useSubscribeToCourseMutation,
-  useGetMyCourseSubscriptionsHistoryQuery
+  useGetMyCourseSubscriptionsHistoryQuery,
+  useGetAllCoursesBundlesQuery
 } = courseApi;
