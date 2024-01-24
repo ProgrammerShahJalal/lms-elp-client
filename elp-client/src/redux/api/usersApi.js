@@ -54,14 +54,56 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ["shipping-addresses"],
     }),
 
-
     deleteUser: build.mutation({
       query: (id) => ({
         url: `${USERS_URL}/${id}`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
-      invalidatesTags: ['users']
-    })
+      invalidatesTags: ["users"],
+    }),
+
+    // permissionCheck: build.query({
+    //   query: (user_id, permission) => {
+    //     return {
+    //       url: `${USERS_URL}/check-permission/${user_id}/${permission}`,
+    //       method: "GET",
+    //     };
+    //   },
+
+    //   providesTags: ["users"],
+    // }),
+    // permissionCheck: build.query({
+    //   query: (user_id, permission) => ({
+    //     url:`${USERS_URL}/check-permission/${user_id}/${permission}`,
+    //     method: "GET",
+    //   }),
+    //   providesTags: ["users"],
+    // }),
+    
+    permissionCheck: build.query({
+      query: ({ userId, permission }) => ({
+        url: `${USERS_URL}/check-permission/${userId}/${permission}`,
+        method: "GET",
+      }),
+      providesTags: ["users"],
+    }),
+    givePermission: build.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/give-permission`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+    removePermission: build.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/remove-permission`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+    
   }),
 });
 
@@ -71,5 +113,8 @@ export const {
   useAddShippingAddressMutation,
   useGetMyShippingAddressQuery,
   useUpdateShippingAddressMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
+  usePermissionCheckQuery,
+  useGivePermissionMutation,
+  useRemovePermissionMutation
 } = usersApi;
