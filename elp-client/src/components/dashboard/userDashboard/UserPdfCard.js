@@ -8,7 +8,7 @@ import UserPdfCardShow from "./UserPdfCardShow";
 const UserPdfCard = ({item,onOpenPDFModal}) => {
     const myAllOrders = JSON.parse(item?.orders);
 
-    // console.log(MyallOrders)
+    console.log(myAllOrders, 'order')
   
 
    

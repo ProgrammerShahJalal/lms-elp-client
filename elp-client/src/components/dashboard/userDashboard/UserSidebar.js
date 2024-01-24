@@ -35,9 +35,8 @@ const UserSidebar = () => {
         ☰
       </button>
       <div
-        className={`bg-gray-200 h-screen w-64 fixed top-0 left-0 overflow-y-auto transition-transform transform lg:transform-none ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`bg-gray-200 h-screen w-64 fixed top-0 left-0 overflow-y-auto transition-transform transform lg:transform-none ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="p-4 flex justify-between items-center mt-16">
           {isOpen && (
@@ -51,12 +50,20 @@ const UserSidebar = () => {
           {role === "admin" ? (
             <>
               <ul className=" text-start">
-              <li>
+                <li>
                   <Link
                     href="/profile"
                     className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "
                   >
                     <ImProfile fontSize={20} /> প্রোফাইল
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/admin/addTest"
+                    className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "
+                  >
+                    <ImProfile fontSize={20} /> Test Driven
                   </Link>
                 </li>
                 <li className="">
@@ -93,12 +100,12 @@ const UserSidebar = () => {
                     পরীক্ষা যোগ করুন
                   </Link>
                 </li>
-                <li > 
-                  <Link href={"/admin/addquiz"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                <li >
+                  <Link href={"/admin/addquiz"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     <MdQuiz /> কুইজ যোগ করুন
                   </Link>
                 </li>
-                <li > 
+                <li >
                   <Link href={"/admin/addquestions"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     <BsFillQuestionSquareFill /> লিখিত প্রশ্ন যোগ করুন
                   </Link>
@@ -111,21 +118,21 @@ const UserSidebar = () => {
                   </Link>
                 </li>
                 <li >
-                  <Link href={"/admin/allorders"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/allorders"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaBookOpen />
                     সব অর্ডার সমূহ
                   </Link>
                 </li>
                 <li >
-                  <Link href={"/admin/alluserscourses"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/alluserscourses"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaBookOpen />
                     সব কেনা কোর্স সমূহ
                   </Link>
                 </li>
                 <li >
-                  <Link href={"/admin/allexams"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/allexams"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaBookOpen />
                     সব পরিক্ষা  সমূহ
@@ -136,7 +143,7 @@ const UserSidebar = () => {
           ) : role === "super_admin" ? (
             <>
               <ul className="text-start">
-              <li>
+                <li>
                   <Link
                     href="/profile"
                     className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "
@@ -146,6 +153,9 @@ const UserSidebar = () => {
                 </li>
                 <li >
                   <Link href={"/superAdmin/allusers"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  px-6  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "> <ImProfile fontSize={20} />ব্যবহারকারী</Link>
+                </li>
+                <li >
+                  <Link href={"/superAdmin/alladmin"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  px-6  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "> <ImProfile fontSize={20} />সকল এডমিন</Link>
                 </li>
                 <li >
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
@@ -164,31 +174,31 @@ const UserSidebar = () => {
                 <li >
                   <Link href={"/admin/addcourse"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-5 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
-                    <SiCoursera fontSize={20}/>
+                    <SiCoursera fontSize={20} />
                     কোর্স যোগ করুন
                   </Link>
                 </li>
                 <li >
-                  <Link href={"/admin/addvideo"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/addvideo"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaFileVideo />
                     ভিডিও যোগ করুন
                   </Link>{" "}
                 </li>
                 <li >
-                  <Link href={"/admin/addexams"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/addexams"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     <PiExamFill />
                     পরীক্ষা যোগ করুন
                   </Link>
                 </li>
-                <li > 
-                  <Link href={"/admin/addquiz"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                <li >
+                  <Link href={"/admin/addquiz"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     <MdQuiz /> কুইজ যোগ করুন
                   </Link>
                 </li>
-                <li > 
-                  <Link href={"/admin/addquestions"}className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
-                    <BsFillQuestionSquareFill  /> লিখিত প্রশ্ন যোগ করুন
+                <li >
+                  <Link href={"/admin/addquestions"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                    <BsFillQuestionSquareFill /> লিখিত প্রশ্ন যোগ করুন
                   </Link>
                 </li>
                 <li >
@@ -247,7 +257,7 @@ const UserSidebar = () => {
                     className="transition-all text-cyan-900  text-lg hover:bg-blue-900  py-2 hover:text-white rounded flex items-center gap-3 mt-2"
                   >
                     <SiCoursera fontSize={18} /> আমার কেনা  বইসমুহ
-                  </Link> 
+                  </Link>
                 </li>
                 <br />
                 <li>

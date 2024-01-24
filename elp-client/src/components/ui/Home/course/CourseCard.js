@@ -90,11 +90,7 @@ const CourseCard = ({ item }) => {
             </Link>
           </div>
 
-          {/* <div className=" card-actions justify-center ">
-            <button className="bg-bluePrimary text-white py-2 px-2 transition-all duration-300 rounded hover:bg-yellowPrimary">
-              এনরোল করুন
-            </button>
-          </div> */}
+          
         </div>
       </div>
     </>
