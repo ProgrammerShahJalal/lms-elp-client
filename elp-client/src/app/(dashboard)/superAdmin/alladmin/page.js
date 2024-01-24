@@ -1,12 +1,32 @@
 "use client"
 
-import { useGetAllUsersQuery } from "@/redux/api/usersApi";
+import AdminPermission from "@/components/dashboard/admin/AdminPermission";
+import { useAdminPermissionMutation, useGetAllUsersQuery } from "@/redux/api/usersApi";
+
+export const adminPermissions = [
+  "user",
+  "course",
+  "subscription",
+  "course_video",
+  "exam",
+  "book",
+  "order_status",
+  "order",
+]
 
 const AllAdminPage = () => {
-    const { data, isLoading, isError } = useGetAllUsersQuery();
-  const users = data?.data?.data || [];
+    const { data, isLoading, isError } = useGetAllUsersQuery({
+      role:"admin"
+    });
+  const adminUsers = data?.data?.data || [];
 
-  const adminUsers = users.filter(user => user.role === "admin");
+ 
+  
+
+
+  
+
+ 
 
   if (isLoading) {
     return <p>Loading users...</p>;
@@ -35,9 +55,9 @@ const AllAdminPage = () => {
                 <th className="border bg-gray-100  py-2 hidden md:table-cell">
                   Role
                 </th>
-                <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
+                {/* <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
                   Make Admin
-                </th>
+                </th> */}
                 {/* <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
                   User registered
                 </th> */}
@@ -65,7 +85,7 @@ const AllAdminPage = () => {
            {user.role}
          </td>
  
-         <td className="">
+         {/* <td className="">
            {" "}
            <button
        
@@ -73,13 +93,14 @@ const AllAdminPage = () => {
      >
        Make Admin
      </button>
-         </td>
+         </td> */}
          {/* <td className="border px-4 py-2 md:table-cell">
            {localData}
          </td> */}
-         <td className="border px-4 py-2 md:table-cell">
-         <button className="bg-red-500 text-white py-1 px-2 rounded-md"
-                     >  Delete</button>
+         <td className="border  py-2 md:table-cell">
+          {adminPermissions?.map((permission)=><AdminPermission key={permission} permission={permission} userId= {user?.id}/>)}
+         {/* <button className="bg-red-500 text-white py-1 px-2 rounded-md"
+                     >  Delete</button> */}
          </td>
        </tr>
       ))}
