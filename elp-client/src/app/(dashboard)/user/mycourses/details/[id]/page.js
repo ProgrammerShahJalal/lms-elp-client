@@ -1,25 +1,24 @@
-'use client'
-import { useGetMyCourseVedioPlaylistQuery } from '@/redux/api/videoApi';
-import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import YouTube from 'react-youtube';
-import axios from 'axios';
-import YoutubePlaylist from './playlist';
-import { getUserInfo } from '@/services/auth.service';
-import { useGetSingleUserQuery } from '@/redux/api/authApi';
+"use client";
+import { useGetMyCourseVedioPlaylistQuery } from "@/redux/api/videoApi";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import YouTube from "react-youtube";
+import axios from "axios";
+import YoutubePlaylist from "./playlist";
+import { getUserInfo } from "@/services/auth.service";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
 const Play = () => {
-
-// Disable right-click
-document.addEventListener('contextmenu', (e) => {
-  e.preventDefault();
-});
+  // Disable right-click
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
 
   const params = useParams();
   const id = params?.id;
   const { data: course } = useGetMyCourseVedioPlaylistQuery(id);
   const [videos, setVideos] = useState([]);
-  const apiKey = 'AIzaSyBZ5EMCEWwIV7h7UVVbinObGvG3cFdLj58';
+  const apiKey = "AIzaSyBZ5EMCEWwIV7h7UVVbinObGvG3cFdLj58";
   const maxVideosToShow = 50;
   const extractPlaylistIdFromUrl = (url) => {
     const regex = /(?:list=)([a-zA-Z0-9_-]+)/;
@@ -51,7 +50,7 @@ document.addEventListener('contextmenu', (e) => {
           setCurrentPlaylistIndex(0);
         }
       } catch (error) {
-        console.error('Error fetching playlists:', error);
+        console.error("Error fetching playlists:", error);
       }
     };
 
@@ -59,13 +58,30 @@ document.addEventListener('contextmenu', (e) => {
   }, [course, apiKey, maxVideosToShow]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [currentPlaylistIndex, setCurrentPlaylistIndex] = useState(0);
+
   const showPreviousPlaylist = () => {
-    setCurrentPlaylistIndex((prevIndex) => (prevIndex === 0 ? videos.length - 1 : prevIndex - 1));
-    setSelectedVideo(videos[currentPlaylistIndex === 0 ? videos.length - 1 : currentPlaylistIndex - 1]?.videoId);
+    setCurrentPlaylistIndex((prevIndex) =>
+      prevIndex === 0 ? videos.length - 1 : prevIndex - 1
+    );
+    setSelectedVideo(
+      videos[
+        currentPlaylistIndex === 0
+          ? videos.length - 1
+          : currentPlaylistIndex - 1
+      ]?.videoId
+    );
   };
   const showNextPlaylist = () => {
-    setCurrentPlaylistIndex((prevIndex) => (prevIndex === videos.length - 1 ? 0 : prevIndex + 1));
-    setSelectedVideo(videos[currentPlaylistIndex === videos.length - 1 ? 0 : currentPlaylistIndex + 1]?.videoId);
+    setCurrentPlaylistIndex((prevIndex) =>
+      prevIndex === videos.length - 1 ? 0 : prevIndex + 1
+    );
+    setSelectedVideo(
+      videos[
+        currentPlaylistIndex === videos.length - 1
+          ? 0
+          : currentPlaylistIndex + 1
+      ]?.videoId
+    );
   };
   const onVideoClick = (videoId, index) => {
     setSelectedVideo(videoId);
@@ -74,49 +90,148 @@ document.addEventListener('contextmenu', (e) => {
 
   let opts;
 
-if (window.innerWidth >= 1024) {
-  opts = {
-    width: '600',
-    height: '340',
-    playerVars: {
-      autoplay: 1,
-      controls: 1,
-      modestbranding: 1,
-      fs: 1,
-      autohide: 1,
-      rel: 0,
-      showinfo: 0,
-      iv_load_policy: 3,
-      disablekb: 1,
-    },
-  };
-} else { 
-  opts = {
-    width: '100%',
-    height: '300',
-    playerVars: {
-      autoplay: 1,
-      controls: 1,
-      modestbranding: 1,
-      fs: 1,
-      autohide: 1,
-      rel: 0,
-      showinfo: 0,
-      iv_load_policy: 3,
-      disablekb: 1,
-    },
-  };
-}
+  if (window.innerWidth >= 1024) {
+    opts = {
+      width: "100%",
+      height: "650",
+      playerVars: {
+        autoplay: 0,
+        controls: 1,
+        modestbranding: 1,
+        fs: 0,
+        autohide: 1,
+        rel: 0,
+        showinfo: 0,
+        iv_load_policy: 3,
+        disablekb: 1,
+      },
+    };
+  } else {
+    opts = {
+      width: "100%",
+      height: "350",
+      playerVars: {
+        autoplay: 0,
+        controls: 1,
+        modestbranding: 1,
+        fs: 0,
+        autohide: 1,
+        rel: 0,
+        showinfo: 0,
+        iv_load_policy: 3,
+        disablekb: 1,
+      },
+    };
+  }
 
-const { userId } = getUserInfo();
-const { data } = useGetSingleUserQuery(userId);
+  const { userId } = getUserInfo();
+  const { data } = useGetSingleUserQuery(userId);
+
+  /* =========================Custom Video Player ===================== */
+  const [player, setPlayer] = useState(null);
+
+  const onPlayerReady = (event) => {
+    setPlayer(event.target);
+  };
+
+  const togglePlay = () => {
+    if (player) {
+      const playerState = player.getPlayerState();
+      if (playerState === window.YT.PlayerState.PLAYING) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+    }
+  };
+
+  const [isPlaying, setPlaying] = useState(false);
+
+  const handleClick = () => {
+    setPlaying((prevPlaying) => !prevPlaying);
+  };
+
+  /* ===================Custom volumn controllar ====================== */
+  const [volume, setVolume] = useState(50);
+
+  const handleVolumeChange = (newVolume) => {
+    if (player) {
+      player.setVolume(newVolume);
+      setVolume(newVolume);
+    }
+  };
+
+
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-14 select-none	">
-      <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3 relative ">
-        {videos && videos.length > 0 && videos[currentPlaylistIndex]?.title}
-        <YouTube key={selectedVideo || 'defaultKey'} videoId={selectedVideo || ''} opts={opts} />
-        <small className='z-50 absolute font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-600 shadow-sm'> {data?.contact_no}</small> 
+    <div className="grid grid-cols-1 gap-4 ">
+      <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3 relative">
+       
+        <div className="static">
+        <div className="bg-white py-7 z-20 absolute top-0 text-green-500">
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        </div>
+        </div>
+
+        <div className=" relative">
+          <div className='bg-transparent top-0 bottom-1/2 py-80 absolute text-transparent'>
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        </div>
+ 
+          <YouTube
+            key={selectedVideo || "defaultKey"}
+            videoId={selectedVideo || ""}
+            opts={opts}
+            onReady={onPlayerReady}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 mt-5 pb-3">
+          {/* Custom play button */}
+            <div>
+            <img
+            className="custom-play-button play-icon cursor-pointer w-10"
+              src={
+                isPlaying
+                  ? "https://i.ibb.co/7NkRvHC/2088562.png"
+                  : "https://i.ibb.co/1Rr5GRV/play-button.png"
+              }
+              alt={isPlaying ? "pause icon" : "play icon"}
+              onClick={() => {
+                togglePlay();
+                handleClick();
+              }}
+            />
+            </div>
+  
+
+       {/* Custom volume controls with progress bar */}
+        <div className="custom-volume-controls">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={volume}
+            onChange={(e) => handleVolumeChange(parseInt(e.target.value))}
+            className="volume-slider"
+          />
+        </div>
+        </div>
+
+
+
+
+        <div className="bg-white px-2 absolute bottom-36 text-green-600">
+        --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        </div>
+
+        <h2 className="text-base"> {videos && videos.length > 0 && videos[currentPlaylistIndex]?.title}</h2>
+
+        <small className="z-50 absolute font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-600 shadow-sm">
+          {" "}
+          {data?.contact_no}
+        </small>
+
         <div className="flex justify-between mt-4">
           <button
             onClick={showPreviousPlaylist}
@@ -136,12 +251,15 @@ const { data } = useGetSingleUserQuery(userId);
       </div>
 
       <div className="overflow-y-auto max-h-96">
-        <YoutubePlaylist videos={videos} course={course} currentPlaylistIndex={currentPlaylistIndex} onVideoClick={onVideoClick} />
+        <YoutubePlaylist
+          videos={videos}
+          course={course}
+          currentPlaylistIndex={currentPlaylistIndex}
+          onVideoClick={onVideoClick}
+        />
       </div>
     </div>
-
   );
 };
-
 
 export default Play;

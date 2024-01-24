@@ -7,8 +7,9 @@ const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick })
     };
 
     return (
-        <div className='md:pl-24 pl-0'>
-            <div className='flex justify-between items-center' onClick={toggleCollapse}>
+       <div> 
+         <div>
+            <div className='bg-white' onClick={toggleCollapse}>
                 <h5 className="text-2xl  cursor-pointer " >{course && course.length > 0 && course[currentPlaylistIndex]?.title}
                 </h5>
                 <span className='text-xl mr-12'>{isCollapsed ? <FaChevronUp /> : <FaChevronDown />}</span>
@@ -29,6 +30,7 @@ const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick })
                 </ul>
             )}
         </div>
+       </div>
     );
 };
 

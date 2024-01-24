@@ -30,7 +30,7 @@ const UserSidebar = () => {
   };
 
   return (
-    <>
+    <div className="z-50">
       <button className="block lg:hidden px-2 py-1 " onClick={toggleSidebar}>
         ☰
       </button>
@@ -302,7 +302,7 @@ const UserSidebar = () => {
           <div className="divider"></div>
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 
