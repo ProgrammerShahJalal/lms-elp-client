@@ -118,7 +118,14 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["subscription-histories"],
     }),
-
+    subscribeToCourseBundle: build.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}//buy-all-of-a-sub-category`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["subscription-histories"],
+    }),
 
     getAllCoursesBundles: build.query({
       query: (arg) => {
@@ -148,6 +155,7 @@ export const {
   useGetAllSubscriptionsQuery,
   useGetAllSubscriptionsHistoryQuery,
   useSubscribeToCourseMutation,
+  useSubscribeToCourseBundleMutation,
   useGetMyCourseSubscriptionsHistoryQuery,
-  useGetAllCoursesBundlesQuery
+  useGetAllCoursesBundlesQuery,
 } = courseApi;
