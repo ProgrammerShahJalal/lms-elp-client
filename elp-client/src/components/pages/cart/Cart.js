@@ -14,15 +14,16 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, removeOneBook,addToCart } from "@/redux/features/cart/cartSlice";
+import {
+  removeFromCart,
+  removeOneBook,
+  addToCart,
+} from "@/redux/features/cart/cartSlice";
 
 const Cart = () => {
-  const { data: cart } = useGetAllCartsByUserQuery();
-  const cartLength = cart?.carts;
-  // const [addToCart] = useAddToCartMutation();
   const { books, total } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-//  console.log(books)
+  //  console.log(books)
   // const [total, setTotal] = useState(0); // State to hold the total price
 
   // useEffect(() => {
@@ -169,7 +170,7 @@ const Cart = () => {
                       </div>
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                        <button
+                          <button
                             className="border px-2"
                             onClick={() => dispatch(removeOneBook(item))}
                             // onClick={() =>
@@ -182,7 +183,7 @@ const Cart = () => {
                             {" "}
                             -
                           </button>
-                          
+
                           <h5>{item?.quantity}</h5>
                           <button
                             className="border px-2"
@@ -200,13 +201,13 @@ const Cart = () => {
                       </div>
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <h5>{item?.price} TK</h5>
+                          <h5>{item?.discount_price} TK</h5>
                         </div>
                       </div>
 
                       <div>
                         <div className="flex items-center space-x-3 font-semibold">
-                          <h5>{item?.quantity * item?.price} TK</h5>
+                          <h5>{item?.quantity * item?.discount_price} TK</h5>
                         </div>
                       </div>
                     </>
@@ -252,8 +253,8 @@ const Cart = () => {
                   </span>
                 </Link>
               )}
-             
-                {/* <Link
+
+              {/* <Link
                   href="/checkout"
                   className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
                 >
@@ -262,7 +263,6 @@ const Cart = () => {
                     <FaArrowRightLong />
                   </span>
                 </Link> */}
-             
             </div>
           </div>
         </div>
