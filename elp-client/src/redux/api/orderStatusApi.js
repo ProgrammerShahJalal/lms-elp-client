@@ -30,7 +30,7 @@ export const orderStatusApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: `${ORDER_STATUS}/${data?.id}`,
         method: "PATCH",
-        data: data.body,
+        data: { status: data.body.status },
       }),
       invalidatesTags: ["order-status"],
     }),
