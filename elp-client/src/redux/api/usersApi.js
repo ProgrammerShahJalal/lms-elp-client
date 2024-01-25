@@ -62,23 +62,7 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ["users"],
     }),
 
-    // permissionCheck: build.query({
-    //   query: (user_id, permission) => {
-    //     return {
-    //       url: `${USERS_URL}/check-permission/${user_id}/${permission}`,
-    //       method: "GET",
-    //     };
-    //   },
-
-    //   providesTags: ["users"],
-    // }),
-    // permissionCheck: build.query({
-    //   query: (user_id, permission) => ({
-    //     url:`${USERS_URL}/check-permission/${user_id}/${permission}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["users"],
-    // }),
+   
     
     permissionCheck: build.query({
       query: ({ userId, permission }) => ({

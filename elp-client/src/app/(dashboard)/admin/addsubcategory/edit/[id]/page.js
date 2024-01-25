@@ -1,16 +1,24 @@
 'use client'
 
-import { useGetSingleCategoryQuery, useUpdateCategoryMutation } from "@/redux/api/categoryApi";
+
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetSingleSubCategoryQuery, useUpdateSubCategoryMutation } from "@/redux/api/subcategoryApi";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const EditCategory = ({id}) => {
+const UpdateSubCategoryPage = ({params}) => {
+    const {id} = params;
     const { register, handleSubmit, reset } = useForm();
-    const {data} = useGetSingleCategoryQuery(id);
+    const {data} = useGetSingleSubCategoryQuery(id);
     const router = useRouter();
+    const {
+        data: categories,
+        isLoading: isLoadingCategories,
+        isError: isErrorCategories,
+      } = useGetAllCategoriesQuery();
 
-    const [updateCategory] = useUpdateCategoryMutation()
+    const [updateSubCategory] = useUpdateSubCategoryMutation()
     // console.log(data)
 
     const onSubmit = async (data) => {
@@ -24,11 +32,11 @@ const EditCategory = ({id}) => {
       formData.append("data", result);
       
         try {
-          const res = await updateCategory({ id, body: formData});
+          const res = await updateSubCategory({ id, body: formData});
          
           if (res?.data?._id === id) {
-            toast.success("Category updated successfully");
-            router.push("/admin/addcategory");
+            toast.success(" Sub Category updated successfully");
+            router.push("/admin/addsubcategory");
           } else {
             toast.error("Something is wrong updating the category");
           }
@@ -49,7 +57,7 @@ const EditCategory = ({id}) => {
 
             <form onSubmit={handleSubmit(onSubmit)} defaultValues={defaultValues}>
         <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Category Name</label>
+          <label className="block text-sm font-bold mb-2">Sub Category Name</label>
           <input
             type="text"
             name="title"
@@ -58,8 +66,26 @@ const EditCategory = ({id}) => {
             className="w-full border border-gray-300 p-2 rounded-md"
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-sm font-bold mb-2">Category</label>
+          <select
+
+            {...register("category_id", { required: true })}
+
+            className="w-full border border-gray-300 p-2 rounded-md"
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            {categories?.categories?.map((category) => (
+              <option key={category?.id} value={category?._id}>
+                {category?.title}
+              </option>
+            ))}
+          </select>
+        </div>
      <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Category Icon</label>
+          <label className="block text-sm font-bold mb-2">Sub Category Icon</label>
           <input
             type="file"
             name="file"
@@ -80,4 +106,4 @@ const EditCategory = ({id}) => {
     );
 };
 
-export default EditCategory;
+export default UpdateSubCategoryPage;
