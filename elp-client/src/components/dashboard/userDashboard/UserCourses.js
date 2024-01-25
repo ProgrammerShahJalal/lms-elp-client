@@ -3,8 +3,6 @@ import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Timer from "@/components/pages/AllCourses/Timer";
 import { useGetMyCourseSubscriptionsHistoryQuery } from "@/redux/api/courseApi";
-
-import Image from "next/image";
 import Link from "next/link";
 
 ///subscription-histories//my-subscription-histories
@@ -46,36 +44,25 @@ const UserCourses = () => {
     content = courseSubs?.map((item) => (
       <div
         key={item?._id}
-        className="card card-compact w-72  shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer"
+        className="w-80 h-auto shadow-xl border rounded-lg border-lime-500"
       >
-        <figure>
-          <Image
+          <img
             src={item?.course_id?.banner}
             alt="course"
-            width={300}
-            height={100}
           />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title"> {item?.course_id?.title}</h2>
-          <p>
-            <progress
-              className="progress progress-primary w-56"
-              value="10"
-              max="100"
-            >
-              {" "}
-            </progress>{" "}
-            0%
-          </p>
+       
+        <div className="card-body text-center">
+          <h2 className="font-bold text-lg"> {item?.course_id?.title}</h2>
+          
 
           <Timer expireDate={item?.expire_date} />
 
           <hr></hr>
+          
           <div className="card-actions justify-center">
             <Link
               href={`/user/mycourses/details/${item?.course_id?._id}`}
-              className="text-lg text-yellowPrimary cursor-pointer"
+              className="text-lg text-yellowPrimary hover:text-green-500 cursor-pointer"
             >
               {" "}
               কোর্সটি শুরু করুন
@@ -87,11 +74,12 @@ const UserCourses = () => {
   }
 
   return (
-    <div className="">
-      <div className="grid lg:grid-cols-2 gap-4">{content}</div>
-
-      {/* <h6 className="text-2xl font-bold my-20">Quiz Questions</h6> */}
+    <div className="flex items-center justify-center">
+    <div className="grid md:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-10">
+      {content}
     </div>
+  </div>
+  
   );
 };
 
