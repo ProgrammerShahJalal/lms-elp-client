@@ -205,9 +205,12 @@ const Navbar = () => {
               যোগাযোগ
             </Link>
 
-            <li className="relative group">
-           <Header1/>
-          </li>
+            <Link 
+            href="/routines"
+            className="block dark:text-black hover:text-bluePrimary font-bold"
+            >
+              ক্লাস রুটিন
+          </Link>
 
             {userLoggedIn && (
               <Link

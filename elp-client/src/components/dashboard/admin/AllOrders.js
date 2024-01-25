@@ -1,118 +1,85 @@
-"use client";
-
+'use client'
 import { useGetAllOrdersQuery } from "@/redux/api/ordersApi";
 import AllOrdersDetials from "./AllOrdersDetials";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useEffect, useState } from "react";
-import { useGetAllOrderStatusQuery } from "@/redux/api/orderStatusApi";
+import { useDebounced } from "@/redux/hooks";
 
 const AllOrders = () => {
-  const [filterValue, setFilterValue] = useState("");
   const [sortedOrder, setSortedOrder] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortField, setSortField] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOrders, setFilteredOrders] = useState([]);
 
   const { data, isLoading, isError } = useGetAllOrdersQuery();
   const ordersData = data?.orders?.data;
-  
-
- 
-
 
   useEffect(() => {
     if (ordersData) {
-      const sortedOrders = [...ordersData].sort((a, b) => {
-        if (sortField === "name") {
-          const nameA = a.user_id?.name?.toUpperCase() || ""; // Added null check
-          const nameB = b.user_id?.name?.toUpperCase() || ""; // Added null check
+      const filteredAndSortedOrders = ordersData
+        .filter((order) =>
+          order?.user_id?.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .sort((a, b) => {
+          if (sortField === "name") {
+            const nameA = a.user_id?.name?.toUpperCase() || "";
+            const nameB = b.user_id?.name?.toUpperCase() || "";
+            return sortOrder === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+          } else if (sortField === "createdAt") {
+            const timeA = new Date(a.createdAt).getTime();
+            const timeB = new Date(b.createdAt).getTime();
+            return sortOrder === "asc" ? timeA - timeB : timeB - timeA;
+          }
+          return 0;
+        });
 
-          return sortOrder === "asc"
-            ? nameA.localeCompare(nameB)
-            : nameB.localeCompare(nameA);
-        } else if (sortField === "createdAt") {
-          const timeA = new Date(a.createdAt).getTime();
-          const timeB = new Date(b.createdAt).getTime();
-
-          return sortOrder === "asc" ? timeA - timeB : timeB - timeA;
-        }
-
-        return 0;
-      });
-
-      setSortedOrder(sortedOrders);
+      setSortedOrder(filteredAndSortedOrders);
+      setFilteredOrders(filteredAndSortedOrders);
     }
-  }, [ordersData, sortOrder, sortField]);
+  }, [ordersData, sortOrder, sortField, searchTerm]);
+
   const handleSortClick = (field) => {
     setSortField(field);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
+  const debouncedTerm = useDebounced({
+    searchQuery:searchTerm,
+    delay:600
+  })
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
   useEffect(() => {
-    if (ordersData) {
-      const sortedOrders = [...ordersData].sort((a, b) => {
-        const nameA = a.user_id?.name.toUpperCase();
-        const nameB = b.user_id?.name.toUpperCase();
-
-        if (nameA < nameB) {
-          return -1;
-        }
-
-        if (nameA > nameB) {
-          return 1;
-        }
-
-        return 0;
-      });
-
-      setSortedOrder(sortedOrders);
-    }
-  }, [ordersData]);
-
-  const filteredOrders = ordersData?.filter((order) =>
-    order?.user_id?.name.toLowerCase().includes(filterValue.toLowerCase())
-  );
-
-  const uniqueUserNames = [
-    ...new Set(ordersData?.map((item) => item?.user_id?.name)),
-  ];
-
+    // Update the search term after the debounced delay
+    setSearchTerm(debouncedTerm);
+  }, [debouncedTerm]);
   let content = null;
 
   if (isLoading) {
+    content = <InitialLoader />;
+  } else if (!isError && sortedOrder.length === 0) {
     content = (
-      <>
-        <InitialLoader />
-      </>
+      <div className="flex justify-center items-center font-bold bg-green-400 text-white py-3 rounded text-lg">
+        <h5>{searchTerm ? 'No matching orders found' : 'All Orders table is Empty Now'}</h5>
+      </div>
     );
-  }
-
-  if (!isLoading && !isError) {
-    content = (
-      <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 my-5 px-3 rounded text-lg">
-        <h5>There is no order now yet</h5>
-      </tr>
-    );
-  }
-
-  if (!isLoading && !isError && sortedOrder?.length === 0) {
-    content = (
-      <>
-        {" "}
-        <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-          <h5>All Orders table is Empty Now</h5>
-        </div>
-      </>
-    );
-  }
-
-  if (!isLoading && !isError && sortedOrder?.length > 0) {
-    content = sortedOrder?.map((item) => (
-      <AllOrdersDetials key={item?.id} item={item}   />
+  } else if (!isError && sortedOrder.length > 0) {
+    content = sortedOrder.map((item) => (
+      <AllOrdersDetials key={item?.id} item={item} />
     ));
   }
 
   return (
     <div>
+      <input
+        type="text"
+        className="border px-5 py-2 outline-none rounded"
+        placeholder="Search Order using Name"
+        onChange={handleSearchChange}
+      />
+
       <div className="flex mb-5"></div>
 
       <div className="border">
@@ -121,22 +88,14 @@ const AllOrders = () => {
             <thead>
               <tr className="">
                 <th>
-                  {" "}
-                  <button
-                    onClick={() => handleSortClick("name")}
-                    className="btn"
-                  >
+                  <button onClick={() => handleSortClick("name")} className="btn">
                     নাম
                   </button>
                 </th>
                 <th>অর্ডার কৃত বইসমুহ </th>
                 <th> সর্বমোট মূল্য</th>
                 <th>
-                  {" "}
-                  <button
-                    onClick={() => handleSortClick("createdAt")}
-                    className="btn"
-                  >
+                  <button onClick={() => handleSortClick("createdAt")} className="btn">
                     কেনার তারিখ
                   </button>
                 </th>
@@ -154,3 +113,4 @@ const AllOrders = () => {
 };
 
 export default AllOrders;
+
