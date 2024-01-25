@@ -53,38 +53,33 @@ const UpdateSubCategoryPage = ({params}) => {
 
     return (
         <div>
-            
-
 
             <form onSubmit={handleSubmit(onSubmit)} defaultValues={defaultValues}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Sub Category Name</label>
-          <input
+         {data?.title &&  <input
             type="text"
             name="title"
             {...register("title")}
             defaultValue={data?.title}
             className="w-full border border-gray-300 p-2 rounded-md"
-          />
+          />}
         </div>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category</label>
           <select
 
-            {...register("category_id", { required: true })}
+            {...register("category_id")}
 
             className="w-full border border-gray-300 p-2 rounded-md"
           >
-            <option value="" disabled>
-              Select a category
-            </option>
             {categories?.categories?.map((category) => (
               <option key={category?.id} value={category?._id} >
                 {category?.title}
               </option>
             ))}
           </select>
-          {/* selected={category?._id === data?.categoryId} */}
+          
         </div>
      <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Sub Category Icon</label>

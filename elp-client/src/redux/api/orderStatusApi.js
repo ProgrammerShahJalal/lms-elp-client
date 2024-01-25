@@ -34,14 +34,7 @@ export const orderStatusApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["order-status"],
     }),
-    // orderStatusChange: build.mutation({
-    //   query: ({ id, status }) => ({
-    //     url: `${ORDER_STATUS}/${id}`,
-    //     method: "PATCH",
-    //     body: { status },
-    //   }),
-    //   invalidatesTags: ["order-status"],
-    // }),
+    
    
 
    
