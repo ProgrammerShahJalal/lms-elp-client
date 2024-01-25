@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const UpdateCoursePlaylistEditPage = ({ params }) => {
   const { id } = params;
   const [title, setTitle] = useState("");
-  const [playListLink, setPlayListLink] = useState("");
+  const [playList_link, setPlayList_link] = useState("");
 
   const { data: singleCoursePLaylist } = useGetSingleCoursePlaylistQuery(id);
   const [updateCoursePlaylist] = useUpdateCoursePlaylistMutation();
@@ -30,31 +30,44 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
   });
   const allCourse = courses?.courses?.data;
 
-  useEffect(() => {
+//   useEffect(() => {
+//     setTitle(singleCoursePLaylist?.title);
+//     setPlayList_link(singleCoursePLaylist?.playlist_link);
+//   }, [singleCoursePLaylist]);
+useEffect(() => {
     setTitle(singleCoursePLaylist?.title);
-    setPlayListLink(singleCoursePLaylist?.playlist_link) ;
- 
+    setPlayList_link(singleCoursePLaylist?.playlist_link);
+
+    // Set default values for category, subcategory, and course
+    if (singleCoursePLaylist?.category_id) {
+      setSelectedCategory(singleCoursePLaylist.category_id);
+    }
+    if (singleCoursePLaylist?.sub_category_id) {
+      setSelectedSubcategory(singleCoursePLaylist.sub_category_id);
+    }
+    if (singleCoursePLaylist?.course_id) {
+      setSelectedCourse(singleCoursePLaylist.course_id);
+    }
   }, [singleCoursePLaylist]);
 
   const onHandleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-    
-      //   const res = await updateCoursePlaylist({
-      //     id,
-      //    title,
-
-      //   });
-      //    console.log(res, 'afetr api')
-      //   if (res) {
-      //     toast.success("Profile updated successfully");
-      //     // router.push("/profile");
-      //   } else {
-      //     toast.error("Something is wrong to update user");
-      //   }
+      const res = await updateCoursePlaylist({
+        id,
+        title,
+        playList_link,
+      });
+      console.log(res, "afetr api");
+      if (res) {
+        toast.success("Profile updated successfully");
+        // router.push("/profile");
+      } else {
+        toast.error("Something is wrong to update user");
+      }
     } catch (err) {
-      //   toast.error(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -76,8 +89,7 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
         </div>
 
 
-{/* Category selection field */}
-<div className="mb-4">
+        <div className="mb-4">
           <label
             htmlFor="categories"
             className="block text-sm font-medium text-gray-600"
@@ -89,8 +101,9 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
             name="categories"
             className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             onChange={(e) => setSelectedCategory(e.target.value)}
+            value={selectedCategory || ""}
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Select a category
             </option>
             {categories &&
@@ -116,8 +129,9 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
             className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
             disabled={!selectedCategory}
             onChange={(e) => setSelectedSubcategory(e.target.value)}
+            value={selectedSubcategory || ""}
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Select a sub category
             </option>
             {!!subCategories &&
@@ -141,9 +155,10 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
             name="courses"
             disabled={!selectedSubcategory}
             onChange={(e) => setSelectedCourse(e.target.value)}
+            value={selectedCourse || ""}
             className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Select a course
             </option>
             {allCourse?.length === 0 ? (
@@ -159,6 +174,11 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
             )}
           </select>
         </div>
+       
+
+
+
+
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
@@ -168,10 +188,8 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
             type="text"
             required
             name="playlist_link"
-            value={playListLink}
-            onChange={(e) =>
-                setPlayListLink( e.target.value)
-            }
+            value={playList_link}
+            onChange={(e) => setPlayList_link(e.target.value)}
             className="mt-1 p-2 w-96  border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
           />
         </div>
@@ -181,7 +199,7 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
         <input
           type="submit"
           value="Update Course Playlist"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700 cursor-pointer "
         />
       </form>
     </div>
