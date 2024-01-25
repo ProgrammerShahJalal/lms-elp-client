@@ -13,7 +13,7 @@ export const baseApi = createApi({
     "shipping-addresses",
     "courses",
     "books",
-    "course-playlists",
+    "course-playlists-all",
     "quiz-questions",
     "categories",
     "sub-categories",

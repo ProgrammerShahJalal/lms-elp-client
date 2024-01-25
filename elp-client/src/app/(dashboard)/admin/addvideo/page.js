@@ -8,6 +8,7 @@ import {
   useDeleteVideoPlaylistMutation,
   useGetAllPlaylistQuery,
 } from "@/redux/api/videoApi";
+import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -15,7 +16,8 @@ import Swal from "sweetalert2";
 const AddVideo = () => {
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
   const { data } = useGetAllPlaylistQuery();
-  const course = data?.courses;
+  const coursePLaylists = data?.playlists;
+  console.log(coursePLaylists)
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -46,9 +48,9 @@ const AddVideo = () => {
         sub_category_id: selectedSubcategory,
         course_id: selectedCourse,
       };
-      console.log(formattedData, "first");
+      
       const res = await addPlaylistVideo(formattedData);
-      console.log(res, "after api calling");
+     
       if (res) {
         toast.success("video playlist added successfully");
       }
@@ -233,11 +235,12 @@ const AddVideo = () => {
               <th className="py-2 px-4 border-b">Playlist Title</th>
               <th className="py-2 px-4 border-b">Course Title</th>
               <th className="py-2 px-4 border-b">Playlist Link</th>
-              <th className="py-2 px-4 border-b">Action</th>
+              <th className="py-2 px-4 border-b">Update</th>
+              <th className="py-2 px-4 border-b">Delete</th>
             </tr>
           </thead>
           <tbody>
-            {course?.map((playlist) => (
+            {coursePLaylists?.map((playlist) => (
               <tr key={playlist._id} className="">
                 <td className="py-2 px-4 border-b">{playlist?.title}</td>
                 <td className="py-2 px-4 border-b">
@@ -253,6 +256,11 @@ const AddVideo = () => {
                     {playlist.playlist_link}
                   </a>
                 </td>
+                <td className="py-2 px-4 border-b md:table-cell">
+                      <Link  href={`/admin/addvideo/edit/${playlist?.id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">
+                        Update
+                      </Link>
+                    </td>
                 <td>
                   <button
                     className="bg-red-500 text-white py-1 px-2 rounded-md"
