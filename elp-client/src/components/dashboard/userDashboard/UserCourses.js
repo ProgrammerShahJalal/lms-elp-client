@@ -12,6 +12,7 @@ const UserCourses = () => {
     useGetMyCourseSubscriptionsHistoryQuery();
 
   const courseSubs = data?.courseSubscription;
+  console.log("sourse subs", courseSubs);
 
   let content = null;
 
@@ -46,19 +47,36 @@ const UserCourses = () => {
         key={item?._id}
         className="w-80 h-auto shadow-xl border rounded-lg border-lime-500"
       >
-          <img
-            src={item?.course_id?.banner}
-            alt="course"
-          />
-       
+
+        <div className="flex justify-between items-center">
+        <p className="p-2 m-2 bg-purple-200 rounded-lg">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+        <p className="p-2 m-2 bg-orange-200 rounded-lg">{item?.course_id?.sub_category_id?.title}</p>
+        </div>
+
+        <img src={item?.course_id?.banner} alt="course" />
+
         <div className="card-body text-center">
           <h2 className="font-bold text-lg"> {item?.course_id?.title}</h2>
-          
 
           <Timer expireDate={item?.expire_date} />
 
+          {item?.course_id?.routine ? (
+            <a
+              href={item?.course_id?.routine}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              <button className="bg-blue-500 hover:bg-orange-400 text-white px-4 py-2 rounded-full">
+                রুটিন দেখুন
+              </button>
+            </a>
+          ) : (
+            <p className="text-orange-600">রুটিন শীঘ্রই আসছে</p>
+          )}
+
           <hr></hr>
-          
+
           <div className="card-actions justify-center">
             <Link
               href={`/user/mycourses/details/${item?.course_id?._id}`}
@@ -75,11 +93,10 @@ const UserCourses = () => {
 
   return (
     <div className="flex items-center justify-center">
-    <div className="grid md:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-10">
-      {content}
+      <div className="grid md:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-10">
+        {content}
+      </div>
     </div>
-  </div>
-  
   );
 };
 
