@@ -24,13 +24,10 @@ const UpdateSubCategoryPage = ({params}) => {
     const onSubmit = async (data) => {
       const content = { ...data };
       const file = content["file"];
-      
       const result = JSON.stringify(content);
-     
       const formData = new FormData();
       formData.append("file", file[0]);
       formData.append("data", result);
-      
         try {
           const res = await updateSubCategory({ id, body: formData});
          

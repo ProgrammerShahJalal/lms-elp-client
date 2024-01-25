@@ -30,10 +30,7 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
   });
   const allCourse = courses?.courses?.data;
 
-//   useEffect(() => {
-//     setTitle(singleCoursePLaylist?.title);
-//     setPlayList_link(singleCoursePLaylist?.playlist_link);
-//   }, [singleCoursePLaylist]);
+
 useEffect(() => {
     setTitle(singleCoursePLaylist?.title);
     setPlayList_link(singleCoursePLaylist?.playlist_link);

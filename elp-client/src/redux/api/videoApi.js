@@ -55,7 +55,7 @@ export const makeQuizApi = baseApi.injectEndpoints({
         updateCoursePlaylist: build.mutation({
       
             query: (data) => ({
-              url: `${COURSE_PLAYLIST}/${data.id}`,
+              url: `${COURSE_PLAYLIST}/${data?.id}`,
            
               method: 'PATCH',
             
