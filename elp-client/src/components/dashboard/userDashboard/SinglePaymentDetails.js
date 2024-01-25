@@ -1,33 +1,70 @@
+import { useGetSingleExamQuery } from '@/redux/api/examsApi';
+import { useSubmitExamUserMutation } from '@/redux/api/resultApi';
+import { getUserInfo } from '@/services/auth.service';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const SinglePaymentDetails = ({ item }) => {
+  console.log(item);
+  const examId = item?.exam_id?._id;
   const dateObject = new Date(item?.createdAt);
   const localData = dateObject.toLocaleDateString();
+  const { userId } = getUserInfo();
+  const { data: examData } = useGetSingleExamQuery(examId);
+  const [submitExamUser] = useSubmitExamUserMutation()
+  const [modalOpen, setModalOpen] = useState(false);
 
- 
-    return (
-        <tr  className="hover">
-        <th>{item?.exam_id?.course_id?.title} </th>
-        <td>{item?.exam_id?.title}</td>
-        <td>{item?.exam_id?.fee}</td>
-        <td>{item?.exam_id?.exam_type === "0" ? 'Quiz' : 'Questions'}</td>
-        <td>{localData}</td>
-        <td>{item?.trx_id}</td>
-        <td>paid</td>
-        <td>
-        <Link href={`/user/myexams/details/${item?.exam_id?.id}`}className="text-red-500 font-bold">  {item?.exam_id?.exam_type === "1" ? 'Questions' : 'পরিক্ষা দিন'}</Link>
-        </td>
-      </tr>
-    );
+  const handleSubmitPdf = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const answer = form.answer.value;
+
+    try {
+      const payload = {
+        user_id: userId,
+        exam_id: examId,
+        exam_type: examData?.exam_type,
+        answer: answer,
+        question_id: examData?.id,
+        question_mark: [],
+        total_marks: examData?.total_marks,
+        total_correct_answer: 0,
+        total_wrong_answer: 0,
+        isApproved: false
+      };
+      const { data: submissionData } = await submitExamUser(payload);
+      if (submissionData) {
+        toast.success("Congratulation, You have successfully submit your ans")
+      }
+      else {
+        toast.error("Your submission not successfully submit")
+      }
+
+      // Handle the submission response as needed
+      console.log('Submission successful:', submissionData);
+    } catch (error) {
+      console.error('Error submitting exam:', error);
+    }
+  };
+  // return (
+  //     <tr  className="hover">
+  //     <th>{item?.exam_id?.course_id?.title} </th>
+  //     <td>{item?.exam_id?.title}</td>
+  //     <td>{item?.exam_id?.fee}</td>
+  //     <td>{item?.exam_id?.exam_type === "0" ? 'Quiz' : 'Questions'}</td>
+  //     <td>{localData}</td>
+  //     <td>{item?.trx_id}</td>
+  //     <td>paid</td>
+  //     <td>
+  //     <Link href={`/user/myexams/details/${item?.exam_id?.id}`}className="text-red-500 font-bold">  {item?.exam_id?.exam_type === "1" ? 'Questions' : 'পরিক্ষা দিন'}</Link>
+  //     </td>
+  //   </tr>
+  // );
 
   const isQuiz = item?.exam_id?.exam_type === "0";
-  const handleSubmitPdf = async (e) => {
-    e.preventDefault()
-    const form = e.target;
-    const answerForm = form.answer.value;
-    console.log(answerForm);
-  }
+
   return (
     <tr className="hover">
       <th>{item?.exam_id?.course_id?.title} </th>
@@ -43,13 +80,15 @@ const SinglePaymentDetails = ({ item }) => {
             পরিক্ষা দিন
           </Link>
         ) : (
-
-          <button onClick={() => document.getElementById('my_modal_3').showModal()} className="your-button-styles">Your Button Text</button>
+          <button onClick={() => setModalOpen(true)} className="your-button-styles">
+            Submit Your Pdf
+          </button>
         )}
       </td>
-      <dialog id="my_modal_3" className="modal">
+      <dialog open={modalOpen} id={`my_modal_${examId}`} className="modal">
         <div className="modal-box">
           <form method="dialog" onSubmit={handleSubmitPdf}>
+            <h1 className='font-bold text-red-500'>Before Submit, Please check pdf link is public, and carefully submit this</h1>
             <div>
               <label
                 htmlFor="answer link"
@@ -71,7 +110,7 @@ const SinglePaymentDetails = ({ item }) => {
               Submit Your Answer
             </button>
           </form>
-          <button onClick={() => document.getElementById('my_modal_3').close()} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          <button onClick={() => { setModalOpen(false) }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </div>
       </dialog>
     </tr>

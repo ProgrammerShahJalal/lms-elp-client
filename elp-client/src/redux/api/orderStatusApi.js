@@ -23,11 +23,11 @@ export const orderStatusApi = baseApi.injectEndpoints({
       providesTags: ["order-status"],
     }),
 
-    
 
-   
+
+
     orderStatusChange: build.mutation({
-      query: (id,payload) => ({
+      query: (id, payload) => ({
         url: `${ORDER_STATUS}/${id}`,
         method: "PATCH",
         body: payload,
@@ -42,9 +42,9 @@ export const orderStatusApi = baseApi.injectEndpoints({
     //   }),
     //   invalidatesTags: ["order-status"],
     // }),
-   
 
-   
+
+
   }),
 });
 

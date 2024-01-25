@@ -9,23 +9,23 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
   const { data: statusData } = useGetAllOrderStatusQuery({
     order_details_id: orderDetailsId,
   });
-  
+
   const allOrdersStatus = statusData?.allStatus?.data;
   // console.log(allOrdersStatus);
 
   const [orderStatusChange] = useOrderStatusChangeMutation();
 
-  
+
   const handleStatusChange = async () => {
-  const payload = {status: selectedStatus}
+    const payload = { status: selectedStatus }
     try {
       const response = await orderStatusChange({
-        id:allOrdersStatus[0]?._id,
+        id: allOrdersStatus[0]?._id,
         payload
       });
-      
+
       console.log("Backend Response:", response);
-  
+
       toast.success("Order Status Updated Successfully");
       // Assuming the mutation is successful, update the local state
       setOrderStatus(selectedStatus);
