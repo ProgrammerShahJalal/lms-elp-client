@@ -59,7 +59,7 @@ export const makeQuizApi = baseApi.injectEndpoints({
            
               method: 'PATCH',
             
-              data: data.body,
+              data: data,
             }),
             invalidatesTags: ["course-playlists-all"],
           }),

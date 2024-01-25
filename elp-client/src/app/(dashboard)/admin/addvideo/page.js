@@ -17,7 +17,7 @@ const AddVideo = () => {
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
   const { data } = useGetAllPlaylistQuery();
   const coursePLaylists = data?.playlists;
-  console.log(coursePLaylists)
+ 
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
