@@ -13,13 +13,13 @@ const AllOrdersDetials = ({item}) => {
     return (
         <tr className="hover border">
           <th>{item?.user_id?.name}</th>
-      <th>
+      <th className='border'>
         <AllOrderBookDetails key={item?.id} bookOrder={item} />{" "} 
       </th>
-      <td>৳ {" "}{item?.total_price}</td>
-      <td>{humanReadableFormatLocal}</td>
-      <td>{item?.trx_id}</td>
-      <td><SingleOrderStatus  orderDetailsId={item?.id}/></td>
+      <td className='border'>৳ {" "}{item?.total_price}</td>
+      <td className='border'>{humanReadableFormatLocal}</td>
+      <td className='border'>{item?.trx_id}</td>
+      <td className='border'><SingleOrderStatus  orderDetailsId={item?.id}/></td>
       {/* <td>paid</td> */}
     </tr>
     );

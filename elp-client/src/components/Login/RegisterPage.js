@@ -92,11 +92,15 @@ const RegisterPage = () => {
                 {...register("contact_no", {
                   required: "মোবাইল নাম্বার প্রয়োজন",
                   pattern: {
-                    value: /^[0-9]{11}$/, // Regular expression for exactly 11 digits
-                    message: "মোবাইল নাম্বারটি ১১ টি সংখ্যা হতে হবে",
+                    value: /^\d{11}$/,
+                    message: "মোবাইল নাম্বারটি  ১১ টি সংখ্যা হতে হবে এবং এমন হবে 01742561023",
                   },
+                  // pattern: {
+                  //   value: /^[0-9]{11}$/, // Regular expression for exactly 11 digits
+                  //   message: "মোবাইল নাম্বারটি ১১ টি সংখ্যা হতে হবে",
+                  // },
                 })}
-                placeholder="আপনার মোবাইল নাম্বার"
+                placeholder=" 01742561023 আপনার মোবাইল নাম্বার "
                 className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200"
               />
              

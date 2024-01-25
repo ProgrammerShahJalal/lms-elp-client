@@ -15,16 +15,16 @@ const AdminPermission = ({userId, permission }) => {
     
 
     const handlesPermission = async() => {
-        console.log("click")
+        // console.log("click")
      if(hasPermission){
            const result = await removePermission({user_id:userId, permission });
-           console.log(result, 'removw permis')
+          //  console.log(result, 'removw permis')
            toast.success("permission remove")
 
      }
      else{
         const  result = await givePermission({user_id:userId, permission });
-        console.log(result, 'give permis')
+        // console.log(result, 'give permis')
         toast.success("permission given")
      }
      refetch()

@@ -36,6 +36,18 @@ export const subcategoryApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["sub-categories"],
         }),
+
+        updateSubCategory: build.mutation({
+      
+            query: (data) => ({
+              url: `${SUBCATEGORIES_URL}/${data.id}`,
+              // contentType: "multipart/form-data",
+              method: 'PATCH',
+              contentType: "multipart/form-data",
+              data: data.body,
+            }),
+            invalidatesTags: ["sub-categories"],
+          }),
         deleteSubCategory: build.mutation({
             query: (categoryId) => ({
                 url: `${SUBCATEGORIES_URL}/${categoryId}`,
@@ -46,4 +58,4 @@ export const subcategoryApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetAllSubcategoriesQuery, useAddSubcategoryMutation,useGetSingleSubCategoryQuery ,useDeleteSubCategoryMutation } = subcategoryApi;
+export const { useGetAllSubcategoriesQuery, useAddSubcategoryMutation,useGetSingleSubCategoryQuery ,useUpdateSubCategoryMutation,useDeleteSubCategoryMutation } = subcategoryApi;
