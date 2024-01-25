@@ -15,6 +15,7 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
 
   const [orderStatusChange] = useOrderStatusChangeMutation();
 
+<<<<<<< HEAD
 
   const handleStatusChange = async () => {
     const payload = { status: selectedStatus }
@@ -29,12 +30,34 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
       toast.success("Order Status Updated Successfully");
       // Assuming the mutation is successful, update the local state
       setOrderStatus(selectedStatus);
+=======
+  const handleStatusChange = async () => {
+    // const payload = { status: ["Pending Approval", "Approved", "On The Way", "Delivered"] };
+    // orderStatusChange({ id: "yourOrderId", body: payload });
+    try {
+      const response = await orderStatusChange({
+        id: allOrdersStatus[0]?._id,
+        body: { status: selectedStatus },
+      });
+  
+      // console.log("Backend Response:", response);
+  
+      if (response.data) {
+        toast.success("Order Status Updated Successfully");
+        // console.log("Order Status Before Update:", orderStatus);
+        setOrderStatus(selectedStatus);
+        // console.log("Order Status After Update:", selectedStatus);
+      } else {
+        toast.error("Failed to update order status");
+      }
+>>>>>>> 28c603867cc6233619ab49afb2b0c1190cba672e
     } catch (error) {
-      console.error("Error updating order status:", error);
+      // console.error("Error updating order status:", error);
       toast.error("Error updating order status");
     }
   };
-
+  
+  
   useEffect(() => {
     if (allOrdersStatus?.length) {
       setOrderStatus(allOrdersStatus[0]?.status);

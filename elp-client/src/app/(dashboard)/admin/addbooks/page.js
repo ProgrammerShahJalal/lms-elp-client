@@ -19,8 +19,10 @@ const AddBooks = () => {
   const [addBooks] = useAddBooksMutation();
   // const { data: courses, isLoading, isError } = useGetAllCoursesQuery();
   // const courseData = courses?.courses?.data;
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [repetitions, setRepetitions] = useState(1);
+  const [fields, setFields] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
+  const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 1 }, () => ''));
+  const [selectedSubcategories, setSelectedSubcategories] = useState(Array.from({ length: 1 }, () => ''));
   const {
     data: categories,
     isLoading: isLoadingCategories,
@@ -32,35 +34,49 @@ const AddBooks = () => {
     isLoading: isLoadingSubcategories,
     isError: isErrorSubcategories,
   } = useGetAllSubcategoriesQuery({
-    category_id: selectedCategory,
+    category_id: selectedCategories,
   });
   const allSubcategory = subcategories?.subcategories;
   const { data } = useGetAllCoursesQuery({
-    sub_category_id: selectedSubcategory,
+    sub_category_id: selectedSubcategories,
   });
   const allCourse = data?.courses?.data;
-  // console.log(variable);
+  const [repetitionData, setRepetitionData] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
 
+  const addRepetition = () => {
+    setRepetitions(repetitions + 1);
+    const newRepetition = { category_id: '', subcategory_id: '', course_ids: [''] };
+    setRepetitionData([...repetitionData, newRepetition]);
+  };
+
+  const removeRepetition = (index) => {
+    setRepetitions(repetitions - 1);
+    const updatedRepetitionData = [...repetitionData];
+    updatedRepetitionData.splice(index, 1);
+    setRepetitionData(updatedRepetitionData);
+  };
   const { register, handleSubmit, reset, watch, setValue } = useForm();
-
   const onSubmit = async (data) => {
     // console.log(data);
     data.price = Number(data?.price);
     data.discount_price = Number(data?.discount_price);
 
     const content = { ...data };
+    console.log(data);
 
     const file = content["file"];
     // console.log(file)
     // delete content['file'];
     const result = JSON.stringify(content);
     // console.log(result, "json");
+    const course_id = data?.categories?.map((category) => category.course_id) || [];
+    console.log(course_id);
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
     // console.log(formData, 'formdaata')
     try {
-      const resultData = await addBooks(formData);
+      const resultData = await addBooks(formData, course_id);
 
       if (resultData) {
         toast.success("Book created successfully");
@@ -70,6 +86,33 @@ const AddBooks = () => {
       toast.error(error.message);
     }
   };
+  // const onSubmit = async (data) => {
+  //   // console.log(data);
+  //   data.price = Number(data?.price);
+  //   data.discount_price = Number(data?.discount_price);
+
+  //   const content = { ...data };
+
+  //   const file = content["file"];
+  //   // console.log(file)
+  //   // delete content['file'];
+  //   const result = JSON.stringify(content);
+  //   // console.log(result, "json");
+  //   const formData = new FormData();
+  //   formData.append("file", file[0]);
+  //   formData.append("data", result);
+  //   // console.log(formData, 'formdaata')
+  //   try {
+  //     const resultData = await addBooks(formData);
+
+  //     if (resultData) {
+  //       toast.success("Book created successfully");
+  //     }
+  //     // console.log(resultData, ' from add category async')
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   // book delete function
   const handleDelete = async (id) => {
@@ -245,104 +288,93 @@ const AddBooks = () => {
             </div>
           )}
 
-          {/* <div>
-            <label
-              htmlFor="format"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Format:
-            </label>
-            <select
-              id="format"
-              name="format"
-              {...register("format", { required: true })}
-              className="mt-1 p-2 border rounded-md w-full"
-            >
-              <option value="pdf">PDF</option>
-              <option value="hard copy">Hard Copy</option>
-            </select>
-          </div>
+          {repetitionData.map((repetition, repetitionIndex) => (
+            <div key={repetitionIndex}>
+              {fields.map((field, index) => (
+                <div key={index} className="mb-4">
+                  <div className="mb-4">
+                    <label className="block text-sm font-bold mb-2">Category</label>
+                    <select
+                      {...register(`categories.${repetitionIndex}.category_id`)}
+                      onChange={(e) => {
+                        const updatedCategories = [...selectedCategories];
+                        updatedCategories[repetitionIndex] = e.target.value;
+                        setSelectedCategories(updatedCategories);
 
-          <div>
-            <label
-              htmlFor="pdf_link"
-              className="block text-sm font-medium text-gray-600"
-            >
-              PDF Link:
-            </label>
-            <input
-              type="text"
-              id="pdf_link"
-              name="pdf_link"
-              {...register("pdf_link", { required: true })}
-              className="mt-1 p-2 border rounded-md w-full"
-            />
-          </div> */}
+                        // Reset subcategory and course when the category changes
+                        setValue(`categories.${repetitionIndex}.sub_category_id`, '');
+                        setValue(`categories.${repetitionIndex}.course_id`, '');
+                      }}
+                      value={selectedCategories[repetitionIndex]}
+                      className="w-full border border-gray-300 p-2 rounded-md"
+                    >
+                      <option value="" disabled>
+                        Select a category
+                      </option>
+                      {categories?.categories?.map((category) => (
+                        <option key={category?.id} value={category?.id}>
+                          {category?.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-bold mb-2">Sub Category</label>
+                    <select
+                      {...register(`categories.${repetitionIndex}.sub_category_id`)}
+                      disabled={!selectedCategories[repetitionIndex]}
+                      onChange={(e) => {
+                        const updatedSubcategories = [...selectedSubcategories];
+                        updatedSubcategories[repetitionIndex] = e.target.value;
+                        setSelectedSubcategories(updatedSubcategories);
 
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Category</label>
+                        // Reset course when the subcategory changes
+                        setValue(`categories.${repetitionIndex}.course_id`, '');
+                      }}
+                      value={selectedSubcategories[repetitionIndex]}
+                      className="w-full border border-gray-300 p-2 rounded-md"
+                    >
+                      <option value="" disabled>
+                        Select a subcategory
+                      </option>
+                      {allSubcategory?.map((subCategory) => (
+                        <option key={subCategory?.id} value={subCategory?.id}>
+                          {subCategory?.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-            <select
-              {...register("category_id")}
-              onChange={(e) => {
-                setSelectedCategory(e.target.value);
-                setValue("sub_category_id", "");
-              }}
-              value={selectedCategory}
-              className="w-full border border-gray-300 p-2 rounded-md"
-            >
-              <option value="" disabled>
-                Select a category
-              </option>
-              {categories?.categories?.map((category) => (
-                <option key={category?.id} value={category?.id}>
-                  {category?.title}
-                </option>
+                  <div className="">
+                    <label className="block text-sm font-bold mb-2">Course</label>
+                    <select
+                      disabled={!selectedSubcategories[repetitionIndex]}
+                      {...register(`categories.${repetitionIndex}.course_id`)}
+                      className="w-full border border-gray-300 p-2 rounded-md"
+                    >
+                      {allCourse?.length === 0 ? (
+                        <option value="" disabled>
+                          No courses available
+                        </option>
+                      ) : (
+                        allCourse?.map((course) => (
+                          <option key={course.id} value={course.id}>
+                            {course?.title}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                  </div>
+                  <button type="button" onClick={() => removeRepetition(index)} className="text-red-500 mt-2">
+                    Remove
+                  </button>
+                </div>
               ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Sub Category</label>
-            <select
-              {...register("sub_category_id")}
-              disabled={!selectedCategory}
-              onChange={(e) => {
-                setSelectedSubcategory(e.target.value);
-                setValue("course_id", ""); // Reset the selected course when the subcategory changes
-              }}
-              value={selectedSubcategory}
-              className="w-full border border-gray-300 p-2 rounded-md"
-            >
-              <option value="" disabled>
-                Select a category
-              </option>
-              {allSubcategory?.map((subCategory) => (
-                <option key={subCategory?.id} value={subCategory?.id}>
-                  {subCategory?.title}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="">
-            <label className="block text-sm font-bold mb-2">Course</label>
-            <select
-              disabled={!selectedSubcategory}
-              {...register("course_id")}
-              className="w-full border border-gray-300 p-2 rounded-md"
-            >
-              {allCourse?.length === 0 ? (
-                <option value="" disabled>
-                  No courses available
-                </option>
-              ) : (
-                allCourse?.map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course?.title}
-                  </option>
-                ))
-              )}
-            </select>
-          </div>
+            </div>
+          ))}
+          <button type="button" onClick={addRepetition} className="text-blue-500 mt-2">
+            Add More
+          </button>
 
           <div>
             <label
@@ -362,7 +394,7 @@ const AddBooks = () => {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md w-full"
           >
             Add Book
           </button>

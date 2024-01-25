@@ -1,11 +1,9 @@
 "use client";
-import { useGetAllCartsByUserQuery } from "@/redux/api/cartApi";
-import { useEffect, useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 const CheckoutCart = ({ shippingCharge }) => {
-  // const { data: cart } = useGetAllCartsByUserQuery();
-  // const cartLength = cart?.carts;
+  // redux
   const { books, total } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 

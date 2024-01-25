@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
@@ -7,13 +7,11 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
-import {  isLoggedIn } from "@/services/auth.service";
+import { isLoggedIn } from "@/services/auth.service";
 import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 
-
-const BookSectionCard = ({item,onOpenPDFModal }) => {
- 
+const BookSectionCard = ({ item, onOpenPDFModal }) => {
   const [showPDFModal, setShowPDFModal] = useState(false);
   const openPDFModal = () => {
     setShowPDFModal(true);
@@ -25,11 +23,9 @@ const BookSectionCard = ({item,onOpenPDFModal }) => {
   const dispatch = useDispatch();
 
   const handleAddBook = (item) => {
-    // console.log(item)
     dispatch(addToCart(item));
-    toast.success('Book added in your cart')
-    
-  }
+    toast.success("Book added in your cart");
+  };
   // const [addToCart] = useAddToCartMutation();
   // const userLoggedIn = isLoggedIn();
   //  const dispatch = useDispatch();
@@ -40,27 +36,27 @@ const BookSectionCard = ({item,onOpenPDFModal }) => {
   //   }
 
   //   const res = await addToCart({book_id: item?._id, quantity: 1 });
-  
- 
+
   //   if (res?.data?.quantity && res.data.quantity > 1) {
   //     toast.success('Book has already been added to your cart. Please check your cart.');
   //   } else {
   //     toast.success('Book added to your cart successfully.');
   //   }
-   
-    
+
   // }
 
   return (
     <>
-    
       <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
-      <div>
-          <button onClick={onOpenPDFModal} className="text-bluePrimary cursor-pointer">
+        <div>
+          <button
+            onClick={onOpenPDFModal}
+            className="text-bluePrimary cursor-pointer"
+          >
             বইটি একটু পড়ুন
           </button>
         </div>
-     
+
         <figure className="relative">
           <Image
             className="rounded w-full h-72"
@@ -69,49 +65,74 @@ const BookSectionCard = ({item,onOpenPDFModal }) => {
             width={400}
             height={100}
           />
-           {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+
+          {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
           <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p> */}
+
+           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p>
+
         </figure>
 
-        <div  className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
+        <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
           <h2 className="card-title  border px-4 py-2  bg-bluePrimary  ring-1 border-white absolute top-[220px] text-white text-[16px] border-b-0 rounded">
             {item?.title}
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
-              <Image src={avatar} width={40} height={50} alt="avatar" className="rounded-full" />
-              <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">{item?.writer}</span>
+              <Image
+                src={avatar}
+                width={40}
+                height={50}
+                alt="avatar"
+                className="rounded-full"
+              />
+              <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">
+                {item?.writer}
+              </span>
             </div>
             <div className="flex items-center">
               <PiNotebookBold />{" "}
-              <span className="pl-1 text-cyanPrimary font-semibold"> {item?.format}</span>
+              <span className="pl-1 text-cyanPrimary font-semibold">
+                {" "}
+                {item?.format}
+              </span>
             </div>
-            
           </div>
 
           <div className="flex justify-between items-center">
             <div>
-            <p className="py-2"  dangerouslySetInnerHTML={{
-              __html: item?.description?.substring(0, 30),
-            }}></p>
-          <Link className="text-bluePrimary pl-5"  href={`/books/details/${item?._id}`}>আর দেখুন</Link> 
+              <p
+                className="py-2"
+                dangerouslySetInnerHTML={{
+                  __html: item?.description?.substring(0, 30),
+                }}
+              ></p>
+              <Link
+                className="text-bluePrimary pl-5"
+                href={`/books/details/${item?._id}`}
+              >
+                আর দেখুন
+              </Link>
             </div>
             <div>
-           
-            {/* <p>বইটি পড়ুন  <iframe src="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" width="640" height="480" allow="autoplay"></iframe></p> */}
-           
+              {/* <p>বইটি পড়ুন  <iframe src="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/preview" width="640" height="480" allow="autoplay"></iframe></p> */}
             </div>
-
           </div>
-          
+
           <hr />
           <div className="flex justify-between items-center mt-3">
             <p className="text-sm font-semibold py-3">
               {" "}
-              কোর্সের মূল্যঃ <del className="text-gray-400  "> -{item?.discount_price} </del> <span className="font-bold pl-2">{item?.price}</span> Tk
+              কোর্সের মূল্যঃ{" "}
+              <del className="text-gray-400  "> -{item?.price} </del>{" "}
+              <span className="font-bold pl-2">{item?.discount_price}</span> Tk
             </p>
-            <button onClick={() => handleAddBook(item)}   className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary ">
-            ঝুড়িতে যোগ করুন
+            <button
+              onClick={() => handleAddBook(item)}
+              className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
+            >
+              ঝুড়িতে যোগ করুন
             </button>
           </div>
           {/* <div className=" card-actions justify-start ">
@@ -120,10 +141,7 @@ const BookSectionCard = ({item,onOpenPDFModal }) => {
             </button>
           </div> */}
         </div>
-       
       </div>
-
-     
     </>
   );
 };

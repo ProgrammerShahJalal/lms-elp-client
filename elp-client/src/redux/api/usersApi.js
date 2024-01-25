@@ -5,12 +5,31 @@ export const SHIPPING_ADDRESS_URL = "/shipping-addresses";
 export const usersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // all courses
+    // getAllUsers: build.query({
+    //   query: (arg) => {
+    //     return {
+    //       url: USERS_URL,
+    //       method: "GET",
+    //       params: arg,
+    //     };
+    //   },
+    //   transformResponse: (response, meta) => {
+    //     return {
+    //       data: response,
+    //       meta,
+    //     };
+    //   },
+    //   providesTags: ["users"],
+    // }),
     getAllUsers: build.query({
-      query: (arg) => {
+      query: ({ page, userPerPage }) => {
         return {
           url: USERS_URL,
           method: "GET",
-          params: arg,
+          params: {
+            page,
+            limit: userPerPage,
+          },
         };
       },
       transformResponse: (response, meta) => {
@@ -54,14 +73,40 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ["shipping-addresses"],
     }),
 
-
     deleteUser: build.mutation({
       query: (id) => ({
         url: `${USERS_URL}/${id}`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
-      invalidatesTags: ['users']
-    })
+      invalidatesTags: ["users"],
+    }),
+
+
+
+    permissionCheck: build.query({
+      query: ({ userId, permission }) => ({
+        url: `${USERS_URL}/check-permission/${userId}/${permission}`,
+        method: "GET",
+      }),
+      providesTags: ["users"],
+    }),
+    givePermission: build.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/give-permission`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+    removePermission: build.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/remove-permission`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+
   }),
 });
 
@@ -71,5 +116,8 @@ export const {
   useAddShippingAddressMutation,
   useGetMyShippingAddressQuery,
   useUpdateShippingAddressMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
+  usePermissionCheckQuery,
+  useGivePermissionMutation,
+  useRemovePermissionMutation
 } = usersApi;

@@ -92,29 +92,35 @@ const AddBooks = () => {
     //     }
     // };
     const onSubmit = async (data) => {
-        console.log(data, ' this is just data console log');
+        // console.log(data);
         data.price = Number(data?.price);
         data.discount_price = Number(data?.discount_price);
 
         const content = { ...data };
+        console.log(data);
+
         const file = content["file"];
-
-
-
+        // console.log(file)
+        // delete content['file'];
         const result = JSON.stringify(content);
+        // console.log(result, "json");
+        const course_id = data?.categories?.map((category) => category.course_id) || [];
+        console.log(course_id, 'this is course id');
         const formData = new FormData();
         formData.append("file", file[0]);
         formData.append("data", result);
-        console.log(formData);
-        // try {
-        //     const resultData = await addBooks(formData);
+        console.log(formData, 'this is form data');
+        // console.log(formData, 'formdaata')
+        try {
+            const resultData = await addBooks(formData, course_id);
 
-        //     if (resultData) {
-        //         toast.success("Book created successfully");
-        //     }
-        // } catch (error) {
-        //     toast.error(error.message);
-        // }
+            if (resultData) {
+                toast.success("Book created successfully");
+            }
+            // console.log(resultData, ' from add category async')
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
     return (

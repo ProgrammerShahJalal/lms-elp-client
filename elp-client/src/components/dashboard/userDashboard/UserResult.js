@@ -8,7 +8,7 @@ const UserResult = () => {
   if (isLoading) {
     return (
       <div>
-        <p>Loading.....</p>
+        <p>Loading...</p>
       </div>
     );
   }
