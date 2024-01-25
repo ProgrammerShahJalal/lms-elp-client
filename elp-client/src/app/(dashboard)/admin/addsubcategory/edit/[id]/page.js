@@ -47,6 +47,7 @@ const UpdateSubCategoryPage = ({params}) => {
 
   const defaultValues = {
     title: data?.title,
+    category_id: data?.categoryId,
     icon: data?.file?.name
   };
 
@@ -78,11 +79,12 @@ const UpdateSubCategoryPage = ({params}) => {
               Select a category
             </option>
             {categories?.categories?.map((category) => (
-              <option key={category?.id} value={category?._id}>
+              <option key={category?.id} value={category?._id} >
                 {category?.title}
               </option>
             ))}
           </select>
+          {/* selected={category?._id === data?.categoryId} */}
         </div>
      <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Sub Category Icon</label>
