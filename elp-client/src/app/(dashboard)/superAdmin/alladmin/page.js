@@ -5,6 +5,7 @@ import {
   useAdminPermissionMutation,
   useGetAllUsersQuery,
 } from "@/redux/api/usersApi";
+import { useState } from "react";
 
 export const adminPermissions = [
   "user",
@@ -22,6 +23,15 @@ const AllAdminPage = () => {
     role: "admin",
   });
   const adminUsers = data?.data?.data || [];
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredUsers = adminUsers.filter((user) =>
+  user?.contact_no?.includes(searchTerm)
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   if (isLoading) {
     return <p>Loading users...</p>;
@@ -33,7 +43,13 @@ const AllAdminPage = () => {
   return (
     <div className="  py-4 ">
       <h1 className="text-2xl font-bold mb-4">All Admins Here</h1>
-      {adminUsers && adminUsers.length > 0 ? (
+      <input
+        type="number"
+        className="border px-5 py-2 outline-none rounded mb-5"
+        placeholder="Search by Contact Number"
+        onChange={handleSearchChange}
+      />
+      {filteredUsers && filteredUsers.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full  border border-gray-300">
             <thead>
@@ -57,7 +73,7 @@ const AllAdminPage = () => {
               </tr>
             </thead>
             <tbody>
-              {adminUsers?.map((user) => (
+              {filteredUsers?.map((user) => (
                 <tr key={user?.id}>
                   <td className="border px-4  py-2 md:table-cell">
                     {user.name}

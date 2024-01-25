@@ -5,13 +5,22 @@ import {
   useMakeAdminMutation,
 } from "@/redux/api/usersApi";
 import { getUserInfo } from "@/services/auth.service";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 const AdminAllUsers = () => {
   const { data, isLoading, isError } = useGetAllUsersQuery();
   const users = data?.data?.data || [];
-  const { role } = getUserInfo();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredUsers = users.filter((user) =>
+  user?.contact_no?.includes(searchTerm)
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   
 
   if (isLoading) {
@@ -24,8 +33,15 @@ const AdminAllUsers = () => {
 
   return (
     <div className="  py-4 ">
+
       <h1 className="text-2xl font-bold mb-4">Admin - All Users</h1>
-      {users && users.length > 0 ? (
+      <input
+        type="number"
+        className="border px-5 py-2 outline-none rounded mb-5"
+        placeholder="Search by Contact Number"
+        onChange={handleSearchChange}
+      />
+      {filteredUsers && filteredUsers.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full  border border-gray-300">
             <thead>
@@ -54,7 +70,7 @@ const AdminAllUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (<UsersDetails key={user?.id} user={user}/>
+              {filteredUsers?.map((user) => (<UsersDetails key={user?.id} user={user}/>
                
               ))}
             </tbody>
