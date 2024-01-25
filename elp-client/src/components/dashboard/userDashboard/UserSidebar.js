@@ -59,12 +59,6 @@ const UserSidebar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/admin/addTest"
-                    className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 "
-                  >
-                    <ImProfile fontSize={20} /> Test Driven
-                  </Link>
                 </li>
                 <li className="">
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200">
