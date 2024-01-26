@@ -50,7 +50,9 @@ const AllUserExams = () => {
               <th className="py-2 px-2 border-b">পরিক্ষার ধরন</th>
               <th className="py-2 px-2 border-b">পরিক্ষার ফী</th>
               <th className="py-2 px-2 border-b">টোটাল মার্ক্স</th>
+              <th className="py-2 px-2 border-b">উত্তর দেখুন</th>
               <th className="py-2 px-2 border-b">প্রাপ্ত মার্ক্স</th>
+              <th className="py-2 px-2 border-b">নম্বর দিন</th>
 
 
             </tr>
