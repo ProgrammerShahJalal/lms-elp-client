@@ -287,7 +287,6 @@ const AddBooks = () => {
               />
             </div>
           )}
-
           {repetitionData.map((repetition, repetitionIndex) => (
             <div key={repetitionIndex}>
               {fields.map((field, index) => (
@@ -372,6 +371,8 @@ const AddBooks = () => {
               ))}
             </div>
           ))}
+
+
           <button type="button" onClick={addRepetition} className="text-blue-500 mt-2">
             Add More
           </button>
@@ -394,7 +395,7 @@ const AddBooks = () => {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md w-full"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md"
           >
             Add Book
           </button>
