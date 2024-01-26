@@ -70,8 +70,8 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
           {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
           <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p> */}
 
-           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id[0]?.sub_category_id?.category_id?.title}</p>
-          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id[0]?.sub_category_id?.title}</p>
+           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">{item?.course_id[0]?.sub_category_id?.category_id?.title}</p>
+          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 "> {item?.course_id[0]?.sub_category_id?.title}</p>
 
         </figure>
 
