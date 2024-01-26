@@ -26,6 +26,24 @@ export const questionsApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["questions"],
         }),
+
+        getSingleQuestion: build.query({
+            query: (id) => ({
+              url: `${QUESTIONS_URL}/${id}`,
+              method: "GET",
+            }),
+            providesTags: ["questions"],
+          }),
+
+        updateQuestion: build.mutation({
+            query: (data) => ({
+              url:`${QUESTIONS_URL}/${data?.id}`,
+              method: "PATCH",
+              data: data.body,
+            }),
+            invalidatesTags: ["questions"],
+          }),
+      
         deleteQuestions: build.mutation({
             query: (categoryId) => ({
                 url: `${QUESTIONS_URL}/${categoryId}`,
@@ -50,4 +68,4 @@ export const questionsApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useDeleteQuestionsMutation , useGetMyQuestionsEnrollHistoryQuery} = questionsApi;
+export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation,useGetSingleQuestionQuery,useUpdateQuestionMutation ,useDeleteQuestionsMutation , useGetMyQuestionsEnrollHistoryQuery} = questionsApi;

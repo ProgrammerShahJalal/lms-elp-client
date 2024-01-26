@@ -50,13 +50,13 @@ const EditCategory = ({id}) => {
             <form onSubmit={handleSubmit(onSubmit)} defaultValues={defaultValues}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category Name</label>
-          <input
+         {data?.title &&  <input
             type="text"
             name="title"
             {...register("title")}
             defaultValue={data?.title}
             className="w-full border border-gray-300 p-2 rounded-md"
-          />
+          />}
         </div>
      <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category Icon</label>

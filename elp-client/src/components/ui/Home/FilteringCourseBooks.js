@@ -27,7 +27,8 @@ const FilteringCourseBooks = ({sub_category_id}) => {
       </div>
       {showCourses ? <SubCategoryCourses sub_category_id={sub_category_id}/> : <SubCategoryBooks sub_category_id={sub_category_id}/>}
       <div className="flex justify-end">
-        <Link href={`/courses/category/subcategory/courseBundle/${sub_category_id}`} className=" border px-10 py-3 ">
+        <Link href={`/courses/category/subcategory/courseBundle/${sub_category_id}`}          className=" bg-bluePrimary text-white hover:bg-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold text-xl border px-10 py-3 ">
+
           সব কোর্স একসাথে কিনুন
         </Link>
         

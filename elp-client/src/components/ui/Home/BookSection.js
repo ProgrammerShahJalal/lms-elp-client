@@ -15,13 +15,7 @@ const BookSection = () => {
 
   const [openPDFModals, setOpenPDFModals] = useState([]);
   const [showPDFModal, setShowPDFModal] = useState(false);
-  // const openPDFModal = () => {
-  //   setShowPDFModal(true);
-  // };
-
-  // const closePDFModal = () => {
-  //   setShowPDFModal(false);
-  // };
+  
   const openPDFModal = (index) => {
     const updatedModals = [...openPDFModals];
     updatedModals[index] = true;
