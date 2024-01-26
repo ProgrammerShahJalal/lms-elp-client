@@ -16,7 +16,7 @@ const AllBooks = () => {
     if (isLoading) {
       content = (
         <>
-          <div>Loading.......</div>
+          <div>Loading...</div>
         </>
       );
     }

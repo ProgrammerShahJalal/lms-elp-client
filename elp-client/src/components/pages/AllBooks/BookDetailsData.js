@@ -34,7 +34,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
   if (isLoading) {
     content = (
       <>
-        <div>Loading.......</div>
+        <div>Loading...</div>
       </>
     );
   }

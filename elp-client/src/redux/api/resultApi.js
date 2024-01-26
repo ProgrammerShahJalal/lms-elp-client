@@ -20,17 +20,24 @@ export const resultApi = baseApi.injectEndpoints({
             },
             providesTags: ["exams"],
         }),
+        getSingleSubmissionExam: build.query({
+            query: (id) => ({
+                url: `${EXAM_RESULT}/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["exams"],
+        }),
         submitExamUser: build.mutation({
             query: (data) => ({
                 url: EXAM_RESULT,
                 method: "POST",
                 data: data,
             }),
-            invalidatesTags: ["exam-results"],
+            invalidatesTags: ["exams"],
         }),
 
 
     }),
 });
 
-export const { useExamResultQuery, useSubmitExamUserMutation } = resultApi;
+export const { useExamResultQuery, useGetSingleSubmissionExamQuery, useSubmitExamUserMutation } = resultApi;

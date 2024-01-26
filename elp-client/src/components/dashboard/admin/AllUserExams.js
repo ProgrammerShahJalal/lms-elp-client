@@ -2,14 +2,14 @@
 
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import {  useGetAllUserExamsQuery } from "@/redux/api/examsApi";
+import { useGetAllUserExamsQuery } from "@/redux/api/examsApi";
 import AllExamDetails from "./AllExamDetails";
 
 const AllUserExams = () => {
-    const {data, isLoading,isError} = useGetAllUserExamsQuery();
-    // console.log(data?.exams);
-    const allExams = data?.exams;
-    let content = null;
+  const { data, isLoading, isError } = useGetAllUserExamsQuery();
+  // console.log(data?.exams);
+  const allExams = data?.exams;
+  let content = null;
 
   if (isLoading) {
     content = (
@@ -31,9 +31,8 @@ const AllUserExams = () => {
       </>
     );
   }
-
   if (!isLoading && !isError && allExams?.length > 0) {
-    content = allExams?.map((item) =><AllExamDetails key={item?.id} item={item}/>)
+    content = allExams?.map((item) => <AllExamDetails key={item?.id} item={item} />)
   }
   return (
     <div className="py-10">
@@ -53,12 +52,12 @@ const AllUserExams = () => {
               <th className="py-2 px-2 border-b">টোটাল মার্ক্স</th>
               <th className="py-2 px-2 border-b">প্রাপ্ত মার্ক্স</th>
 
-             
+
             </tr>
           </thead>
           <tbody>
             {content}
-          
+
             {/* <tr className="block md:table-row">
               <td className="py-2  px-1 border-b md:table-cell flex">রমজান</td>
               <td className="py-2 px-4 border-b md:table-cell">বাংলা</td>
