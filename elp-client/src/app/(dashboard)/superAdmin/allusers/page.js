@@ -10,10 +10,7 @@ import toast from "react-hot-toast";
 
 // const AdminAllUsers = () => {
 //   const [page, setPage] = useState(1);
-//   const [limit, setLimit] = useState(10);
-//   const handlePageChange = (newPage) => {
-//     setPage(newPage);
-//   };
+//   const [limit, setLimit] = useState(4);
 //   const { data, isLoading, isError } = useGetAllUsersQuery({ page, userPerPage: limit });
 //   const users = data?.data?.data || [];
 //   const [searchTerm, setSearchTerm] = useState("");
@@ -33,8 +30,25 @@ import toast from "react-hot-toast";
 //     pageNumbers.push(i);
 //   }
 
+//   const calculateDisplayPages = () => {
+//     const middleIndex = Math.floor(limit / 2);
+//     const pagesToShow =
+//       totalPages <= limit
+//         ? pageNumbers
+//         : pageNumbers.slice(
+//           Math.max(0, page - middleIndex),
+//           Math.min(pageNumbers.length, page + middleIndex + (limit % 2))
+//         );
+//     return pagesToShow;
+//   };
 
 
+
+//   const displayPageNumbers = calculateDisplayPages();
+
+//   const handlePageChange = (newPage) => {
+//     setPage(newPage);
+//   };
 
 //   if (isLoading) {
 //     return <p>Loading users...</p>;
@@ -45,8 +59,7 @@ import toast from "react-hot-toast";
 //   }
 
 //   return (
-//     <div className="  py-4 ">
-
+//     <div className="py-4">
 //       <h1 className="text-2xl font-bold mb-4">Admin - All Users</h1>
 //       <input
 //         type="number"
@@ -56,35 +69,11 @@ import toast from "react-hot-toast";
 //       />
 //       {filteredUsers && filteredUsers.length > 0 ? (
 //         <div className="overflow-x-auto">
-//           <table className="min-w-full  border border-gray-300">
-//             <thead>
-//               <tr>
-//                 <th className="border bg-gray-100  px-4 py-2 hidden md:table-cell">
-//                   Name
-//                 </th>
-//                 <th className="border bg-gray-100  py-2 hidden md:table-cell">
-//                   Email
-//                 </th>
-//                 <th className="border bg-gray-100  py-2 hidden md:table-cell">
-//                   Contact Number
-//                 </th>
-//                 <th className="border bg-gray-100  py-2 hidden md:table-cell">
-//                   Role
-//                 </th>
-//                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
-//                   Make Admin
-//                 </th>
-//                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
-//                   User registered
-//                 </th>
-//                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
-//                   Action
-//                 </th>
-//               </tr>
-//             </thead>
+//           <table className="min-w-full border border-gray-300">
+//             {/* ... (your table header) */}
 //             <tbody>
-//               {filteredUsers?.map((user, index) => (<UsersDetails key={user?.id} index={index} user={user} />
-
+//               {filteredUsers?.map((user, index) => (
+//                 <UsersDetails key={user?.id} index={index} user={user} />
 //               ))}
 //             </tbody>
 //           </table>
@@ -92,59 +81,34 @@ import toast from "react-hot-toast";
 //       ) : (
 //         <p>No users available.</p>
 //       )}
-//       {/* <div className="flex justify-center space-x-2 mt-4">
+//       <div className="flex justify-center space-x-2 my-4">
 //         <button
 //           onClick={() => handlePageChange(page - 1)}
 //           disabled={page === 1}
-//           className="bg-blue-600 text-white px-4 py-2 rounded-md"
+//           className={`bg-blue-600 text-white px-4 py-2 rounded-md ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''
+//             }`}
 //         >
 //           Previous
 //         </button>
-//         <button
-//           onClick={() => handlePageChange(page + 1)}
-//           disabled={users.length < limit}
-//           className="bg-blue-600 text-white px-4 py-2 rounded-md"
-//         >
-//           Next
-//         </button>
-//       </div> */}
-//       <div className="flex justify-center space-x-2 mt-4">
-//         <button
-//           onClick={() => handlePageChange(page - 1)}
-//           disabled={page === 1}
-//           className="bg-blue-600 text-white px-4 py-2 rounded-md"
-//         >
-//           Previous
-//         </button>
-//         {pageNumbers.map((pageNumber) => (
+//         {displayPageNumbers.map((pageNumber) => (
 //           <button
 //             key={pageNumber}
 //             onClick={() => handlePageChange(pageNumber)}
 //             className={`${pageNumber === page
-//               ? "bg-blue-600 text-white"
-//               : "bg-gray-300 text-black"
+//               ? 'bg-blue-600 text-white'
+//               : 'bg-gray-300 text-black'
 //               } px-4 py-2 rounded-md`}
 //           >
 //             {pageNumber}
 //           </button>
 //         ))}
-
-//         {pageNumbers.length > 5 && (
-//           <>
-//             <span className="px-2">...</span>
-//             <button
-//               onClick={() => handlePageChange(page + 1)}
-//               className="bg-blue-600 text-white px-4 py-2 rounded-md"
-//             >
-//               {page + 1}
-//             </button>
-//           </>
-//         )}
-
 //         <button
 //           onClick={() => handlePageChange(page + 1)}
-//           disabled={users.length < limit}
-//           className="bg-blue-600 text-white px-4 py-2 rounded-md"
+//           disabled={pageNumbers.length <= limit || users.length < limit}
+//           className={`bg-blue-600 text-white px-4 py-2 rounded-md ${page * limit >= data?.data?.meta?.total
+//             ? 'opacity-50 cursor-not-allowed'
+//             : ''
+//             }`}
 //         >
 //           Next
 //         </button>
@@ -154,12 +118,17 @@ import toast from "react-hot-toast";
 // };
 
 // export default AdminAllUsers;
+
+
 const AdminAllUsers = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(4);
-  const { data, isLoading, isError } = useGetAllUsersQuery({ page, userPerPage: limit });
+  const [limit, setLimit] = useState(10);
+  const { data, isLoading, isError } = useGetAllUsersQuery({
+    page,
+    userPerPage: limit,
+  });
   const users = data?.data?.data || [];
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const filteredUsers = users.filter((user) =>
     user?.contact_no?.includes(searchTerm)
@@ -170,30 +139,39 @@ const AdminAllUsers = () => {
   };
 
   const totalPages = Math.ceil(data?.data?.meta?.total / limit);
-  const calculateDisplayPages = () => {
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const displayPageNumbers = () => {
     const middleIndex = Math.floor(limit / 2);
-    const pagesToShow =
-      totalPages <= limit
-        ? pageNumbers
-        : pageNumbers.slice(
-          Math.max(0, page - middleIndex),
-          Math.min(pageNumbers.length, page + middleIndex + (limit % 2))
-        );
-    return pagesToShow;
+    const ellipsis = '...';
+
+    if (totalPages <= limit) {
+      return pageNumbers;
+    }
+
+    const pagesToShow = pageNumbers.slice(
+      Math.max(0, page - middleIndex),
+      Math.min(totalPages, page + middleIndex)
+    );
+
+    const result = [];
+
+    if (pagesToShow[0] > 1) {
+      result.push(1, ellipsis);
+    }
+
+    result.push(...pagesToShow);
+
+    if (pagesToShow[pagesToShow.length - 1] < totalPages) {
+      result.push(ellipsis, totalPages);
+    }
+
+    return result;
   };
-
-
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  const displayPageNumbers = calculateDisplayPages();
-
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
-
   if (isLoading) {
     return <p>Loading users...</p>;
   }
@@ -211,12 +189,36 @@ const AdminAllUsers = () => {
         placeholder="Search by Contact Number"
         onChange={handleSearchChange}
       />
-      {filteredUsers && filteredUsers.length > 0 ? (
+      {filteredUsers.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300">
-            {/* ... (your table header) */}
+            <thead>
+              <tr>
+                <th className="border bg-gray-100  px-4 py-2 hidden md:table-cell">
+                  Name
+                </th>
+                <th className="border bg-gray-100  py-2 hidden md:table-cell">
+                  Email
+                </th>
+                <th className="border bg-gray-100  py-2 hidden md:table-cell">
+                  Contact Number
+                </th>
+                <th className="border bg-gray-100  py-2 hidden md:table-cell">
+                  Role
+                </th>
+                <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
+                  Make Admin
+                </th>
+                <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
+                  User registered
+                </th>
+                <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
+                  Action
+                </th>
+              </tr>
+            </thead>
             <tbody>
-              {filteredUsers?.map((user, index) => (
+              {filteredUsers.map((user, index) => (
                 <UsersDetails key={user?.id} index={index} user={user} />
               ))}
             </tbody>
@@ -225,46 +227,36 @@ const AdminAllUsers = () => {
       ) : (
         <p>No users available.</p>
       )}
-      <div className="flex justify-center space-x-2 my-12">
+      <div className="flex justify-center space-x-2 my-4">
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md"
+          className={`bg-blue-600 text-white  px-2 py-1  rounded-md ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
         >
-          Previous
+          &lt;
         </button>
-        {displayPageNumbers.map((pageNumber) => (
+        {displayPageNumbers().map((pageNumber, index) => (
           <button
-            key={pageNumber}
+            key={index}
             onClick={() => handlePageChange(pageNumber)}
             className={`${pageNumber === page
-              ? "bg-blue-600 text-white"
-              : "bg-gray-300 text-black"
-              } px-4 py-2 rounded-md`}
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-300 text-black'
+              } px-3 py-2 rounded-lg`}
           >
             {pageNumber}
           </button>
         ))}
-        {pageNumbers.length > limit && (
-          <>
-            <span className="px-2">...</span>
-            <button
-              onClick={() => handlePageChange(pageNumbers[limit])}
-              className={`${pageNumbers[limit] === page
-                ? "bg-blue-600 text-white"
-                : "bg-gray-300 text-black"
-                } px-4 py-2 rounded-md`}
-            >
-              {pageNumbers[limit]}
-            </button>
-          </>
-        )}
         <button
           onClick={() => handlePageChange(page + 1)}
-          disabled={users.length < limit}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md"
+          disabled={page * limit >= data?.data?.meta?.total}
+          className={`bg-blue-600 text-white  px-2 py-1  rounded-md ${page * limit >= data?.data?.meta?.total
+            ? 'opacity-50 cursor-not-allowed'
+            : ''
+            }`}
         >
-          Next
+          &gt;
         </button>
       </div>
     </div>
