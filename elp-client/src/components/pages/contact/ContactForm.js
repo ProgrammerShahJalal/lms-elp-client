@@ -1,24 +1,28 @@
 'use client'
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
 import toast from "react-hot-toast";
 
 
 const ContactForm = () => {
   const form = useRef();
+  const [submissionStatus, setSubmissionStatus] = useState("submitNow");
 
   const sendEmail = (e) => {
     e.preventDefault();
 
+    setSubmissionStatus("submitting");
+
     emailjs.sendForm('service_3enyp94', 'template_58eqzje', form.current, 'ZM_l5RHz-XAPu2mYN')
       .then((result) => {
-        if(result.status === 200){
-          toast.success("Your email has been sent successfully")
+        if (result.status === 200) {
+          setSubmissionStatus("submitted");
+          toast.success("Your email has been sent successfully");
         }
-          // console.log(result);
       }, (error) => {
-          toast.error(error.text);
+        setSubmissionStatus("submitNow");
+        toast.error(error.text);
       });
   };
   return (
@@ -39,12 +43,14 @@ const ContactForm = () => {
           required
         />
         <input
-          type="text"
-          className="px-4 py-3 bg-gray-200 w-full outline-none text-xl rounded "
-          placeholder="Your Phone *"
-          name="from_con"
-          required
-        />
+  type="text"
+  className="px-4 py-3 bg-gray-200 w-full outline-none text-xl rounded "
+  placeholder="Your Phone *"
+  name="from_con"
+  pattern="^01\d{9}$"
+  title="মোবাইল নাম্বারটি  ১১ টি সংখ্যা হতে হবে এবং এমন হবে 01742561023"
+  required
+/>
        
         <textarea rows={5}
           type="text"
@@ -55,9 +61,17 @@ const ContactForm = () => {
         />
         <input
           type="submit"
-          className="px-4 py-3 bg-bluePrimary w-full text-white outline-none text-lg rounded  cursor-pointer hover:bg-cyanPrimary transition-all duration-500 delay-500"
-          value="Submit Now"
-          
+          className={`px-4 py-3 bg-bluePrimary w-full text-white outline-none text-lg rounded cursor-pointer hover:bg-cyanPrimary transition-all duration-500 delay-500 ${
+            submissionStatus === "submitting" && "opacity-50 pointer-events-none"
+          }`}
+          value={
+            submissionStatus === "submitNow"
+              ? "Submit Now"
+              : submissionStatus === "submitting"
+              ? "Submitting..."
+              : "Submitted"
+          }
+          disabled={submissionStatus === "submitting"}
         />
       </form>
     </div>

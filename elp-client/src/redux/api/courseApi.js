@@ -64,7 +64,17 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
-
+    // update courses
+    updateCourse: build.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.id}`,
+        // contentType: "multipart/form-data",
+        method: "PATCH",
+        contentType: "multipart/form-data",
+        data: data.body,
+      }),
+      invalidatesTags: ["courses"],
+    }),
     // alll subscript get
     getAllSubscriptions: build.query({
       query: (arg) => ({
@@ -152,6 +162,7 @@ export const {
   useGetSingleCourseQuery,
   useAddCourseMutation,
   useDeleteCoursesMutation,
+  useUpdateCourseMutation,
   useGetAllSubscriptionsQuery,
   useGetAllSubscriptionsHistoryQuery,
   useSubscribeToCourseMutation,
