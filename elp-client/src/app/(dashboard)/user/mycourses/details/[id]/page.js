@@ -8,18 +8,19 @@ import YoutubePlaylist from "./playlist";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
-const Play = () => {
-  // Disable right-click
-  document.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-  });
 
-  document.addEventListener("keydown", function (e) {
-    // Check if the pressed key is F12
-    if (e.key === "F12" || e.keyCode === 123) {
-      e.preventDefault();
-    }
-  });
+const Play = () => {
+  // // Disable right-click
+  // document.addEventListener("contextmenu", (e) => {
+  //   e.preventDefault();
+  // });
+
+  // document.addEventListener("keydown", function (e) {
+  //   // Check if the pressed key is F12
+  //   if (e.key === "F12" || e.keyCode === 123) {
+  //     e.preventDefault();
+  //   }
+  // });
 
   const params = useParams();
   const id = params?.id;
