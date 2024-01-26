@@ -1,4 +1,3 @@
-
 import toast from "react-hot-toast";
 
 const { createSlice } = require("@reduxjs/toolkit");
@@ -8,9 +7,10 @@ const { createSlice } = require("@reduxjs/toolkit");
 //   books: [],
 //   total: 0,
 // };
-const storedCart = typeof localStorage !== 'undefined'
-  ? JSON.parse(localStorage.getItem("cart")) || { books: [], total: 0 }
-  : { books: [], total: 0 };
+const storedCart =
+  typeof localStorage !== "undefined"
+    ? JSON.parse(localStorage.getItem("cart")) || { books: [], total: 0 }
+    : { books: [], total: 0 };
 
 export const initialState = storedCart;
 
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
         state.books.push({ ...action.payload, quantity: 1 });
       }
 
-      state.total += action.payload.price;
+      state.total += action.payload.discount_price;
 
       // Update localStorage with the new cart data
       localStorage.setItem("cart", JSON.stringify(state));
@@ -40,7 +40,7 @@ const cartSlice = createSlice({
         (book) => book._id !== action.payload._id
       );
 
-      state.total -= action.payload.price * action.payload.quantity;
+      state.total -= action.payload.discount_price * action.payload.quantity;
 
       // Update localStorage with the new cart data
       localStorage.setItem("cart", JSON.stringify(state));
@@ -53,22 +53,26 @@ const cartSlice = createSlice({
 
       if (existingBook && existingBook.quantity > 1) {
         existingBook.quantity = existingBook.quantity - 1;
-        state.total -= action.payload.price;
-         // Update localStorage with the new cart data
-      localStorage.setItem("cart", JSON.stringify(state));
-       
+        state.total -= action.payload.discount_price;
+        // Update localStorage with the new cart data
+        localStorage.setItem("cart", JSON.stringify(state));
       } else {
         toast.error(
           "You cannot remove more because this quantity is less than 0"
         );
       }
-    
-     
+    },
+    clearCart: (state) => {
+      state.books = [];
+      state.total = 0;
+
+      // Update localStorage with the new cart data
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });
 
-export const { addToCart, removeFromCart, removeOneBook } = cartSlice.actions;
+export const { addToCart, removeFromCart, removeOneBook, clearCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
-

@@ -5,7 +5,7 @@ const UserProfile = () => {
   return (
     <div>
         <DashNavbar/>
-       
+      
     </div>
   )
 }

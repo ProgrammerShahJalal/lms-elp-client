@@ -64,7 +64,17 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
-
+    // update courses
+    updateCourse: build.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.id}`,
+        // contentType: "multipart/form-data",
+        method: "PATCH",
+        contentType: "multipart/form-data",
+        data: data.body,
+      }),
+      invalidatesTags: ["courses"],
+    }),
     // alll subscript get
     getAllSubscriptions: build.query({
       query: (arg) => ({
@@ -118,6 +128,31 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["subscription-histories"],
     }),
+    subscribeToCourseBundle: build.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}//buy-all-of-a-sub-category`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["subscription-histories"],
+    }),
+
+    getAllCoursesBundles: build.query({
+      query: (arg) => {
+        return {
+          url: `${COURSES_URL}/total-cost-of-all-courses-of-a-sub-cat`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response, meta) => {
+        return {
+          bundles: response,
+          meta,
+        };
+      },
+      providesTags: ["courses"],
+    }),
   }),
 });
 
@@ -127,8 +162,11 @@ export const {
   useGetSingleCourseQuery,
   useAddCourseMutation,
   useDeleteCoursesMutation,
+  useUpdateCourseMutation,
   useGetAllSubscriptionsQuery,
   useGetAllSubscriptionsHistoryQuery,
   useSubscribeToCourseMutation,
-  useGetMyCourseSubscriptionsHistoryQuery
+  useSubscribeToCourseBundleMutation,
+  useGetMyCourseSubscriptionsHistoryQuery,
+  useGetAllCoursesBundlesQuery,
 } = courseApi;

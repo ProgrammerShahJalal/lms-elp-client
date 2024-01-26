@@ -15,11 +15,11 @@ export const makeQuizApi = baseApi.injectEndpoints({
             },
             transformResponse: (response, meta) => {
                 return {
-                    courses: response,
+                    playlists: response,
                     meta,
                 };
             },
-            providesTags: ["course-playlists"],
+            providesTags: ["course-playlists-all"],
         }),
 
         getMyCourseVedioPlaylist: build.query({
@@ -31,14 +31,14 @@ export const makeQuizApi = baseApi.injectEndpoints({
                 };
             },
            
-            providesTags: ["course-playlists"],
+            providesTags: ["course-playlists-all"],
         }),
         getSingleCoursePlaylist: build.query({
             query: (id) => ({
               url: `${COURSE_PLAYLIST}/${id}`,
               method: "GET",
             }),
-            providesTags: ["course-playlists"],
+            providesTags: ["course-playlists-all"],
           }),
 
 
@@ -49,17 +49,30 @@ export const makeQuizApi = baseApi.injectEndpoints({
                 method: "POST",
                 data: data,
             }),
-            invalidatesTags: ["course-playlists"],
+            invalidatesTags: ["course-playlists-all"],
         }),
+
+        updateCoursePlaylist: build.mutation({
+      
+            query: (data) => ({
+              url: `${COURSE_PLAYLIST}/${data?.id}`,
+           
+              method: 'PATCH',
+            
+              data: data,
+            }),
+            invalidatesTags: ["course-playlists-all"],
+          }),
+         
 
         deleteVideoPlaylist: build.mutation({
             query: (id) => ({
               url: `${COURSE_PLAYLIST}/${id}`,
               method: 'DELETE'
             }),
-            invalidatesTags: ['course-playlists']
+            invalidatesTags: ['course-playlists-all']
           })
     }),
 });
 
-export const {  useAddPlaylistVideoMutation,useGetSingleCoursePlaylistQuery, useGetMyCourseVedioPlaylistQuery, useGetAllPlaylistQuery, useDeleteVideoPlaylistMutation } = makeQuizApi;
+export const {  useAddPlaylistVideoMutation,useGetSingleCoursePlaylistQuery, useGetMyCourseVedioPlaylistQuery, useGetAllPlaylistQuery, useUpdateCoursePlaylistMutation ,useDeleteVideoPlaylistMutation } = makeQuizApi;

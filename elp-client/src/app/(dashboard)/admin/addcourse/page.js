@@ -21,6 +21,7 @@ import {
   useGetAllCoursesQuery,
 } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 const AddCourseForm = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -54,21 +55,20 @@ const AddCourseForm = () => {
     const content = { ...data };
 
     const file = content["file"];
-    // console.log(file)
-    // delete content['file'];
+    
     const result = JSON.stringify(content);
-    // console.log(result, "json")
+  
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
-    // console.log(formData, 'formdaata')
+
     try {
       const resultData = await addCourse(formData);
-      // console.log(resultData,'from api')
+    
       if (resultData) {
         toast.success("course created successfully");
       }
-      // console.log(resultData, ' from add category async')
+  
     } catch (error) {
       toast.error(error.message);
     }
@@ -167,21 +167,7 @@ const AddCourseForm = () => {
                 </option>
               ))}
             </select>
-            {/* <select
-
-            {...register("category_id", { required: true })}
-
-            className="w-full border border-gray-300 p-2 rounded-md"
-          >
-            <option value="" disabled>
-              Select a category
-            </option>
-            {categories?.categories?.map((category) => (
-              <option key={category?.id} value={category?.id}>
-                {category?.title}
-              </option>
-            ))}
-          </select> */}
+            
           </div>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Sub Category</label>
@@ -242,6 +228,18 @@ const AddCourseForm = () => {
               id="syllabus"
               name="syllabus"
               {...register("syllabus", { required: true })}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Class Routine:
+            </label>
+            <input
+              type="text"
+              id="routine"
+              name="syllabus"
+              {...register("routine", { required: true })}
               className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
             />
           </div>
@@ -322,13 +320,13 @@ const AddCourseForm = () => {
                     />
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">
-                    <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
+                    <Link href={`/admin/addcourse/edit/${course?.id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">
                       Update
-                    </button>
+                    </Link>
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">
                     <button
-                      className="bg-red-500 text-white py-1 px-2 rounded-md"
+                      className="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer"
                       onClick={() => handleDelete(course.id)}
                     >
                       Delete

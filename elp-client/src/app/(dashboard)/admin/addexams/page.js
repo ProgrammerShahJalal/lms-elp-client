@@ -49,12 +49,12 @@ const AdminAddExams = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     try {
-    //   const selectedExam = allCourse?.find(
-    //     (exam) => exam.id === newQuestion.exam_id
-    //   );
-    //   console.log(selectedExam ,'exam')
+      //   const selectedExam = allCourse?.find(
+      //     (exam) => exam.id === newQuestion.exam_id
+      //   );
+      //   console.log(selectedExam ,'exam')
       const formattedQuestion = {
         ...newQuestion,
         total_marks: parseInt(newQuestion.total_marks, 10),
@@ -137,37 +137,37 @@ const AdminAddExams = () => {
               ))}
           </select>
         </div>
-         {/* Course selection field */}
-         <div className="mb-4">
-                            <label
-                                htmlFor="courses"
-                                className="block text-sm font-medium text-gray-600"
-                            >
-                                Select Courses
-                            </label>
-                            <select
-                                id="courses"
-                                name="courses"
-                                disabled={!selectedSubcategory}
-                                onChange={(e) => setSelectedCourse(e.target.value)}
-                                className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
-                            >
-                                <option value="" disabled selected>
-                                    Select a course
-                                </option>
-                                {allCourse?.length === 0 ? (
-                                    <option value="" disabled>
-                                        No courses available
-                                    </option>
-                                ) : (
-                                    allCourse?.map((course) => (
-                                        <option key={course.id} value={course.id}>
-                                            {course.title}
-                                        </option>
-                                    ))
-                                )}
-                            </select>
-                        </div>
+        {/* Course selection field */}
+        <div className="mb-4">
+          <label
+            htmlFor="courses"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Select Courses
+          </label>
+          <select
+            id="courses"
+            name="courses"
+            disabled={!selectedSubcategory}
+            onChange={(e) => setSelectedCourse(e.target.value)}
+            className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
+          >
+            <option value="" disabled selected>
+              Select a course
+            </option>
+            {allCourse?.length === 0 ? (
+              <option value="" disabled>
+                No courses available
+              </option>
+            ) : (
+              allCourse?.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))
+            )}
+          </select>
+        </div>
         {/* <div className="mb-4">
           <label
             htmlFor="examId"

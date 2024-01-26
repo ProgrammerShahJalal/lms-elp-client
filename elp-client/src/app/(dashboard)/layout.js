@@ -42,13 +42,13 @@ const DashBoardLayout = ({ children }) => {
 
   return (
     <>
-      <div className="">
+      <div className=" ">
         <DashNavbar />
-        <div className=" lg:flex   z-0">
+        <div className=" lg:flex  pb-12">
           <div className="  mt-5 rounded lg:mr-60 ">
             <UserSidebar />
           </div>
-          <div className=" mt-5 rounded px-10 pt-10 " >
+          <div className=" mt-5 rounded px-10 pt-10" >
           {shouldShowWelcomeComponent && <UserWelcome />}
             <br />
             {children}

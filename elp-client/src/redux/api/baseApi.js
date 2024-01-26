@@ -13,7 +13,7 @@ export const baseApi = createApi({
     "shipping-addresses",
     "courses",
     "books",
-    "course-playlists",
+    "course-playlists-all",
     "quiz-questions",
     "categories",
     "sub-categories",
@@ -25,6 +25,7 @@ export const baseApi = createApi({
     "settings",
     "orders",
     "exam-payments",
-    "exam-results"
+    "exam-results",
+    "order-status"
   ],
 });

@@ -1,20 +1,18 @@
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { useState } from "react";
-const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick }) => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
-    const toggleCollapse = () => {
-        setIsCollapsed(!isCollapsed);
-    };
+import React from "react";
 
+
+
+
+const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick }) => {
+   
     return (
-        <div>
-            <div className='flex justify-between items-center' onClick={toggleCollapse}>
-                <h5 className="text-2xl  cursor-pointer " >{course && course.length > 0 && course[currentPlaylistIndex]?.title}
+       <div> 
+         <div>
+            <div className='bg-white'>
+                <h5 className="text-2xl" >{course && course.length > 0 && course[currentPlaylistIndex]?.title}
                 </h5>
-                <span className='text-xl mr-12'>{isCollapsed ? <FaChevronUp /> : <FaChevronDown />}</span>
             </div>
 
-            {!isCollapsed && (
                 <ul>
                     {videos.map((video, index) => (
                         <div key={index}>
@@ -27,8 +25,8 @@ const YoutubePlaylist = ({ videos, course, currentPlaylistIndex, onVideoClick })
                         </div>
                     ))}
                 </ul>
-            )}
         </div>
+       </div>
     );
 };
 
