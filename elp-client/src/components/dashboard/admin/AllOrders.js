@@ -100,8 +100,8 @@ const AllOrders = () => {
                   </button>
                 </th>
                 <th>ট্রান্সজেকশন আইডি</th>
+                <th>প্রেরণের ঠিকানা</th>
                 <th>স্ট্যাটাস</th>
-                {/* <th>পেমেন্ট</th> */}
               </tr>
             </thead>
             <tbody>{content}</tbody>

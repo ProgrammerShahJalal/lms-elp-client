@@ -8,6 +8,7 @@ import {
   useGetAllQuestionsQuery,
 } from "@/redux/api/questionsApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -337,6 +338,7 @@ const AddQuestions = () => {
               <tr>
                 <th className="py-2 px-4 border-b">Question</th>
                 <th className="py-2 px-4 border-b">Category</th>
+                <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
               </tr>
             </thead>
@@ -347,6 +349,14 @@ const AddQuestions = () => {
                     {i + 1}) {quiz?.question}
                   </td>
                   <td className="py-2 px-4 border-b">{quiz?.exam_id?.title}</td>
+                  <td className="py-2 px-4 border-b md:table-cell">
+                    <Link href={`/admin/addquestions/edit/${quiz?.id}`}
+                      className="bg-red-500 text-white py-1 px-2 rounded-md"
+                      
+                    >
+                      Update
+                    </Link>
+                  </td>
                   <td className="py-2 px-4 border-b md:table-cell">
                     <button
                       className="bg-red-500 text-white py-1 px-2 rounded-md"

@@ -18,8 +18,8 @@ const CourseCard = ({ item }) => {
             height={50}
           />
           {/* z-0-rotate-45 z-10 */}
-          <p className="absolute top-0 left-0 text-black font-bold text-xl p-1 rounded-xl ">{item?.sub_category_id?.category_id?.title}</p>
-          <Link href={`/courses/subcategory/${item?.id}`} className="absolute top-0 right-0 text-black  font-bold text-xl p-1 rounded-xl"> {item?.sub_category_id?.title}</Link>
+          <p className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">{item?.sub_category_id?.category_id?.title}</p>
+          <Link href={`/courses/subcategory/${item?.id}`} className="absolute top-0 right-0 bg-bluePrimary text-white p-1 "> {item?.sub_category_id?.title}</Link>
         </figure>
 
         <div className="cursor-pointer p-4  hover:bg-white hover:rounded hover:text-cyanPrimary">
