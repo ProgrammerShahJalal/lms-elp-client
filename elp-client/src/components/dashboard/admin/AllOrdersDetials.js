@@ -8,7 +8,6 @@ const AllOrdersDetials = ({item}) => {
     const dateObject = new Date(item?.createdAt);
   const humanReadableFormatLocal = dateObject.toLocaleDateString();
 
-  console.log(item)
     return (
         <tr className="hover border">
           <th>{item?.user_id?.name}</th>
