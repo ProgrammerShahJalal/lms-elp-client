@@ -9,7 +9,7 @@ const CourseDetails = ({id}) => {
     const {data,isLoading,isError} = useGetSingleCourseQuery(id);
     
 
-
+console.log('course details', data);
 
     const breadcrumbItems = [
         { label: 'হোম', link: '/' },
@@ -19,11 +19,7 @@ const CourseDetails = ({id}) => {
   return (
     <div>
          <Commonbanner title="কোর্স  ডিটেইলস" breadcrumbItems={breadcrumbItems}/>
-
-         <div className="lg:mx-14 sm:mx-10 md:mx-5">
             <CourseDetailsData data={data} isLoading={isLoading} isError={isError} />
-         </div>
-
     </div>
   )
 }

@@ -31,7 +31,7 @@ const MyExamPages = () => {
   if (!isLoading && isError) {
     // content = <Error />;
     content = <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 px-3  my-5 rounded text-lg">
-      <h5>Your don't buy any exam right now</h5>
+      <h5>এখনও কোনো পরীক্ষা কেনা হয়নি</h5>
     </tr>;
   }
 

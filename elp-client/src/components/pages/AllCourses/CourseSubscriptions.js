@@ -61,19 +61,15 @@ function CourseSubscriptions({ course_id }) {
 
   if (!isLoading && !isError && subscriptionData?.length === 0) {
     content = (
-      <>
-        {" "}
-        <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-      <h5>There is No Subscription course</h5>
-    </div>
-      </>
+      <h5 className=" font-semibold bg-green-600  text-white p-3 rounded text-md">সাবস্ক্রিপশন কোর্স শীঘ্রই আসছে</h5>
+
     );
   }
 
   if (!isLoading && !isError && subscriptionData?.length > 0) {
     content = subscriptionData?.map((subscription) => (
-      <tr className="hover" key={subscription?._id}>
-        <th className="text-gray-400">#</th>
+    
+        <tr className="hover" key={subscription?._id}>
         <td>{subscription?.name}</td>
         <td>{subscription?.subscription_duration_in_months} Months</td>
         <td>{subscription?.cost}</td>
@@ -86,17 +82,17 @@ function CourseSubscriptions({ course_id }) {
           </p>
         </td>
       </tr>
+     
     ));
   }
 
   return (
     <div>
       <h2 className="text-xl font-bold">Buy</h2>
-      <table className="table">
+      <table className="table table-auto">
         {/* head */}
         <thead>
           <tr>
-            <th></th>
             <th>Subscription Name</th>
             <th>Duration</th>
             <th>Cost</th>
@@ -105,23 +101,6 @@ function CourseSubscriptions({ course_id }) {
         </thead>
         <tbody>
           {content}
-          {/* {!!subscriptionData &&
-            subscriptionData?.map((subscription) => (
-              <tr className="hover" key={subscription?._id}>
-                <th className="text-gray-400">#</th>
-                <td>{subscription?.name}</td>
-                <td>{subscription?.subscription_duration_in_months} Months</td>
-                <td>{subscription?.cost}</td>
-                <td>
-                  <p
-                    onClick={() => enrollToCourse(subscription)}
-                    className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
-                  >
-                    Enroll
-                  </p>
-                </td>
-              </tr>
-            ))} */}
         </tbody>
       </table>
     </div>

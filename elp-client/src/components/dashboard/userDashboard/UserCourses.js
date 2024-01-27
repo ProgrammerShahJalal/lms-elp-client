@@ -26,8 +26,8 @@ const UserCourses = () => {
 
   if (!isLoading && isError) {
     content = (
-      <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-        <h5>You don't buy course yet now</h5>
+      <div>
+        <h5 className="font-bold bg-green-600  text-white py-3 px-4 rounded text-lg">এখনও কোনো কোর্স কেনা হয়নি</h5>
       </div>
     );
   }
