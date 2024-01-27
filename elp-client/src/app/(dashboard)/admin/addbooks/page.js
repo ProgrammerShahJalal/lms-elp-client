@@ -62,21 +62,21 @@ const AddBooks = () => {
     data.discount_price = Number(data?.discount_price);
 
     const content = { ...data };
-    console.log(data);
 
     const file = content["file"];
     // console.log(file)
     // delete content['file'];
-    const result = JSON.stringify(content);
+    content.course_id = data?.categories?.map((category) => category.course_id) || [];
+    const { categories, ...othersData } = content;
+    console.log(othersData);
+    const result = JSON.stringify(othersData);
     // console.log(result, "json");
-    const course_id = data?.categories?.map((category) => category.course_id) || [];
-    console.log(course_id);
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
     // console.log(formData, 'formdaata')
     try {
-      const resultData = await addBooks(formData, course_id);
+      const resultData = await addBooks(formData);
 
       if (resultData) {
         toast.success("Book created successfully");
@@ -395,7 +395,7 @@ const AddBooks = () => {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md w-full"
           >
             Add Book
           </button>
