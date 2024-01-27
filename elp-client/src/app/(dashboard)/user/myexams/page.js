@@ -5,12 +5,13 @@ import InitialLoader from "@/components/Loader/InitialLoader";
 import SinglePaymentDetails from "@/components/dashboard/userDashboard/SinglePaymentDetails";
 
 import { useGetMyExamPaymentQuery } from "@/redux/api/examsApi";
+import { getUserInfo } from "@/services/auth.service";
 
 import Link from "next/link";
 
 
 const MyExamPages = () => {
-
+  const { userId } = getUserInfo();
   const { data: payments, isError, isLoading } = useGetMyExamPaymentQuery();
   const paymentsData = payments?.payments;
   // const filteredArray = paymentsData?.filter(item => {
