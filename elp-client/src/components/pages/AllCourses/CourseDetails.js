@@ -9,8 +9,6 @@ const CourseDetails = ({id}) => {
     const {data,isLoading,isError} = useGetSingleCourseQuery(id);
     
 
-console.log('course details', data);
-
     const breadcrumbItems = [
         { label: 'হোম', link: '/' },
         { label: ' কোর্সসমূহ ',link: '/courses' },

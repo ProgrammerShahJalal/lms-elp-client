@@ -25,7 +25,7 @@ const CourseSubscribe = ({course_id}) => {
 
     const router = useRouter();
   const { data, isError, isLoading } = useGetAllSubscriptionsQuery({course_id});
-//   console.log(data?.subscriptions?.data, "from sub page");
+  console.log(data?.subscriptions?.data, "from sub page");
   const allSubsCourses = data?.subscriptions?.data;
 
   const enrollToCourse = async (subscription) => {
@@ -91,15 +91,14 @@ const CourseSubscribe = ({course_id}) => {
               {item?.cost}
             </h1>
             <p className="opacity-75 font-bold text-xl">
-              duration: {item?.subscription_duration_in_months} Months
+            সময়কাল: {item?.subscription_duration_in_months} মাস
             </p>
             <p className="opacity-75 py-2">
-              Course Title: {item?.course_id?.title}
+            কোর্সের শিরোনাম: {item?.course_id?.title}
             </p>
             <p className="opacity-75 py-2">
-              Category: {item?.course_id?.category_id?.title}
+            কোর্স প্রশিক্ষক: {item?.course_id?.author}
             </p>
-            <p className="opacity-75 py-2">Support : yes</p>
             <button  onClick={() => enrollToCourse(item)}
               className="bg-bluePrimary text-white py-3 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary "
               href="/subscribe"
