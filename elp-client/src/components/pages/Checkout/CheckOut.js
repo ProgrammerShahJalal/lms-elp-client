@@ -26,7 +26,6 @@ const CheckOut = () => {
   // declaring states
   const [isDefault, setIsDefault] = useState(false);
   const [selectedOutsideDhaka, setSelectedOutsideDhaka] = useState(true);
-  const [hardCopyOrdered, setHardCopyOrdered] = useState(true);
   const [shippingCharge, setShippingCharge] = useState(100);
 
   // hooks and misc
@@ -37,6 +36,7 @@ const CheckOut = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   // data fetch
@@ -80,6 +80,8 @@ const CheckOut = () => {
     books,
     selectedOutsideDhaka,
     shippingChargeInsideDhaka,
+    shippingInsideDhakaLoading,
+    shippingChargeOutsideDhaka,
     shippingChargeOutsideDhaka,
   ]);
 
@@ -87,6 +89,18 @@ const CheckOut = () => {
     refetch();
     refetchShippingAddress();
   }, [user]);
+
+  useEffect(() => {
+    if (shippingAddress) {
+      setValue("billing_name", shippingAddress.billing_name);
+      setValue("division", shippingAddress.division);
+      setValue("district", shippingAddress.district);
+      setValue("upazilla", shippingAddress.upazilla);
+      setValue("outside_dhaka", String(shippingAddress.outside_dhaka));
+      setValue("address", shippingAddress.address);
+      setValue("contact_no", shippingAddress.contact_no);
+    }
+  }, [shippingAddress]);
 
   // constants
   const breadcrumbItems = [
@@ -137,7 +151,7 @@ const CheckOut = () => {
             className={`grid lg:grid-cols-2 auto-cols-auto gap-5 py-20 justify-center`}
           >
             <div>
-              {hardCopyOrdered && (
+              {shippingCharge ? (
                 <div>
                   <h2 className="font-semibold text-yellowPrimary pb-5 text-xl">
                     Shipping Address
@@ -309,6 +323,8 @@ const CheckOut = () => {
                     </div>
                   </div>
                 </div>
+              ) : (
+                ""
               )}
             </div>
 

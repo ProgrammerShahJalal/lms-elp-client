@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +7,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Tiro Bangla', serif;
+  font-family: "Tiro Bangla", serif;
 }
 /* global.css */
 
@@ -225,11 +225,7 @@ i.fa-solid.fa-users.i-3 {
   transition: 0.4s;
 }
 
-
-
-
 /* Team Part End */
-
 
 /* //swipper js */
 

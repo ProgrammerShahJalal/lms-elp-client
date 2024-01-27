@@ -22,14 +22,11 @@ export const usersApi = baseApi.injectEndpoints({
     //   providesTags: ["users"],
     // }),
     getAllUsers: build.query({
-      query: ({ page, userPerPage }) => {
+      query: (params) => {
         return {
           url: USERS_URL,
           method: "GET",
-          params: {
-            page,
-            limit: userPerPage,
-          },
+          params: params,
         };
       },
       transformResponse: (response, meta) => {
@@ -81,8 +78,6 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ["users"],
     }),
 
-
-
     permissionCheck: build.query({
       query: ({ userId, permission }) => ({
         url: `${USERS_URL}/check-permission/${userId}/${permission}`,
@@ -106,7 +101,6 @@ export const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
-
   }),
 });
 
@@ -119,5 +113,5 @@ export const {
   useDeleteUserMutation,
   usePermissionCheckQuery,
   useGivePermissionMutation,
-  useRemovePermissionMutation
+  useRemovePermissionMutation,
 } = usersApi;
