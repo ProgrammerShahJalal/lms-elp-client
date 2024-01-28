@@ -2,11 +2,15 @@
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-import { useAddSubscriptionMutation } from "@/redux/api/subscriptionApi";
+import { useAddSubscriptionMutation, useDeleteSubscriptionMutation, useGetAllSubscriptionQuery } from "@/redux/api/subscriptionApi";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const AddSubscription = () => {
+    const { data } = useGetAllSubscriptionQuery();
+    const allSubscription = data?.exams?.data;
+    const [deleteSubscription] = useDeleteSubscriptionMutation()
     const [addSubscription] = useAddSubscriptionMutation()
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -43,7 +47,6 @@ const AddSubscription = () => {
         }
         try {
             const response = await addSubscription(subscriptionData)
-            console.log(response);
             if (response) {
                 toast.success("Successfully Added Subscription")
             }
@@ -52,17 +55,50 @@ const AddSubscription = () => {
             console.error('Error adding subscription', error)
 
         }
+    };
+    const handleSubscriptionDelete = async (categoryId) => {
+        try {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to delete this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            });
 
+            if (result.isConfirmed) {
+                // User confirmed deletion
+                const res = await deleteSubscription(categoryId);
+                // console.log(res?.data)
+
+                if (res?.data?._id === categoryId) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Something went wrong with deletion.",
+                        icon: "error",
+                    });
+                }
+            }
+        } catch (err) {
+            toast.error(err.message);
+        }
     };
 
-
     return (
-        <div>
+        <div className="container mx-auto w-full">
             <form
                 onSubmit={handleSubmit}
-                className=" w-full  mx-auto bg-white p-8 border rounded shadow"
+                className=" p-8 border rounded shadow"
             >
-                <h1>অ্যাডমিন সাবস্ক্রিপশন যোগ করেছেন</h1>
+                <h1 className="mb-8 text-3xl font-bold">অ্যাডমিন সাবস্ক্রিপশন যোগ করেছেন</h1>
                 <div className="mb-4">
                     <label
                         htmlFor="name"
@@ -196,6 +232,60 @@ const AddSubscription = () => {
                     </button>
                 </div>
             </form>
+
+            {/* <div className=" mt-8">
+                <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
+                <table className="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th className="border border-gray-300 px-4 py-2">Name</th>
+                            <th className="border border-gray-300 px-4 py-2">Duration (Months)</th>
+                            <th className="border border-gray-300 px-4 py-2">Cost</th>
+                            <th className="border border-gray-300 px-4 py-2">Course Name</th>
+                            <th className="border border-gray-300 px-4 py-2">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allSubscription?.map((subscription) => (
+                            <tr key={subscription._id}>
+                                <td className="border border-gray-300 px-4 py-2">{subscription?.name}</td>
+                                <td className="border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
+                                <td className="border border-gray-300 px-4 py-2">{subscription?.cost}</td>
+                                <td className="border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
+                                <td className="border border-gray-300 px-4  bg-blue-600 rounded-lg text-white"> <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div> */}
+            <div className="mt-8 overflow-x-auto">
+                <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
+                <table className="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th className="lg:border border-gray-300 px-4 py-2">Name</th>
+                            <th className="lg:border border-gray-300 px-4 py-2">Duration (Months)</th>
+                            <th className="lg:border border-gray-300 px-4 py-2">Cost</th>
+                            <th className="lg:border border-gray-300 px-4 py-2">Course Name</th>
+                            <th className="lg:border border-gray-300 px-4 py-2">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allSubscription?.map((subscription) => (
+                            <tr key={subscription._id}>
+                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.name}</td>
+                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
+                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.cost}</td>
+                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
+                                <td className="lg:border border-gray-300 px-4  bg-blue-600 rounded-lg text-white">
+                                    <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     );
 };
