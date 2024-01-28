@@ -17,13 +17,14 @@ const GetAllExams = () => {
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই পরীক্ষাটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
   
       if (result.isConfirmed) {
@@ -126,7 +127,7 @@ const GetAllExams = () => {
 
   return (
     <div className="py-10">
-      <h2 className="text-xl font-bold py-5"> All Exams are here</h2>
+      <h2 className="text-xl font-bold py-5">All Exams are here</h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">

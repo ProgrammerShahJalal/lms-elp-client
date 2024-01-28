@@ -79,13 +79,14 @@ const AddCourseForm = () => {
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই কোর্সটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
 
       if (result.isConfirmed) {
@@ -136,7 +137,7 @@ const AddCourseForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-600">
-              Author:
+              Course Instructor:
             </label>
             <input
               type="text"
@@ -147,7 +148,7 @@ const AddCourseForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Category</label>
+            <label className="block text-sm font-medium mb-2">Category:</label>
            
             <select
               {...register("category_id", { required: true })}
@@ -170,7 +171,7 @@ const AddCourseForm = () => {
             
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Sub Category</label>
+            <label className="block text-sm mb-2">Sub Category:</label>
             <select
               {...register("sub_category_id", { required: true })}
               className="w-full border border-gray-300 p-2 rounded-md"
@@ -273,16 +274,17 @@ const AddCourseForm = () => {
           <button
             type="submit"
             //   onClick={handleAddCourse}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+            className="bg-blue-500 text-white px-4 py-2 mt-6 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
           >
             Add Course
           </button>
         </form>
       </div>
 
-      <h1 className="text-2xl font-bold mb-4 mt-12">
-        Admin Update & Delete Courses
+      <h1 className="text-2xl font-bold mt-12">
+        All Courses
       </h1>
+      <p className="mb-4">You can update and delete courses here</p>
       {isSubcategoryLoading ? (
         <p className="text-center text-xl">Loading courses...</p>
       ) : (

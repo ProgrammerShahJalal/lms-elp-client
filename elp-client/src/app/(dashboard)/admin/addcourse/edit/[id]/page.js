@@ -261,7 +261,7 @@ const UpdateCoursePage = ({ params }) => {
         <button
           type="submit"
           //   onClick={handleAddCourse}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700 cursor-pointer"
+          className="bg-blue-500 text-white px-4 py-2 mt-6 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700 cursor-pointer"
         >
           Update Course
         </button>

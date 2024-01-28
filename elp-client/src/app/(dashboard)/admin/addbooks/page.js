@@ -118,13 +118,14 @@ const AddBooks = () => {
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই বইটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
 
       if (result.isConfirmed) {

@@ -5,13 +5,13 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 
 const RoutinesPage = () => {
-  const { data: categories } = useGetAllCategoriesQuery();
+  const { data: categories } = useGetAllCategoriesQuery({limit: 20});
   const categoriesData = categories?.categories;
 
-  const { data: subCategories } = useGetAllSubcategoriesQuery();
+  const { data: subCategories } = useGetAllSubcategoriesQuery({limit: 20});
   const subCategoriesData = subCategories?.subcategories;
 
-  const { data: courses } = useGetAllCoursesQuery();
+  const { data: courses } = useGetAllCoursesQuery({limit: 20});
   const coursesData = courses?.courses?.data;
 
   const breadcrumbItems = [

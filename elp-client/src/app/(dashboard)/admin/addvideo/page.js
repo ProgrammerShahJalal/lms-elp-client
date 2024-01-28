@@ -62,15 +62,15 @@ const AddVideo = () => {
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই প্লেলিস্টটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
-
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteVideoPlaylist(id);
@@ -100,6 +100,7 @@ const AddVideo = () => {
 
   return (
     <div className=" my-8 ">
+      <h2 className="text-2xl font-bold mb-4">Add Video PlayList</h2>
       <form>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
