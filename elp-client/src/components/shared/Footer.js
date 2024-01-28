@@ -155,9 +155,14 @@ const Footer = () => {
           <p>
             Copyright © 2024 - All rights reserved by Easy Learning Platform
           </p>
-          <p>
+         
+          <a
+          target="_blank"
+          href="https://www.linkedin.com/in/ProgrammerShahJalal/"
+          >
           Developed by Elite Developer Unity
-          </p>
+          </a>
+        
         </aside>
       </footer>
     </div>
