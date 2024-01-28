@@ -1,9 +1,9 @@
-import { useGetSingleExamQuery } from '@/redux/api/examsApi';
-import { useSubmitExamUserMutation } from '@/redux/api/resultApi';
-import { getUserInfo } from '@/services/auth.service';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
+import { useGetSingleExamQuery } from "@/redux/api/examsApi";
+import { useSubmitExamUserMutation } from "@/redux/api/resultApi";
+import { getUserInfo } from "@/services/auth.service";
+import Link from "next/link";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const SinglePaymentDetails = ({ item }) => {
   console.log(item);
@@ -12,7 +12,7 @@ const SinglePaymentDetails = ({ item }) => {
   const localData = dateObject.toLocaleDateString();
   const { userId } = getUserInfo();
   const { data: examData } = useGetSingleExamQuery(examId);
-  const [submitExamUser] = useSubmitExamUserMutation()
+  const [submitExamUser] = useSubmitExamUserMutation();
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleSubmitPdf = async (e) => {
@@ -32,20 +32,19 @@ const SinglePaymentDetails = ({ item }) => {
         total_marks: examData?.total_marks,
         total_correct_answer: 0,
         total_wrong_answer: 0,
-        isApproved: false
+        isApproved: false,
       };
       const { data: submissionData } = await submitExamUser(payload);
       if (submissionData) {
-        toast.success("Congratulation, You have successfully submit your ans")
-      }
-      else {
-        toast.error("Your submission not successfully submit")
+        toast.success("Congratulation, You have successfully submit your ans");
+      } else {
+        toast.error("Your submission not successfully submit");
       }
 
       // Handle the submission response as needed
-      console.log('Submission successful:', submissionData);
+      console.log("Submission successful:", submissionData);
     } catch (error) {
-      console.error('Error submitting exam:', error);
+      console.error("Error submitting exam:", error);
     }
   };
   // return (
@@ -70,17 +69,23 @@ const SinglePaymentDetails = ({ item }) => {
       <th>{item?.exam_id?.course_id?.title} </th>
       <td>{item?.exam_id?.title}</td>
       <td>{item?.exam_id?.fee}</td>
-      <td>{item?.exam_id?.exam_type === "0" ? 'Quiz' : 'Questions'}</td>
+      <td>{item?.exam_id?.exam_type === "0" ? "Quiz" : "Questions"}</td>
       <td>{localData}</td>
       <td>{item?.trx_id}</td>
       <td>paid</td>
       <td>
         {isQuiz ? (
-          <Link href={`/user/myexams/details/${item?.exam_id?.id}`} className="text-red-500 font-bold">
+          <Link
+            href={`/user/myexams/details/${item?.exam_id?.id}`}
+            className="text-red-500 font-bold"
+          >
             পরিক্ষা দিন
           </Link>
         ) : (
-          <button onClick={() => setModalOpen(true)} className="your-button-styles">
+          <button
+            onClick={() => setModalOpen(true)}
+            className="your-button-styles"
+          >
             Submit Your Pdf
           </button>
         )}
@@ -88,7 +93,10 @@ const SinglePaymentDetails = ({ item }) => {
       <dialog open={modalOpen} id={`my_modal_${examId}`} className="modal">
         <div className="modal-box">
           <form method="dialog" onSubmit={handleSubmitPdf}>
-            <h1 className='font-bold text-red-500'>Before Submit, Please check pdf link is public, and carefully submit this</h1>
+            <h1 className="font-bold text-red-500">
+              Before Submit, Please check pdf link is public, and carefully
+              submit this
+            </h1>
             <div>
               <label
                 htmlFor="answer link"
@@ -110,12 +118,18 @@ const SinglePaymentDetails = ({ item }) => {
               Submit Your Answer
             </button>
           </form>
-          <button onClick={() => { setModalOpen(false) }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          <button
+            onClick={() => {
+              setModalOpen(false);
+            }}
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
         </div>
       </dialog>
     </tr>
   );
-
 };
 
 export default SinglePaymentDetails;

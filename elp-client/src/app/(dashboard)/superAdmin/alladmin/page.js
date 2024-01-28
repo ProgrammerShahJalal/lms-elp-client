@@ -1,6 +1,6 @@
 "use client";
 
-import AdminPermission from "@/components/dashboard/admin/AdminPermission";
+import AdminPermissions from "@/components/dashboard/admin/AdminPermission";
 import {
   useAdminPermissionMutation,
   useGetAllUsersQuery,
@@ -19,14 +19,19 @@ export const adminPermissions = [
 ];
 
 const AllAdminPage = () => {
-  const { data, isLoading, isError } = useGetAllUsersQuery({
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch: refetchAdmins,
+  } = useGetAllUsersQuery({
     role: "admin",
   });
   const adminUsers = data?.data?.data || [];
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = adminUsers.filter((user) =>
-  user?.contact_no?.includes(searchTerm)
+    user?.contact_no?.includes(searchTerm)
   );
 
   const handleSearchChange = (e) => {
@@ -63,9 +68,6 @@ const AllAdminPage = () => {
                 <th className="border bg-gray-100  py-2 hidden md:table-cell">
                   Contact Number
                 </th>
-                <th className="border bg-gray-100  py-2 hidden md:table-cell">
-                  Role
-                </th>
 
                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
                   Action
@@ -85,16 +87,11 @@ const AllAdminPage = () => {
                     {user.contact_no}
                   </td>
 
-                  <td className="">{user.role}</td>
-
                   <td className="border  py-2 md:table-cell">
-                    {adminPermissions?.map((permission) => (
-                      <AdminPermission
-                        key={permission}
-                        permission={permission}
-                        userId={user?.id}
-                      />
-                    ))}
+                    <AdminPermissions
+                      user={user}
+                      refetchAdmins={refetchAdmins}
+                    />
                   </td>
                 </tr>
               ))}

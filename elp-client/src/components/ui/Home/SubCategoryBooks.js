@@ -2,24 +2,23 @@
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import { useGetAllBooksQuery, useGetSubCategoryBookQuery } from "@/redux/api/booksApi";
+import {
+  useGetAllBooksQuery,
+  useGetSubCategoryBookQuery,
+} from "@/redux/api/booksApi";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import BookSectionCard from "./course/BookSectionCard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination,  } from 'swiper/modules';
-
+import { Navigation, Pagination } from "swiper/modules";
 
 const SubCategoryBooks = ({ sub_category_id }) => {
-  const { data, isError, isLoading } = useGetSubCategoryBookQuery(sub_category_id);
-  console.log(data)
+  const { data, isError, isLoading } =
+    useGetSubCategoryBookQuery(sub_category_id);
 
   const booksData = data;
-  
-  
-    
 
   //   const filteredCourses = coursesData?.filter((item) => item?.membership_type === "1");
 
