@@ -37,11 +37,11 @@ export const resultApi = baseApi.injectEndpoints({
         }),
         giveMarkToStudent: build.mutation({
             query: (data) => ({
-                url: `${EXAM_RESULT}/${data.exam_id}`, // Update the URL to include the exam_id
+                url: `${EXAM_RESULT}/give-mark`,
                 method: "PATCH",
                 data: data,
             }),
-            invalidatesTags: ["exams"],
+            invalidatesTags: ["exam-payments"],
         }),
 
 
