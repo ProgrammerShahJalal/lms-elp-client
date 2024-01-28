@@ -48,7 +48,7 @@ const AddQuiz = () => {
             (exam) => exam.id === newQuestion.exam_id
         );
         const transformedArray = newQuestion?.options?.map((option, index) => {
-            const key = String.fromCharCode(97 + index); // Convert index to corresponding alphabet letter
+            const key = String.fromCharCode(97 + index);
             const obj = { [key]: option };
             return obj;
         });
