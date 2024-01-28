@@ -1,11 +1,7 @@
 'use client'
 
-import { useGetAllQuestionsQuery, useGetMyQuestionsEnrollHistoryQuery } from "@/redux/api/questionsApi";
-import { useExamResultQuery, useGetSingleSubmissionExamQuery, useGiveMarkToStudentMutation } from "@/redux/api/resultApi";
-import { getUserInfo } from "@/services/auth.service";
-import Link from "next/link";
+import { useExamResultQuery, } from "@/redux/api/resultApi";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import GiveMark from "./GiveMark";
 
 const AllExamDetails = ({ item }) => {
