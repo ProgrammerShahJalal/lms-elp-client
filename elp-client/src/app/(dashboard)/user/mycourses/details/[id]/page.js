@@ -8,18 +8,19 @@ import YoutubePlaylist from "./playlist";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
-const Play = () => {
-  // Disable right-click
-  document.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-  });
 
-  document.addEventListener("keydown", function (e) {
-    // Check if the pressed key is F12
-    if (e.key === "F12" || e.keyCode === 123) {
-      e.preventDefault();
-    }
-  });
+const Play = () => {
+  // // Disable right-click
+  // document.addEventListener("contextmenu", (e) => {
+  //   e.preventDefault();
+  // });
+
+  // document.addEventListener("keydown", function (e) {
+  //   // Check if the pressed key is F12
+  //   if (e.key === "F12" || e.keyCode === 123) {
+  //     e.preventDefault();
+  //   }
+  // });
 
   const params = useParams();
   const id = params?.id;
@@ -192,13 +193,13 @@ const Play = () => {
         <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3 relative">
           <div className="static">
             <div className="bg-white  py-3 px-36 md:px-96 z-20 absolute top-0 text-green-500 font-bold flex items-center">
-              <h2>TOP</h2>
+              <h2 className="md:px-12">TOP</h2>
               <img
                 className="w-12"
                 src="https://i.ibb.co/qNjGQnB/2592258.png"
                 alt="secure"
               />
-              <h2>SECURE</h2>
+              <h2 className="md:px-12">SECURE</h2>
             </div>
           </div>
 
@@ -227,7 +228,7 @@ const Play = () => {
                 max="100"
                 value={volume}
                 onChange={(e) => handleVolumeChange(parseInt(e.target.value))}
-                className="volume-slider ml-4 md:ml-0"
+                className="volume-slider ml-6 md:ml-0"
               />
             </div>
            
@@ -238,7 +239,7 @@ const Play = () => {
                 {isPlaying ? <small>Pause</small> : <small>Play</small>}
               </div>
               <img
-                className="custom-play-button play-icon cursor-pointer w-10 mb-2"
+                className="custom-play-button play-icon cursor-pointer w-7 md:w-10 mb-2"
                 src={
                   isPlaying
                     ? "https://i.ibb.co/7NkRvHC/2088562.png"
@@ -274,14 +275,14 @@ const Play = () => {
 
           </div>
 
-          <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-44 text-green-500 font-bold flex items-center">
-            <h2>TOP</h2>
+          <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-48 text-green-500 font-bold flex items-center">
+            <h2 className="md:px-12">TOP</h2>
             <img
               className="w-12"
               src="https://i.ibb.co/qNjGQnB/2592258.png"
               alt="secure"
             />
-            <h2>SECURE</h2>
+            <h2 className="md:px-12">SECURE</h2>
           </div>
 
           <h2 className="text-base">

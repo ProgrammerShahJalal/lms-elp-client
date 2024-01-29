@@ -5,12 +5,28 @@ export const SHIPPING_ADDRESS_URL = "/shipping-addresses";
 export const usersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // all courses
+    // getAllUsers: build.query({
+    //   query: (arg) => {
+    //     return {
+    //       url: USERS_URL,
+    //       method: "GET",
+    //       params: arg,
+    //     };
+    //   },
+    //   transformResponse: (response, meta) => {
+    //     return {
+    //       data: response,
+    //       meta,
+    //     };
+    //   },
+    //   providesTags: ["users"],
+    // }),
     getAllUsers: build.query({
-      query: (arg) => {
+      query: (params) => {
         return {
           url: USERS_URL,
           method: "GET",
-          params: arg,
+          params: params,
         };
       },
       transformResponse: (response, meta) => {
@@ -62,8 +78,6 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ["users"],
     }),
 
-   
-    
     permissionCheck: build.query({
       query: ({ userId, permission }) => ({
         url: `${USERS_URL}/check-permission/${userId}/${permission}`,
@@ -87,7 +101,6 @@ export const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
-    
   }),
 });
 
@@ -100,5 +113,5 @@ export const {
   useDeleteUserMutation,
   usePermissionCheckQuery,
   useGivePermissionMutation,
-  useRemovePermissionMutation
+  useRemovePermissionMutation,
 } = usersApi;

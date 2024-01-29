@@ -96,12 +96,12 @@ const AllOrders = () => {
                 <th> সর্বমোট মূল্য</th>
                 <th>
                   <button onClick={() => handleSortClick("createdAt")} className="btn">
-                    কেনার তারিখ
+                    কেনার <br/> তারিখ
                   </button>
                 </th>
                 <th>ট্রান্সজেকশন আইডি</th>
+                <th>প্রেরণের ঠিকানা</th>
                 <th>স্ট্যাটাস</th>
-                {/* <th>পেমেন্ট</th> */}
               </tr>
             </thead>
             <tbody>{content}</tbody>

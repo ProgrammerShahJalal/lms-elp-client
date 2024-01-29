@@ -22,7 +22,7 @@ const GetInTouch = () => {
                 </div>
 
                 <h2 className="font-bold text-xl">Our Website</h2>
-                <p className="">https://elp-client.vercel.app/</p>
+                <p className="">Easy Learning Platform</p>
               </div>
             </div>
           </Link>
@@ -33,7 +33,7 @@ const GetInTouch = () => {
               </div>
 
               <h2 className="font-bold text-xl">Call Us On</h2>
-              <p className="">elp: +880 18 863 47350</p>
+              <p className="">+880 18 863 47350</p>
             </div>
           </div>
           <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">

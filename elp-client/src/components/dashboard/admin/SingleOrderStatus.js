@@ -9,7 +9,7 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
   const { data: statusData } = useGetAllOrderStatusQuery({
     order_details_id: orderDetailsId,
   });
-  
+
   const allOrdersStatus = statusData?.allStatus?.data;
   // console.log(allOrdersStatus);
 

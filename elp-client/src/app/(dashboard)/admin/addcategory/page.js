@@ -118,7 +118,7 @@ const AdminAddCategory = () => {
 
       <div>
         <h1 className="text-2xl font-bold mb-4 mt-12">
-          Admin Delete Category List
+          Category List
         </h1>
         {allCategory ? (
           <ul>

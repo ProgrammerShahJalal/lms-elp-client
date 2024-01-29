@@ -34,8 +34,8 @@ const CheckoutCart = ({ shippingCharge }) => {
               <h2 className="font-bold text-xl text-bluePrimary">
                 Payment Method
               </h2>
-              <p className="border px-2 py-1"> CashOn Delivery </p>
-              <p className="border px-2 py-1"> Bkash or Nogod</p>
+              <p className="border px-2 py-1">Bkash </p>
+              <p className="border px-2 py-1">Nagad </p>
             </div>
             <div className="pt-5">
               <div className="flex justify-between items-center text-start">

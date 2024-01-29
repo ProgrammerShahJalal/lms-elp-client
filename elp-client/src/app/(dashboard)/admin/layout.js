@@ -26,7 +26,7 @@ const DashboardLayout = ({ children }) => {
   }, [router, role, isLoading]);
 
   if (isLoading) {
-    return <p className="text-center py-20 text-2xl font-bold">Loading.................</p>
+    return <p className="text-center py-20 text-2xl font-bold">Loading...</p>
   }
 
   return (

@@ -50,12 +50,12 @@ const EditExam = ({ id }) => {
 
   return (
     <div>
-      <h2>You can Edit Exam</h2>
+      <h2 className="font-bold text-xl mb-4">You can Edit Exam</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} defaultValues={defaultValues}>
         {data?.course_id && (
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Course Id</label>
+            <label className="block text-sm mb-2">Select the Course</label>
             <select
               {...register("course_id" )}
               defaultValue={data?.course_id}
@@ -75,7 +75,7 @@ const EditExam = ({ id }) => {
 
         {data?.title && (
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Exam Name</label>
+            <label className="block text-sm mb-2">Exam Name</label>
             <input
               type="text"
               name="title"

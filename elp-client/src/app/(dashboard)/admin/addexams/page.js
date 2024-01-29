@@ -81,6 +81,7 @@ const AdminAddExams = () => {
 
   return (
     <div>
+        <h1 className="text-2xl font-bold mb-4">Add New Exam</h1>
       <form
         onSubmit={handleSubmit}
         className=" mx-auto bg-white p-8 border rounded shadow"
