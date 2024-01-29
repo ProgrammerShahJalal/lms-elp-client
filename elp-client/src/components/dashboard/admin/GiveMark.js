@@ -162,10 +162,12 @@ const GiveMark = ({ examResultData, examId, setModalOpen, studentId, name }) => 
                                 htmlFor={`answer_${question.id}`}
                                 className="block text-sm font-medium text-gray-600 mt-2 mb-2"
                             >
-                                Give Mark:
+                                Give Mark:  <span className="font-bold">(Total Mark {question?.mark})</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
+                                max={question?.mark}
+                                min={0}
                                 id={`answer_${question.id}`}
                                 name={`answer_${question.id}`}
                                 className="mt-1 p-2 border rounded-md w-full"
