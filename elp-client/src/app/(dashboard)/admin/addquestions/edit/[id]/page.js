@@ -21,7 +21,7 @@ const UpdateQuestionPage = ({params}) => {
       try {
         data.mark = Number(data?.mark);
         const res = await updateQuestion({ id, body: data });
-        console.log(res);
+       
         if (res?.data?._id === id) {
           toast.success(" Broad Question updated successfully");
           router.push("/admin/addquestions");
