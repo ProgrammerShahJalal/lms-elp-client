@@ -67,7 +67,7 @@ const AdminAddSubCategory = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Admin Add Subcategory</h1>
+      <h1 className="text-2xl font-bold mb-4">Add Subcategory</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">
@@ -118,7 +118,7 @@ const AdminAddSubCategory = () => {
           Add Subcategory
         </button>
       </form>
-      <h1 className="text-2xl font-bold mb-4 mt-12">Admin Update & Delete Sub Category</h1>
+      <h1 className="text-2xl font-bold mb-4 mt-12">Update Sub Category</h1>
       {isSubcategoryLoading ? (
         <p>Loading...</p>
       ) : (
