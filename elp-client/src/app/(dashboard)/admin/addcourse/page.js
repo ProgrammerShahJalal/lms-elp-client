@@ -38,12 +38,12 @@ const AddCourseForm = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
  
-  const totalPages = Math.ceil(allCourses.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(allCourses?.length / ITEMS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  const currentCourses = allCourses.slice(startIndex, endIndex);
+  const currentCourses = allCourses?.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
