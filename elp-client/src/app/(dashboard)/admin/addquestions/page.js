@@ -48,11 +48,8 @@ const AddQuestions = () => {
   const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
-  const [newQuestion, setNewQuestion] = useState({
-    question: "",
-    mark: 0,
-    exam_id: "",
-  });
+  
+  console.log('quesion board', filteredQuestions)
 
   useEffect(() => {
     const fetchSubCategory = async () => {
@@ -138,7 +135,7 @@ const AddQuestions = () => {
 
   return (
     <>
-      <div className="container mx-auto mt-8">
+      <div className="container mx-auto my-8">
         <form
           onSubmit={handleSubmit}
           className="max-w-md mx-auto bg-white p-8 border rounded shadow"
@@ -261,33 +258,7 @@ const AddQuestions = () => {
               )}
             </select>
           </div>
-          {/* <div className="mb-4">
-            <label
-              htmlFor="examId"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Exam ID
-            </label>
-            <select required
-              id="examId"
-              name="examId"
-              value={newQuestion.exam_id}
-              onChange={(e) =>
-                setNewQuestion({ ...newQuestion, exam_id: e.target.value })
-              }
-              className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
-            >
-              <option value="" disabled >
-                Select Exam
-              </option>
-              {filteredAllData &&
-                filteredAllData?.map((exam) => (
-                  <option key={exam.id} value={exam.id}>
-                    {exam?.title}
-                  </option>
-                ))}
-            </select>
-          </div> */}
+         
 
           <div className="mb-4">
             <label
@@ -333,12 +304,13 @@ const AddQuestions = () => {
           </div>
         </form>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mt-10">
           <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr>
                 <th className="py-2 px-4 border-b">Question</th>
-                <th className="py-2 px-4 border-b">Category</th>
+                <th className="py-2 px-4 border-b">Mark</th>
+                <th className="py-2 px-4 border-b">Exam Title</th>
                 <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
               </tr>
@@ -349,16 +321,17 @@ const AddQuestions = () => {
                   <td className="py-2 px-4 border-b">
                     {i + 1}) {quiz?.question}
                   </td>
-                  <td className="py-2 px-4 border-b">{quiz?.exam_id?.title}</td>
-                  <td className="py-2 px-4 border-b md:table-cell">
+                  <td className="py-2 px-4 border-b text-center">{quiz?.mark}</td>
+                  <td className="py-2 px-4 border-b text-center">{quiz?.exam_id?.title}</td>
+                  <td className="py-2 px-4 border-b text-center md:table-cell">
                     <Link href={`/admin/addquestions/edit/${quiz?.id}`}
-                      className="bg-red-500 text-white py-1 px-2 rounded-md"
+                      className="bg-lime-600 text-white py-2 px-2 rounded-md"
                       
                     >
                       Update
                     </Link>
                   </td>
-                  <td className="py-2 px-4 border-b md:table-cell">
+                  <td className="py-2 px-4 border-b text-center md:table-cell">
                     <button
                       className="bg-red-500 text-white py-1 px-2 rounded-md"
                       onClick={() => handleDelete(quiz.id)}

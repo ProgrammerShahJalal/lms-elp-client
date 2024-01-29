@@ -141,6 +141,7 @@ const AddSubscription = () => {
                         type="number"
                         id="cost"
                         name="cost"
+                        placeholder="such as 2500 ৳"
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
                 </div>
@@ -233,31 +234,7 @@ const AddSubscription = () => {
                 </div>
             </form>
 
-            {/* <div className=" mt-8">
-                <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
-                <table className="min-w-full bg-white border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 px-4 py-2">Name</th>
-                            <th className="border border-gray-300 px-4 py-2">Duration (Months)</th>
-                            <th className="border border-gray-300 px-4 py-2">Cost</th>
-                            <th className="border border-gray-300 px-4 py-2">Course Name</th>
-                            <th className="border border-gray-300 px-4 py-2">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {allSubscription?.map((subscription) => (
-                            <tr key={subscription._id}>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.name}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.cost}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
-                                <td className="border border-gray-300 px-4  bg-blue-600 rounded-lg text-white"> <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div> */}
+           
             <div className="mt-8 overflow-x-auto">
                 <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
                 <table className="min-w-full bg-white border border-gray-300">
@@ -273,12 +250,12 @@ const AddSubscription = () => {
                     <tbody>
                         {allSubscription?.map((subscription) => (
                             <tr key={subscription._id}>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.name}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.cost}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
-                                <td className="lg:border border-gray-300 px-4  bg-blue-600 rounded-lg text-white">
-                                    <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.name}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.cost} ৳</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
+                                <td className="lg:border border-gray-300 text-center my-3">
+                                    <button className="mx-2 px-4 py-1 bg-blue-600 rounded-lg text-white" onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
