@@ -11,8 +11,11 @@ const AllOrders = () => {
   const [sortField, setSortField] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading, isError } = useGetAllOrdersQuery();
+  const ITEMS_PER_PAGE = 10;
+
+  const { data, isLoading, isError } = useGetAllOrdersQuery({limit: 10000});
   const ordersData = data?.orders?.data;
 
   useEffect(() => {
@@ -55,20 +58,29 @@ const AllOrders = () => {
     // Update the search term after the debounced delay
     setSearchTerm(debouncedTerm);
   }, [debouncedTerm]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentOrders = filteredOrders.slice(startIndex, endIndex);
+
+
   let content = null;
 
   if (isLoading) {
     content = <InitialLoader />;
-  } else if (!isError && sortedOrder.length === 0) {
+  } else if (!isError && currentOrders.length === 0) {
     content = (
       <div className="flex justify-center items-center font-bold bg-green-400 text-white py-3 rounded text-lg">
-        <h5>{searchTerm ? 'No matching orders found' : 'All Orders table is Empty Now'}</h5>
+        <h5>{searchTerm ? "No matching orders found" : "All Orders table is Empty Now"}</h5>
       </div>
     );
-  } else if (!isError && sortedOrder.length > 0) {
-    content = sortedOrder.map((item) => (
-      <AllOrdersDetials key={item?.id} item={item} />
-    ));
+  } else if (!isError && currentOrders.length > 0) {
+    content = currentOrders.map((item) => <AllOrdersDetials key={item?.id} item={item} />);
   }
 
   return (
@@ -106,6 +118,28 @@ const AllOrders = () => {
             </thead>
             <tbody>{content}</tbody>
           </table>
+
+
+          {/* Pagination controls */}
+          <div className="flex justify-center my-4">
+            {Array.from({ length: Math.ceil(filteredOrders.length / ITEMS_PER_PAGE) }, (_, index) => index + 1).map(
+              (page) => (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`mx-2 px-4 py-2 rounded-full ${
+                    page === currentPage
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-300 text-gray-700'
+                  }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
+          </div>
+
+
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 
 const AddVideo = () => {
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
-  const { data } = useGetAllPlaylistQuery();
+  const { data } = useGetAllPlaylistQuery({limit: 10000});
   const coursePLaylists = data?.playlists;
  
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
@@ -23,17 +23,30 @@ const AddVideo = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { data: categories } = useGetAllCategoriesQuery(undefined);
+  const { data: categories } = useGetAllCategoriesQuery({limit: 10000});
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
+      limit: 10000
     });
   const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
+    limit: 10000
   });
   const allCourse = courses?.courses?.data;
 
-  const { data: allVedio } = useGetAllQuestionsQuery();
+  const { data: allVedio } = useGetAllQuestionsQuery({limit: 10000});
+
+
+  const ITEMS_PER_PAGE = 25;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil((coursePLaylists?.length || 0) / ITEMS_PER_PAGE);
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentPlaylists = coursePLaylists?.slice(startIndex, endIndex);
+
 
   const [initialFormData, setInitialFormData] = useState({
     title: "",
@@ -97,6 +110,13 @@ const AddVideo = () => {
       toast.error(err.message);
     }
   };
+
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+
 
   return (
     <div className=" my-8 ">
@@ -241,7 +261,7 @@ const AddVideo = () => {
             </tr>
           </thead>
           <tbody>
-            {coursePLaylists?.map((playlist) => (
+            {currentPlaylists?.map((playlist) => (
               <tr key={playlist._id} className="">
                 <td className="py-2 px-4 border-b">{playlist?.title}</td>
                 <td className="py-2 px-4 border-b">
@@ -274,6 +294,28 @@ const AddVideo = () => {
             ))}
           </tbody>
         </table>
+
+         {/* Pagination controls */}
+         <div className="flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            (page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`mx-2 px-4 py-2 rounded-full ${
+                  page === currentPage
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-300 text-gray-700'
+                }`}
+              >
+                {page}
+              </button>
+            )
+          )}
+        </div>
+
+
+
       </div>
     </div>
   );

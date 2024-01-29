@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const AddSubscription = () => {
-    const { data } = useGetAllSubscriptionQuery();
+    const { data } = useGetAllSubscriptionQuery({limit: 10000});
     const allSubscription = data?.exams?.data;
     const [deleteSubscription] = useDeleteSubscriptionMutation()
     const [addSubscription] = useAddSubscriptionMutation()
@@ -19,24 +19,46 @@ const AddSubscription = () => {
     const { data: subCategories, refetch: refetchSubCategories } =
         useGetAllSubcategoriesQuery({
             category_id: selectedCategory,
+            limit: 10000
         });
     const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
         sub_category_id: selectedSubcategory,
+        limit: 10000
     });
     const allCourse = courses?.courses?.data;
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 25; 
+
+  const totalPages = Math.ceil(
+    (allSubscription?.length || 0) / ITEMS_PER_PAGE
+  );
+    
     useEffect(() => {
         const fetchSubCategory = async () => {
-            await refetchSubCategories({ category_id: selectedCategory });
+            await refetchSubCategories({ category_id: selectedCategory, limit: 10000 });
         };
         fetchSubCategory();
-    }, [selectedCategory]);
+    }, [currentPage]);
+
 
     useEffect(() => {
         const fetchSubCategories = async () => {
-            await refetchCourses({ sub_category_id: selectedSubcategory });
+            await refetchCourses({ sub_category_id: selectedSubcategory, limit: 10000 });
         };
         fetchSubCategories();
-    }, [selectedSubcategory]);
+    }, [currentPage]);
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentSubscriptions = allSubscription?.slice(startIndex, endIndex);
+
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+      };
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const subscriptionData = {
@@ -56,6 +78,8 @@ const AddSubscription = () => {
 
         }
     };
+
+
     const handleSubscriptionDelete = async (categoryId) => {
         try {
             const result = await Swal.fire({
@@ -98,7 +122,7 @@ const AddSubscription = () => {
                 onSubmit={handleSubmit}
                 className=" p-8 border rounded shadow"
             >
-                <h1 className="mb-8 text-3xl font-bold">অ্যাডমিন সাবস্ক্রিপশন যোগ করেছেন</h1>
+                <h1 className="mb-8 text-3xl font-bold">সাবস্ক্রিপশন যোগ করুন</h1>
                 <div className="mb-4">
                     <label
                         htmlFor="name"
@@ -141,6 +165,7 @@ const AddSubscription = () => {
                         type="number"
                         id="cost"
                         name="cost"
+                        placeholder="such as 2500 ৳"
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
                 </div>
@@ -233,31 +258,7 @@ const AddSubscription = () => {
                 </div>
             </form>
 
-            {/* <div className=" mt-8">
-                <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
-                <table className="min-w-full bg-white border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 px-4 py-2">Name</th>
-                            <th className="border border-gray-300 px-4 py-2">Duration (Months)</th>
-                            <th className="border border-gray-300 px-4 py-2">Cost</th>
-                            <th className="border border-gray-300 px-4 py-2">Course Name</th>
-                            <th className="border border-gray-300 px-4 py-2">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {allSubscription?.map((subscription) => (
-                            <tr key={subscription._id}>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.name}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.cost}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
-                                <td className="border border-gray-300 px-4  bg-blue-600 rounded-lg text-white"> <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div> */}
+           
             <div className="mt-8 overflow-x-auto">
                 <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
                 <table className="min-w-full bg-white border border-gray-300">
@@ -271,19 +272,41 @@ const AddSubscription = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allSubscription?.map((subscription) => (
+                        {currentSubscriptions?.map((subscription) => (
                             <tr key={subscription._id}>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.name}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.cost}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
-                                <td className="lg:border border-gray-300 px-4  bg-blue-600 rounded-lg text-white">
-                                    <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.name}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">৳ {subscription?.cost}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
+                                <td className="lg:border border-gray-300 text-center my-3">
+                                    <button className="mx-2 px-4 py-1 bg-blue-600 rounded-lg text-white" onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
+
+                {/* Pagination controls */}
+        <div className="flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            (page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`mx-2 px-4 py-2 rounded-full ${
+                  page === currentPage
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-300 text-gray-700'
+                }`}
+              >
+                {page}
+              </button>
+            )
+          )}
+        </div>
+
+
             </div>
 
         </div>

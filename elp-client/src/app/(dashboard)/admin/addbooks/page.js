@@ -13,12 +13,10 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 
 const AddBooks = () => {
-  const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery();
+  const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery({limit: 1000});
   const allBook = allBooks?.books?.data;
   const [deleteBooks] = useDeleteBooksMutation();
   const [addBooks] = useAddBooksMutation();
-  // const { data: courses, isLoading, isError } = useGetAllCoursesQuery();
-  // const courseData = courses?.courses?.data;
   const [repetitions, setRepetitions] = useState(1);
   const [fields, setFields] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
   const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 1 }, () => ''));
@@ -27,7 +25,7 @@ const AddBooks = () => {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useGetAllCategoriesQuery();
+  } = useGetAllCategoriesQuery({limit: 1000});
 
   const {
     data: subcategories,
@@ -35,10 +33,12 @@ const AddBooks = () => {
     isError: isErrorSubcategories,
   } = useGetAllSubcategoriesQuery({
     category_id: selectedCategories,
+    limit: 1000
   });
   const allSubcategory = subcategories?.subcategories;
   const { data } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategories,
+    limit: 1000
   });
   const allCourse = data?.courses?.data;
   const [repetitionData, setRepetitionData] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
@@ -55,66 +55,38 @@ const AddBooks = () => {
     updatedRepetitionData.splice(index, 1);
     setRepetitionData(updatedRepetitionData);
   };
+
+
   const { register, handleSubmit, reset, watch, setValue } = useForm();
+
+
   const onSubmit = async (data) => {
-    // console.log(data);
     data.price = Number(data?.price);
     data.discount_price = Number(data?.discount_price);
 
     const content = { ...data };
 
     const file = content["file"];
-    // console.log(file)
-    // delete content['file'];
+
     content.course_id = data?.categories?.map((category) => category.course_id) || [];
     const { categories, ...othersData } = content;
     console.log(othersData);
     const result = JSON.stringify(othersData);
-    // console.log(result, "json");
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
-    // console.log(formData, 'formdaata')
+   
     try {
       const resultData = await addBooks(formData);
 
       if (resultData) {
         toast.success("Book created successfully");
       }
-      // console.log(resultData, ' from add category async')
     } catch (error) {
       toast.error(error.message);
     }
   };
-  // const onSubmit = async (data) => {
-  //   // console.log(data);
-  //   data.price = Number(data?.price);
-  //   data.discount_price = Number(data?.discount_price);
-
-  //   const content = { ...data };
-
-  //   const file = content["file"];
-  //   // console.log(file)
-  //   // delete content['file'];
-  //   const result = JSON.stringify(content);
-  //   // console.log(result, "json");
-  //   const formData = new FormData();
-  //   formData.append("file", file[0]);
-  //   formData.append("data", result);
-  //   // console.log(formData, 'formdaata')
-  //   try {
-  //     const resultData = await addBooks(formData);
-
-  //     if (resultData) {
-  //       toast.success("Book created successfully");
-  //     }
-  //     // console.log(resultData, ' from add category async')
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
-
-  // book delete function
+  
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -129,19 +101,15 @@ const AddBooks = () => {
       });
 
       if (result.isConfirmed) {
-        // User confirmed deletion
         const res = await deleteBooks(id);
-        // console.log(res?.data)
 
         if (res?.data?._id === id) {
-          // Item deleted successfully
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success",
           });
         } else {
-          // Something went wrong with deletion
           Swal.fire({
             title: "Error!",
             text: "Something went wrong with deletion.",
@@ -150,10 +118,22 @@ const AddBooks = () => {
         }
       }
     } catch (err) {
-      // Handle any errors that occur during the process
       toast.error(err.message);
     }
   };
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10; 
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentBooks = allBooks?.books?.data?.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div className="container mx-auto  p-6">
@@ -403,7 +383,7 @@ const AddBooks = () => {
         </form>
 
         <h1 className="text-2xl font-bold mb-4 mt-12">
-          Admin Update & Delete Books
+        Update & Delete Books
         </h1>
         {isBooksLoading ? (
           <p className="text-center text-xl">Loading books...</p>
@@ -424,10 +404,10 @@ const AddBooks = () => {
                 </tr>
               </thead>
               <tbody>
-                {allBook?.map((book, i) => (
+                {currentBooks?.map((book, i) => (
                   <tr key={book._id}>
                     <td className="py-2 px-4 border-b">
-                      {i + 1}) {book?.title}
+                      {book?.title}
                     </td>
                     <td className="py-2 px-4 border-b">{book?.writer}</td>
                     <td className="py-2 px-4 border-b">{book?.price}</td>
@@ -472,6 +452,26 @@ const AddBooks = () => {
                 ))}
               </tbody>
             </table>
+
+{/* Pagination controls */}
+<div className="flex justify-center mt-4">
+              {Array.from({ length: Math.ceil((allBooks?.books?.data?.length || 0) / ITEMS_PER_PAGE) }, (_, index) => index + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`mx-2 px-4 py-2 rounded-full ${
+                      page === currentPage
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-300 text-gray-700'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+            </div>
+
           </div>
         )}
       </div>

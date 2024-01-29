@@ -4,12 +4,13 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useState } from "react";
 
 const RoutinesPage = () => {
-
-  const { data: courses, isLoading } = useGetAllCoursesQuery({ limit: 100000 });
+  const ITEMS_PER_PAGE = 10;
+  const { data: courses, isLoading } = useGetAllCoursesQuery({ limit: 1000 });
   const coursesData = courses?.courses?.data;
 
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Extract unique subcategories and categories
   const uniqueSubcategories = Array.from(
@@ -31,6 +32,18 @@ const RoutinesPage = () => {
       (!selectedSubcategory || (course.sub_category_id && course.sub_category_id.title === selectedSubcategory)) &&
       (!selectedCategory || (course.sub_category_id && course.sub_category_id.category_id.title === selectedCategory))
   );
+
+
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(filteredCourses?.length / ITEMS_PER_PAGE);
+
+  // Calculate the index range for the current page
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+
+  // Extract the courses for the current page
+  const currentCourses = filteredCourses?.slice(startIndex, endIndex);
 
 
   const breadcrumbItems = [
@@ -92,7 +105,7 @@ const RoutinesPage = () => {
 }
       <div className="p-8 mb-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-        {filteredCourses?.map((course) => (  
+        {currentCourses?.map((course) => (  
           <div key={course.id} className="p-4 rounded-lg shadow bg-indigo-100">
             <h2 className="text-2xl font-bold mb-2 text-center">
               {course.title}
@@ -125,7 +138,25 @@ const RoutinesPage = () => {
             )}
           </div>
         ))}
+
+
       </div>
+
+       {/* Pagination controls */}
+       <div className="flex justify-center my-4">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`mx-2 px-4 py-2 rounded-full ${
+              page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+
     </>
   );
 };

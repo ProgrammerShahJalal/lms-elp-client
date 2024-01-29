@@ -47,7 +47,7 @@ const UsersDetails = ({ user, index }) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        text: "To delete the user, click 'Delete'; otherwise, click 'Cancel.'",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -81,18 +81,7 @@ const UsersDetails = ({ user, index }) => {
       toast.error(err.message);
     }
   };
-  //   const handleMakeAdmin = async (userId) => {
-  //     try {
-  //       const response = await makeAdmin({ userId });
-  //       if (response) {
-  //         toast.success("admin Created Successfully");
-  //       }
-
-  //       // console.log(response);
-  //     } catch (error) {
-  //       toast.error("Error making user admin:", error);
-  //     }
-  //   };
+  
   const isAdmin = user && (user.role === 'admin' || user.role === 'super_admin');
 
   const getColorClass = (userRole) => {
@@ -100,17 +89,17 @@ const UsersDetails = ({ user, index }) => {
       case "admin":
         return "text-blue-500";
       case "super_admin":
-        return "text-green-500"; // You can choose the color class you prefer for super admins
+        return "text-green-500"; 
       case "student":
-        return "text-yellow-500"; // You can choose the color class you prefer for students
+        return "text-yellow-500"; 
       default:
-        return "text-gray-500"; // Default color for unknown roles
+        return "text-gray-500"; 
     }
   };
   return (
     <tr>
       <td className="border px-4  py-2 md:table-cell">
-        {index})      {user.name}
+        {user.name}
       </td>
       <td className="border px-2  py-2 md:table-cell">
         {user.email}
@@ -118,7 +107,7 @@ const UsersDetails = ({ user, index }) => {
       <td className="border px-2  py-2 md:table-cell">
         {user.contact_no}
       </td>
-      {/* <td className="border px-2 py-2 md:table-cell">{user.role}</td> */}
+      
       <td
         className={`border px-2 py-2 md:table-cell ${getColorClass(
           user.role
