@@ -4,10 +4,9 @@ import AdminPermissions from "@/components/dashboard/admin/AdminPermission";
 import {
   useGetAllUsersQuery,
 } from "@/redux/api/usersApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Pagination from "../../Pagination";
 
-
-const ITEMS_PER_PAGE = 10;
 
 
 export const adminPermissions = [
@@ -22,41 +21,46 @@ export const adminPermissions = [
 ];
 
 const AllAdminPage = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+
   const {
     data,
     isLoading,
     isError,
     refetch: refetchAdmins,
   } = useGetAllUsersQuery({
-    role: "admin", limit: 100
+    role: "admin", 
+    limit,
+    page, 
+    searchTerm,
   });
-  const adminUsers = data?.data?.data || [];
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+ 
 
-  const filteredUsers = adminUsers.filter((user) =>
+
+  const admins = data?.data?.data || [];
+
+
+  const filteredUsers = admins.filter((user) =>
     user?.contact_no?.includes(searchTerm)
   );
 
 
-  const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
-
-
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-
-
-  const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1);
+    setPage(1);
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  useEffect(() => {
+    refetchAdmins();
+  }, [limit, page, searchTerm]);
+
+  const totalData = data?.data?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
 
   if (isLoading) {
@@ -96,7 +100,7 @@ const AllAdminPage = () => {
               </tr>
             </thead>
             <tbody>
-              {currentUsers?.map((user) => (
+              {admins?.map((user) => (
                 <tr key={user?.id}>
                   <td className="border px-4  py-2 md:table-cell">
                     {user.name}
@@ -119,24 +123,7 @@ const AllAdminPage = () => {
             </tbody>
           </table>
 
-           {/* Pagination controls */}
-           <div className="flex justify-center mt-4">
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`mx-2 px-4 py-2 rounded-full ${
-                    page === currentPage
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-300 text-gray-700'
-                  }`}
-                >
-                  {page}
-                </button>
-              )
-            )}
-          </div>
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
 
         </div>

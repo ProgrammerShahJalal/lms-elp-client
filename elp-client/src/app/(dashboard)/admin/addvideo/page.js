@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 
 const AddVideo = () => {
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
-  const { data } = useGetAllPlaylistQuery({limit: 10000});
+  const { data } = useGetAllPlaylistQuery({limit: 400});
   const coursePLaylists = data?.playlists;
  
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
@@ -23,19 +23,19 @@ const AddVideo = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { data: categories } = useGetAllCategoriesQuery({limit: 10000});
+  const { data: categories } = useGetAllCategoriesQuery({limit: 400});
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
-      limit: 10000
+      limit: 400
     });
   const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
-    limit: 10000
+    limit: 400
   });
   const allCourse = courses?.courses?.data;
 
-  const { data: allVedio } = useGetAllQuestionsQuery({limit: 10000});
+  const { data: allVedio } = useGetAllQuestionsQuery({limit: 400});
 
 
   const ITEMS_PER_PAGE = 25;
