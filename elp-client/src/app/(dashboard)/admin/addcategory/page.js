@@ -6,14 +6,21 @@ import {
 } from "@/redux/api/categoryApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Pagination from "../../Pagination";
 
 const AdminAddCategory = () => {
-  const { data: categories } = useGetAllCategoriesQuery();
+  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { data: categories, refetch } = useGetAllCategoriesQuery({limit, page, searchTerm});
+
   const allCategory = categories?.categories;
+
   const [addCategory] = useAddCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -22,6 +29,8 @@ const AdminAddCategory = () => {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
     // console.log(data)
+
+
 
     const content = { ...data };
     const file = content["file"];
@@ -86,9 +95,18 @@ const AdminAddCategory = () => {
     }
   };
 
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+// console.log('info', categories);
+  // const totalData = questions?.categories?.meta?.total;
+  // const totalPages = Math.ceil(totalData / limit);
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Admin Add Category</h1>
+      <h1 className="text-2xl font-bold mb-4">Add Category</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category Name</label>
@@ -118,7 +136,7 @@ const AdminAddCategory = () => {
 
       <div>
         <h1 className="text-2xl font-bold mb-4 mt-12">
-          Admin Delete Category List
+          Category List
         </h1>
         {allCategory ? (
           <ul>
@@ -160,6 +178,7 @@ const AdminAddCategory = () => {
           <p>No categories found</p>
         )}
       </div>
+      {/* <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/> */}
     </div>
   );
 };

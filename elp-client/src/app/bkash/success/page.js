@@ -27,7 +27,6 @@ import { clearCart } from "@/redux/features/cart/cartSlice";
 function Success() {
   const user_id = getUserInfo()?.userId;
   const searchParams = useSearchParams();
-  const { data: shippingAddress } = useGetMyShippingAddressQuery();
   const [payForExam] = usePayForExamMutation();
   const [subscribeToCourse] = useSubscribeToCourseMutation();
   const [subscribeToCourseBundle] = useSubscribeToCourseBundleMutation();
@@ -43,20 +42,20 @@ function Success() {
   useEffect(() => {
     const processPayment = async () => {
       try {
+        // if book ordered, create book payload
+        let booksPayload;
+        if (books?.length) {
+          booksPayload = books?.map((book) => {
+            return {
+              book_id: book?._id,
+              quantity: book?.quantity,
+            };
+          });
+        }
         if (payloadString) {
           const payload = JSON.parse(payloadString);
           payload.trx_id = trx_id;
           payload.paymentID = paymentID;
-
-          let booksPayload;
-          if (books?.length) {
-            booksPayload = books?.map((book) => {
-              return {
-                book_id: book?._id,
-                quantity: book?.quantity,
-              };
-            });
-          }
 
           if (orderType === "subscription") {
             const res = await subscribeToCourse(payload);
@@ -67,7 +66,6 @@ function Success() {
                 icon: "success",
               });
             }
-            // toast("Success!");
           } else if (orderType === "exam") {
             const res = await payForExam(payload);
             if (res) {
@@ -77,7 +75,6 @@ function Success() {
                 icon: "success",
               });
             }
-            // toast("Success!");
           } else if (orderType === "hard copy") {
             const shippingAddressPayload = {
               user_id,
@@ -88,10 +85,9 @@ function Success() {
               outside_dhaka: JSON.parse(payload?.outside_dhaka),
               billing_name: payload?.billing_name,
             };
-            if (!shippingAddress || payload?.is_default) {
+            if (payload?.is_default) {
               await updateShippingAddress(shippingAddressPayload);
             }
-
             // create order
             const order = await addOrder({
               trx_id,
@@ -151,7 +147,10 @@ function Success() {
         Cookies.remove("order_type");
         Cookies.remove("creationPayload");
       } catch (error) {
-        toast.error("Order failed!  Contact to easy learning platform admin!");
+        toast.error(
+          "Order failed!  Contact to easy learning platform admin!",
+          error
+        );
       }
     };
     processPayment();

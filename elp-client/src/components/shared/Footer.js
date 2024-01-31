@@ -67,14 +67,11 @@ const Footer = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <Link href="/">
+              
                 <span>
                   <FaWhatsapp className="text-white text-xl" />
                 </span>
-              </Link>
-              {showNumber && (
-                <span className="text-white">Help: +880 18 863 47350</span>
-              )}
+              
             </p>
             <p className="bg-gray-700 p-4  rounded transition-all duration-300  hover:bg-bluePrimary text-center cursor-pointer">
               <Link href="/">
@@ -146,16 +143,23 @@ const Footer = () => {
           <a className="link link-hover">
             Chattagram Office: Anderkilla, Chattagram-4000
           </a>
-          <a className="link link-hover">elp: +880 18 863 47350</a>
+          <a className="link link-hover">+880 18 863 47350</a>
           <a className="link link-hover">easyjobpreperation@gmail.com</a>
         </nav>
       </footer>
       <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">
         <aside>
           <p>
-            Copyright © 2024 - All right reserved Developed by Elite Developer
-            Unity
+            Copyright © 2024 - All rights reserved by Easy Learning Platform
           </p>
+         
+          <a
+          target="_blank"
+          href="https://www.linkedin.com/in/ProgrammerShahJalal/"
+          >
+          Developed by Elite Developer Unity
+          </a>
+        
         </aside>
       </footer>
     </div>

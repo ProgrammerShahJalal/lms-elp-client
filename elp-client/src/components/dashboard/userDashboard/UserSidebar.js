@@ -6,6 +6,7 @@ import { ImProfile } from "react-icons/im";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
 import { PiExamFill } from "react-icons/pi";
 import { SiCoursera } from "react-icons/si";
+import { MdSubscriptions } from "react-icons/md";
 import { FaBorderAll } from "react-icons/fa6";
 import { MdRememberMe, MdQuiz } from "react-icons/md";
 import { useState } from "react";
@@ -79,6 +80,13 @@ const UserSidebar = () => {
                     {" "}
                     <SiCoursera />
                     কোর্স যোগ করুন
+                  </Link>
+                </li>
+                <li >
+                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-5 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                    {" "}
+                    <MdSubscriptions fontSize={20} />
+                    সাবস্ক্রিপশন যোগ করুন
                   </Link>
                 </li>
                 <li >
@@ -170,6 +178,13 @@ const UserSidebar = () => {
                     {" "}
                     <SiCoursera fontSize={20} />
                     কোর্স যোগ করুন
+                  </Link>
+                </li>
+                <li >
+                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-5 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                    {" "}
+                    <MdSubscriptions fontSize={20} />
+                    সাবস্ক্রিপশন যোগ করুন
                   </Link>
                 </li>
                 <li >

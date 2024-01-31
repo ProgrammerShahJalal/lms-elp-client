@@ -1,29 +1,48 @@
 "use client";
 
+import Pagination from "@/app/(dashboard)/Pagination";
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useDeleteExamMutation, useGetAllExamsQuery } from "@/redux/api/examsApi";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const GetAllExams = () => {
-  const { data, isLoading, isError } = useGetAllExamsQuery();
+  const [limit, setLimit] = useState(25);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { data, isLoading, isError, refetch } = useGetAllExamsQuery({limit,  page, searchTerm});
   const [deleteExam] = useDeleteExamMutation()
 //   console.log(data?.exams?.data);
   const examsData = data?.exams?.data;
 
+
+  console.log('info', data?.exams?.meta);
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+
+  const totalData = data?.exams?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই পরীক্ষাটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
   
       if (result.isConfirmed) {
@@ -126,7 +145,7 @@ const GetAllExams = () => {
 
   return (
     <div className="py-10">
-      <h2 className="text-xl font-bold py-5"> All Exams are here</h2>
+      <h2 className="text-xl font-bold py-5">All Exams are here</h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
@@ -145,6 +164,8 @@ const GetAllExams = () => {
           </thead>
           <tbody>{content}</tbody>
         </table>
+
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
       </div>
     </div>
   );

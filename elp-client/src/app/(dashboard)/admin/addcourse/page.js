@@ -1,18 +1,8 @@
 "use client";
-import React, { useState } from "react";
-// import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
-// import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-// import {
-//   useAddCourseMutation,
-//   useDeleteCoursesMutation,
-//   useGetAllCoursesQuery,
-// } from "@/redux/api/courseApi";
-// import "react-quill/dist/quill.snow.css";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import {
@@ -22,8 +12,13 @@ import {
 } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import Pagination from "../../Pagination";
 
 const AddCourseForm = () => {
+  const [limit, setLimit] = useState(15);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const {
     data: categories,
@@ -40,9 +35,21 @@ const AddCourseForm = () => {
   });
   const allSubcategory = subcategories?.subcategories;
 
-  const { data: courses, isLoading: isSubcategoryLoading } =
-    useGetAllCoursesQuery();
+  const { data: courses, isLoading: isSubcategoryLoading, refetch } =
+    useGetAllCoursesQuery({limit, page, searchTerm});
   const allCourses = courses?.courses?.data;
+
+  const currentCourses = courses?.courses?.data;
+
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+  const totalData = courses?.courses?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+
 
   const [addCourse] = useAddCourseMutation();
   const [deleteCourses] = useDeleteCoursesMutation();
@@ -50,7 +57,6 @@ const AddCourseForm = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data, 'input daa');
 
     const content = { ...data };
 
@@ -74,34 +80,31 @@ const AddCourseForm = () => {
     }
   };
 
-  // handle delete course function
 
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই কোর্সটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
 
       if (result.isConfirmed) {
-        // User confirmed deletion
         const res = await deleteCourses(id);
-        // console.log(res?.data)
 
         if (res?.data?._id === id) {
-          // Item deleted successfully
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success",
           });
         } else {
-          // Something went wrong with deletion
+         
           Swal.fire({
             title: "Error!",
             text: "Something went wrong with deletion.",
@@ -110,7 +113,6 @@ const AddCourseForm = () => {
         }
       }
     } catch (err) {
-      // Handle any errors that occur during the process
       toast.error(err.message);
     }
   };
@@ -136,7 +138,7 @@ const AddCourseForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-600">
-              Author:
+              Course Instructor:
             </label>
             <input
               type="text"
@@ -147,7 +149,7 @@ const AddCourseForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Category</label>
+            <label className="block text-sm font-medium mb-2">Category:</label>
            
             <select
               {...register("category_id", { required: true })}
@@ -170,7 +172,7 @@ const AddCourseForm = () => {
             
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Sub Category</label>
+            <label className="block text-sm mb-2">Sub Category:</label>
             <select
               {...register("sub_category_id", { required: true })}
               className="w-full border border-gray-300 p-2 rounded-md"
@@ -213,8 +215,6 @@ const AddCourseForm = () => {
             <textarea rows={10}
               id="description"
               name="description"
-              // theme="snow"
-              // modules={{ toolbar: toolbarOptions }}
               {...register("description", { required: true })}
               className="mt-1 p-2 border rounded-md w-full"
             />
@@ -273,16 +273,17 @@ const AddCourseForm = () => {
           <button
             type="submit"
             //   onClick={handleAddCourse}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+            className="bg-blue-500 text-white px-4 py-2 mt-6 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
           >
             Add Course
           </button>
         </form>
       </div>
 
-      <h1 className="text-2xl font-bold mb-4 mt-12">
-        Admin Update & Delete Courses
+      <h1 className="text-2xl font-bold mt-12">
+        All Courses
       </h1>
+      <p className="mb-4">You can update and delete courses here</p>
       {isSubcategoryLoading ? (
         <p className="text-center text-xl">Loading courses...</p>
       ) : (
@@ -300,7 +301,7 @@ const AddCourseForm = () => {
               </tr>
             </thead>
             <tbody>
-              {allCourses?.map((course) => (
+              {currentCourses?.map((course) => (
                 <tr key={course._id}>
                   <td className="py-2 px-1 border-b">{course?.title}</td>
                   <td className="py-2 px-4 border-b">{course?.author}</td>
@@ -336,6 +337,9 @@ const AddCourseForm = () => {
               ))}
             </tbody>
           </table>
+
+<Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
         </div>
       )}
     </div>

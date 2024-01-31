@@ -13,8 +13,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Pagination from "../../Pagination";
 
 const AddQuestions = () => {
+
+  const [limit, setLimit] = useState(30);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -23,36 +29,46 @@ const AddQuestions = () => {
   const [mark, setMark] = useState(null);
   const [addQuizPlaylist] = useAddQuizPlaylistMutation();
 
-  // const { data:exams } = useGetAllExamsQuery({
-  //   course_id:selectedCourse, exam_type:1
-  // });
-  const { data: categories } = useGetAllCategoriesQuery(undefined);
+ 
+  const { data: categories } = useGetAllCategoriesQuery({limit, page, searchTerm});
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
+      limit, page, searchTerm,
     });
   const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
+    limit, page, searchTerm,
   });
+
   const allCourse = courses?.courses?.data;
+
   const { data: exams, refetch: refetchExams } = useGetAllExamsQuery({
     course_id: selectedCourse,
     exam_type: 1,
+    limit, page, searchTerm,
   });
+
+
   const allExams = exams?.exams?.data;
 
-  // const allData = data?.categories?.data;
-  // const filteredAllData = allData?.filter((quiz) => quiz.exam_type === "1");
-  const { data: questions } = useGetAllQuestionsQuery();
+
+  const { data: questions, refetch } = useGetAllQuestionsQuery({limit, page, searchTerm});
+
   const allQuiz = questions?.categories?.data;
   const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
-  const [newQuestion, setNewQuestion] = useState({
-    question: "",
-    mark: 0,
-    exam_id: "",
-  });
+  
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+
+  const totalData = questions?.categories?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
 
   useEffect(() => {
     const fetchSubCategory = async () => {
@@ -99,13 +115,14 @@ const AddQuestions = () => {
    const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই প্রশ্নটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
 
       if (result.isConfirmed) {
@@ -137,7 +154,7 @@ const AddQuestions = () => {
 
   return (
     <>
-      <div className="container mx-auto mt-8">
+      <div className="container mx-auto my-8">
         <form
           onSubmit={handleSubmit}
           className="max-w-md mx-auto bg-white p-8 border rounded shadow"
@@ -260,33 +277,7 @@ const AddQuestions = () => {
               )}
             </select>
           </div>
-          {/* <div className="mb-4">
-            <label
-              htmlFor="examId"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Exam ID
-            </label>
-            <select required
-              id="examId"
-              name="examId"
-              value={newQuestion.exam_id}
-              onChange={(e) =>
-                setNewQuestion({ ...newQuestion, exam_id: e.target.value })
-              }
-              className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
-            >
-              <option value="" disabled >
-                Select Exam
-              </option>
-              {filteredAllData &&
-                filteredAllData?.map((exam) => (
-                  <option key={exam.id} value={exam.id}>
-                    {exam?.title}
-                  </option>
-                ))}
-            </select>
-          </div> */}
+         
 
           <div className="mb-4">
             <label
@@ -332,12 +323,13 @@ const AddQuestions = () => {
           </div>
         </form>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mt-10">
           <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr>
                 <th className="py-2 px-4 border-b">Question</th>
-                <th className="py-2 px-4 border-b">Category</th>
+                <th className="py-2 px-4 border-b">Mark</th>
+                <th className="py-2 px-4 border-b">Exam Title</th>
                 <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
               </tr>
@@ -348,16 +340,17 @@ const AddQuestions = () => {
                   <td className="py-2 px-4 border-b">
                     {i + 1}) {quiz?.question}
                   </td>
-                  <td className="py-2 px-4 border-b">{quiz?.exam_id?.title}</td>
-                  <td className="py-2 px-4 border-b md:table-cell">
+                  <td className="py-2 px-4 border-b text-center">{quiz?.mark}</td>
+                  <td className="py-2 px-4 border-b text-center">{quiz?.exam_id?.title}</td>
+                  <td className="py-2 px-4 border-b text-center md:table-cell">
                     <Link href={`/admin/addquestions/edit/${quiz?.id}`}
-                      className="bg-red-500 text-white py-1 px-2 rounded-md"
+                      className="bg-lime-600 text-white py-2 px-2 rounded-md"
                       
                     >
                       Update
                     </Link>
                   </td>
-                  <td className="py-2 px-4 border-b md:table-cell">
+                  <td className="py-2 px-4 border-b text-center md:table-cell">
                     <button
                       className="bg-red-500 text-white py-1 px-2 rounded-md"
                       onClick={() => handleDelete(quiz.id)}
@@ -369,6 +362,9 @@ const AddQuestions = () => {
               ))}
             </tbody>
           </table>
+
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
         </div>
       </div>
     </>

@@ -6,7 +6,6 @@ import { useGetAllExamsQuery } from "@/redux/api/examsApi";
 import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
-
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -21,10 +20,10 @@ function CourseExams({ course_id }) {
   } = useGetAllExamsQuery({
     course_id: course_id,
   });
-  console.log(dataExams, "this is finding");
+
   const enrollToExam = async (exam) => {
     if (!userLoggedIn) {
-      return toast.error("Please signin to buy exam ");
+      return toast.error("Please sign in to buy the exam");
     }
 
     const examPaymentPayload = {
@@ -52,11 +51,7 @@ function CourseExams({ course_id }) {
   let content = null;
 
   if (isLoading) {
-    content = (
-      <>
-        <InitialLoader />
-      </>
-    );
+    content = <InitialLoader />;
   }
 
   if (!isLoading && isError) {
@@ -65,55 +60,51 @@ function CourseExams({ course_id }) {
 
   if (!isLoading && !isError && examsData?.length === 0) {
     content = (
-      <>
-        {" "}
-        <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-          <h5>There is No exam in this course</h5>
-        </div>
-      </>
+      <h5 className="font-semibold bg-green-600 text-white p-3 rounded text-md">
+        এই কোর্সে এখনও কোনো পরীক্ষা নেই।
+      </h5>
     );
   }
 
   if (!isLoading && !isError && examsData?.length > 0) {
-    content = examsData?.map((exam) => (
-      <tr className="hover" key={exam?._id}>
-        <th className="text-gray-400">#</th>
-        <td>{exam?.title}</td>
-        <td>{exam?.exam_type == "0" ? "MCQ" : "Written"}</td>
-        <td>{exam?.total_marks}</td>
-        <td>{exam?.fee}</td>
-        <td>
-          <p
-            onClick={() => enrollToExam(exam)}
-            className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
-          >
-            Enroll
-          </p>
-        </td>
-      </tr>
-    ));
-  }
-
-  return (
-    <>
+    content = (
       <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
+        <table className="table table-auto min-w-full bg-white border border-gray-300">
           <thead>
             <tr>
-              <th></th>
-              <th>Exam Title</th>
-              <th>Exam Type</th>
-              <th>Total Marks</th>
-              <th>Fee</th>
-              <th>Action</th>
+              <th className="py-2 px-4 md:w-1/4">Exam Title</th>
+              <th className="py-2 px-4 md:w-1/4">Exam Type</th>
+              <th className="py-2 px-4 md:w-1/4">Total Marks</th>
+              <th className="py-2 px-4 md:w-1/4">Fee</th>
+              <th className="py-2 px-4 md:w-1/4">Action</th>
             </tr>
           </thead>
-          <tbody>{content}</tbody>
+          <tbody>
+            {examsData?.map((exam) => (
+              <tr key={exam?._id}>
+                <td className="py-2 px-4 md:w-1/4">{exam?.title}</td>
+                <td className="py-2 px-4 md:w-1/4">
+                  {exam?.exam_type == "0" ? "MCQ" : "Written"}
+                </td>
+                <td className="py-2 px-4 md:w-1/4">{exam?.total_marks}</td>
+                <td className="py-2 px-4 md:w-1/4">{exam?.fee}</td>
+                <td className="py-2 px-4 md:w-1/4">
+                  <p
+                    onClick={() => enrollToExam(exam)}
+                    className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0 cursor-pointer w-fit"
+                  >
+                    Enroll
+                  </p>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
-    </>
-  );
+    );
+  }
+
+  return <>{content}</>;
 }
 
 export default CourseExams;

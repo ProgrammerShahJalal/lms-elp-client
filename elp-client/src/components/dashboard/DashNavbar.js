@@ -18,23 +18,17 @@ const DashNavbar = () => {
     router.push("/login");
   };
 
+
   return (
     <div className=" bg-gray-200 border-b border-b-gray-300 sticky top-0 z-50">
       <div className="navbar px-5">
         <div className="navbar-start ">
-          <Link href="/" className="text-lg text-cyan-900">
+          <Link href="/" className="text-lg font-bold text-cyan-900">
             ইজি লার্নিং প্লাটফর্ম
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul>
-            <li>
-              <Link href="/" className="text-lg font-medium">
-                কোর্স সমহ
-              </Link>
-            </li>
-          </ul>
-          <p className="px-3 text-lg font-bold">{role}</p>
+          <p className="px-3 text-lg font-bold">{role} ড্যাশবোর্ড</p>
         </div>
         <div className="navbar-end">
           {/* <ToggleTheme /> */}

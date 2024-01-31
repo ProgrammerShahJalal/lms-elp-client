@@ -1,9 +1,6 @@
-"use client";
-
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Image from "next/image";
-import Link from "next/link";
 import CourseExams from "./CourseExams";
 import CourseSubscriptions from "./CourseSubscriptions";
 
@@ -11,121 +8,122 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
   let content = null;
 
   if (isLoading) {
-    content = (
-      <>
-        <InitialLoader />
-      </>
-    );
+    content = <InitialLoader />;
   }
 
   if (!isLoading && isError) {
-    content = <Error></Error>;
+    content = <Error />;
   }
 
   if (!isLoading && !isError && data) {
     content = (
-      <div className="grid lg:grid-cols-2 gap-5 my-10">
-        <div>
-          <div className="space-y-4 mb-10">
-            <h2 className="text-2xl font-bold">{data?.title}</h2>
+      <div>
+        <div className="md:pr-10">
+          <div className="space-y-4 mb-10 grid grid-cols-1 gap-2 ">
+            <h2 className="text-xl font-bold mt-5 mx-12 text-center text-blue-600">
+              {data?.title} কোর্সে আপনাকে কোর্স প্রশিক্ষক {data?.author} এবং
+              "ইজি লার্নিং প্ল্যাটফর্ম" এর পক্ষ থেকে স্বাগতম 🎉
+            </h2>
 
-            <p>
-              {" "}
-              <span className=" text-bluePrimary pr-10 font-semibold">
-                {" "}
-                Category: {data?.sub_category_id?.category_id?.title}{" "}
-              </span>{" "}
-              Sub Category:{" "}
-              <span className=" text-yellowPrimary">
-                {data?.sub_category_id?.title}
-              </span>{" "}
-            </p>
-            <Image
-              className="rounded"
-              src={data?.banner}
-              alt="course"
-              width={600}
-              height={50}
-            />
+            <div className="w-96 mx-auto">
+              <p>
+                <span className="text-bluePrimary pr-10 font-semibold">
+                  Category: {data?.sub_category_id?.category_id?.title}
+                </span>
+                Sub Category:{" "}
+                <span className="text-yellowPrimary">
+                  {data?.sub_category_id?.title}
+                </span>
+              </p>
 
-            <div>
-              {/* <p>
-              {data?.description}
-            </p> */}
-              <p dangerouslySetInnerHTML={{ __html: data?.description }}></p>
+              <Image
+                className="rounded w-full"
+                src={data?.banner}
+                alt="course"
+                width={600}
+                height={50}
+              />
             </div>
-          </div>
-          <div>{data && <CourseSubscriptions course_id={data?._id} />}</div>
 
-          <div className="">
-            <div className="space-y-4 bg-white rounded border py-10 px-5">
-              <h2 className="text-xl font-bold">কী কী শিখবেন এ কোর্স থেকে?</h2>
-
-              <ul className="grid grid-cols-2 gap-2 ">
-                <li>☑ English</li>
-                <li>☑ English</li>
-                <li>☑ English</li>
-                <li>☑ English</li>
-                <li>☑ English</li>
-                <li>☑ English</li>
-              </ul>
-              <br />
-              <div className="mt-14">
-                <a
-                  href="https://drive.google.com/file/d/178gMk281mQtMJrVHtR7nytcphA_uoIDk/view?usp=sharing"
-                  target="_blank"
-                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary "
-                >
-                  {" "}
-                  ফুল সিলেবাস দেখুন
+            <div className="grid grid-cols-2 md:grid-cols-4 items-center text-center gap-8 mx-10">
+              <div>
+                <div className="drop-shadow-xl text-center bg-indigo-300 rounded p-5 mt-8">
+                  <a href={data?.study_materials} target="_blank">
+                    <img
+                      className="w-24 mx-auto pb-3"
+                      src="https://i.ibb.co/59y8Vxz/395068.png"
+                      alt="study materials"
+                    />
+                    <p className="text-base md:text-lg font-bold">
+                      স্টাডি ম্যাটেরিয়ালস
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div>
+                <a href={data?.syllabus} target="_blank">
+                  <div className="drop-shadow-xl text-center bg-lime-400 rounded p-5 mt-8">
+                    <img
+                      className="w-24 mx-auto pb-3"
+                      src="https://i.ibb.co/VgkXyBZ/762677.png"
+                      alt="syllabus"
+                    />
+                    <p className="text-base md:text-lg font-bold">
+                      সম্পূর্ণ সিলেবাস দেখুন
+                    </p>
+                  </div>
                 </a>
               </div>
+              <div>
+                <a href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank">
+                  <div className="drop-shadow-xl text-center bg-green-400 rounded p-5 mt-8">
+                    <img
+                      className="w-24 mx-auto pb-3"
+                      src="https://i.ibb.co/vq6N0mw/8577594.png"
+                      alt="free seminar"
+                    />
+                    <p className="text-base md:text-lg font-bold">
+                      ফ্রি সেমিনারে যোগ দিন
+                    </p>
+                  </div>
+                </a>
+              </div>
+
+              <div>
+                <div className="drop-shadow-xl text-center bg-cyan-400 rounded p-5 mt-8">
+                  <img
+                    className="w-24 mx-auto pb-3"
+                    src="https://i.ibb.co/zZD7Pbw/5560586.png"
+                    alt="membership"
+                  />
+                  <p className="text-base md:text-lg font-bold">
+                  মেম্বারশিপ টাইপ:
+                    {data?.membership_type === "1" ? " পেইড" : " ফ্রি"}
+                  </p>
+                </div>
+              </div>
             </div>
-          
           </div>
         </div>
 
-        <div className="pl-10">
-          <div className="bg-white rounded border py-10 px-4 w-96">
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold">
-                এই কোর্সের ভেতরে যা যা রয়েছে
-              </h2>
-              <ul>
-                <li className=""> ⏺ 100% পর্যন্ত স্কলারশিপ জেতার সুযোগ</li>
-                <li className=""> ⏺ 100% পর্যন্ত স্কলারশিপ জেতার সুযোগ</li>
-                <li className=""> ⏺ 100% পর্যন্ত স্কলারশিপ জেতার সুযোগ</li>
-                <li className=""> ⏺ 100% পর্যন্ত স্কলারশিপ জেতার সুযোগ</li>
-              </ul>
-              <div className="space-y-10 pt-6">
-                <a
-                  href="https://forms.gle/3vjsXVuQi2vUomHX7"
-                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary "
-                  target="_blank"
-                >
-                  {" "}
-                  সেমিনারে অংশ নেন
-                </a>
-                <br /> <br />
-                {/* <Link
-                  href="/subscribe"
-                  className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary"
-                >
-                  এখনই মেম্বারশিপ হোন
-                </Link> */}
-              </div>
-            </div>
+        <div className="px-16 text-justify">
+          <p dangerouslySetInnerHTML={{ __html: data?.description }}></p>
+        </div>
+
+        <div className="md:pl-10 mt-4 md:mt-0">
+          <div className=" bg-white rounded border py-10 px-5 mt-4 mx-5">
+            {data && <CourseSubscriptions course_id={data?._id} />}
           </div>
-          <div className="space-y-4 bg-white rounded border py-10 px-5 mt-4">
-              <h2 className="text-xl font-bold">Exams on this course:</h2>
-              {data && <CourseExams course_id={data?._id} />}
-            </div>
+
+          <div className="bg-white rounded border py-10 px-5  m-5">
+            <h2 className="text-xl font-bold">Exams on this course:</h2>
+            {data && <CourseExams course_id={data?._id} />}
+          </div>
         </div>
       </div>
     );
   }
 
-  // console.log(data)
   return <>{content}</>;
 };
 

@@ -9,31 +9,51 @@ import {
   useGetAllPlaylistQuery,
 } from "@/redux/api/videoApi";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Pagination from "../../Pagination";
 
 const AddVideo = () => {
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
-  const { data } = useGetAllPlaylistQuery();
-  const coursePLaylists = data?.playlists;
+  const { data, refetch: refetchPlaylist } = useGetAllPlaylistQuery({limit, page, searchTerm});
+  const coursePLaylists = data?.playlists?.data;
+
  
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { data: categories } = useGetAllCategoriesQuery(undefined);
+
+  const { data: categories, refetch: refetchCategories } = useGetAllCategoriesQuery({limit, page, searchTerm});
+
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
+      limit, page, searchTerm
     });
   const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
+    limit, page, searchTerm
   });
   const allCourse = courses?.courses?.data;
 
-  const { data: allVedio } = useGetAllQuestionsQuery();
+ 
+
+  useEffect(() => {
+    refetchPlaylist();
+  }, [limit, page, searchTerm]);
+
+  console.log('info', data?.playlists);
+
+  const totalData = data?.playlists?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
 
   const [initialFormData, setInitialFormData] = useState({
     title: "",
@@ -62,15 +82,15 @@ const AddVideo = () => {
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to delete this!",
+        title: "আপনি এই প্লেলিস্টটি মুছে ফেলার বিষয়ে নিশ্চিত?",
+        text: "আপনি যদি এটি মুছতে চান তবে 'হ্যাঁ মুছুন' বোতামে ক্লিক করুন অন্যথায় 'বাতিল' বোতামে ক্লিক করুন।",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ মুছুন",
+        cancelButtonText: "বাতিল",
       });
-
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteVideoPlaylist(id);
@@ -98,8 +118,11 @@ const AddVideo = () => {
     }
   };
 
+
+
   return (
     <div className=" my-8 ">
+      <h2 className="text-2xl font-bold mb-4">Add Video PlayList</h2>
       <form>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
@@ -273,6 +296,9 @@ const AddVideo = () => {
             ))}
           </tbody>
         </table>
+
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
       </div>
     </div>
   );

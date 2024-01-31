@@ -13,7 +13,6 @@ const EditExam = ({ id }) => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
   const { data } = useGetSingleExamQuery(id);
-  // console.log(data)
   const [updateExam] = useUpdateExamMutation();
   const { data: courses, isLoading, isError } = useGetAllCoursesQuery();
   const courseData = courses?.courses?.data;
@@ -25,12 +24,12 @@ const EditExam = ({ id }) => {
 
     try {
       const res = await updateExam({ id, body: data });
-      console.log(res);
+    
       if (res?.data?._id === id) {
         toast.success("Exam updated successfully");
         router.push("/admin/addexams");
       } else {
-        toast.error("Something is wrong to update user");
+        toast.error("Something is wrong to update exam");
       }
     } catch (err) {
       toast.error(err.message);
@@ -50,12 +49,12 @@ const EditExam = ({ id }) => {
 
   return (
     <div>
-      <h2>You can Edit Exam</h2>
+      <h2 className="font-bold text-xl mb-4">You can Edit Exam</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} defaultValues={defaultValues}>
         {data?.course_id && (
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Course Id</label>
+            <label className="block text-sm mb-2">Select the Course</label>
             <select
               {...register("course_id" )}
               defaultValue={data?.course_id}
@@ -75,10 +74,11 @@ const EditExam = ({ id }) => {
 
         {data?.title && (
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Exam Name</label>
+            <label className="block text-sm mb-2">Exam Name</label>
             <input
               type="text"
               name="title"
+              required
               {...register("title")}
               defaultValue={data?.title}
               className="w-full border border-gray-300 p-2 rounded-md"
@@ -115,6 +115,7 @@ const EditExam = ({ id }) => {
               type="number"
               id="total_marks"
               name="total_marks"
+              required
               {...register("total_marks")}
               defaultValue={data?.total_marks}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
@@ -133,6 +134,7 @@ const EditExam = ({ id }) => {
               type="number"
               id="duration_in_minutes"
               name="duration_in_minutes"
+              required
               {...register("duration_in_minutes")}
               defaultValue={data?.duration_in_minutes}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
@@ -151,6 +153,7 @@ const EditExam = ({ id }) => {
               type="number"
               id="fee"
               name="fee"
+              required
               {...register("fee")}
               defaultValue={data?.fee}
               className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"

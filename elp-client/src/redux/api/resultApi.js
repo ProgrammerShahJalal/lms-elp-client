@@ -35,9 +35,17 @@ export const resultApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["exams"],
         }),
+        giveMarkToStudent: build.mutation({
+            query: (data) => ({
+                url: `${EXAM_RESULT}/give-mark`,
+                method: "PATCH",
+                data: data,
+            }),
+            invalidatesTags: ["exam-payments"],
+        }),
 
 
     }),
 });
 
-export const { useExamResultQuery, useGetSingleSubmissionExamQuery, useSubmitExamUserMutation } = resultApi;
+export const { useExamResultQuery, useGetSingleSubmissionExamQuery, useSubmitExamUserMutation, useGiveMarkToStudentMutation } = resultApi;
