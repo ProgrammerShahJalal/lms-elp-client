@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import AdminAddQuiz from "@/components/dashboard/admin/AdminAddQuiz";
 
 const AddQuiz = () => {
     // declaring states
@@ -17,6 +18,7 @@ const AddQuiz = () => {
     const [addQuizPlaylist] = useAddQuizPlaylistMutation();
     const { data: questions } = useGetAllQuestionsQuery();
     const allQuiz = questions?.categories?.data;
+
 
     const filteredQuestions = allQuiz?.filter(quiz => quiz.exam_type === '0');
 
@@ -393,41 +395,15 @@ const AddQuiz = () => {
                 <table className="min-w-full bg-white border border-gray-300 table-auto">
                     <thead>
                         <tr>
-                            <th className="py-2 px-4 border-b">Question</th>
-                            <th className="py-2 px-4 border-b">Option</th>
-                            <th className="py-2 px-4 border-b">Correct Answer</th>
-                            <th className="py-2 px-4 border-b">Exam Title</th>
-                            <th className="py-2 px-4 border-b">Delete</th>
+                            <th className="py-2  border-b">Exam Title</th>
+                            <th className="py-2  border-b">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredQuestions?.map((quiz, i) => (
-                            <tr key={quiz._id}>
-                                <td className="py-2 px-4 border-b">
-                                    {i + 1}) {quiz?.question}
-                                </td>
-                                <td className="py-2 px-4 border-b">
-                                    {quiz?.options?.map((option, index) => (
-                                        <div key={index}>
-                                            {Object.keys(option)[0]}: {Object.values(option)[0]}
-                                        </div>
-                                    ))}
-                                </td>
-
-                                <td className="py-2 px-4 border-b">{quiz?.correct_answer}</td>
-                                <td className="py-2 px-4 border-b">{quiz?.exam_id?.title}</td>
-                                <td className="py-2 px-4 border-b md:table-cell">
-                                    <button
-                                        className="bg-red-500 text-white py-1 px-2 rounded-md"
-                                        onClick={() => handleDelete(quiz.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                        {filteredQuestions?.map((quiz, i) => <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} quiz={quiz} i={i}></AdminAddQuiz>)}
                     </tbody>
                 </table>
+
             </div>
         </>
     );

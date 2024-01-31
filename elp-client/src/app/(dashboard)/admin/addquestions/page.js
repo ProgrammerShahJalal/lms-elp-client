@@ -48,7 +48,7 @@ const AddQuestions = () => {
   const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
-  
+
   console.log('quesion board', filteredQuestions)
 
   useEffect(() => {
@@ -92,8 +92,8 @@ const AddQuestions = () => {
       toast.error("An error occurred:", error);
     }
   };
-   // question delete function
-   const handleDelete = async (id) => {
+  // question delete function
+  const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
         title: "আপনি এই প্রশ্নটি মুছে ফেলার বিষয়ে নিশ্চিত?",
@@ -138,7 +138,7 @@ const AddQuestions = () => {
       <div className="container mx-auto my-8">
         <form
           onSubmit={handleSubmit}
-          className="max-w-md mx-auto bg-white p-8 border rounded shadow"
+          className=" mx-auto bg-white p-8 border rounded shadow"
         >
           <h2 className="text-2xl font-semibold mb-4">Add Broad questions</h2>
           {/* Category selection field */}
@@ -258,7 +258,7 @@ const AddQuestions = () => {
               )}
             </select>
           </div>
-         
+
 
           <div className="mb-4">
             <label
@@ -326,7 +326,7 @@ const AddQuestions = () => {
                   <td className="py-2 px-4 border-b text-center md:table-cell">
                     <Link href={`/admin/addquestions/edit/${quiz?.id}`}
                       className="bg-lime-600 text-white py-2 px-2 rounded-md"
-                      
+
                     >
                       Update
                     </Link>
