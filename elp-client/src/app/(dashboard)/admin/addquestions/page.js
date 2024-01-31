@@ -13,8 +13,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Pagination from "../../Pagination";
 
 const AddQuestions = () => {
+
+  const [limit, setLimit] = useState(30);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -23,33 +29,46 @@ const AddQuestions = () => {
   const [mark, setMark] = useState(null);
   const [addQuizPlaylist] = useAddQuizPlaylistMutation();
 
-  // const { data:exams } = useGetAllExamsQuery({
-  //   course_id:selectedCourse, exam_type:1
-  // });
-  const { data: categories } = useGetAllCategoriesQuery(undefined);
+ 
+  const { data: categories } = useGetAllCategoriesQuery({limit, page, searchTerm});
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
+      limit, page, searchTerm,
     });
   const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
+    limit, page, searchTerm,
   });
+
   const allCourse = courses?.courses?.data;
+
   const { data: exams, refetch: refetchExams } = useGetAllExamsQuery({
     course_id: selectedCourse,
     exam_type: 1,
+    limit, page, searchTerm,
   });
+
+
   const allExams = exams?.exams?.data;
 
-  // const allData = data?.categories?.data;
-  // const filteredAllData = allData?.filter((quiz) => quiz.exam_type === "1");
-  const { data: questions } = useGetAllQuestionsQuery();
+
+  const { data: questions, refetch } = useGetAllQuestionsQuery({limit, page, searchTerm});
+
   const allQuiz = questions?.categories?.data;
   const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
   
-  console.log('quesion board', filteredQuestions)
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+
+  const totalData = questions?.categories?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
 
   useEffect(() => {
     const fetchSubCategory = async () => {
@@ -343,6 +362,9 @@ const AddQuestions = () => {
               ))}
             </tbody>
           </table>
+
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
         </div>
       </div>
     </>

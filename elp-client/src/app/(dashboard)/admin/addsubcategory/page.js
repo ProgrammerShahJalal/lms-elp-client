@@ -4,10 +4,15 @@ import { useDeleteCoursesMutation } from "@/redux/api/courseApi";
 import { useAddSubcategoryMutation, useDeleteSubCategoryMutation, useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Pagination from "../../Pagination";
 const AdminAddSubCategory = () => {
+  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
   const [addSubcategory] = useAddSubcategoryMutation();
@@ -15,14 +20,23 @@ const AdminAddSubCategory = () => {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useGetAllCategoriesQuery();
-  const { data: subcategories, isLoading: isSubcategoryLoading } = useGetAllSubcategoriesQuery();
+  } = useGetAllCategoriesQuery({limit, page, searchTerm});
+
+  const { data: subcategories, isLoading: isSubcategoryLoading, refetch } = useGetAllSubcategoriesQuery({limit, page, searchTerm});
+
   const allSubcategory = subcategories?.subcategories;
+
   const [deleteCourses] = useDeleteCoursesMutation()
   const [deleteSubCategory] = useDeleteSubCategoryMutation()
 
 
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
 
+console.log('info', subcategories)
+  // const totalData = questions?.categories?.meta?.total;
+  // const totalPages = Math.ceil(totalData / limit);
   
   const onSubmit = async (data) => {
     // console.log(data);
@@ -151,6 +165,11 @@ const AdminAddSubCategory = () => {
               ))}
             </tbody>
           </table>
+
+
+
+          {/* <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/> */}
+
         </div>
 
 
