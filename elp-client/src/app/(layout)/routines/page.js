@@ -104,7 +104,7 @@ useEffect(() => {
 }
       <div className="p-8 mb-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-        {coursesData?.map((course) => (  
+        {filteredCourses?.map((course) => (  
           <div key={course.id} className="p-4 rounded-lg shadow bg-indigo-100">
             <h2 className="text-2xl font-bold mb-2 text-center">
               {course.title}
