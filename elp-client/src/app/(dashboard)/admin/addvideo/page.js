@@ -9,43 +9,50 @@ import {
   useGetAllPlaylistQuery,
 } from "@/redux/api/videoApi";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Pagination from "../../Pagination";
 
 const AddVideo = () => {
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
-  const { data } = useGetAllPlaylistQuery({limit: 400});
-  const coursePLaylists = data?.playlists;
+  const { data, refetch: refetchPlaylist } = useGetAllPlaylistQuery({limit, page, searchTerm});
+  const coursePLaylists = data?.playlists?.data;
+
  
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { data: categories } = useGetAllCategoriesQuery({limit: 400});
+
+  const { data: categories, refetch: refetchCategories } = useGetAllCategoriesQuery({limit, page, searchTerm});
+
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
-      limit: 400
+      limit, page, searchTerm
     });
   const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategory,
-    limit: 400
+    limit, page, searchTerm
   });
   const allCourse = courses?.courses?.data;
 
-  const { data: allVedio } = useGetAllQuestionsQuery({limit: 400});
+ 
 
+  useEffect(() => {
+    refetchPlaylist();
+  }, [limit, page, searchTerm]);
 
-  const ITEMS_PER_PAGE = 25;
-  const [currentPage, setCurrentPage] = useState(1);
+  console.log('info', data?.playlists);
 
-  const totalPages = Math.ceil((coursePLaylists?.length || 0) / ITEMS_PER_PAGE);
-
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentPlaylists = coursePLaylists?.slice(startIndex, endIndex);
+  const totalData = data?.playlists?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
 
   const [initialFormData, setInitialFormData] = useState({
@@ -109,11 +116,6 @@ const AddVideo = () => {
       // Handle any errors that occur during the process
       toast.error(err.message);
     }
-  };
-
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
   };
 
 
@@ -261,7 +263,7 @@ const AddVideo = () => {
             </tr>
           </thead>
           <tbody>
-            {currentPlaylists?.map((playlist) => (
+            {coursePLaylists?.map((playlist) => (
               <tr key={playlist._id} className="">
                 <td className="py-2 px-4 border-b">{playlist?.title}</td>
                 <td className="py-2 px-4 border-b">
@@ -295,26 +297,7 @@ const AddVideo = () => {
           </tbody>
         </table>
 
-         {/* Pagination controls */}
-         <div className="flex justify-center mt-4">
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`mx-2 px-4 py-2 rounded-full ${
-                  page === currentPage
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-300 text-gray-700'
-                }`}
-              >
-                {page}
-              </button>
-            )
-          )}
-        </div>
-
-
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
       </div>
     </div>
