@@ -8,24 +8,28 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Pagination from "../../Pagination";
+import AdminAddQuiz from "@/components/dashboard/admin/AdminAddQuiz";
+import SeeDynamicQuiz from "@/components/dashboard/admin/SeeDynamicQuiz";
 
 const AddQuiz = () => {
     const [limit, setLimit] = useState(25);
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
+    const [openModal, setOpenModal] = useState(false);
 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [selectedOptions, setSelectedOptions] = useState({});
     const [addQuizPlaylist] = useAddQuizPlaylistMutation();
-    const { data: questions, refetch } = useGetAllQuestionsQuery({limit, page, searchTerm});
+    const { data: questions, isLoading: isFilteredQuestionLoading, refetch } = useGetAllQuestionsQuery({ limit, page, searchTerm });
 
     const allQuiz = questions?.categories?.data;
 
     const filteredQuestions = allQuiz?.filter(quiz => quiz.exam_type === '0');
 
-    const { data: categories } = useGetAllCategoriesQuery({limit, page, searchTerm});
+
+    const { data: categories } = useGetAllCategoriesQuery({ limit, page, searchTerm });
     const { data: subCategories, refetch: refetchSubCategories } =
         useGetAllSubcategoriesQuery({
             category_id: selectedCategory,
@@ -137,11 +141,11 @@ const AddQuiz = () => {
     // questions?.categories?.data
     useEffect(() => {
         refetch();
-      }, [limit, page, searchTerm]);
-    
-    
-      const totalData = questions?.categories?.meta?.total;
-      const totalPages = Math.ceil(totalData / limit);
+    }, [limit, page, searchTerm]);
+
+
+    const totalData = questions?.categories?.meta?.total;
+    const totalPages = Math.ceil(totalData / limit);
 
 
     return (
@@ -412,7 +416,7 @@ const AddQuiz = () => {
 
 
             {/* from here admin can delete quiz */}
-            <div className="overflow-x-auto">
+            {/* <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-300 table-auto">
                     <thead>
                         <tr>
@@ -448,12 +452,36 @@ const AddQuiz = () => {
                                     </button>
                                 </td>
                             </tr>
+
                         ))}
                     </tbody>
-                </table>
+                </table> */}
+            <div className="overflow-x-auto">
+                {isFilteredQuestionLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <table className="min-w-full bg-white border border-gray-300 table-auto">
+                        <thead>
+                            <tr>
+                                <th className="py-2 px-4 border-b">Question</th>
+                                <th className="py-2 px-4 border-b">Option</th>
+                                <th className="py-2 px-4 border-b">Correct Answer</th>
+                                <th className="py-2 px-4 border-b">Exam Title</th>
+                                <th className="py-2 px-4 border-b">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredQuestions?.map((quiz, i) => (
+                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
+                            ))}
+                        </tbody>
+                    </table>
+                )}
 
-                <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
+                <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
             </div>
+
         </>
     );
 };

@@ -111,7 +111,7 @@ const Category = () => {
           </Link>{" "}
         </button> */}
       </div>
-     
+
       <div className="">
         <Swiper
           // pagination={{
