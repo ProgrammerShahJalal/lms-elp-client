@@ -14,7 +14,7 @@ const FreeSeminar = () => {
             {/* <a href="https://www.youtube.com/watch?v=CitLPrSS1w0" target="_blank" rel="noopener noreferrer">
             <SiYoutubemusic className="text-6xl text-white "/>
             </a> */}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/CitLPrSS1w0?si=GTpGRpu6sXHvQsac" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+            <iframe width="560" height="315" className="hidden lg:block" src="https://www.youtube.com/embed/CitLPrSS1w0?si=GTpGRpu6sXHvQsac" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
           </div>
           <div className="lg:pt-20 text-white space-y-6">
@@ -23,7 +23,7 @@ const FreeSeminar = () => {
               সফল ক্যারিয়ার গড়ার সঠিক দিকনির্দেশনা পেতে আমাদের ফ্রি সেমিনারগুলোতে অংশগ্রহণ করুন। এসব
               সেমিনারে প্রশ্নোত্তরের মাধ্যমে আপনার কনফিউশন দূর করতে পারবেন।
             </p>
-            <Link href="/subscribe" className="bg-cyanPrimary text-white py-3 px-6 transition-all duration-300 rounded hover:bg-yellowPrimary">সিট বুক করুন</Link>
+            <a href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank" className="bg-cyanPrimary text-white py-3 px-6 transition-all duration-300 rounded hover:bg-yellowPrimary">সিট বুক করুন</a>
           </div>
         </div>
       </div>

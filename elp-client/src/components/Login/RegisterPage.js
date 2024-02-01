@@ -12,10 +12,11 @@ import { storeUserInfo } from "@/services/auth.service";
 const RegisterPage = () => {
   const [userSignup] = useUserSignupMutation();
   const router = useRouter();
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset,setError, formState: { errors } } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -23,23 +24,22 @@ const RegisterPage = () => {
 
   const onSubmit = async (data) => {
     try {
-       const res = await userSignup({ ...data }).unwrap();
-      
-      
-      if (res?.accessToken){
-        console.log(res, ' from res');
-        storeUserInfo({ accessToken: res?.accessToken })
+      setLoading(true);
+      const res = await userSignup({ ...data }).unwrap();
+
+      if (res?.accessToken) {
+        // console.log(res, " from res");
+        storeUserInfo({ accessToken: res?.accessToken });
         toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
-        router.push("/")
-      }
-      else{
+        router.push("/");
+      } else {
         toast.error("Email already exists. Please use a different email.");
       }
-      
     } catch (err) {
-      
-        toast.error(err.message);
-      
+      toast.error(err.message);
+    }
+    finally {
+      setLoading(false); 
     }
   };
   return (
@@ -51,6 +51,17 @@ const RegisterPage = () => {
 
         <div className="mb-10">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+          {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="relative inline-flex">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-pulse"></div>
+                </div>
+              </div>
+            ) : (
+              "  "
+            )}
             <div className="flex justify-center">
               <input
                 type="text"
@@ -69,14 +80,34 @@ const RegisterPage = () => {
               />
             </div>
             <div className="flex justify-center">
-              <input
+              {/* <input
                 type="number"
                 {...register("contact_no")}
                 placeholder="আপনার মোবাইল নাম্বার"
                 className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200"
                 required
+              /> */}
+              <input
+                type="number"
+                {...register("contact_no", {
+                  required: "মোবাইল নাম্বার প্রয়োজন",
+                  pattern: {
+                    value: /^\d{11}$/,
+                    message: "মোবাইল নাম্বারটি  ১১ টি সংখ্যা হতে হবে এবং এমন হবে 01742561023",
+                  },
+                  // pattern: {
+                  //   value: /^[0-9]{11}$/, // Regular expression for exactly 11 digits
+                  //   message: "মোবাইল নাম্বারটি ১১ টি সংখ্যা হতে হবে",
+                  // },
+                })}
+                placeholder=" 01742561023 আপনার মোবাইল নাম্বার "
+                className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200"
               />
+             
             </div>
+            {errors.contact_no && (
+          <p className="text-red-500">{errors.contact_no.message}</p>
+        )}
             <div className="flex justify-center">
               <div className="relative w-80">
                 <input
@@ -109,7 +140,10 @@ const RegisterPage = () => {
             <p>
               {" "}
               আপনার এক্যাউন্ট আছে ?{" "}
-              <Link href="/login" className="text-bold text-bluePrimary text-lg hover:underline">
+              <Link
+                href="/login"
+                className="text-bold text-bluePrimary text-lg hover:underline"
+              >
                 লগইন করুন
               </Link>
             </p>

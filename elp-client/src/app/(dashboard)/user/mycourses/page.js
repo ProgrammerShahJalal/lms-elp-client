@@ -4,8 +4,8 @@ import UserCourses from "@/components/dashboard/userDashboard/UserCourses"
 
 const MyCourses = () => {
   return (
-    <div>
-      <h2 className="text-center text-xl text-cyan-900 pb-3"> আমার কোর্স</h2>
+    <div className="text-center">
+      <h2 className="text-xl text-black font-bold pb-10"> আমার কোর্স</h2>
       <UserCourses />
     </div>
   )

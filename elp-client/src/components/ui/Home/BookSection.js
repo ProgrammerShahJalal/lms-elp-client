@@ -5,11 +5,50 @@ import { useGetAllBooksQuery } from "@/redux/api/booksApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import PDFViewerModal from "@/components/ohters/PDFViewerModal";
+import { useState } from "react";
 
 const BookSection = () => {
   const { data, isError, isLoading } = useGetAllBooksQuery();
 
+  const [openPDFModals, setOpenPDFModals] = useState([]);
+  const [showPDFModal, setShowPDFModal] = useState(false);
+  
+  const openPDFModal = (index) => {
+    const updatedModals = [...openPDFModals];
+    updatedModals[index] = true;
+    setOpenPDFModals(updatedModals);
+  };
+
+  const closePDFModal = (index) => {
+    const updatedModals = [...openPDFModals];
+    updatedModals[index] = false;
+    setOpenPDFModals(updatedModals);
+  };
+
   const booksData = data?.books?.data;
+ 
+  const breakpoints = {
+    
+    480: {
+        slidesPerView: 1,
+       spaceBetween: 30,
+      },
+    576: {
+        slidesPerView: 2,
+       spaceBetween: 30,
+      },
+      786: {
+     slidesPerView: 3,
+        spaceBetween: 30,
+     },
+      1024: {
+      slidesPerView: 3,
+        spaceBetween:20,
+       },
+     }
 
 
   let content = null;
@@ -36,7 +75,7 @@ const BookSection = () => {
   }
 
   if (!isLoading && !isError && booksData?.length > 0) {
-    content = booksData?.map((item) => <BookSectionCard key={item?._id} item={item} />);
+    content = booksData?.map((item, index) => <SwiperSlide key={item?._id}><BookSectionCard  item={item} onOpenPDFModal={() => openPDFModal(index)}/></SwiperSlide>);
   }
   return (
     <div className="px-14 py-20">
@@ -46,7 +85,32 @@ const BookSection = () => {
           সব বই দেখুন
         </Link>
       </div>
-      <div className="grid lg:grid-cols-3  gap-4">{content}</div>
+      <div>
+        
+    </div>
+      <Swiper
+        // pagination={{
+        //   type: 'progressbar',
+        // }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        
+        breakpoints= {breakpoints}
+        className="mySwiper"
+      >
+        
+{content}
+      </Swiper>
+      
+      {openPDFModals.map((isOpen, index) => (
+        <PDFViewerModal
+          key={index}
+          isOpen={isOpen}
+          onClose={() => closePDFModal(index)}
+          pdfSrc={data?.books?.data[index]?.pdf_link}
+        />
+      ))}
+     
     </div>
   );
 };

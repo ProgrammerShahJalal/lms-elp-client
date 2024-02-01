@@ -9,7 +9,7 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <div>
-      <div className="banner bg-cyanPrimary  py-10">
+      <div className="banner bg-cyanPrimary py-10">
         <div className="hero-content flex-col lg:flex-row-reverse z-0">
           <Image src={banner2} className=" rounded-lg shadow-2xl z-0" width={500}  height={200} alt="hero img" />
           <div className="">

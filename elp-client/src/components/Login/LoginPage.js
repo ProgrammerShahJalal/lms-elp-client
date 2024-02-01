@@ -17,14 +17,15 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const res = await userLogin({ ...data }).unwrap();
 
       if (res?.accessToken) {
@@ -35,7 +36,9 @@ const LoginPage = () => {
         router.push("/");
       } else if (res?.message == "User not found here!") {
         // User not found or other error from the server
-        toast.error("User not found or other error. Please check your credentials.");
+        toast.error(
+          "User not found or other error. Please check your credentials."
+        );
       } else {
         // User not found or other error
         toast.error("আপনার ইমেইল বা মোবাইল নাম্বার বা পাসওয়ার্ড  সঠিক নয় । ");
@@ -43,12 +46,16 @@ const LoginPage = () => {
     } catch (err) {
       if (err?.message === "User not found here!") {
         // User not found or other error from the server
-        toast.error("User not found or other error. Please check your credentials.");
+        toast.error(
+          "User not found or other error. Please check your credentials."
+        );
       } else {
         // Handle other errors
         // console.error("Error during login:", err);
         toast.error("An error occurred during login. Please try again.");
       }
+    } finally {
+      setLoading(false); // Set loading to false after the login request completes
     }
   };
 
@@ -61,6 +68,17 @@ const LoginPage = () => {
 
         <div className="mb-10">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="relative inline-flex">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-pulse"></div>
+                </div>
+              </div>
+            ) : (
+              "  "
+            )}
             <div className="flex justify-center">
               <input
                 type="text"
@@ -102,7 +120,10 @@ const LoginPage = () => {
             <p>
               {" "}
               আপনার এক্যাউন্ট নাই ?{" "}
-              <Link href="/register" className="text-bold text-bluePrimary text-lg hover:underline">
+              <Link
+                href="/register"
+                className="text-bold text-bluePrimary text-lg hover:underline"
+              >
                 রেজিস্টার করুন
               </Link>
             </p>

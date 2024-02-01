@@ -21,6 +21,7 @@ const DashBoardLayout = ({ children }) => {
 
 
   const { data: user } = useGetSingleUserQuery(userId);
+  const shouldShowWelcomeComponent = !(role === "admin" || role === "super_admin");
 
   useEffect(() => {
     // if(role !== 'admin' || role !== 'super_admin'){
@@ -33,7 +34,7 @@ const DashBoardLayout = ({ children }) => {
   }, [router, isLoading, userLoggedIn]);
 
   if (!isLoading) {
-    return <p className="text-center py-20 text-2xl font-bold">Loading.................</p>
+    return <p className="text-center py-20 text-2xl font-bold">Loading...</p>
   }
 
 
@@ -41,14 +42,14 @@ const DashBoardLayout = ({ children }) => {
 
   return (
     <>
-      <div className="">
+      <div>
         <DashNavbar />
-        <div className=" grid  lg:grid-cols-2  bg-gray-200">
-          <div className="bg-white  mt-5 border border-gray-300 rounded ml-5 ">
+        <div className="pb-12">
+          <div className="  mt-5 rounded z-0">
             <UserSidebar />
           </div>
-          <div className="bg-white   mt-5 rounded px-10 pt-10 lg:mr-10 lg:ml-[-300px]" >
-            <UserWelcome />
+          <div className=" mt-5 rounded px-10 pt-10 lg:ml-60 ml-10" >
+          {shouldShowWelcomeComponent && <UserWelcome />}
             <br />
             {children}
 

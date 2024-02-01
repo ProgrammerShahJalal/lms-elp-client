@@ -1,8 +1,6 @@
 import { instance as axiosInstance } from "./axiosInstance";
 export const axiosBaseQuery =
-  (
-    { baseUrl } = { baseUrl: "" }
-  ) =>
+  ({ baseUrl } = { baseUrl: "" }) =>
   async ({ url, method, data, params, contentType }) => {
     // console.log(data);
     try {
@@ -18,7 +16,7 @@ export const axiosBaseQuery =
       });
       return result;
     } catch (axiosError) {
-      let err = axiosError 
+      let err = axiosError;
       return {
         error: {
           status: err.response?.status,
