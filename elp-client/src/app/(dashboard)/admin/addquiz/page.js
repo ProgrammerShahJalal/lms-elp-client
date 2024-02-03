@@ -7,32 +7,43 @@ import toast from "react-hot-toast";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import Pagination from "../../Pagination";
 
 const AddQuiz = () => {
-    // declaring states
+    const [limit, setLimit] = useState(25);
+    const [page, setPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [selectedOptions, setSelectedOptions] = useState({});
     const [addQuizPlaylist] = useAddQuizPlaylistMutation();
-    const { data: questions } = useGetAllQuestionsQuery();
+    const { data: questions, refetch } = useGetAllQuestionsQuery({limit, page, searchTerm});
+
     const allQuiz = questions?.categories?.data;
 
     const filteredQuestions = allQuiz?.filter(quiz => quiz.exam_type === '0');
 
-    const { data: categories } = useGetAllCategoriesQuery(undefined);
+    const { data: categories } = useGetAllCategoriesQuery({limit, page, searchTerm});
     const { data: subCategories, refetch: refetchSubCategories } =
         useGetAllSubcategoriesQuery({
             category_id: selectedCategory,
+            limit, page, searchTerm,
         });
     const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
         sub_category_id: selectedSubcategory,
+        limit, page, searchTerm,
     });
     const allCourse = courses?.courses?.data;
     const { data: exams, refetch: refetchExams } = useGetAllExamsQuery({
         course_id: selectedCourse,
+        limit, page, searchTerm,
     });
+
+
     const allExams = exams?.exams?.data;
+
 
     const [deleteQuestions] = useDeleteQuestionsMutation();
     const [newQuestion, setNewQuestion] = useState({
@@ -100,6 +111,8 @@ const AddQuiz = () => {
         fetchExams();
     }, [selectedCourse]);
 
+
+
     const handleOptionChange = (index, value) => {
         setNewQuestion((prevQuestion) => {
             const newOptions = [...prevQuestion.options];
@@ -119,6 +132,16 @@ const AddQuiz = () => {
             options: prevQuestion.options.filter((_, index) => index !== indexToRemove),
         }));
     };
+
+
+    // questions?.categories?.data
+    useEffect(() => {
+        refetch();
+      }, [limit, page, searchTerm]);
+    
+    
+      const totalData = questions?.categories?.meta?.total;
+      const totalPages = Math.ceil(totalData / limit);
 
 
     return (
@@ -403,10 +426,10 @@ const AddQuiz = () => {
                     <tbody>
                         {filteredQuestions?.map((quiz, i) => (
                             <tr key={quiz._id}>
-                                <td className="py-2 px-4 border-b">
+                                <td className="py-2 px-4 border-b text-center">
                                     {i + 1}) {quiz?.question}
                                 </td>
-                                <td className="py-2 px-4 border-b">
+                                <td className="py-2 px-4 border-b text-center">
                                     {quiz?.options?.map((option, index) => (
                                         <div key={index}>
                                             {Object.keys(option)[0]}: {Object.values(option)[0]}
@@ -414,9 +437,9 @@ const AddQuiz = () => {
                                     ))}
                                 </td>
 
-                                <td className="py-2 px-4 border-b">{quiz?.correct_answer}</td>
-                                <td className="py-2 px-4 border-b">{quiz?.exam_id?.title}</td>
-                                <td className="py-2 px-4 border-b md:table-cell">
+                                <td className="py-2 px-4 border-b text-center">{quiz?.correct_answer}</td>
+                                <td className="py-2 px-4 border-b text-center">{quiz?.exam_id?.title}</td>
+                                <td className="py-2 px-4 border-b text-center md:table-cell">
                                     <button
                                         className="bg-red-500 text-white py-1 px-2 rounded-md"
                                         onClick={() => handleDelete(quiz.id)}
@@ -428,6 +451,8 @@ const AddQuiz = () => {
                         ))}
                     </tbody>
                 </table>
+
+                <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
             </div>
         </>
     );

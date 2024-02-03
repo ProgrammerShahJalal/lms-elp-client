@@ -1,18 +1,8 @@
 "use client";
-import React, { useState } from "react";
-// import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
-// import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-// import {
-//   useAddCourseMutation,
-//   useDeleteCoursesMutation,
-//   useGetAllCoursesQuery,
-// } from "@/redux/api/courseApi";
-// import "react-quill/dist/quill.snow.css";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import {
@@ -22,8 +12,13 @@ import {
 } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import Pagination from "../../Pagination";
 
 const AddCourseForm = () => {
+  const [limit, setLimit] = useState(15);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const {
     data: categories,
@@ -40,9 +35,21 @@ const AddCourseForm = () => {
   });
   const allSubcategory = subcategories?.subcategories;
 
-  const { data: courses, isLoading: isSubcategoryLoading } =
-    useGetAllCoursesQuery();
+  const { data: courses, isLoading: isSubcategoryLoading, refetch } =
+    useGetAllCoursesQuery({limit, page, searchTerm});
   const allCourses = courses?.courses?.data;
+
+  const currentCourses = courses?.courses?.data;
+
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+  const totalData = courses?.courses?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+
 
   const [addCourse] = useAddCourseMutation();
   const [deleteCourses] = useDeleteCoursesMutation();
@@ -50,7 +57,6 @@ const AddCourseForm = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data, 'input daa');
 
     const content = { ...data };
 
@@ -74,7 +80,6 @@ const AddCourseForm = () => {
     }
   };
 
-  // handle delete course function
 
   const handleDelete = async (id) => {
     try {
@@ -90,19 +95,16 @@ const AddCourseForm = () => {
       });
 
       if (result.isConfirmed) {
-        // User confirmed deletion
         const res = await deleteCourses(id);
-        // console.log(res?.data)
 
         if (res?.data?._id === id) {
-          // Item deleted successfully
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success",
           });
         } else {
-          // Something went wrong with deletion
+         
           Swal.fire({
             title: "Error!",
             text: "Something went wrong with deletion.",
@@ -111,7 +113,6 @@ const AddCourseForm = () => {
         }
       }
     } catch (err) {
-      // Handle any errors that occur during the process
       toast.error(err.message);
     }
   };
@@ -214,8 +215,6 @@ const AddCourseForm = () => {
             <textarea rows={10}
               id="description"
               name="description"
-              // theme="snow"
-              // modules={{ toolbar: toolbarOptions }}
               {...register("description", { required: true })}
               className="mt-1 p-2 border rounded-md w-full"
             />
@@ -302,7 +301,7 @@ const AddCourseForm = () => {
               </tr>
             </thead>
             <tbody>
-              {allCourses?.map((course) => (
+              {currentCourses?.map((course) => (
                 <tr key={course._id}>
                   <td className="py-2 px-1 border-b">{course?.title}</td>
                   <td className="py-2 px-4 border-b">{course?.author}</td>
@@ -338,6 +337,9 @@ const AddCourseForm = () => {
               ))}
             </tbody>
           </table>
+
+<Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
         </div>
       )}
     </div>

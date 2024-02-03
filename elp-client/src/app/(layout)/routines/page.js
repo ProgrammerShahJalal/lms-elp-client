@@ -1,16 +1,20 @@
 "use client"
+import Pagination from "@/app/(dashboard)/Pagination";
 import Commonbanner from "@/components/banners/Commonbanner";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RoutinesPage = () => {
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: courses, isLoading } = useGetAllCoursesQuery({ limit: 100000 });
+  const { data: courses, isLoading, refetch } = useGetAllCoursesQuery({ limit, page, searchTerm });
   const coursesData = courses?.courses?.data;
 
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-
+ 
   // Extract unique subcategories and categories
   const uniqueSubcategories = Array.from(
     new Set(
@@ -31,6 +35,14 @@ const RoutinesPage = () => {
       (!selectedSubcategory || (course.sub_category_id && course.sub_category_id.title === selectedSubcategory)) &&
       (!selectedCategory || (course.sub_category_id && course.sub_category_id.category_id.title === selectedCategory))
   );
+
+
+useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+  const totalData = courses?.courses?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
 
   const breadcrumbItems = [
@@ -125,7 +137,12 @@ const RoutinesPage = () => {
             )}
           </div>
         ))}
+
+
       </div>
+
+      <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
     </>
   );
 };

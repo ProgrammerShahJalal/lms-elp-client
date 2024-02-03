@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useAddBooksMutation,
   useDeleteBooksMutation,
@@ -11,23 +11,35 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import Pagination from "../../Pagination";
 
 const AddBooks = () => {
-  const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery();
-  const allBook = allBooks?.books?.data;
+  const [limit, setLimit] = useState(25);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+  const { data: allBooks, isLoading: isBooksLoading, refetch} = useGetAllBooksQuery({
+    limit,
+    page,
+    searchTerm,
+  });
+
+  const currentBooks = allBooks?.books?.data;
+
   const [deleteBooks] = useDeleteBooksMutation();
   const [addBooks] = useAddBooksMutation();
-  // const { data: courses, isLoading, isError } = useGetAllCoursesQuery();
-  // const courseData = courses?.courses?.data;
   const [repetitions, setRepetitions] = useState(1);
   const [fields, setFields] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
   const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 1 }, () => ''));
   const [selectedSubcategories, setSelectedSubcategories] = useState(Array.from({ length: 1 }, () => ''));
+
+
   const {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useGetAllCategoriesQuery();
+  } = useGetAllCategoriesQuery({limit, page, searchTerm});
 
   const {
     data: subcategories,
@@ -35,11 +47,20 @@ const AddBooks = () => {
     isError: isErrorSubcategories,
   } = useGetAllSubcategoriesQuery({
     category_id: selectedCategories,
+    limit, page, searchTerm,
   });
+
+
   const allSubcategory = subcategories?.subcategories;
+
+
   const { data } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategories,
+    limit, page, searchTerm,
   });
+
+
+
   const allCourse = data?.courses?.data;
   const [repetitionData, setRepetitionData] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
 
@@ -55,66 +76,38 @@ const AddBooks = () => {
     updatedRepetitionData.splice(index, 1);
     setRepetitionData(updatedRepetitionData);
   };
+
+
   const { register, handleSubmit, reset, watch, setValue } = useForm();
+
+
   const onSubmit = async (data) => {
-    // console.log(data);
     data.price = Number(data?.price);
     data.discount_price = Number(data?.discount_price);
 
     const content = { ...data };
 
     const file = content["file"];
-    // console.log(file)
-    // delete content['file'];
+
     content.course_id = data?.categories?.map((category) => category.course_id) || [];
     const { categories, ...othersData } = content;
-    console.log(othersData);
+   
     const result = JSON.stringify(othersData);
-    // console.log(result, "json");
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
-    // console.log(formData, 'formdaata')
+   
     try {
       const resultData = await addBooks(formData);
 
       if (resultData) {
         toast.success("Book created successfully");
       }
-      // console.log(resultData, ' from add category async')
     } catch (error) {
       toast.error(error.message);
     }
   };
-  // const onSubmit = async (data) => {
-  //   // console.log(data);
-  //   data.price = Number(data?.price);
-  //   data.discount_price = Number(data?.discount_price);
-
-  //   const content = { ...data };
-
-  //   const file = content["file"];
-  //   // console.log(file)
-  //   // delete content['file'];
-  //   const result = JSON.stringify(content);
-  //   // console.log(result, "json");
-  //   const formData = new FormData();
-  //   formData.append("file", file[0]);
-  //   formData.append("data", result);
-  //   // console.log(formData, 'formdaata')
-  //   try {
-  //     const resultData = await addBooks(formData);
-
-  //     if (resultData) {
-  //       toast.success("Book created successfully");
-  //     }
-  //     // console.log(resultData, ' from add category async')
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
-
-  // book delete function
+  
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -129,19 +122,15 @@ const AddBooks = () => {
       });
 
       if (result.isConfirmed) {
-        // User confirmed deletion
         const res = await deleteBooks(id);
-        // console.log(res?.data)
 
         if (res?.data?._id === id) {
-          // Item deleted successfully
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success",
           });
         } else {
-          // Something went wrong with deletion
           Swal.fire({
             title: "Error!",
             text: "Something went wrong with deletion.",
@@ -150,11 +139,19 @@ const AddBooks = () => {
         }
       }
     } catch (err) {
-      // Handle any errors that occur during the process
       toast.error(err.message);
     }
   };
-  return (
+
+  
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+  const totalData = allBooks?.books?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+return (
     <>
       <div className="container mx-auto  p-6">
         <h2 className="text-2xl font-semibold mb-6">Add Book</h2>
@@ -403,7 +400,7 @@ const AddBooks = () => {
         </form>
 
         <h1 className="text-2xl font-bold mb-4 mt-12">
-          Admin Update & Delete Books
+        Update & Delete Books
         </h1>
         {isBooksLoading ? (
           <p className="text-center text-xl">Loading books...</p>
@@ -424,10 +421,10 @@ const AddBooks = () => {
                 </tr>
               </thead>
               <tbody>
-                {allBook?.map((book, i) => (
+                {currentBooks?.map((book, i) => (
                   <tr key={book._id}>
                     <td className="py-2 px-4 border-b">
-                      {i + 1}) {book?.title}
+                      {book?.title}
                     </td>
                     <td className="py-2 px-4 border-b">{book?.writer}</td>
                     <td className="py-2 px-4 border-b">{book?.price}</td>
@@ -472,6 +469,9 @@ const AddBooks = () => {
                 ))}
               </tbody>
             </table>
+
+                        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
           </div>
         )}
       </div>

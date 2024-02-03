@@ -72,9 +72,6 @@ const Footer = () => {
                   <FaWhatsapp className="text-white text-xl" />
                 </span>
               
-              {showNumber && (
-                <span className="text-white">Help: +880 18 863 47350</span>
-              )}
             </p>
             <p className="bg-gray-700 p-4  rounded transition-all duration-300  hover:bg-bluePrimary text-center cursor-pointer">
               <Link href="/">

@@ -6,10 +6,21 @@ import { useAddSubscriptionMutation, useDeleteSubscriptionMutation, useGetAllSub
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Pagination from "../../Pagination";
 
 const AddSubscription = () => {
-    const { data } = useGetAllSubscriptionQuery();
+  const [limit, setLimit] = useState(30);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+    const { data, refetch } = useGetAllSubscriptionQuery({
+        limit,
+        page,
+        searchTerm,
+    });
+
     const allSubscription = data?.exams?.data;
+   
     const [deleteSubscription] = useDeleteSubscriptionMutation()
     const [addSubscription] = useAddSubscriptionMutation()
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -19,24 +30,46 @@ const AddSubscription = () => {
     const { data: subCategories, refetch: refetchSubCategories } =
         useGetAllSubcategoriesQuery({
             category_id: selectedCategory,
+            limit,
+            page,
+            searchTerm,
         });
     const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
-        sub_category_id: selectedSubcategory,
+            sub_category_id: selectedSubcategory,
+            limit,
+            page,
+            searchTerm,
     });
+
     const allCourse = courses?.courses?.data;
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+  const totalData = courses?.courses?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+    
     useEffect(() => {
         const fetchSubCategory = async () => {
-            await refetchSubCategories({ category_id: selectedCategory });
+            await refetchSubCategories({ category_id: selectedCategory, limit, page, searchTerm });
         };
         fetchSubCategory();
-    }, [selectedCategory]);
+    }, [page]);
+
 
     useEffect(() => {
         const fetchSubCategories = async () => {
-            await refetchCourses({ sub_category_id: selectedSubcategory });
+            await refetchCourses({ sub_category_id: selectedSubcategory, limit, page, searchTerm });
         };
         fetchSubCategories();
-    }, [selectedSubcategory]);
+    }, [page]);
+
+  
+
+
+    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const subscriptionData = {
@@ -56,6 +89,8 @@ const AddSubscription = () => {
 
         }
     };
+
+
     const handleSubscriptionDelete = async (categoryId) => {
         try {
             const result = await Swal.fire({
@@ -98,7 +133,7 @@ const AddSubscription = () => {
                 onSubmit={handleSubmit}
                 className=" p-8 border rounded shadow"
             >
-                <h1 className="mb-8 text-3xl font-bold">অ্যাডমিন সাবস্ক্রিপশন যোগ করেছেন</h1>
+                <h1 className="mb-8 text-3xl font-bold">সাবস্ক্রিপশন যোগ করুন</h1>
                 <div className="mb-4">
                     <label
                         htmlFor="name"
@@ -141,6 +176,7 @@ const AddSubscription = () => {
                         type="number"
                         id="cost"
                         name="cost"
+                        placeholder="such as ৳ 2500"
                         className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
                     />
                 </div>
@@ -233,31 +269,7 @@ const AddSubscription = () => {
                 </div>
             </form>
 
-            {/* <div className=" mt-8">
-                <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
-                <table className="min-w-full bg-white border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 px-4 py-2">Name</th>
-                            <th className="border border-gray-300 px-4 py-2">Duration (Months)</th>
-                            <th className="border border-gray-300 px-4 py-2">Cost</th>
-                            <th className="border border-gray-300 px-4 py-2">Course Name</th>
-                            <th className="border border-gray-300 px-4 py-2">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {allSubscription?.map((subscription) => (
-                            <tr key={subscription._id}>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.name}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.cost}</td>
-                                <td className="border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
-                                <td className="border border-gray-300 px-4  bg-blue-600 rounded-lg text-white"> <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div> */}
+           
             <div className="mt-8 overflow-x-auto">
                 <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
                 <table className="min-w-full bg-white border border-gray-300">
@@ -273,17 +285,22 @@ const AddSubscription = () => {
                     <tbody>
                         {allSubscription?.map((subscription) => (
                             <tr key={subscription._id}>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.name}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.cost}</td>
-                                <td className="lg:border border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
-                                <td className="lg:border border-gray-300 px-4  bg-blue-600 rounded-lg text-white">
-                                    <button onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.name}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">৳ {subscription?.cost}</td>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.course_id?.title}</td>
+                                <td className="lg:border border-gray-300 text-center my-3">
+                                    <button className="mx-2 px-4 py-1 bg-blue-600 rounded-lg text-white" onClick={() => handleSubscriptionDelete(subscription?.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
+
+                <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
+
             </div>
 
         </div>

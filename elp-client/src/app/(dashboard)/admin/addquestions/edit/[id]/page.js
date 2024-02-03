@@ -8,33 +8,22 @@ import { useRouter } from "next/navigation";
 
 const UpdateQuestionPage = ({params}) => {
     
-    const { register, handleSubmit, reset,setValue } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const router = useRouter();
     const { id } = params;
   
     const { data } = useGetSingleQuestionQuery(id);
-    console.log(data)
     const [updateQuestion] = useUpdateQuestionMutation();
   
    
   
-    // useEffect(() => {
-    //   if (data) {
-    //     // banner: data?.file?.name,
-        
-    //     setValue("title", data?.title);
-    //     setValue("playlist_link", data?.playlist_link);
-    //     setValue("course_id", data?.course_id || "");
-        
-    //   }
-    // }, [data, setValue]);
     const onSubmit = async (data) => {
-      console.log(data);
       try {
+        data.mark = Number(data?.mark);
         const res = await updateQuestion({ id, body: data });
-        console.log(res);
+       
         if (res?.data?._id === id) {
-          toast.success(" broad Question updated successfully");
+          toast.success(" Broad Question updated successfully");
           router.push("/admin/addquestions");
         } else {
           toast.error("Something is wrong to update question");
@@ -44,14 +33,11 @@ const UpdateQuestionPage = ({params}) => {
       }
     };
   
-    // const defaultValues = {
-    //   title: data?.title,
-    //   course_id: data?.course_id,
-    //   playlist_link: data?.playlist_link,
-    // };
+
     return (
         <div>
-            <h2>Update Question {id}</h2>
+            <h2>Update The Question</h2> 
+            <span className="text-orange-600">{data?.question}</span>
 
             <div>
       <form onSubmit={handleSubmit(onSubmit)} >
@@ -62,9 +48,9 @@ const UpdateQuestionPage = ({params}) => {
         <input
           required
           type="text"
-          name="title"
-          {...register("title")}
-          
+          name="question"
+          {...register("question")}
+          defaultValue={data?.question}
           className="mt-1 p-2 w-96 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
         />
       </div>
@@ -77,16 +63,15 @@ const UpdateQuestionPage = ({params}) => {
            Mark
           </label>
           <input
-            type="text"
+            type="number"
             required
-            name="playlist_link"
-            {...register("playlist_link")}
-           
+            name="mark"
+            {...register("mark")}
+            defaultValue={data?.mark}
             className="mt-1 p-2 w-96  border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
           />
         </div>
 
-       
 
         <input
           type="submit"

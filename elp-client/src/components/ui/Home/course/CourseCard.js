@@ -9,7 +9,7 @@ const CourseCard = ({ item }) => {
   return (
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
-      <div className="card shadow-2xl my-6 transition ease-in-out delay-150  duration-300 rounded bg-white ">
+      <div className="card shadow-lg my-6 transition ease-in-out delay-150  duration-300 rounded bg-white ">
         <figure className="relative ">
           <Image
             className="rounded h-48 "
@@ -50,7 +50,7 @@ const CourseCard = ({ item }) => {
           </div>
           <p
   dangerouslySetInnerHTML={{
-    __html: `${item?.description.substring(0, 100)}...`,
+    __html: `${item?.description.substring(0, 90)}...`,
   }}
 ></p>
 
@@ -60,7 +60,7 @@ const CourseCard = ({ item }) => {
             <div className="flex justify-between">
             <Link
               href={`/courses/details/${item?._id}`}
-              className="text-yellowPrimary"
+              className="text-fuchsia-600"
             >
               বিস্তারিত পড়ুন
             </Link>{" "}

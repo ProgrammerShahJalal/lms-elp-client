@@ -4,6 +4,7 @@ import AllOrdersDetials from "./AllOrdersDetials";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useEffect, useState } from "react";
 import { useDebounced } from "@/redux/hooks";
+import Pagination from "@/app/(dashboard)/Pagination";
 
 const AllOrders = () => {
   const [sortedOrder, setSortedOrder] = useState([]);
@@ -11,15 +12,18 @@ const AllOrders = () => {
   const [sortField, setSortField] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(25);
 
-  const { data, isLoading, isError } = useGetAllOrdersQuery();
+  const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({limit, page, searchTerm});
+
   const ordersData = data?.orders?.data;
 
   useEffect(() => {
     if (ordersData) {
       const filteredAndSortedOrders = ordersData
         .filter((order) =>
-          order?.user_id?.name.toLowerCase().includes(searchTerm.toLowerCase())
+        order?.user_id?.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .sort((a, b) => {
           if (sortField === "name") {
@@ -48,28 +52,44 @@ const AllOrders = () => {
     searchQuery:searchTerm,
     delay:600
   })
+
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setPage(1);
   };
-  useEffect(() => {
-    // Update the search term after the debounced delay
-    setSearchTerm(debouncedTerm);
-  }, [debouncedTerm]);
+
+
+useEffect(() => {
+  setSearchTerm(debouncedTerm);
+}, [debouncedTerm]);
+
+  
+
   let content = null;
 
   if (isLoading) {
     content = <InitialLoader />;
-  } else if (!isError && sortedOrder.length === 0) {
+  } else if (!isError && filteredOrders.length === 0) {
     content = (
       <div className="flex justify-center items-center font-bold bg-green-400 text-white py-3 rounded text-lg">
-        <h5>{searchTerm ? 'No matching orders found' : 'All Orders table is Empty Now'}</h5>
+        <h5>{searchTerm ? "No matching orders found" : "All Orders table is Empty Now"}</h5>
       </div>
     );
-  } else if (!isError && sortedOrder.length > 0) {
-    content = sortedOrder.map((item) => (
-      <AllOrdersDetials key={item?.id} item={item} />
-    ));
+  } else if (!isError && filteredOrders.length > 0) {
+    content = filteredOrders.map((item) => <AllOrdersDetials key={item?.id} item={item} />);
   }
+
+
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+ 
+  const totalData = data?.orders?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+
 
   return (
     <div>
@@ -106,6 +126,11 @@ const AllOrders = () => {
             </thead>
             <tbody>{content}</tbody>
           </table>
+
+
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
+
         </div>
       </div>
     </div>

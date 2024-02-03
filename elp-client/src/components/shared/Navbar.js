@@ -264,12 +264,9 @@ const Navbar = () => {
                     <ul className="py-4 pl-5 text-sm text-gray-700 dark:text-black">
                       <>
                         <li>
-                          <Link
-                            href="/"
-                            className="block  py-2 hover:bg-gray-100  "
-                          >
+                         
                             <p className="text-lg font-bold">{data?.name}</p>
-                          </Link>
+                         
                         </li>
                         <li>
                           <Link
