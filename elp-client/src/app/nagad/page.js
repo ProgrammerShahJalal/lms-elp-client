@@ -70,11 +70,17 @@ function Success() {
             }
           } else if (orderType === "exam") {
             const res = await payForExam(payload);
-            if (res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: "You  can now continue your buying exam!",
+                text: "You  can now continue your buying subscribe course!",
                 icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Error buying course! Contact to admin",
+                icon: "error",
               });
             }
           } else if (orderType === "hard copy") {
