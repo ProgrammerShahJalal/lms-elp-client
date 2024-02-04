@@ -10,6 +10,7 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Error from "@/components/Loader/Error";
 import CourseCard from "./CourseCard";
+import EmptyContent from "@/components/Loader/EmptyContent";
 
 const SubCategoryCourses = ({ sub_category_id }) => {
   const { data, isError, isLoading } = useGetAllCoursesQuery({
