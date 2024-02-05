@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -12,8 +12,13 @@ import {
 } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import Pagination from "../../Pagination";
 
 const AddCourseForm = () => {
+  const [limit, setLimit] = useState(15);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const {
     data: categories,
@@ -30,24 +35,19 @@ const AddCourseForm = () => {
   });
   const allSubcategory = subcategories?.subcategories;
 
-  const { data: courses, isLoading: isSubcategoryLoading } =
-    useGetAllCoursesQuery({limit:1000});
+  const { data: courses, isLoading: isSubcategoryLoading, refetch } =
+    useGetAllCoursesQuery({limit, page, searchTerm});
   const allCourses = courses?.courses?.data;
 
-  const ITEMS_PER_PAGE = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentCourses = courses?.courses?.data;
 
- 
-  const totalPages = Math.ceil(allCourses?.length / ITEMS_PER_PAGE);
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
 
-  const currentCourses = allCourses?.slice(startIndex, endIndex);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const totalData = courses?.courses?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
 
 
@@ -338,24 +338,7 @@ const AddCourseForm = () => {
             </tbody>
           </table>
 
-{/* Pagination controls */}
-<div className="flex justify-center mt-4">
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`mx-2 px-4 py-2 rounded-full ${
-                    page === currentPage
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-300 text-gray-700'
-                  }`}
-                >
-                  {page}
-                </button>
-              )
-            )}
-          </div>
+<Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
         </div>
       )}

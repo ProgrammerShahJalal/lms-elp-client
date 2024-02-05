@@ -1,17 +1,20 @@
 "use client"
+import Pagination from "@/app/(dashboard)/Pagination";
 import Commonbanner from "@/components/banners/Commonbanner";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RoutinesPage = () => {
-  const ITEMS_PER_PAGE = 10;
-  const { data: courses, isLoading } = useGetAllCoursesQuery({ limit: 1000 });
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { data: courses, isLoading, refetch } = useGetAllCoursesQuery({ limit, page, searchTerm });
   const coursesData = courses?.courses?.data;
 
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-
+ 
   // Extract unique subcategories and categories
   const uniqueSubcategories = Array.from(
     new Set(
@@ -34,16 +37,12 @@ const RoutinesPage = () => {
   );
 
 
+useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
 
-  // Calculate the total number of pages
-  const totalPages = Math.ceil(filteredCourses?.length / ITEMS_PER_PAGE);
-
-  // Calculate the index range for the current page
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-
-  // Extract the courses for the current page
-  const currentCourses = filteredCourses?.slice(startIndex, endIndex);
+  const totalData = courses?.courses?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
 
   const breadcrumbItems = [
@@ -105,7 +104,7 @@ const RoutinesPage = () => {
 }
       <div className="p-8 mb-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-        {currentCourses?.map((course) => (  
+        {filteredCourses?.map((course) => (  
           <div key={course.id} className="p-4 rounded-lg shadow bg-indigo-100">
             <h2 className="text-2xl font-bold mb-2 text-center">
               {course.title}
@@ -142,20 +141,7 @@ const RoutinesPage = () => {
 
       </div>
 
-       {/* Pagination controls */}
-       <div className="flex justify-center my-4">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`mx-2 px-4 py-2 rounded-full ${
-              page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
-            }`}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
+      <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
     </>
   );

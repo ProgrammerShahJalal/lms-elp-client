@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useAddBooksMutation,
   useDeleteBooksMutation,
@@ -11,21 +11,35 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Swal from "sweetalert2";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import Pagination from "../../Pagination";
 
 const AddBooks = () => {
-  const { data: allBooks, isLoading: isBooksLoading } = useGetAllBooksQuery({limit: 1000});
-  const allBook = allBooks?.books?.data;
+  const [limit, setLimit] = useState(25);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+  const { data: allBooks, isLoading: isBooksLoading, refetch} = useGetAllBooksQuery({
+    limit,
+    page,
+    searchTerm,
+  });
+
+  const currentBooks = allBooks?.books?.data;
+
   const [deleteBooks] = useDeleteBooksMutation();
   const [addBooks] = useAddBooksMutation();
   const [repetitions, setRepetitions] = useState(1);
   const [fields, setFields] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
   const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 1 }, () => ''));
   const [selectedSubcategories, setSelectedSubcategories] = useState(Array.from({ length: 1 }, () => ''));
+
+
   const {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useGetAllCategoriesQuery({limit: 1000});
+  } = useGetAllCategoriesQuery({limit, page, searchTerm});
 
   const {
     data: subcategories,
@@ -33,13 +47,20 @@ const AddBooks = () => {
     isError: isErrorSubcategories,
   } = useGetAllSubcategoriesQuery({
     category_id: selectedCategories,
-    limit: 1000
+    limit, page, searchTerm,
   });
+
+
   const allSubcategory = subcategories?.subcategories;
+
+
   const { data } = useGetAllCoursesQuery({
     sub_category_id: selectedSubcategories,
-    limit: 1000
+    limit, page, searchTerm,
   });
+
+
+
   const allCourse = data?.courses?.data;
   const [repetitionData, setRepetitionData] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
 
@@ -70,7 +91,7 @@ const AddBooks = () => {
 
     content.course_id = data?.categories?.map((category) => category.course_id) || [];
     const { categories, ...othersData } = content;
-    console.log(othersData);
+   
     const result = JSON.stringify(othersData);
     const formData = new FormData();
     formData.append("file", file[0]);
@@ -122,19 +143,15 @@ const AddBooks = () => {
     }
   };
 
+  
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 10; 
+  const totalData = allBooks?.books?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentBooks = allBooks?.books?.data?.slice(startIndex, endIndex);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  return (
+return (
     <>
       <div className="container mx-auto  p-6">
         <h2 className="text-2xl font-semibold mb-6">Add Book</h2>
@@ -453,24 +470,7 @@ const AddBooks = () => {
               </tbody>
             </table>
 
-{/* Pagination controls */}
-<div className="flex justify-center mt-4">
-              {Array.from({ length: Math.ceil((allBooks?.books?.data?.length || 0) / ITEMS_PER_PAGE) }, (_, index) => index + 1).map(
-                (page) => (
-                  <button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={`mx-2 px-4 py-2 rounded-full ${
-                      page === currentPage
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-300 text-gray-700'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                )
-              )}
-            </div>
+                        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
           </div>
         )}

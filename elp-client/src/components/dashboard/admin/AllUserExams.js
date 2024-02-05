@@ -4,11 +4,29 @@ import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import { useGetAllUserExamsQuery } from "@/redux/api/examsApi";
 import AllExamDetails from "./AllExamDetails";
+import Pagination from "@/app/(dashboard)/Pagination";
+import { useEffect, useState } from "react";
 
 const AllUserExams = () => {
-  const { data, isLoading, isError } = useGetAllUserExamsQuery();
-  // console.log(data?.exams);
-  const allExams = data?.exams;
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { data, isLoading, isError, refetch } = useGetAllUserExamsQuery({limit, page, searchTerm});
+
+  const allExams = data?.exams?.data;
+  
+  
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
+
+
+  const totalData = data?.exams?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+
+  
   let content = null;
 
   if (isLoading) {
@@ -61,6 +79,9 @@ const AllUserExams = () => {
 
           </tbody>
         </table>
+
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+
       </div>
     </div>
   );

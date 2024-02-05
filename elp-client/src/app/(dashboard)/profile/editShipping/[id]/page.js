@@ -9,7 +9,8 @@ import toast from "react-hot-toast";
 const UserEditShippingPage = ({params}) => {
   const router = useRouter()
   const {id} = params;
-  const {data} = useGetMyShippingAddressQuery(id);
+  const {data} = useGetMyShippingAddressQuery();
+
 
   const [address , setAddress] = useState("");
   const [billing_name , setBilling_name] = useState("");
@@ -57,6 +58,7 @@ useEffect(()=>{
        });
        if(res){
         toast.success("Shipping Info updated successfully");
+        router.push("/profile");
        }
        else{
         toast.error("Something is wrong to update shipping info")
@@ -69,8 +71,7 @@ useEffect(()=>{
     }
   };
 
- 
-  return (
+return (
     <>
     <div className="bg-white rounded-lg py-6 border border-gray-200 px-10 ">
       <h3 className="font-medium text-lg text-center pb-3">Edit Shipping Info</h3>

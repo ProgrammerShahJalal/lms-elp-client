@@ -41,7 +41,7 @@ const MyPurchasePdfPage = () => {
     // content = <Error/>;
     content = (
       <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 my-5 px-3 rounded text-lg">
-        <h5>আপনি কোন বই কিনেন নি এখনো</h5>
+        <h5>আপনি এখনো কোন বই কিনেন নি </h5>
       </tr>
     );
   }

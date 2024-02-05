@@ -5,47 +5,38 @@ import {
   useMakeAdminMutation,
 } from "@/redux/api/usersApi";
 import { getUserInfo } from "@/services/auth.service";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import Pagination from "../../Pagination";
 
 const AdminAllUsers = () => {
-  const ITEMS_PER_PAGE = 10;
+  const [limit, setLimit] = useState(50);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading, isError } = useGetAllUsersQuery({ limit: 10000 });
+  const { data, isLoading, isError, refetch } = useGetAllUsersQuery({
+    limit,
+    page,
+    searchTerm,
+  });
   const users = data?.data?.data || [];
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredUsers = users.filter((user) =>
     user?.contact_no?.includes(searchTerm)
   );
 
-
-// Calculate the total number of pages
-const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
-
-// Calculate the index range for the current page
-const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-const endIndex = startIndex + ITEMS_PER_PAGE;
-
-// Extract the users for the current page
-const currentUsers = filteredUsers.slice(startIndex, endIndex);
-
-
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1);
+    setPage(1);
   };
 
+  useEffect(() => {
+    refetch();
+  }, [limit, page, searchTerm]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const totalData = data?.data?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
 
-
-  
   if (isLoading) {
     return <p>Loading users...</p>;
   }
@@ -58,7 +49,6 @@ const currentUsers = filteredUsers.slice(startIndex, endIndex);
     <div className="py-4">
       <h1 className="text-2xl font-bold mb-4">Admin - All Users</h1>
       <input
-    
         type="number"
         className="border px-5 py-2 outline-none w-96 mb-5"
         placeholder="Search by Contact Number"
@@ -93,36 +83,19 @@ const currentUsers = filteredUsers.slice(startIndex, endIndex);
               </tr>
             </thead>
             <tbody>
-              {currentUsers.map((user, index) => (
+              {users.map((user, index) => (
                 <UsersDetails key={user?.id} index={index} user={user} />
               ))}
             </tbody>
           </table>
 
-{/* Pagination controls */}
-<div className="flex justify-center mt-4">
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`mx-2 px-4 py-2 rounded-full ${
-                    page === currentPage
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-300 text-gray-700'
-                  }`}
-                >
-                  {page}
-                </button>
-              )
-            )}
-          </div>
+
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
         </div>
       ) : (
         <p>No users available.</p>
       )}
-      
     </div>
   );
 };
