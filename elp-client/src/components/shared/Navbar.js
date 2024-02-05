@@ -46,7 +46,6 @@ const Navbar = () => {
   const [showSubcategories, setShowSubcategories] = useState(false);
   const { data: routines } = useGetAllCoursesRoutineQuery();
 
-
   const allRoutines = routines?.routines;
   const { data: courses } = useGetAllCoursesQuery();
   const { data: cart } = useGetAllCartsByUserQuery();
@@ -108,7 +107,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="w-full bg-white sticky top-0 left-0 right-0 z-10 border-b border-b-gray-200 shadow-lg">
+    <header className="w-full bg-white sticky top-0 left-0 right-0 z-50 border-b border-b-gray-200 shadow-lg">
       <nav
         className={`py-4  px-4 ${
           isSticky
@@ -142,56 +141,60 @@ const Navbar = () => {
               হোম
             </Link>
             <li className="relative group">
-            <span className="cursor-pointer flex items-center  hover:text-bluePrimary font-bold">কোর্সসমূহ <IoIosArrowDown /></span>
-            {categoriesData && (
-        <ul
-          className={`absolute hidden min-w-[10em] px-4 text-white py-2 space-y-2 shadow-md group-hover:block text-left rounded-md transition-all duration-300 bg-bluePrimary`}
-        >
-          {categoriesData?.map((category) => (
-            <li
-              key={category.id}
-              className="group relative"
-              onMouseEnter={() => setHoveredCategoryId(category.id)}
-              onMouseLeave={() => setHoveredCategoryId(null)}
-            >
-              <span className="cursor-pointer flex items-center">
-                {category?.title}
-                <IoIosArrowDown />
+              <span className="cursor-pointer flex items-center  hover:text-bluePrimary font-bold">
+                কোর্সসমূহ <IoIosArrowDown />
               </span>
-              {hoveredCategoryId === category.id && subCategoriesData && (
+              {categoriesData && (
                 <ul
-                  className={`absolute top-0 left-full space-y-2 text-white bg-bluePrimary py-2 shadow-md rounded-md`}
+                  className={`absolute hidden min-w-[10em] px-4 text-white py-2 space-y-2 shadow-md group-hover:block text-left rounded-md transition-all duration-300 bg-bluePrimary`}
                 >
-                  {subCategoriesData
-                    .filter(
-                      (subCategory) =>
-                        subCategory?.category_id?._id === category.id
-                    )
-                    .map((subCategory) => (
-                      <li
-                        key={subCategory?.id}
-                        className="group relative"
-                        onMouseEnter={() =>
-                          setHoveredSubCategoryId(subCategory.id)
-                        }
-                        onMouseLeave={() => setHoveredSubCategoryId(null)}
-                      >
-                        <Link
-                          href={`/courses/category/subcategory/${subCategory?._id}`}
-                          className="block px-4 py-2"
-                        >
-                          {subCategory?.title}
-                        </Link>
-                        
-                      </li>
-                    ))}
+                  {categoriesData?.map((category) => (
+                    <li
+                      key={category.id}
+                      className="group relative"
+                      onMouseEnter={() => setHoveredCategoryId(category.id)}
+                      onMouseLeave={() => setHoveredCategoryId(null)}
+                    >
+                      <span className="cursor-pointer flex items-center">
+                        {category?.title}
+                        <IoIosArrowDown />
+                      </span>
+                      {hoveredCategoryId === category.id &&
+                        subCategoriesData && (
+                          <ul
+                            className={`absolute top-0 left-full space-y-2 text-white bg-bluePrimary py-2 shadow-md rounded-md`}
+                          >
+                            {subCategoriesData
+                              .filter(
+                                (subCategory) =>
+                                  subCategory?.category_id?._id === category.id
+                              )
+                              .map((subCategory) => (
+                                <li
+                                  key={subCategory?.id}
+                                  className="group relative"
+                                  onMouseEnter={() =>
+                                    setHoveredSubCategoryId(subCategory.id)
+                                  }
+                                  onMouseLeave={() =>
+                                    setHoveredSubCategoryId(null)
+                                  }
+                                >
+                                  <Link
+                                    href={`/courses/category/subcategory/${subCategory?._id}`}
+                                    className="block px-4 py-2"
+                                  >
+                                    {subCategory?.title}
+                                  </Link>
+                                </li>
+                              ))}
+                          </ul>
+                        )}
+                    </li>
+                  ))}
                 </ul>
               )}
             </li>
-          ))}
-        </ul>
-      )}
-          </li>
             <Link
               href="/about"
               className="block dark:text-black hover:text-bluePrimary font-bold"
@@ -205,12 +208,13 @@ const Navbar = () => {
               যোগাযোগ
             </Link>
 
-            <Link 
-            href="/routines"
-            className="block dark:text-black hover:text-bluePrimary font-bold"
+            <Link
+              href="/routines"
+              className="block dark:text-black hover:text-bluePrimary font-bold"
             >
               ক্লাস রুটিন
-          </Link>
+            </Link>
+            <Link href="/nagad">নগদ</Link>
 
             {userLoggedIn && (
               <Link
@@ -264,12 +268,9 @@ const Navbar = () => {
                     <ul className="py-4 pl-5 text-sm text-gray-700 dark:text-black">
                       <>
                         <li>
-                          <Link
-                            href="/"
-                            className="block  py-2 hover:bg-gray-100  "
-                          >
+                         
                             <p className="text-lg font-bold">{data?.name}</p>
-                          </Link>
+                         
                         </li>
                         <li>
                           <Link
@@ -322,7 +323,7 @@ const Navbar = () => {
           }`}
         >
           {/* <ToggleTheme /> */}
-         <MobileNavbar/>
+          <MobileNavbar />
         </div>
       </nav>
     </header>
