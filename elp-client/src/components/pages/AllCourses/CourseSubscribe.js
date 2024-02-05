@@ -5,7 +5,7 @@ import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Commonbanner from "@/components/banners/Commonbanner";
 import { authKey } from "@/constants/storage";
-import { useGetAllSubscriptionsQuery, useGetSingleCourseQuery } from "@/redux/api/courseApi";
+import { useGetAllSubscriptionsQuery } from "@/redux/api/courseApi";
 
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
@@ -13,26 +13,35 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import PaymentModal from "@/components/shared/PaymentModal";
 
-const CourseSubscribe = ({course_id}) => {
-  const {data:singleCourse} = useGetSingleCourseQuery(course_id);
-
+const CourseSubscribe = ({ course_id }) => {
   const userLoggedIn = isLoggedIn();
- 
-  // const singleCourseId = singleCourse?._id;
-  // console.log(singleCourse,"single course");
+  const router = useRouter();
 
-
-    const router = useRouter();
-  const { data, isError, isLoading } = useGetAllSubscriptionsQuery({course_id});
-  console.log(data?.subscriptions?.data, "from sub page");
+  const { data, isError, isLoading } = useGetAllSubscriptionsQuery({
+    course_id,
+  });
   const allSubsCourses = data?.subscriptions?.data;
 
+  // states
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedSubscription, setSelectedSubscription] = useState(null);
+
+  // effects
+  useEffect(() => {
+    if (paymentMethod) {
+      enrollToCourse(selectedSubscription);
+    }
+  }, [paymentMethod]);
+
+  // handlers
   const enrollToCourse = async (subscription) => {
     if (!userLoggedIn) {
       return toast.error("Please signin to buy a subscribe course");
     }
-
 
     const coursePaymentPayload = {
       user_id: getUserInfo()?.userId,
@@ -41,17 +50,27 @@ const CourseSubscribe = ({course_id}) => {
     Cookies.set("order_type", "subscription");
     Cookies.set("creationPayload", JSON.stringify(coursePaymentPayload));
 
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
-      {
-        amount: `${subscription?.cost}`,
-      },
-      {
-        withCredentials: true,
-        headers: { Authorization: getFromLocalStorage(authKey) },
-      }
-    );
-    router.push(data?.data);
+    if (paymentMethod === "bkash") {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
+        {
+          amount: `${subscription?.cost}`,
+        },
+        {
+          withCredentials: true,
+          headers: { Authorization: getFromLocalStorage(authKey) },
+        }
+      );
+      router.push(data?.data);
+    } else if (paymentMethod === "nagad") {
+      const { data: payment } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/create`,
+        {
+          amount: `${subscription?.cost}`,
+        }
+      );
+      router.push(payment?.data);
+    }
   };
 
   let content = null;
@@ -91,15 +110,19 @@ const CourseSubscribe = ({course_id}) => {
               {item?.cost}
             </h1>
             <p className="opacity-75 font-bold text-xl">
-            সময়কাল: {item?.subscription_duration_in_months} মাস
+              সময়কাল: {item?.subscription_duration_in_months} মাস
             </p>
             <p className="opacity-75 py-2">
-            কোর্সের শিরোনাম: {item?.course_id?.title}
+              কোর্সের শিরোনাম: {item?.course_id?.title}
             </p>
             <p className="opacity-75 py-2">
-            কোর্স প্রশিক্ষক: {item?.course_id?.author}
+              কোর্স প্রশিক্ষক: {item?.course_id?.author}
             </p>
-            <button  onClick={() => enrollToCourse(item)}
+            <button
+              onClick={() => {
+                setSelectedSubscription(item);
+                setModalOpen(true);
+              }}
               className="bg-bluePrimary text-white py-3 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary "
               href="/subscribe"
             >
@@ -139,6 +162,13 @@ const CourseSubscribe = ({course_id}) => {
       />
       <div className="py-10 mx-14">
         <div className="grid lg:grid-cols-3 gap-4">{content}</div>
+        {modalOpen && (
+          <PaymentModal
+            setModalOpen={setModalOpen}
+            setPaymentMethod={setPaymentMethod}
+            amount={selectedSubscription?.cost}
+          />
+        )}
       </div>
     </div>
   );
