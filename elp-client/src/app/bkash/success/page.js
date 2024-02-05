@@ -56,7 +56,7 @@ function Success() {
 
           if (orderType === "subscription") {
             const res = await subscribeToCourse(payload);
-            if (res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: "You  can now continue your buying subscribe course!",
@@ -65,7 +65,7 @@ function Success() {
             }
           } else if (orderType === "exam") {
             const res = await payForExam(payload);
-            if (res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: "You  can now continue your buying exam!",
@@ -76,10 +76,10 @@ function Success() {
             const shippingAddressPayload = {
               user_id,
               division: payload?.division,
+              district: payload?.district,
               upazilla: payload?.upazilla,
               address: payload?.address,
               contact_no: payload?.contact_no,
-              outside_dhaka: JSON.parse(payload?.outside_dhaka),
               billing_name: payload?.billing_name,
             };
             if (payload?.is_default) {
@@ -92,15 +92,13 @@ function Success() {
               books: booksPayload,
               paymentID,
             });
-            if (!!order) {
+            if (Boolean(order?.data)) {
               dispatch(clearCart());
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: " Your order has been successfully.!",
+                text: " Your order has been successfull!",
                 icon: "success",
               });
-            } else {
-              toast.error("Order creation failed!");
             }
           } else if (orderType === "bundle_course") {
             const res = subscribeToCourseBundle({
@@ -110,7 +108,7 @@ function Success() {
               trx_id,
             });
 
-            if (!!res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: " Your bundle course has been bought successfully.!",
@@ -130,15 +128,13 @@ function Success() {
             paymentID,
           });
 
-          if (!!order) {
+          if (Boolean(order?.data)) {
             dispatch(clearCart());
             Swal.fire({
               title: "Congratulations! Payment Successful",
               text: " Your order has been successfully.!",
               icon: "success",
             });
-          } else {
-            toast.error("Order creation failed!");
           }
         }
         Cookies.remove("order_type");

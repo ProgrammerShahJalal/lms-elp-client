@@ -3,9 +3,6 @@
 import Commonbanner from "@/components/banners/Commonbanner";
 import CheckoutCart from "./CheckoutCart";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import bkashImg from "@/assets/images/Bkash logo.png";
-import nagadImg from "@/assets/images/Nagad-Logo.png";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getUserInfo, isLoggedIn } from "@/services/auth.service";
@@ -24,12 +21,12 @@ import {
   useGetShipppingChargeOutsideDhakaQuery,
 } from "@/redux/api/settingsApi";
 import { useGetMyShippingAddressQuery } from "@/redux/api/usersApi";
+import PaymentModal from "@/components/shared/PaymentModal";
 
 const CheckOut = () => {
   // declaring states
   const [modalOpen, setModalOpen] = useState(false);
   const [isDefault, setIsDefault] = useState(false);
-  const [selectedOutsideDhaka, setSelectedOutsideDhaka] = useState(true);
   const [shippingCharge, setShippingCharge] = useState(100);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
@@ -40,9 +37,11 @@ const CheckOut = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    watch,
+    formState: { errors, isValid },
     setValue,
   } = useForm();
+  const selectedDivision = watch("division");
 
   // data fetch
   const {
@@ -73,7 +72,7 @@ const CheckOut = () => {
       );
       if (isThereHardCopyBook) {
         setShippingCharge(
-          selectedOutsideDhaka
+          selectedDivision !== "Dhaka"
             ? shippingChargeOutsideDhaka
             : shippingChargeInsideDhaka
         );
@@ -83,11 +82,11 @@ const CheckOut = () => {
     }
   }, [
     books,
-    selectedOutsideDhaka,
     shippingChargeInsideDhaka,
     shippingInsideDhakaLoading,
     shippingChargeOutsideDhaka,
-    shippingChargeOutsideDhaka,
+    shippingOutsideDhakaLoading,
+    selectedDivision,
   ]);
 
   useEffect(() => {
@@ -96,18 +95,11 @@ const CheckOut = () => {
   }, [user]);
 
   useEffect(() => {
-    if (paymentMethod) {
-      handleFormSubmit();
-    }
-  }, [paymentMethod]);
-
-  useEffect(() => {
     if (shippingAddress) {
       setValue("billing_name", shippingAddress.billing_name);
       setValue("division", shippingAddress.division);
       setValue("district", shippingAddress.district);
       setValue("upazilla", shippingAddress.upazilla);
-      setValue("outside_dhaka", String(shippingAddress.outside_dhaka));
       setValue("address", shippingAddress.address);
       setValue("contact_no", shippingAddress.contact_no);
     }
@@ -125,42 +117,85 @@ const CheckOut = () => {
     setIsDefault(!isDefault);
   };
 
+  const handlePlaceOrderBtn = async () => {
+    try {
+      if (!userLoggedIn) {
+        toast.error("Login first!");
+      } else {
+        await handleSubmit(handleFormSubmit)();
+        if (isValid) {
+          // if form submission is valid, i.e. no error, open modal for payment
+          setModalOpen(true);
+        }
+      }
+    } catch (error) {
+      toast.error("Error submitting form!");
+    }
+  };
+
   // handle form submit/payment/order create
   const handleFormSubmit = async (data) => {
-    /*
     Cookies.set("order_type", shippingCharge ? "hard copy" : "pdf");
     if (shippingCharge) {
       Cookies.set(
         "creationPayload",
-        JSON.stringify({ ...data, is_default: isDefault, paymentMethod })
+        JSON.stringify({ ...data, is_default: isDefault })
       );
     }
-    if (!userLoggedIn) {
-      return toast.error("Please signin to buy a book");
-    }
-
-    if (paymentMethod === "bkash") {
-      const { data: payment } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
-        {
-          amount: `${Number(shippingCharge) + Number(total)}`,
-        },
-        {
-          withCredentials: true,
-          headers: { Authorization: getFromLocalStorage(authKey) },
-        }
-      );
-      router.push(payment?.data);
-    } else if (paymentMethod === "nagad") {
-      const { data: payment } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/create`,
-        {
-          amount: `${Number(shippingCharge) + Number(total)}`,
-        }
-      );
-      router.push(payment?.data);
-    }*/
   };
+
+  // payment handler function
+  const handlePayment = async () => {
+    try {
+      if (paymentMethod) {
+        if (paymentMethod === "bkash") {
+          const { data } = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
+            {
+              amount: `${Number(shippingCharge) + Number(total)}`,
+            },
+            {
+              withCredentials: true,
+              headers: { Authorization: getFromLocalStorage(authKey) },
+            }
+          );
+          router.push(data?.data);
+        } else if (paymentMethod === "nagad") {
+          const { data: payment } = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/create`,
+            {
+              amount: `${Number(shippingCharge) + Number(total)}`,
+            }
+          );
+          router.push(payment?.data);
+        }
+      }
+    } catch (error) {
+      toast.error("Error during payment");
+    }
+  };
+
+  // handle payment in use effect as it is asynchronous task
+  useEffect(() => {
+    const performAsyncOperation = () => {
+      try {
+        const asyncOperation = async () => {
+          await handlePayment();
+        };
+
+        asyncOperation();
+      } catch (error) {
+        console.log("Error during asynchronous operation:", error);
+      }
+    };
+
+    performAsyncOperation();
+
+    // Return a cleanup function (if needed)
+    return () => {
+      // Cleanup logic (if needed)
+    };
+  }, [paymentMethod, shippingCharge, total]);
 
   if (userLoading) {
     return <Loading />;
@@ -182,7 +217,7 @@ const CheckOut = () => {
                     <div className="max-w-md mx-auto mt-8">
                       <div className="col-span-2 mb-4">
                         <label className="block text-sm font-medium text-gray-700">
-                          বিলের নাম
+                          বিলিং নাম
                         </label>
                         <input
                           {...register("billing_name", {
@@ -202,15 +237,21 @@ const CheckOut = () => {
                           <label className="block text-sm font-medium text-gray-700">
                             বিভাগ
                           </label>
-                          <input
+                          <select
                             {...register("division", {
-                              required: "Division is required",
+                              required: "Please select Division",
                             })}
-                            className="mt-1 p-2 w-full border"
-                            defaultValue={
-                              shippingAddress ? shippingAddress?.division : ""
-                            }
-                          />
+                            className="mt-1 h-10 w-full border"
+                          >
+                            <option value="Rajshahi">রাজশাহী</option>
+                            <option value="Dhaka">ঢাকা</option>
+                            <option value="Mymensingh">ময়মনসিংহ</option>
+                            <option value="Rangpur">রংপুর</option>
+                            <option value="Khulna">খুলনা</option>
+                            <option value="Chattogram">চট্টগ্রাম</option>
+                            <option value="Barishal">বরিশাল</option>
+                            <option value="Sylhet">সিলেট</option>
+                          </select>
                           {errors.division && (
                             <p className="text-red-500 text-sm">
                               {errors.division.message}
@@ -259,6 +300,28 @@ const CheckOut = () => {
 
                         <div>
                           <label className="block text-sm font-medium text-gray-700">
+                            যোগাযোগের মোবাইল নম্বর
+                          </label>
+                          <input
+                            {...register("contact_no", {
+                              required: "Contact Number is required",
+                              pattern: {
+                                value: /^\d{11}$/,
+                                message: "Invalid contact number",
+                              },
+                            })}
+                            className="mt-1 p-2 w-full border"
+                            defaultValue={user?.contact_no}
+                          />
+                          {errors.contact_no && (
+                            <p className="text-red-500 text-sm">
+                              {errors.contact_no.message}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* <div>
+                          <label className="block text-sm font-medium text-gray-700">
                             ঢাকার বাইরে?
                           </label>
                           <select
@@ -284,7 +347,7 @@ const CheckOut = () => {
                               {errors.outside_dhaka.message}
                             </p>
                           )}
-                        </div>
+                        </div> */}
 
                         <div className="col-span-2">
                           <label className="block text-sm font-medium text-gray-700">
@@ -304,28 +367,6 @@ const CheckOut = () => {
                           {errors.address && (
                             <p className="text-red-500 text-sm">
                               {errors.address.message}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="col-span-2">
-                          <label className="block text-sm font-medium text-gray-700">
-                            যোগাযোগের মোবাইল নম্বর
-                          </label>
-                          <input
-                            {...register("contact_no", {
-                              required: "Contact Number is required",
-                              pattern: {
-                                value: /^\d{11}$/,
-                                message: "Invalid contact number",
-                              },
-                            })}
-                            className="mt-1 p-2 w-full border"
-                            defaultValue={user?.contact_no}
-                          />
-                          {errors.contact_no && (
-                            <p className="text-red-500 text-sm">
-                              {errors.contact_no.message}
                             </p>
                           )}
                         </div>
@@ -370,7 +411,7 @@ const CheckOut = () => {
               </Link>
               <button
                 type="button"
-                onClick={() => setModalOpen(true)}
+                onClick={handlePlaceOrderBtn}
                 className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
               >
                 Place Order
@@ -381,40 +422,13 @@ const CheckOut = () => {
             </div>
           </div>
           {/* ====================  Payment modal  ==========================================*/}
-          <div className="dialog-container w-96 h-72">
-            <dialog
-              open={modalOpen}
-              id={`my_modal`}
-              className="modal bg-gray-100 w-96 h-72"
-            >
-              <div className="flex flex-col justify-center h-full p-4">
-                <h2 className="text-center mb-6">পেমেন্ট পদ্ধতি</h2>
-                <div className="flex gap-4 mb-4">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("bkash")}
-                    className="bg-white rounded h-20 w-32 flex justify-center items-center"
-                  >
-                    <Image src={bkashImg} alt="Bkash" width={100} height={60} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("nagad")}
-                    className="bg-white rounded h-20 w-32 flex justify-center items-center"
-                  >
-                    <Image src={nagadImg} alt="Nagad" width={100} height={60} />
-                  </button>
-                </div>
-              </div>
-              <button
-                className="flex justify-center items-center bg-red-400 text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary"
-                type="button"
-                onClick={() => setModalOpen(false)}
-              >
-                Close
-              </button>
-            </dialog>
-          </div>
+          {modalOpen && (
+            <PaymentModal
+              setModalOpen={setModalOpen}
+              setPaymentMethod={setPaymentMethod}
+              amount={total}
+            />
+          )}
         </form>
       </div>
     );
