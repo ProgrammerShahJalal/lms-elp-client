@@ -37,7 +37,7 @@ const AdminPermissions = ({ user, refetchAdmins }) => {
   };
   return (
     <div className="flex justify-center flex-wrap">
-      {adminPermissions.map((permission) => (
+      {adminPermissions?.map((permission) => (
         <button
           onClick={() => handlesPermission(permission)}
           className={`${
