@@ -27,7 +27,7 @@ const UserOrder = () => {
   if (!isLoading && !isError) {
     // content = <Error/>;
     content = <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 my-5 px-3 rounded text-lg">
-    <h5>Your Order is Empty Now</h5>
+    <h5>আপনার অর্ডার এখন খালি</h5>
   </tr>;
   }
 

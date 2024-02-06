@@ -11,7 +11,7 @@ const UserProfileInfo = () => {
   const { data } = useGetSingleUserQuery(userId);
   const { data: addressData } = useGetMyShippingAddressQuery();
 
-  console.log("adress", addressData);
+
 
 
 
@@ -55,7 +55,8 @@ const UserProfileInfo = () => {
     </div>
 
 
-<div className="flex items-center justify-between rounded-lg py-5 px-10 mt-6 border border-gray-200">
+{
+  addressData && <div className="flex items-center justify-between rounded-lg py-5 px-10 mt-6 border border-gray-200">
   <div>
   <h2 className="font-semibold text-lg">Your Shipping Info:</h2>
 <p>Address: {addressData?.address}</p>
@@ -89,6 +90,7 @@ const UserProfileInfo = () => {
         </div>
 
 </div>
+}
 
    </>
   );

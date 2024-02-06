@@ -16,7 +16,7 @@ import { useAddOrderMutation } from "@/redux/api/ordersApi";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Swal from "sweetalert2";
-import successImg from "../../../assets/images/success.svg";
+import successImg from "@/assets/images/success.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "@/redux/features/cart/cartSlice";
@@ -29,8 +29,8 @@ function Success() {
   const [subscribeToCourseBundle] = useSubscribeToCourseBundleMutation();
   const [updateShippingAddress] = useUpdateShippingAddressMutation();
   const [addOrder] = useAddOrderMutation();
-  const trx_id = searchParams.get("trx_id");
-  const paymentID = searchParams.get("paymentID");
+  const nagadPaymentStatus = searchParams.get("status");
+  const nagadPaymentRefId = searchParams.get("payment_ref_id");
   const payloadString = Cookies.get("creationPayload");
   const orderType = Cookies.get("order_type");
   const { books } = useSelector((state) => state.cart);
@@ -51,25 +51,36 @@ function Success() {
         }
         if (payloadString) {
           const payload = JSON.parse(payloadString);
-          payload.trx_id = trx_id;
-          payload.paymentID = paymentID;
+          payload.payment_ref_id = nagadPaymentRefId;
 
           if (orderType === "subscription") {
             const res = await subscribeToCourse(payload);
-            if (res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: "You  can now continue your buying subscribe course!",
                 icon: "success",
               });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Error buying course! Contact to admin",
+                icon: "error",
+              });
             }
           } else if (orderType === "exam") {
             const res = await payForExam(payload);
-            if (res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: "You  can now continue your buying exam!",
+                text: "You  can now continue your buying subscribe course!",
                 icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Error buying course! Contact to admin",
+                icon: "error",
               });
             }
           } else if (orderType === "hard copy") {
@@ -90,7 +101,6 @@ function Success() {
               trx_id,
               shipping_address: JSON.stringify(shippingAddressPayload),
               books: booksPayload,
-              paymentID,
             });
             if (!!order) {
               dispatch(clearCart());
@@ -127,7 +137,6 @@ function Success() {
           const order = await addOrder({
             trx_id,
             books: booksPayload,
-            paymentID,
           });
 
           if (!!order) {
