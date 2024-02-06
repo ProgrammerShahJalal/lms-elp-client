@@ -210,11 +210,19 @@ const Navbar = () => {
 
             <Link
               href="/routines"
-              className="block dark:text-black hover:text-bluePrimary font-bold"
+
+
+               className="block dark:text-black hover:text-bluePrimary font-bold"
             >
               ক্লাস রুটিন
             </Link>
-            <Link href="/nagad">নগদ</Link>
+            <Link
+              href="/notice"
+              className="block dark:text-black hover:text-bluePrimary font-bold"
+            >
+              নোটিশ
+            </Link>
+    
 
             {userLoggedIn && (
               <Link

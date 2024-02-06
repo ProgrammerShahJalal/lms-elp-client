@@ -1,6 +1,9 @@
-'use client'
+"use client";
 
-import { useDeleteUserMutation, useMakeAdminMutation } from "@/redux/api/usersApi";
+import {
+  useDeleteUserMutation,
+  useMakeAdminMutation,
+} from "@/redux/api/usersApi";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -8,7 +11,7 @@ const UsersDetails = ({ user, index }) => {
   const dateObject = new Date(user?.createdAt);
   const localData = dateObject.toLocaleDateString();
   const [makeAdmin] = useMakeAdminMutation();
-  const [deleteUser] = useDeleteUserMutation()
+  const [deleteUser] = useDeleteUserMutation();
 
   const handleMakeAdmin = async (userId) => {
     try {
@@ -19,7 +22,7 @@ const UsersDetails = ({ user, index }) => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, make admin!"
+        confirmButtonText: "Yes, make admin!",
       });
 
       if (result.isConfirmed) {
@@ -29,7 +32,7 @@ const UsersDetails = ({ user, index }) => {
           Swal.fire({
             title: "Admin Created!",
             text: "The user has been made an admin successfully.",
-            icon: "success"
+            icon: "success",
           });
         }
       }
@@ -37,11 +40,10 @@ const UsersDetails = ({ user, index }) => {
       Swal.fire({
         title: "Error",
         text: "An error occurred while making the user an admin.",
-        icon: "error"
+        icon: "error",
       });
     }
   };
-
 
   const handleDelete = async (id) => {
     try {
@@ -81,37 +83,33 @@ const UsersDetails = ({ user, index }) => {
       toast.error(err.message);
     }
   };
-  
-  const isAdmin = user && (user.role === 'admin' || user.role === 'super_admin');
+
+  const isAdmin =
+    user && (user.role === "admin" || user.role === "super_admin");
 
   const getColorClass = (userRole) => {
     switch (userRole) {
       case "admin":
         return "text-blue-500";
       case "super_admin":
-        return "text-green-500"; 
+        return "text-green-500";
       case "student":
-        return "text-yellow-500"; 
+        return "text-yellow-500";
       default:
-        return "text-gray-500"; 
+        return "text-gray-500";
     }
   };
   return (
     <tr>
-      <td className="border px-4  py-2 md:table-cell">
-        {user.name}
-      </td>
-      <td className="border px-2  py-2 md:table-cell">
-        {user.email}
-      </td>
-      <td className="border px-2  py-2 md:table-cell">
-        {user.contact_no}
-      </td>
-      
+      <td className="border   py-2 md:table-cell">{index + 1}</td>
+      <td className="border px-4  py-2 md:table-cell">{user.name}</td>
+      <td className="border px-2  py-2 md:table-cell">{user.email}</td>
+      <td className="border px-2  py-2 md:table-cell">{user.contact_no}</td>
+
       <td
-        className={`border px-2 py-2 md:table-cell ${getColorClass(
+        className={`border px-2  py-2 md:table-cell ${getColorClass(
           user.role
-        )}`}
+        )} `}
       >
         {user.role}
       </td>
@@ -120,18 +118,25 @@ const UsersDetails = ({ user, index }) => {
         {" "}
         <button
           onClick={() => handleMakeAdmin(user?._id)}
-          className={`bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 rounded text-sm px-1 mx-2 ${isAdmin ? 'disabled:opacity-50 cursor-not-allowed bg-gray-400 text-black' : ''}`}
+          className={`bg-blue-400 hover:bg-blue-700 font-semibold text-white  py-2 rounded text-sm px-1  my-2 ${
+            isAdmin
+              ? "disabled:opacity-50 cursor-not-allowed bg-gray-400 text-black"
+              : ""
+          }`}
           disabled={isAdmin}
         >
           Make Admin
         </button>
       </td>
+      <td className="border px-4 py-2 md:table-cell">{localData}</td>
       <td className="border px-4 py-2 md:table-cell">
-        {localData}
-      </td>
-      <td className="border px-4 py-2 md:table-cell">
-        <button className="bg-red-500 text-white py-1 px-2 rounded-md"
-          onClick={() => handleDelete(user?.id)}>  Delete</button>
+        <button
+          className="bg-red-500 text-white py-1 px-2 rounded-md"
+          onClick={() => handleDelete(user?.id)}
+        >
+          {" "}
+          Delete
+        </button>
       </td>
     </tr>
   );
