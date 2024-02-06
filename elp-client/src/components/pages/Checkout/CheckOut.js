@@ -352,7 +352,7 @@ const CheckOut = () => {
 
             <div>
               <h2 className="font-semibold text-yellowPrimary pb-5 text-xl">
-                Products
+                Buying Processing Books
               </h2>
               <CheckoutCart shippingCharge={shippingCharge} total={total} />
             </div>

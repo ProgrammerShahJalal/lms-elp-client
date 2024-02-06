@@ -62,9 +62,10 @@ useEffect(()=>{
   };
 
  
-  // const onSubmit = (data) => console.log(data);
+ 
   return (
     <>
+    <h2 className="text-xl font-bold pb-5">Update Your Profile</h2>
     <div className="bg-white rounded-lg py-6 border border-gray-200 px-10 ">
       <form onSubmit={onHandleSubmit} >
       

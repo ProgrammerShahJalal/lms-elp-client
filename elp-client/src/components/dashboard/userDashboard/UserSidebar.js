@@ -181,7 +181,7 @@ const UserSidebar = () => {
                   </Link>
                 </li>
                 <li >
-                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-5 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <MdSubscriptions fontSize={20} />
                     সাবস্ক্রিপশন যোগ করুন
