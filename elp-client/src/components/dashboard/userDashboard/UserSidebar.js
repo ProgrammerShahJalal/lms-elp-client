@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaAddressBook, FaBookOpen, FaFileVideo } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
+import { IoIosNotifications } from "react-icons/io";
 import { PiExamFill } from "react-icons/pi";
 import { SiCoursera } from "react-icons/si";
 import { MdSubscriptions } from "react-icons/md";
@@ -236,6 +237,13 @@ const UserSidebar = () => {
                     {" "}
                     <FaBookOpen />
                     সব পরিক্ষা  সমূহ
+                  </Link>
+                </li>
+                <li >
+                  <Link href={"/superAdmin/addnotice"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                    {" "}
+                    <IoIosNotifications size={25}/>
+                    নোটিশ যোগ করুন 
                   </Link>
                 </li>
               </ul>
