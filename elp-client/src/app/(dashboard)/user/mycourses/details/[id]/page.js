@@ -192,7 +192,7 @@ const Play = () => {
       ) : (
         <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3 relative">
           <div className="static">
-            <div className="bg-white  py-3 px-36 md:px-96 z-20 absolute top-0 text-green-500 font-bold flex items-center">
+            <div className="bg-white  py-3 px-36 md:px-96 z-20 absolute top-0 left-0 right-0 text-green-500 font-bold flex items-center">
               <h2 className="md:px-12">TOP</h2>
               <img
                 className="w-12"
@@ -275,7 +275,7 @@ const Play = () => {
 
           </div>
 
-          <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-48 text-green-500 font-bold flex items-center">
+          <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-44 left-0 right-0 text-green-500 font-bold flex items-center">
             <h2 className="md:px-12">TOP</h2>
             <img
               className="w-12"
