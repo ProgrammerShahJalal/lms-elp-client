@@ -164,14 +164,14 @@ const UserSidebar = () => {
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
-                    বিভাগ যোগ করুন
+                     সকল বিভাগ 
                   </Link>
                 </li>
                 <li >
                   <Link href={"/admin/addsubcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
-                    উপ বিভাগ যোগ করুন
+                    সকল উপ বিভাগ 
                   </Link>
                 </li>
                 <li >

@@ -34,7 +34,7 @@ const AdminAddSubCategory = () => {
     refetch();
   }, [limit, page, searchTerm]);
 
-console.log('info', subcategories)
+
   // const totalData = questions?.categories?.meta?.total;
   // const totalPages = Math.ceil(totalData / limit);
   
@@ -81,8 +81,8 @@ console.log('info', subcategories)
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Add Subcategory</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <h1 className="text-2xl font-bold mb-4">Add Subcategory</h1> */}
+      {/* <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">
             Subcategory Title
@@ -131,7 +131,7 @@ console.log('info', subcategories)
         >
           Add Subcategory
         </button>
-      </form>
+      </form> */}
       <h1 className="text-2xl font-bold mb-4 mt-12">Update Sub Category</h1>
       {isSubcategoryLoading ? (
         <p>Loading...</p>
