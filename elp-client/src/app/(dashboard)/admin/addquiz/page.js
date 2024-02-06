@@ -467,6 +467,8 @@ const AddQuiz = () => {
                                 <th className="py-2 px-4 border-b">Option</th>
                                 <th className="py-2 px-4 border-b">Correct Answer</th>
                                 <th className="py-2 px-4 border-b">Exam Title</th>
+                                <th className="py-2 px-4 border-b">Status</th>
+                                <th className="py-2 px-4 border-b">Change Status</th>
                                 <th className="py-2 px-4 border-b">Delete</th>
                             </tr>
                         </thead>
