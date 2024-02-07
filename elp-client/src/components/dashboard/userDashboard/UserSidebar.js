@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaAddressBook, FaBookOpen, FaFileVideo } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
+import { IoIosNotifications } from "react-icons/io";
 import { PiExamFill } from "react-icons/pi";
 import { SiCoursera } from "react-icons/si";
 import { MdSubscriptions } from "react-icons/md";
@@ -163,14 +164,14 @@ const UserSidebar = () => {
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
-                    বিভাগ যোগ করুন
+                     সকল বিভাগ 
                   </Link>
                 </li>
                 <li >
                   <Link href={"/admin/addsubcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
-                    উপ বিভাগ যোগ করুন
+                    সকল উপ বিভাগ 
                   </Link>
                 </li>
                 <li >
@@ -181,7 +182,7 @@ const UserSidebar = () => {
                   </Link>
                 </li>
                 <li >
-                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-5 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <MdSubscriptions fontSize={20} />
                     সাবস্ক্রিপশন যোগ করুন
@@ -236,6 +237,13 @@ const UserSidebar = () => {
                     {" "}
                     <FaBookOpen />
                     সব পরিক্ষা  সমূহ
+                  </Link>
+                </li>
+                <li >
+                  <Link href={"/superAdmin/addnotice"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   px-6 py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                    {" "}
+                    <IoIosNotifications size={25}/>
+                    নোটিশ যোগ করুন 
                   </Link>
                 </li>
               </ul>

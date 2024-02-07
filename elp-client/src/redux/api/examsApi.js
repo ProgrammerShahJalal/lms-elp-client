@@ -55,6 +55,16 @@ export const examsApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["exams"],
     }),
+    updateStatusChange: build.mutation({
+      query: (data) => ({
+        url: `${EXAMS_URL}/${data?.id}`,
+        method: "PATCH",
+        data: {
+          is_active: data?.is_active,
+        },
+      }),
+      invalidatesTags: ["exams"],
+    }),
 
     deleteExam: build.mutation({
       query: (id) => ({
@@ -99,6 +109,8 @@ export const examsApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+
   }),
 });
 
@@ -107,9 +119,10 @@ export const {
   useGetSingleExamQuery,
   useDeleteExamMutation,
   useUpdateExamMutation,
+  useUpdateStatusChangeMutation,
   useAddAllExamsMutation,
   usePayForExamMutation,
   useGetMyExamPaymentQuery,
   useGetAllUserExamsQuery,
-  useGetMyDueExamsQuery,
+  useGetMyDueExamsQuery
 } = examsApi;

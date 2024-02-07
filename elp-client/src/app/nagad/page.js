@@ -16,7 +16,7 @@ import { useAddOrderMutation } from "@/redux/api/ordersApi";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Swal from "sweetalert2";
-import successImg from "../../../assets/images/success.svg";
+import successImg from "@/assets/images/success.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "@/redux/features/cart/cartSlice";
@@ -29,8 +29,8 @@ function Success() {
   const [subscribeToCourseBundle] = useSubscribeToCourseBundleMutation();
   const [updateShippingAddress] = useUpdateShippingAddressMutation();
   const [addOrder] = useAddOrderMutation();
-  const trx_id = searchParams.get("trx_id");
-  const paymentID = searchParams.get("paymentID");
+  const nagadPaymentStatus = searchParams.get("status");
+  const nagadPaymentRefId = searchParams.get("payment_ref_id");
   const payloadString = Cookies.get("creationPayload");
   const orderType = Cookies.get("order_type");
   const { books } = useSelector((state) => state.cart);
@@ -51,16 +51,21 @@ function Success() {
         }
         if (payloadString) {
           const payload = JSON.parse(payloadString);
-          payload.trx_id = trx_id;
-          payload.paymentID = paymentID;
+          payload.payment_ref_id = nagadPaymentRefId;
 
           if (orderType === "subscription") {
             const res = await subscribeToCourse(payload);
             if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: "You  can now continue your buying subscribe course!",
+                text: "You  can now continue your subscribed course!",
                 icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Error buying course! Contact to admin",
+                icon: "error",
               });
             }
           } else if (orderType === "exam") {
@@ -68,8 +73,14 @@ function Success() {
             if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: "You  can now continue your buying exam!",
+                text: "You  can now participate to the paid exam!",
                 icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Error paying for exam! Contact to admin",
+                icon: "error",
               });
             }
           } else if (orderType === "hard copy") {
@@ -87,17 +98,22 @@ function Success() {
             }
             // create order
             const order = await addOrder({
-              trx_id,
+              payment_ref_id: nagadPaymentRefId,
               shipping_address: JSON.stringify(shippingAddressPayload),
               books: booksPayload,
-              paymentID,
             });
             if (Boolean(order?.data)) {
-              dispatch(clearCart());
+               dispatch(clearCart());
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: " Your order has been successfull!",
+                text: " Your order has been successful!",
                 icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Error paying for exam! Contact to admin",
+                icon: "error",
               });
             }
           } else if (orderType === "bundle_course") {
@@ -115,19 +131,19 @@ function Success() {
                 icon: "success",
               });
             } else {
-              toast.error(
-                "Order failed. Contact to easy learning platform admin!"
-              );
+              Swal.fire({
+                title: "Error!",
+                text: "Error paying for exam! Contact to admin",
+                icon: "error",
+              });
             }
           }
         }
         if (orderType === "pdf") {
           const order = await addOrder({
-            trx_id,
+            payment_ref_id: nagadPaymentRefId,
             books: booksPayload,
-            paymentID,
           });
-
           if (Boolean(order?.data)) {
             dispatch(clearCart());
             Swal.fire({
@@ -135,10 +151,13 @@ function Success() {
               text: " Your order has been successfully.!",
               icon: "success",
             });
+          } else {
+            toast.error("Order creation failed!");
           }
         }
         Cookies.remove("order_type");
         Cookies.remove("creationPayload");
+        
       } catch (error) {
         toast.error(
           "Order failed!  Contact to easy learning platform admin!",

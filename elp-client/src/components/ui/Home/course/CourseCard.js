@@ -19,8 +19,16 @@ const CourseCard = ({ item }) => {
             height={50}
           />
           {/* z-0-rotate-45 z-10 */}
-          <p className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">{item?.sub_category_id?.category_id?.title}</p>
-          <Link href={`/courses/subcategory/${item?.id}`} className="absolute top-0 right-0 bg-bluePrimary text-white p-1 "> {item?.sub_category_id?.title}</Link>
+          <p className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">
+            {item?.sub_category_id?.category_id?.title}
+          </p>
+          <Link
+            href={`/courses/subcategory/${item?.id}`}
+            className="absolute top-0 right-0 bg-bluePrimary text-white p-1 "
+          >
+            {" "}
+            {item?.sub_category_id?.title}
+          </Link>
         </figure>
 
         <div className="p-4  hover:bg-white hover:rounded hover:text-cyanPrimary">
@@ -29,61 +37,57 @@ const CourseCard = ({ item }) => {
           </h2>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
-            <GiTeacher  className="text-3xl text-lime-500"/>
+              <GiTeacher className="text-3xl text-lime-500" />
               <span className="pl-2 text-cyanPrimary hover:text-cyanPrimary">
                 {item?.author}
               </span>
             </div>
             <div className="flex items-center">
-            <p className="text-sm font-semibold py-3 ">
-              {" "}
-              <span className="pr-5">মেম্বারশিপ ধরন</span>{" "}
-              <span
-                className={`bg-blue-200 font-bold px-2 py-1 rounded ${
-                  item?.membership_type === "1" ? "text-paid" : "text-free"
-                }`}
-              >
-                {item?.membership_type === "1" ? "Paid" : "Free"}
-              </span>
-            </p>
+              <p className="text-sm font-semibold py-3 ">
+                {" "}
+                <span className="pr-5">মেম্বারশিপ ধরন</span>{" "}
+                <span
+                  className={`bg-blue-200 font-bold px-2 py-1 rounded ${
+                    item?.membership_type === "1" ? "text-paid" : "text-free"
+                  }`}
+                >
+                  {item?.membership_type === "1" ? "Paid" : "Free"}
+                </span>
+              </p>
             </div>
           </div>
           <p
-  dangerouslySetInnerHTML={{
-    __html: `${item?.description.substring(0, 90)}...`,
-  }}
-></p>
+            dangerouslySetInnerHTML={{
+              __html: `${item?.description.substring(0, 90)}...`,
+            }}
+          ></p>
 
-         
           <div className="py-3">
             {/* {item?.description}{" "} */}
             <div className="flex justify-between">
-            <Link
-              href={`/courses/details/${item?._id}`}
-              className="text-fuchsia-600"
-            >
-              বিস্তারিত পড়ুন
-            </Link>{" "}
-            <Link
-              href={`/courses/details/${item?._id}/quiz`}
-              className="text-red-500 "
-            >
-              পরিক্ষা/কুইজে অংশগ্রহন করুন
-            </Link>{" "}
+              <Link
+                href={`/courses/details/${item?._id}`}
+                className="text-fuchsia-600"
+              >
+                বিস্তারিত পড়ুন
+              </Link>{" "}
+              <Link
+                href={`/courses/details/${item?._id}/quiz`}
+                className="text-red-500 "
+              >
+                পরিক্ষা/কুইজে অংশগ্রহন করুন
+              </Link>{" "}
             </div>
           </div>
           <hr />
           <div className="text-center mt-6 mb-3 ">
-            
             <Link
               href={`/courses/details/${item?._id}/subscribe`}
-              className="bg-yellowPrimary text-white py-4 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
+              className="bg-yellowPrimary text-white py-4 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary"
             >
               কোর্সটি কিনুন
             </Link>
           </div>
-
-          
         </div>
       </div>
     </>

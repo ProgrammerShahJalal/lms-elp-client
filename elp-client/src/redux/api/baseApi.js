@@ -26,6 +26,7 @@ export const baseApi = createApi({
     "orders",
     "exam-payments",
     "exam-results",
-    "order-status"
+    "order-status",
+    "notice"
   ],
 });

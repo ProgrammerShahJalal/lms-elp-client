@@ -106,8 +106,8 @@ const AdminAddCategory = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Add Category</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <h1 className="text-2xl font-bold mb-4">Add Category</h1> */}
+      {/* <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category Name</label>
           <input
@@ -132,7 +132,7 @@ const AdminAddCategory = () => {
         >
           Add Category
         </button>
-      </form>
+      </form> */}
 
       <div>
         <h1 className="text-2xl font-bold mb-4 mt-12">

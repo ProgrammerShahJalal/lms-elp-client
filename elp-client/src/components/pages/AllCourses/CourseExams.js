@@ -1,6 +1,7 @@
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Commonbanner from "@/components/banners/Commonbanner";
+import PaymentModal from "@/components/shared/PaymentModal";
 import { authKey } from "@/constants/storage";
 import { useGetAllExamsQuery } from "@/redux/api/examsApi";
 import { getUserInfo, isLoggedIn } from "@/services/auth.service";
@@ -8,11 +9,18 @@ import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function CourseExams({ course_id }) {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
+
+  // states
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedExam, setSelectedExam] = useState(null);
+
   const {
     data: dataExams,
     isError,
@@ -20,6 +28,13 @@ function CourseExams({ course_id }) {
   } = useGetAllExamsQuery({
     course_id: course_id,
   });
+
+  // effects
+  useEffect(() => {
+    if (paymentMethod) {
+      enrollToExam(selectedExam);
+    }
+  }, [paymentMethod]);
 
   const enrollToExam = async (exam) => {
     if (!userLoggedIn) {
@@ -33,17 +48,29 @@ function CourseExams({ course_id }) {
 
     Cookies.set("order_type", "exam");
     Cookies.set("creationPayload", JSON.stringify(examPaymentPayload));
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
-      {
-        amount: `${exam?.fee}`,
-      },
-      {
-        withCredentials: true,
-        headers: { Authorization: getFromLocalStorage(authKey) },
-      }
-    );
-    router.push(data?.data);
+
+
+    if (paymentMethod === "bkash") {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
+        {
+          amount: `${exam?.fee}`,
+        },
+        {
+          withCredentials: true,
+          headers: { Authorization: getFromLocalStorage(authKey) },
+        }
+      );
+      router.push(data?.data);
+    } else if (paymentMethod === "nagad") {
+      const { data: payment } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/create`,
+        {
+          amount: `${exam?.fee}`,
+        }
+      );
+      router.push(payment?.data);
+    }
   };
 
   const examsData = dataExams?.exams?.data;
@@ -90,7 +117,10 @@ function CourseExams({ course_id }) {
                 <td className="py-2 px-4 md:w-1/4">{exam?.fee}</td>
                 <td className="py-2 px-4 md:w-1/4">
                   <p
-                    onClick={() => enrollToExam(exam)}
+                    onClick={() => {
+                      setSelectedExam(exam);
+                      setModalOpen(true);
+                    }}
                     className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0 cursor-pointer w-fit"
                   >
                     Enroll
@@ -104,7 +134,18 @@ function CourseExams({ course_id }) {
     );
   }
 
-  return <>{content}</>;
+  return (
+    <>
+      {content}{" "}
+      {modalOpen && (
+        <PaymentModal
+          setModalOpen={setModalOpen}
+          setPaymentMethod={setPaymentMethod}
+          amount={selectedExam?.fee}
+        />
+      )}
+    </>
+  );
 }
 
 export default CourseExams;

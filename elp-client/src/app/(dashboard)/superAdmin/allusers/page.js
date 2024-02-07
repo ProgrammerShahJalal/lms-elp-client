@@ -59,6 +59,9 @@ const AdminAllUsers = () => {
           <table className="min-w-full border border-gray-300">
             <thead>
               <tr>
+                <th className="border bg-gray-100   py-2 hidden md:table-cell">
+                  S.No
+                </th>
                 <th className="border bg-gray-100  px-4 py-2 hidden md:table-cell">
                   Name
                 </th>
@@ -68,7 +71,7 @@ const AdminAllUsers = () => {
                 <th className="border bg-gray-100  py-2 hidden md:table-cell">
                   Contact Number
                 </th>
-                <th className="border bg-gray-100  py-2 hidden md:table-cell">
+                <th className="border bg-gray-100  py-2  hidden md:table-cell">
                   Role
                 </th>
                 <th className="border bg-gray-100 px-4 py-2 hidden md:table-cell">
