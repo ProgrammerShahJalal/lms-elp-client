@@ -38,8 +38,10 @@ const UsersDetails = ({ user, index }) => {
 
         if (Boolean(response?.data)) {
           Swal.fire({
-            title: "Admin Created!",
-            text: "The user has been made an admin successfully.",
+            title: `${currentRole === "admin" ? "Student" : "Admin"} Created!`,
+            text: `The user has been made an ${
+              currentRole === "admin" ? "student" : "admin"
+            } successfully.`,
             icon: "success",
           });
         }
@@ -47,7 +49,9 @@ const UsersDetails = ({ user, index }) => {
     } catch (error) {
       Swal.fire({
         title: "Error",
-        text: "An error occurred while making the user an admin.",
+        text: `An error occurred while making the user an ${
+          currentRole === "admin" ? "student" : "admin"
+        }.`,
         icon: "error",
       });
     }
