@@ -28,7 +28,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
     
   }
 
-  // console.log(data)
+  console.log(data)
   let content = null;
 
   if (isLoading) {
@@ -68,12 +68,14 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
           <div className="space-y-4 mb-10">
             <h2 className="text-2xl font-bold">{data?.title}</h2>
             <p>{data?.description}</p>
+            <p>Writer:  {data?.writer}</p>
             <p>
               Sub Category:{" "}
-              <span className=" text-yellowPrimary">{data?.writer}</span>{" "}
+              <span className=" text-yellowPrimary">{data?.course_id[0]?.sub_category_id?.category_id?.title}</span>{" "}
+              
               <span className=" text-bluePrimary pl-5 font-semibold">
                 {" "}
-                Category: {data?.format}{" "}
+                Category: {data?.course_id[0]?.sub_category_id?.title}  {data?.format}{" "}
               </span>
             </p>
             {/* <p>{data?.pdf_link}</p> */}
@@ -85,6 +87,8 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
           </div>
           </div>
         </div>
+
+
       </div>
     );
   }
