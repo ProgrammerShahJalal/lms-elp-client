@@ -16,7 +16,7 @@ const AdminNoticeCreatePage = () => {
      
       if (resultData?.data?._id) {
         toast.success("Notice created successfully");
-        // router.push("/");
+        reset();
       }
      
     } catch (error) {
