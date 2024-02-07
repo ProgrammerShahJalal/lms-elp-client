@@ -12,6 +12,7 @@ import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 
 const BookSectionCard = ({ item, onOpenPDFModal }) => {
+  
 
   const [showPDFModal, setShowPDFModal] = useState(false);
   const openPDFModal = () => {
@@ -105,10 +106,10 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
             <div>
               <p
                 className="py-2"
-                dangerouslySetInnerHTML={{
-                  __html: item?.description?.substring(0, 30),
-                }}
-              ></p>
+              
+              > {
+                item?.description
+             }</p>
               <Link
                 className="text-bluePrimary pl-5"
                 href={`/books/details/${item?._id}`}
