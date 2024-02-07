@@ -1,8 +1,8 @@
 "use client";
 
 import {
+  useChangeRoleMutation,
   useDeleteUserMutation,
-  useMakeAdminMutation,
 } from "@/redux/api/usersApi";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -10,28 +10,38 @@ import Swal from "sweetalert2";
 const UsersDetails = ({ user, index }) => {
   const dateObject = new Date(user?.createdAt);
   const localData = dateObject.toLocaleDateString();
-  const [makeAdmin] = useMakeAdminMutation();
+  const [changeRole] = useChangeRoleMutation();
   const [deleteUser] = useDeleteUserMutation();
 
-  const handleMakeAdmin = async (userId) => {
+  const handleChangeRole = async (userId, currentRole) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
-        text: "You want to make this user an admin?",
+        text: `You want to make this user an ${
+          currentRole === "admin" ? "student" : "admin"
+        }?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, make admin!",
+        confirmButtonText: `Yes, make ${
+          currentRole === "admin" ? "student" : "admin"
+        }!`,
       });
 
       if (result.isConfirmed) {
-        const response = await makeAdmin({ userId });
+        const payload = {
+          user_id: userId,
+          role: currentRole === "admin" ? "student" : "admin",
+        };
+        const response = await changeRole(payload);
 
-        if (response) {
+        if (Boolean(response?.data)) {
           Swal.fire({
-            title: "Admin Created!",
-            text: "The user has been made an admin successfully.",
+            title: `${currentRole === "admin" ? "Student" : "Admin"} Created!`,
+            text: `The user has been made an ${
+              currentRole === "admin" ? "student" : "admin"
+            } successfully.`,
             icon: "success",
           });
         }
@@ -39,7 +49,9 @@ const UsersDetails = ({ user, index }) => {
     } catch (error) {
       Swal.fire({
         title: "Error",
-        text: "An error occurred while making the user an admin.",
+        text: `An error occurred while making the user an ${
+          currentRole === "admin" ? "student" : "admin"
+        }.`,
         icon: "error",
       });
     }
@@ -84,9 +96,6 @@ const UsersDetails = ({ user, index }) => {
     }
   };
 
-  const isAdmin =
-    user && (user.role === "admin" || user.role === "super_admin");
-
   const getColorClass = (userRole) => {
     switch (userRole) {
       case "admin":
@@ -114,18 +123,19 @@ const UsersDetails = ({ user, index }) => {
         {user.role}
       </td>
 
-      <td className="">
-        {" "}
+      <td className="border">
         <button
-          onClick={() => handleMakeAdmin(user?._id)}
-          className={`bg-blue-400 hover:bg-blue-700 font-semibold text-white  py-2 rounded text-sm px-1  my-2 ${
-            isAdmin
+          onClick={() => handleChangeRole(user?._id, user?.role)}
+          className={` hover:bg-blue-700 font-semibold text-white  py-2 rounded text-sm px-1 ${
+            user?.role === "admin" ? "bg-yellow-500" : "bg-blue-500"
+          } my-2 ${
+            user?.role === "super_admin"
               ? "disabled:opacity-50 cursor-not-allowed bg-gray-400 text-black"
               : ""
           }`}
-          disabled={isAdmin}
+          disabled={user?.role === "super_admin"}
         >
-          Make Admin
+          Make {user?.role === "admin" ? "Student" : "Admin"}
         </button>
       </td>
       <td className="border px-4 py-2 md:table-cell">{localData}</td>
