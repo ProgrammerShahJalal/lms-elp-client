@@ -49,6 +49,7 @@ function CourseExams({ course_id }) {
     Cookies.set("order_type", "exam");
     Cookies.set("creationPayload", JSON.stringify(examPaymentPayload));
 
+
     if (paymentMethod === "bkash") {
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,

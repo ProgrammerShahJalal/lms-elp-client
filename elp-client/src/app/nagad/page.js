@@ -103,7 +103,7 @@ function Success() {
               books: booksPayload,
             });
             if (Boolean(order?.data)) {
-              // dispatch(clearCart());
+               dispatch(clearCart());
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: " Your order has been successful!",
@@ -155,8 +155,9 @@ function Success() {
             toast.error("Order creation failed!");
           }
         }
-        // Cookies.remove("order_type");
-        // Cookies.remove("creationPayload");
+        Cookies.remove("order_type");
+        Cookies.remove("creationPayload");
+        
       } catch (error) {
         toast.error(
           "Order failed!  Contact to easy learning platform admin!",
