@@ -34,6 +34,13 @@ export const questionsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["questions"],
     }),
+    getQuestionsOfAnExam: build.query({
+      query: (examId) => ({
+        url: `${QUESTIONS_URL}/exam/${examId}`,
+        method: "GET",
+      }),
+      providesTags: ["questions"],
+    }),
 
     updateQuestion: build.mutation({
       query: (data) => ({
@@ -68,4 +75,4 @@ export const questionsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useGetSingleQuestionQuery, useUpdateQuestionMutation, useDeleteQuestionsMutation, useGetMyQuestionsEnrollHistoryQuery } = questionsApi;
+export const { useGetAllQuestionsQuery, useAddQuizPlaylistMutation, useGetQuestionsOfAnExamQuery, useGetSingleQuestionQuery, useUpdateQuestionMutation, useDeleteQuestionsMutation, useGetMyQuestionsEnrollHistoryQuery } = questionsApi;

@@ -7,7 +7,7 @@ import { useGetMyAllOrdersDetailsQuery } from "@/redux/api/orderApi";
 import { useState } from "react";
 
 const MyPurchasePdfPage = () => {
-    const [openPDFModals, setOpenPDFModals] = useState([]);
+  const [openPDFModals, setOpenPDFModals] = useState([]);
 
   const { data, isLoading, isError } = useGetMyAllOrdersDetailsQuery();
   // console.log(data, 'form user order');
@@ -64,7 +64,7 @@ const MyPurchasePdfPage = () => {
 
   if (!isLoading && !isError && bookOrdersData?.length > 0) {
     content = bookOrdersData?.map((item, index) => (
-      <UserPdfCard key={item?.id} item={item} onOpenPDFModal={() => openPDFModal(index)}/>
+      <UserPdfCard key={item?.id} item={item} onOpenPDFModal={() => openPDFModal(index)} />
     ));
   }
 

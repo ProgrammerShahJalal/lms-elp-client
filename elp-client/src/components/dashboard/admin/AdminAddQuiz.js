@@ -3,7 +3,7 @@ import SeeDynamicQuiz from "./SeeDynamicQuiz";
 import { useUpdateStatusChangeMutation } from "@/redux/api/examsApi";
 import toast from "react-hot-toast";
 
-const AdminAddQuiz = ({ quiz, i, refetchExams, handleDelete, filteredQuestions }) => {
+const AdminAddQuiz = ({ quiz, i, refetch, handleDelete, filteredQuestions }) => {
     const examId = quiz?.exam_id?._id;
     const examTitle = quiz?.exam_id?.title;
     const activeStatus = quiz?.exam_id?.is_active;
@@ -18,7 +18,7 @@ const AdminAddQuiz = ({ quiz, i, refetchExams, handleDelete, filteredQuestions }
             if (result) {
                 toast.success("Successfully change the status")
             }
-            refetchExams()
+            refetch()
         } catch (error) {
             console.error("Error Updating status", error)
 

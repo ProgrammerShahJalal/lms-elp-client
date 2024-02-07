@@ -2,8 +2,8 @@
 
 import { useGetSingleBookQuery } from "@/redux/api/booksApi";
 
-const UserPdfCardShow = ({ bookId, order}) => {
-    const {data} = useGetSingleBookQuery(bookId)
+const UserPdfCardShow = ({ bookId, order }) => {
+    const { data } = useGetSingleBookQuery(bookId)
     console.log(data, 'from bookid')
     // console.log(order);
     return (

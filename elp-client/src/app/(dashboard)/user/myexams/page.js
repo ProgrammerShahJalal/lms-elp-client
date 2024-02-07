@@ -14,6 +14,7 @@ const MyExamPages = () => {
   const { userId } = getUserInfo();
   const { data: payments, isError, isLoading } = useGetMyExamPaymentQuery();
   const paymentsData = payments?.payments;
+  console.log(paymentsData, 'this is payments data');
   let content = null;
 
   if (isLoading) {

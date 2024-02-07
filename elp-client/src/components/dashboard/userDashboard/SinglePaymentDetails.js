@@ -1,4 +1,5 @@
 import { useGetSingleExamQuery } from "@/redux/api/examsApi";
+import { useGetQuestionsOfAnExamQuery } from "@/redux/api/questionsApi";
 import { useSubmitExamUserMutation } from "@/redux/api/resultApi";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
@@ -11,6 +12,8 @@ const SinglePaymentDetails = ({ item }) => {
   const localData = dateObject.toLocaleDateString();
   const { userId } = getUserInfo();
   const { data: examData } = useGetSingleExamQuery(examId);
+  const { data: questionData } = useGetQuestionsOfAnExamQuery(examId)
+  console.log(questionData, 'this is exam data');
   const [submitExamUser] = useSubmitExamUserMutation();
   const [modalOpen, setModalOpen] = useState(false);
 
