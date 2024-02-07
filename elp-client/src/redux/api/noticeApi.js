@@ -28,7 +28,7 @@ export const noticeApi = baseApi.injectEndpoints({
     }),
     addNotice: build.mutation({
       query: (data) => ({
-        url: NaN,
+        url: NOTICES_URL,
         method: "POST",
         data: data,
       }),
@@ -59,4 +59,5 @@ export const {
   useGetSingleNoticeQuery,
   useAddNoticeMutation,
   useUpdateNoticeMutation,
+  useDeleteNoticeMutation
 } = noticeApi;
