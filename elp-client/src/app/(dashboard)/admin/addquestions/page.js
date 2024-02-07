@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Pagination from "../../Pagination";
+import AdminChangeWrittenStatus from "@/components/dashboard/admin/AdminChangeWrittenStatus";
 
 const AddQuestions = () => {
 
@@ -29,8 +30,8 @@ const AddQuestions = () => {
   const [mark, setMark] = useState(null);
   const [addQuizPlaylist] = useAddQuizPlaylistMutation();
 
- 
-  const { data: categories } = useGetAllCategoriesQuery({limit, page, searchTerm});
+
+  const { data: categories } = useGetAllCategoriesQuery({ limit, page, searchTerm });
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
       category_id: selectedCategory,
@@ -53,13 +54,13 @@ const AddQuestions = () => {
   const allExams = exams?.exams?.data;
 
 
-  const { data: questions, refetch } = useGetAllQuestionsQuery({limit, page, searchTerm});
+  const { data: questions, refetch } = useGetAllQuestionsQuery({ limit, page, searchTerm });
 
   const allQuiz = questions?.categories?.data;
   const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
-  
+
 
   useEffect(() => {
     refetch();
@@ -111,8 +112,23 @@ const AddQuestions = () => {
       toast.error("An error occurred:", error);
     }
   };
-   // question delete function
-   const handleDelete = async (id) => {
+  const handleStatusChange = async () => {
+    try {
+      const result = await updateStatusChange({
+        id: examId,
+        is_active: !activeStatus
+      })
+      if (result) {
+        toast.success("Successfully change the status")
+      }
+      refetchExams()
+    } catch (error) {
+      console.error("Error Updating status", error)
+
+    }
+  }
+  // question delete function
+  const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
         title: "আপনি এই প্রশ্নটি মুছে ফেলার বিষয়ে নিশ্চিত?",
@@ -157,7 +173,7 @@ const AddQuestions = () => {
       <div className="container mx-auto my-8">
         <form
           onSubmit={handleSubmit}
-          className="max-w-md mx-auto bg-white p-8 border rounded shadow"
+          className=" mx-auto bg-white p-8 border rounded shadow"
         >
           <h2 className="text-2xl font-semibold mb-4">Add Broad questions</h2>
           {/* Category selection field */}
@@ -277,7 +293,7 @@ const AddQuestions = () => {
               )}
             </select>
           </div>
-         
+
 
           <div className="mb-4">
             <label
@@ -330,40 +346,20 @@ const AddQuestions = () => {
                 <th className="py-2 px-4 border-b">Question</th>
                 <th className="py-2 px-4 border-b">Mark</th>
                 <th className="py-2 px-4 border-b">Exam Title</th>
+                <th className="py-2 px-4 border-b">Status</th>
+                <th className="py-2 px-4 border-b">Change Status</th>
                 <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th>
               </tr>
             </thead>
             <tbody>
               {filteredQuestions?.map((quiz, i) => (
-                <tr key={quiz._id}>
-                  <td className="py-2 px-4 border-b">
-                    {i + 1}) {quiz?.question}
-                  </td>
-                  <td className="py-2 px-4 border-b text-center">{quiz?.mark}</td>
-                  <td className="py-2 px-4 border-b text-center">{quiz?.exam_id?.title}</td>
-                  <td className="py-2 px-4 border-b text-center md:table-cell">
-                    <Link href={`/admin/addquestions/edit/${quiz?.id}`}
-                      className="bg-lime-600 text-white py-2 px-2 rounded-md"
-                      
-                    >
-                      Update
-                    </Link>
-                  </td>
-                  <td className="py-2 px-4 border-b text-center md:table-cell">
-                    <button
-                      className="bg-red-500 text-white py-1 px-2 rounded-md"
-                      onClick={() => handleDelete(quiz.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                <AdminChangeWrittenStatus key={quiz?._id} quiz={quiz} i={i} handleDelete={handleDelete}></AdminChangeWrittenStatus>
               ))}
             </tbody>
           </table>
 
-          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
 
         </div>
       </div>
