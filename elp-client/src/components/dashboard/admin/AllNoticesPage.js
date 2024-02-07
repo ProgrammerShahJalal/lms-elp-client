@@ -1,13 +1,20 @@
 "use client";
 
+import Pagination from "@/app/(dashboard)/Pagination";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import { useDeleteNoticeMutation, useGetAllNoticesQuery } from "@/redux/api/noticeApi";
+import {
+  useDeleteNoticeMutation,
+  useGetAllNoticesQuery,
+} from "@/redux/api/noticeApi";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const AllNoticesPage = () => {
-  const { data, isLoading, isError } = useGetAllNoticesQuery();
+  const [limit, setLimit] = useState(50);
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isError } = useGetAllNoticesQuery({ limit, page });
   const [deleteNotice] = useDeleteNoticeMutation();
   const allNotices = data?.notices?.data;
 
@@ -31,6 +38,9 @@ const AllNoticesPage = () => {
     const day = date.getDate();
     return `${month} ${day}`;
   };
+
+  const totalData = data?.data?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -75,7 +85,7 @@ const AllNoticesPage = () => {
   if (isLoading) {
     content = (
       <>
-        <InitialLoader/>
+        <InitialLoader />
       </>
     );
   }
@@ -108,11 +118,11 @@ const AllNoticesPage = () => {
             <h2 className="font-bold text-xl">{item?.title}</h2>
             <p>{item?.description}</p>
             <button
-                className="bg-red-500 text-white py- mb-4 px-2 rounded-md cursor-pointer hover:bg-red-700"
-                onClick={() => handleDelete(item?.id)}
-              >
-                Delete
-              </button>
+              className="bg-red-500 text-white py- mb-4 px-2 rounded-md cursor-pointer hover:bg-red-700"
+              onClick={() => handleDelete(item?.id)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -122,9 +132,9 @@ const AllNoticesPage = () => {
   return (
     <div>
       <h2 className="text-center font-bold text-3xl my-4">সব নোটিশ দেখুন</h2>
-      <div className="my-5 space-y-4">
-      {content}
-      </div>
+      <div className="my-5 space-y-4">{content}</div>
+
+      <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
     </div>
   );
 };

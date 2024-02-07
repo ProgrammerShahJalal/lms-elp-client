@@ -3,10 +3,22 @@
 import { useGetAllNoticesQuery } from "@/redux/api/noticeApi";
 import InitialLoader from "../Loader/InitialLoader";
 import Error from "../Loader/Error";
+import { useState } from "react";
+import Pagination from "@/app/(dashboard)/Pagination";
 
 const NoticePage = () => {
-  const { data, isLoading, isError } = useGetAllNoticesQuery();
+  const [limit, setLimit] = useState(30);
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isError } = useGetAllNoticesQuery({
+    limit,
+    page,
+  });
+ 
   const allNotices = data?.notices?.data;
+
+  const totalData = data?.notices?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
 
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
@@ -79,6 +91,8 @@ const NoticePage = () => {
         <div className="my-5 space-y-4">
           {content}
         </div>
+
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
       </div>
     </>
   );
