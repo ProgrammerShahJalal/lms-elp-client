@@ -210,6 +210,8 @@ const Navbar = () => {
 
             <Link
               href="/routines"
+
+
                className="block dark:text-black hover:text-bluePrimary font-bold"
             >
               ক্লাস রুটিন
@@ -220,7 +222,7 @@ const Navbar = () => {
             >
               নোটিশ
             </Link>
-            <Link href="/nagad">নগদ</Link>
+    
 
             {userLoggedIn && (
               <Link

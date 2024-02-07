@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 const SinglePaymentDetails = ({ item }) => {
-  console.log(item);
   const examId = item?.exam_id?._id;
   const dateObject = new Date(item?.createdAt);
   const localData = dateObject.toLocaleDateString();
@@ -79,7 +78,7 @@ const SinglePaymentDetails = ({ item }) => {
             href={`/user/myexams/details/${item?.exam_id?.id}`}
             className="text-red-500 font-bold"
           >
-            পরিক্ষা দিন
+            কুইজ  দিন
           </Link>
         ) : (
           <button

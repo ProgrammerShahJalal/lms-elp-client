@@ -183,6 +183,31 @@ const Play = () => {
   /* full content redering and then display the page */
   const [isLoading, setLoading] = useState(true);
 
+  const [contactNoPosition, setContactNoPosition] = useState({
+    top: "1/2",
+    left: "1/2",
+  });
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Generate random top and left values
+      const randomTop = Math.floor(Math.random() * 100) + 1 + "%";
+      const randomLeft = Math.floor(Math.random() * 100) + 1 + "%";
+      const randomRight = Math.floor(Math.random() * 100) + 1 + "%";
+      const randomBottom = Math.floor(Math.random() * 100) + 1 + "%";
+
+      setContactNoPosition({
+        top: randomTop,
+        left: randomLeft,
+        right: randomRight,
+        bottom: randomBottom,
+      });
+    }, 15000); // 15 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+
   return (
     <div className="grid grid-cols-1 gap-1 select-none">
       {isLoading ? (
@@ -192,7 +217,7 @@ const Play = () => {
       ) : (
         <div className="aspect-w-16 aspect-h-9 md:aspect-w-4 md:aspect-h-3 relative">
           <div className="static">
-            <div className="bg-white  py-3 px-36 md:px-96 z-20 absolute top-0 text-green-500 font-bold flex items-center">
+            <div className="bg-white  py-3 px-36 md:px-96 z-20 absolute top-0 left-0 right-0 text-green-500 font-bold flex items-center">
               <h2 className="md:px-12">TOP</h2>
               <img
                 className="w-12"
@@ -275,7 +300,7 @@ const Play = () => {
 
           </div>
 
-          <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-48 text-green-500 font-bold flex items-center">
+          <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-44 left-0 right-0 text-green-500 font-bold flex items-center">
             <h2 className="md:px-12">TOP</h2>
             <img
               className="w-12"
@@ -290,10 +315,18 @@ const Play = () => {
             {videos && videos.length > 0 && videos[currentPlaylistIndex]?.title}
           </h2>
 
-          <small className="z-50 absolute font-bold top-1/2 left-1/2 bottom-4 transform -translate-x-1/2 -translate-y-1/2 text-red-600 shadow-sm">
-            {" "}
-            {data?.contact_no}
-          </small>
+          <small
+        className="z-50 absolute font-bold text-red-600 shadow-sm"
+        style={{
+          top: contactNoPosition.top,
+          left: contactNoPosition.left,
+          right: contactNoPosition.right,
+          bottom: contactNoPosition.bottom,
+          transform: "-translate(-50%, -50%)",
+        }}
+      >
+        {data?.contact_no}
+      </small>
 
           <div className="flex justify-between mt-4">
             <button

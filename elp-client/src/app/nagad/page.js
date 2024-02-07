@@ -58,7 +58,7 @@ function Success() {
             if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: "You  can now continue your buying subscribe course!",
+                text: "You  can now continue your subscribed course!",
                 icon: "success",
               });
             } else {
@@ -73,13 +73,13 @@ function Success() {
             if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: "You  can now continue your buying subscribe course!",
+                text: "You  can now participate to the paid exam!",
                 icon: "success",
               });
             } else {
               Swal.fire({
                 title: "Error!",
-                text: "Error buying course! Contact to admin",
+                text: "Error paying for exam! Contact to admin",
                 icon: "error",
               });
             }
@@ -87,10 +87,10 @@ function Success() {
             const shippingAddressPayload = {
               user_id,
               division: payload?.division,
+              district: payload?.district,
               upazilla: payload?.upazilla,
               address: payload?.address,
               contact_no: payload?.contact_no,
-              outside_dhaka: JSON.parse(payload?.outside_dhaka),
               billing_name: payload?.billing_name,
             };
             if (payload?.is_default) {
@@ -98,19 +98,23 @@ function Success() {
             }
             // create order
             const order = await addOrder({
-              trx_id,
+              payment_ref_id: nagadPaymentRefId,
               shipping_address: JSON.stringify(shippingAddressPayload),
               books: booksPayload,
             });
-            if (!!order) {
-              dispatch(clearCart());
+            if (Boolean(order?.data)) {
+               dispatch(clearCart());
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: " Your order has been successfully.!",
+                text: " Your order has been successful!",
                 icon: "success",
               });
             } else {
-              toast.error("Order creation failed!");
+              Swal.fire({
+                title: "Error!",
+                text: "Error paying for exam! Contact to admin",
+                icon: "error",
+              });
             }
           } else if (orderType === "bundle_course") {
             const res = subscribeToCourseBundle({
@@ -120,26 +124,27 @@ function Success() {
               trx_id,
             });
 
-            if (!!res) {
+            if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: " Your bundle course has been bought successfully.!",
                 icon: "success",
               });
             } else {
-              toast.error(
-                "Order failed. Contact to easy learning platform admin!"
-              );
+              Swal.fire({
+                title: "Error!",
+                text: "Error paying for exam! Contact to admin",
+                icon: "error",
+              });
             }
           }
         }
         if (orderType === "pdf") {
           const order = await addOrder({
-            trx_id,
+            payment_ref_id: nagadPaymentRefId,
             books: booksPayload,
           });
-
-          if (!!order) {
+          if (Boolean(order?.data)) {
             dispatch(clearCart());
             Swal.fire({
               title: "Congratulations! Payment Successful",
@@ -152,6 +157,7 @@ function Success() {
         }
         Cookies.remove("order_type");
         Cookies.remove("creationPayload");
+        
       } catch (error) {
         toast.error(
           "Order failed!  Contact to easy learning platform admin!",
