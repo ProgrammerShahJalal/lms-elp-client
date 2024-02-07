@@ -7,7 +7,7 @@ import React from 'react';
 
 const MyAllResultPage = () => {
     const { userId } = getUserInfo()
-    const { data, isError, isLoading } = useExamResultQuery(userId);
+    const { data, isError, isLoading } = useExamResultQuery();
     const allExamData = data?.exams?.data;
     let content = null;
 
@@ -50,10 +50,12 @@ const MyAllResultPage = () => {
                         <thead>
                             <tr>
 
+                                <th> নাম </th>
                                 <th>পরিক্ষা্র নাম </th>
                                 <th>পরিক্ষা্র ধরন</th>
                                 <th>পরিক্ষা্র মার্ক্স</th>
-                                <th>আপনার মার্ক্স</th>
+                                <th>আপনার কুইজ  মার্ক্স</th>
+                                <th>আপনার লিখিত  মার্ক্স</th>
 
                             </tr>
                         </thead>

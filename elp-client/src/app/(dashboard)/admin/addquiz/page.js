@@ -43,6 +43,7 @@ const AddQuiz = () => {
     const { data: exams, refetch: refetchExams } = useGetAllExamsQuery({
         course_id: selectedCourse,
         limit, page, searchTerm,
+        exam_type: 0
     });
 
 
@@ -474,7 +475,7 @@ const AddQuiz = () => {
                         </thead>
                         <tbody>
                             {filteredQuestions?.map((quiz, i) => (
-                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
+                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} refetchExams={refetchExams} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
                             ))}
                         </tbody>
                     </table>

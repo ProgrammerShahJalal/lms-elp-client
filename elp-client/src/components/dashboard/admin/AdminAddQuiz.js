@@ -3,7 +3,7 @@ import SeeDynamicQuiz from "./SeeDynamicQuiz";
 import { useUpdateStatusChangeMutation } from "@/redux/api/examsApi";
 import toast from "react-hot-toast";
 
-const AdminAddQuiz = ({ quiz, i, handleDelete, filteredQuestions }) => {
+const AdminAddQuiz = ({ quiz, i, refetchExams, handleDelete, filteredQuestions }) => {
     const examId = quiz?.exam_id?._id;
     const examTitle = quiz?.exam_id?.title;
     const activeStatus = quiz?.exam_id?.is_active;
@@ -18,6 +18,7 @@ const AdminAddQuiz = ({ quiz, i, handleDelete, filteredQuestions }) => {
             if (result) {
                 toast.success("Successfully change the status")
             }
+            refetchExams()
         } catch (error) {
             console.error("Error Updating status", error)
 
@@ -37,7 +38,7 @@ const AdminAddQuiz = ({ quiz, i, handleDelete, filteredQuestions }) => {
             </td>
             <td className="py-2 px-4 border-b text-center">{quiz?.correct_answer}</td>
             <td className="py-2 px-4 border-b"><button onClick={() => setOpenModal(true)}>{examTitle}</button></td>
-            <td className="py-2 px-4 border-b">{activeStatus.toString()}</td>
+            <td className="py-2 px-4 border-b">{activeStatus ? "true" : "false"}</td>
             <td className="py-2 px-4 border-b"><button onClick={handleStatusChange} className="bg-red-500 text-white py-1 px-2 rounded-md">Change Status</button></td>
 
             <td className="py-2 px-4 border-b md:table-cell">
