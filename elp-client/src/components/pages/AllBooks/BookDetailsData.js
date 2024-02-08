@@ -7,6 +7,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 
 const BookDetailsData = ({ data, isError, isLoading }) => {
+  console.log(data)
   const [addToCart] = useAddToCartMutation();
   const userLoggedIn = isLoggedIn();
   // const dispatch = useDispatch();
