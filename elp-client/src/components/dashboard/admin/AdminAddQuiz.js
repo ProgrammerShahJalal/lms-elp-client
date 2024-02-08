@@ -37,9 +37,9 @@ const AdminAddQuiz = ({ quiz, i, refetch, handleDelete, filteredQuestions }) => 
                 ))}
             </td>
             <td className="py-2 px-4 border-b text-center">{quiz?.correct_answer}</td>
-            <td className="py-2 px-4 border-b"><button onClick={() => setOpenModal(true)}>{examTitle}</button></td>
-            <td className="py-2 px-4 border-b">{activeStatus ? "true" : "false"}</td>
-            <td className="py-2 px-4 border-b"><button onClick={handleStatusChange} className="bg-green-500 text-white py-1 px-2 rounded-md">Change Status</button></td>
+            <td className="py-2 px-4 border-b text-center"><button onClick={() => setOpenModal(true)}>{examTitle}</button></td>
+            <td className="py-2 px-4 border-b text-center">{activeStatus ? "true" : "false"}</td>
+            <td className="py-2 px-4 border-b text-center"><button onClick={handleStatusChange} className="bg-green-500 text-white py-1 px-2 rounded-md">Change Status</button></td>
 
             <td className="py-2 px-4 border-b md:table-cell">
                 <button
