@@ -11,7 +11,7 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onOpenPDFModal = () => {
-    console.log("clicked")
+   
     setIsModalOpen(true);
   };
 

@@ -64,7 +64,7 @@ const NoticePage = () => {
             <h2>{formatDate(item?.createdAt)}</h2>
           </div>
           <div className="text-gray-500 pl-5">
-            <h2 className="font-bold text-xl">{item?.title}</h2>
+            <h2 className="font-bold text-xl cursor-pointer">{item?.title}</h2>
             {expandedNoticeId === item?.id && <p>{item?.description}</p>}
           </div>
         </div>
