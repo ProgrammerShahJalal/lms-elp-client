@@ -107,7 +107,7 @@ const BookSection = () => {
           key={index}
           isOpen={isOpen}
           onClose={() => closePDFModal(index)}
-          pdfSrc={data?.books?.data[index]?.pdf_link}
+          pdfSrc={data?.books?.data[index]?.sample_pdf_link}
         />
       ))}
      
