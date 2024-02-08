@@ -9,6 +9,7 @@ import {
 } from "@/redux/api/noticeApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AllNoticesPage = () => {
@@ -101,16 +102,18 @@ const formatDate = (isoDate) => {
   if (!isLoading && !isError && allNotices?.length > 0) {
     content = allNotices?.map((item) => (
       <div className=" bg-white rounded-lg shadow-lg border-b-2" key={item?.id}>
-        <div className="flex items-center" onClick={() => toggleDescription(item?.id)}>
+        <div className="flex items-center cursor-pointer" onClick={() => toggleDescription(item?.id)}>
           <div className="bg-green-500 text-white px-3 rounded py-4">
             <h2>{formatDate(item?.createdAt)}</h2>
-          
           </div>
-          <div className="text-gray-500 pl-5">
-            <h2 className="font-bold text-xl">{item?.title}</h2>
+          <div className="pl-5">
+           <div className="flex justify-between">
+           <h2 className="font-bold text-xl">{item?.title}</h2>
+            {expandedNoticeId === item?.id ? <FaAngleUp /> : <FaAngleDown />} 
+           </div>
             {expandedNoticeId === item?.id && <p>{item?.description}</p>}
             <button
-              className="bg-red-500 text-white my-4 mb-4 px-2 rounded-md cursor-pointer hover:bg-red-700"
+              className="bg-red-500 text-white my-5 mb-4 px-4 rounded-md cursor-pointer hover:bg-red-700"
               onClick={() => handleDelete(item?.id)}
             >
               Delete
