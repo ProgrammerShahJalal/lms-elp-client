@@ -1,12 +1,25 @@
 "use client";
 
+import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
 import { isLoggedIn } from "@/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 const BookDetailsData = ({ data, isError, isLoading }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onOpenPDFModal = () => {
+   
+    setIsModalOpen(true);
+  };
+
+  const onClosePDFModal = () => {
+    setIsModalOpen(false);
+  };
+
   const [addToCart] = useAddToCartMutation();
   const userLoggedIn = isLoggedIn();
   // const dispatch = useDispatch();
@@ -28,7 +41,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
     
   }
 
-  // console.log(data)
+
   let content = null;
 
   if (isLoading) {
@@ -68,29 +81,46 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
           <div className="space-y-4 mb-10">
             <h2 className="text-2xl font-bold">{data?.title}</h2>
             <p>{data?.description}</p>
+            <p>Writer:  {data?.writer}</p>
             <p>
               Sub Category:{" "}
-              <span className=" text-yellowPrimary">{data?.writer}</span>{" "}
+              <span className=" text-yellowPrimary">{data?.course_id[0]?.sub_category_id?.category_id?.title}</span>{" "}
+              
               <span className=" text-bluePrimary pl-5 font-semibold">
                 {" "}
-                Category: {data?.format}{" "}
+                Category: {data?.course_id[0]?.sub_category_id?.title}  {" "}
               </span>
             </p>
-            {/* <p>{data?.pdf_link}</p> */}
+            <p>{data?.format}</p>
+          
             <p>{data?.price} TK</p>
             <button onClick={() => handleAddBook(data)}  className="bg-yellowPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
               এড টু কার্ড
-            </button>
+            </button> 
+
+            <button
+            onClick={onOpenPDFModal}
+            className="bg-bluePrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-yellowPrimary ml-3"
+          >
+            বইটি পড়ুন
+          </button>
             
           </div>
           </div>
         </div>
+
+
       </div>
     );
   }
 
   return (
-    <>{content}</>
+    <>{content}
+     {isModalOpen && (
+  <PDFViewerModal isOpen={isModalOpen} pdfSrc={data?.sample_pdf_link} onClose={onClosePDFModal} />
+)}
+    
+    </>
   );
 };
 

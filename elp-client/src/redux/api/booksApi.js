@@ -48,6 +48,18 @@ export const booksApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
+
+     // update book
+     updateBook: build.mutation({
+      query: (data) => ({
+        url: `${BOOKS_URL}/${data.id}`,
+      
+        method: "PATCH",
+        contentType: "multipart/form-data",
+        data: data.body,
+      }),
+      invalidatesTags: ["books"],
+    }),
     deleteBooks: build.mutation({
       query: (id) => ({
         url: `${BOOKS_URL}/${id}`,
@@ -55,17 +67,11 @@ export const booksApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['books']
     })
-    // deleteCourses: build.mutation({
-    //   query: (categoryId) => ({
-    //     url: `${COURSES_URL}/${categoryId}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["courses"],
-    // }),
+    
 
 
 
   }),
 });
 
-export const { useGetAllBooksQuery, useGetSingleBookQuery, useGetSubCategoryBookQuery, useAddBooksMutation, useDeleteBooksMutation } = booksApi;
+export const { useGetAllBooksQuery, useGetSingleBookQuery, useGetSubCategoryBookQuery, useAddBooksMutation,useUpdateBookMutation ,useDeleteBooksMutation } = booksApi;

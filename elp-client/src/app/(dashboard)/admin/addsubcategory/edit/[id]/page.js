@@ -4,12 +4,14 @@
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetSingleSubCategoryQuery, useUpdateSubCategoryMutation } from "@/redux/api/subcategoryApi";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const UpdateSubCategoryPage = ({params}) => {
+  const [selectedCategory, setSelectedCategory] = useState("");
     const {id} = params;
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset,setValue } = useForm();
     const {data} = useGetSingleSubCategoryQuery(id);
     const router = useRouter();
     const {
@@ -18,18 +20,32 @@ const UpdateSubCategoryPage = ({params}) => {
         isError: isErrorCategories,
       } = useGetAllCategoriesQuery();
 
-    const [updateSubCategory] = useUpdateSubCategoryMutation()
+    const [updateSubCategory] = useUpdateSubCategoryMutation();
+
     // console.log(data)
+
+    useEffect(() => {
+      if (data) {
+        // banner: data?.file?.name,
+        setValue("title", data?.title);
+       
+        setValue("category_id", data?.category_id || "");
+        
+      }
+    }, [data, setValue]);
 
     const onSubmit = async (data) => {
       const content = { ...data };
       const file = content["file"];
+      
       const result = JSON.stringify(content);
+     
       const formData = new FormData();
       formData.append("file", file[0]);
       formData.append("data", result);
         try {
           const res = await updateSubCategory({ id, body: formData});
+       
          
           if (res?.data?._id === id) {
             toast.success(" Sub Category updated successfully");
@@ -62,7 +78,28 @@ const UpdateSubCategoryPage = ({params}) => {
             className="w-full border border-gray-300 p-2 rounded-md"
           />}
         </div>
-        <div className="mb-4">
+        {data?.category_id && (
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2">Category</label>
+
+            <select
+              {...register("category_id")}
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+                setValue("sub_category_id", "");
+              }}
+              defaultValue={data?.category_id}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              {categories?.categories?.map((category) => (
+                <option key={category?.id} value={category?.id}>
+                  {category?.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {/* <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Category</label>
           <select
 
@@ -77,7 +114,7 @@ const UpdateSubCategoryPage = ({params}) => {
             ))}
           </select>
           
-        </div>
+        </div> */}
      <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Sub Category Icon</label>
           <input

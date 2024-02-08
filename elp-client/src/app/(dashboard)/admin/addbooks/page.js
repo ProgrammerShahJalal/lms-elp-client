@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import Pagination from "../../Pagination";
+import Link from "next/link";
 
 const AddBooks = () => {
   const [limit, setLimit] = useState(25);
@@ -453,9 +454,9 @@ return (
                       )}
                     </td>
                     <td className="py-2 px-4 border-b md:table-cell">
-                      <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
+                      <Link href={`/admin/addbooks/edit/${book?._id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">
                         Update
-                      </button>
+                      </Link>
                     </td>
                     <td className="py-2 px-4 border-b md:table-cell">
                       <button
@@ -470,7 +471,7 @@ return (
               </tbody>
             </table>
 
-                        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+     <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
 
           </div>
         )}
