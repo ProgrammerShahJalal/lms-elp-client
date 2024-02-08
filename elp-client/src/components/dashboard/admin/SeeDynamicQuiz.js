@@ -4,8 +4,10 @@ const SeeDynamicQuiz = ({ setOpenModal, filteredQuestions, examTitle }) => {
 
     return (
         <div className="modal-box">
+            <h1 className="text-xl font-semibold">{examTitle}</h1>
             {specificQuiz.map((filteredQuiz, index) => (
                 <tr key={index}>
+
                     <td className="py-2 px-4 border-b">
                         {index + 1}) {filteredQuiz?.question}
                     </td>

@@ -7,7 +7,7 @@ import React from 'react';
 
 const MyAllResultPage = () => {
     const { userId } = getUserInfo()
-    const { data, isError, isLoading } = useExamResultQuery();
+    const { data, isError, isLoading } = useExamResultQuery({ user_id: userId });
     const allExamData = data?.exams?.data;
     let content = null;
 

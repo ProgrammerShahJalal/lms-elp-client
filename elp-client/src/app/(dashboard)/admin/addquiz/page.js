@@ -475,7 +475,7 @@ const AddQuiz = () => {
                         </thead>
                         <tbody>
                             {filteredQuestions?.map((quiz, i) => (
-                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} refetchExams={refetchExams} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
+                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} refetch={refetch} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
                             ))}
                         </tbody>
                     </table>
