@@ -117,7 +117,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
   return (
     <>{content}
      {isModalOpen && (
-  <PDFViewerModal isOpen={isModalOpen} pdfSrc={data?.pdf_link} onClose={onClosePDFModal} />
+  <PDFViewerModal isOpen={isModalOpen} pdfSrc={data?.sample_pdf_link} onClose={onClosePDFModal} />
 )}
     
     </>
