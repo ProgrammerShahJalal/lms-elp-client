@@ -148,7 +148,7 @@ const SinglePaymentDetails = ({ item }) => {
         <dialog open={isModalOpen} id={`my_modal_${examId}_questions`} className="modal">
           <div className="modal-box">
             {
-              questionData?.map(item => <UserSeeBroadQuestion key={item?.id} item={item} setIsModalOpen1={setIsModalOpen1}></UserSeeBroadQuestion>)
+              questionData?.map((item, index) => <UserSeeBroadQuestion key={item?.id} item={item} index={index} setIsModalOpen1={setIsModalOpen1}></UserSeeBroadQuestion>)
             }
           </div>
 

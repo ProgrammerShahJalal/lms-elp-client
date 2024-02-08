@@ -1,9 +1,10 @@
 'use client'
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import QuizSubmissionResult from "@/components/dashboard/userDashboard/QuizSubmissionResult";
 import { useGetSingleExamQuery } from "@/redux/api/examsApi";
 import { useGetMyQuestionsEnrollHistoryQuery } from "@/redux/api/questionsApi";
-import { useSubmitExamUserMutation } from "@/redux/api/resultApi";
+import { useExamResultQuery, useSubmitExamUserMutation } from "@/redux/api/resultApi";
 import { getUserInfo } from "@/services/auth.service";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -21,8 +22,14 @@ const UserExamPage = ({ params }) => {
   const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState({});
+  // const { data: userExamSubmission, isLoading: submissionLoading, isError: submissionError } = useExamResultQuery({ userId, examId: id, exam_type: 0 });
   // Calculate totalQuestions when needed
   const totalQuestions = Object.keys(selectedOptions).length;
+  // useEffect(() => {
+  //   if (userExamSubmission) {
+  //     setQuizSubmitted(true);
+  //   }
+  // }, [userExamSubmission]);
 
   const handleCheckboxChange = (questionId, option) => {
     setSelectedOptions((prevOptions) => ({
@@ -203,11 +210,16 @@ const UserExamPage = ({ params }) => {
       >
         Submit
       </button>
+      {/* <button
+        onClick={handleSubmit}
+        disabled={isSubmitButtonDisabled || time === 0 || quizSubmitted || submissionLoading}
+        className={`py-2 px-4 rounded ${isSubmitButtonDisabled || quizSubmitted || submissionLoading ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+      >
+        {submissionLoading ? "Checking Submission..." : (quizSubmitted ? "Quiz Already Submitted" : "Submit")}
+      </button> */}
       {quizSubmitted && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Quiz Results</h2>
-
-
           <div className="mt-2">
             {data?.map((quiz, i) => (<>
               <p key={quiz.id} className="text-green-400">
@@ -219,6 +231,8 @@ const UserExamPage = ({ params }) => {
           </div>
         </div>
       )}
+
+      <QuizSubmissionResult data={data} />
     </div>
   );
 };
