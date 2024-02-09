@@ -5,11 +5,11 @@ import { useState } from "react";
 import GiveMark from "./GiveMark";
 import { useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
 
-const AllExamDetails = ({ item }) => {
+const AllExamDetails = ({ item, refetchUserExam }) => {
   const isQuiz = item?.exam_id?.exam_type === "0";
   const examId = item?.exam_id?._id;
   const [modalOpen, setModalOpen] = useState(false);
-  const { data: examResult } = useExamResultQuery({
+  const { data: examResult, refetch: refetchExamResult } = useExamResultQuery({
     exam_id: examId,
     user_id: item?.user_id?.id,
   });
@@ -72,6 +72,8 @@ const AllExamDetails = ({ item }) => {
         <GiveMark
           examResultData={examResultData}
           examId={examId}
+          // refetchUserExam={refetchUserExam}
+          refetchExamResult={refetchExamResult}
           studentId={item?.user_id?.id}
           name={item?.user_id?.name}
           setModalOpen={setModalOpen}

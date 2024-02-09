@@ -3,7 +3,7 @@ import { useGiveMarkToStudentMutation } from "@/redux/api/resultApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const GiveMark = ({ examResultData, examId, setModalOpen, studentId, name }) => {
+const GiveMark = ({ examResultData, refetchExamResult, examId, setModalOpen, studentId }) => {
     const [giveMarkToStudent] = useGiveMarkToStudentMutation();
     const { data: questions } = useGetAllQuestionsQuery({ exam_id: examId });
     const allQuestions = questions?.categories?.data;
@@ -29,7 +29,6 @@ const GiveMark = ({ examResultData, examId, setModalOpen, studentId, name }) => 
                 exam_id: examId,
                 marks: questionMarksArray,
             };
-            console.log(payload, ' payload');
             const { data: submissionData } = await giveMarkToStudent(payload);
             console.log(submissionData, 'submissionData');
 
@@ -38,6 +37,7 @@ const GiveMark = ({ examResultData, examId, setModalOpen, studentId, name }) => 
             } else {
                 toast.error("Your submission was not successful");
             }
+            refetchExamResult()
 
             console.log('Submission successful:', submissionData);
         } catch (error) {

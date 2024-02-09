@@ -14,6 +14,7 @@ const MyExamPages = () => {
   const { userId } = getUserInfo();
   const { data: payments, isError, isLoading } = useGetMyExamPaymentQuery();
   const paymentsData = payments?.payments;
+  console.log(paymentsData, 'this is payments data');
   let content = null;
 
   if (isLoading) {
@@ -81,6 +82,7 @@ const MyExamPages = () => {
                 <th>কেনার তারিখ</th>
                 <th>ট্রান্সজেকশন আইডি</th>
                 <th>পেমেন্ট</th>
+                <th>সমস্ত প্রশ্ন দেখুন</th>
                 <th>পরিক্ষা দিন</th>
               </tr>
             </thead>
