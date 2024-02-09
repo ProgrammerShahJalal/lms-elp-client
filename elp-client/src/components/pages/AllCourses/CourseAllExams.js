@@ -2,6 +2,7 @@
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Commonbanner from "@/components/banners/Commonbanner";
+import PaymentModal from "@/components/shared/PaymentModal";
 import { authKey } from "@/constants/storage";
 import {
   useGetAllExamsQuery,
@@ -12,6 +13,7 @@ import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const CourseAllExams = ({ course_id }) => {
@@ -25,6 +27,18 @@ const CourseAllExams = ({ course_id }) => {
     course_id: course_id,
   });
   const { data: dueExamIds } = useGetMyDueExamsQuery();
+
+  // states
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedExam, setSelectedExam] = useState(null);
+
+  // effects
+  useEffect(() => {
+    if (paymentMethod) {
+      enrollToExam(selectedExam);
+    }
+  }, [paymentMethod]);
 
   const enrollToExam = async (exam) => {
     if (!userLoggedIn) {
@@ -46,17 +60,27 @@ const CourseAllExams = ({ course_id }) => {
 
     Cookies.set("order_type", "exam");
     Cookies.set("creationPayload", JSON.stringify(examPaymentPayload));
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
-      {
-        amount: `${exam?.fee}`,
-      },
-      {
-        withCredentials: true,
-        headers: { Authorization: getFromLocalStorage(authKey) },
-      }
-    );
-    router.push(data?.data);
+    if (paymentMethod === "bkash") {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
+        {
+          amount: `${exam?.fee}`,
+        },
+        {
+          withCredentials: true,
+          headers: { Authorization: getFromLocalStorage(authKey) },
+        }
+      );
+      router.push(data?.data);
+    } else if (paymentMethod === "nagad") {
+      const { data: payment } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/create`,
+        {
+          amount: `${exam?.fee}`,
+        }
+      );
+      router.push(payment?.data);
+    }
   };
   const examsData = dataExams?.exams?.data;
 
@@ -93,7 +117,10 @@ const CourseAllExams = ({ course_id }) => {
         <td>{exam?.fee}</td>
         <td>
           <p
-            onClick={() => enrollToExam(exam)}
+            onClick={() => {
+              setSelectedExam(exam);
+              setModalOpen(true);
+            }}
             className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
           >
             Enroll
@@ -102,28 +129,32 @@ const CourseAllExams = ({ course_id }) => {
       </tr>
     ));
   }
-  const breadcrumbItems = [{ label: "হোম", link: "/" }, { label: " সব কোর্স",link: "/courses"  }, {label:"পরিক্ষা/ কুইজ"}];
+  const breadcrumbItems = [
+    { label: "হোম", link: "/" },
+    { label: " সব কোর্স", link: "/courses" },
+    { label: "পরিক্ষা/ কুইজ" },
+  ];
 
   return (
     <>
-     <Commonbanner title="পরিক্ষা/ কুইজ" breadcrumbItems={breadcrumbItems} />
-    <div className="mx-20 py-20 ">
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Exam Title</th>
-              <th>Exam Type</th>
-              <th>Total Marks</th>
-              <th>Fee</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody className="">
-            {content}
-            {/* {!!examsData &&
+      <Commonbanner title="পরিক্ষা/ কুইজ" breadcrumbItems={breadcrumbItems} />
+      <div className="mx-20 py-20 ">
+        <div className="overflow-x-auto">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th></th>
+                <th>Exam Title</th>
+                <th>Exam Type</th>
+                <th>Total Marks</th>
+                <th>Fee</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody className="">
+              {content}
+              {/* {!!examsData &&
             examsData?.map((exam) => (
               <tr className="hover" key={exam?._id}>
                 <th className="text-gray-400">#</th>
@@ -141,10 +172,17 @@ const CourseAllExams = ({ course_id }) => {
                 </td>
               </tr>
             ))} */}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+      {modalOpen && (
+        <PaymentModal
+          setModalOpen={setModalOpen}
+          setPaymentMethod={setPaymentMethod}
+          amount={selectedExam?.fee}
+        />
+      )}
     </>
   );
 };
