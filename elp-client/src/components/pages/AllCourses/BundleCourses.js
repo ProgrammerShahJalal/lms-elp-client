@@ -6,32 +6,57 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { authKey } from "@/constants/storage";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import PaymentModal from "@/components/shared/PaymentModal";
 
 const BundleCourses = ({ bundle, i, isLast, sub_category_id }) => {
   const router = useRouter();
 
+  // states
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedSubscriptionDuration, setSelectedSubscriptionDuration] =
+    useState(null);
+
+  // effects
+  useEffect(() => {
+    if (paymentMethod) {
+      handleBundlePayment(selectedSubscriptionDuration);
+    }
+  }, [paymentMethod]);
+
   // handle form submit(payment and buy)
-  const handleBundlePayment = async (subscription_duration_in_months) => {
+  const handleBundlePayment = async (selectedSubscriptionDuration) => {
     Cookies.set("order_type", "bundle_course");
     Cookies.set(
       "creationPayload",
       JSON.stringify({
         sub_category_id,
-        subscription_duration_in_months: subscription_duration_in_months,
+        subscription_duration_in_months: selectedSubscriptionDuration,
       })
     );
 
-    const { data: payment } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
-      {
-        amount: `${Number(bundle?.total_cost)}`,
-      },
-      {
-        withCredentials: true,
-        headers: { Authorization: getFromLocalStorage(authKey) },
-      }
-    );
-    router.push(payment?.data);
+    if (paymentMethod === "bkash") {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/bkash/payment/create`,
+        {
+          amount: `${bundle?.total_cost}`,
+        },
+        {
+          withCredentials: true,
+          headers: { Authorization: getFromLocalStorage(authKey) },
+        }
+      );
+      router.push(data?.data);
+    } else if (paymentMethod === "nagad") {
+      const { data: payment } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/create`,
+        {
+          amount: `${bundle?.total_cost}`,
+        }
+      );
+      router.push(payment?.data);
+    }
   };
 
   return (
@@ -58,9 +83,15 @@ const BundleCourses = ({ bundle, i, isLast, sub_category_id }) => {
               মোট {bundle?.total_cost} টাকা
             </h3>
             <button
-              onClick={() =>
-                handleBundlePayment(bundle?.subscription_duration_in_months)
-              }
+              // onClick={() =>
+              //   handleBundlePayment(bundle?.subscription_duration_in_months)
+              // }
+              onClick={() => {
+                setSelectedSubscriptionDuration(
+                  bundle?.subscription_duration_in_months
+                );
+                setModalOpen(true);
+              }}
               className="bg-yellowPrimary text-white py-3 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary "
             >
               বান্ডিল কোর্সটি কিনুন
@@ -68,6 +99,13 @@ const BundleCourses = ({ bundle, i, isLast, sub_category_id }) => {
           </div>
         </div>
       </div>
+      {modalOpen && (
+        <PaymentModal
+          setModalOpen={setModalOpen}
+          setPaymentMethod={setPaymentMethod}
+          amount={20}
+        />
+      )}
     </div>
   );
 };
