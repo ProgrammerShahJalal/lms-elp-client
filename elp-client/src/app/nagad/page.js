@@ -103,7 +103,7 @@ function Success() {
               books: booksPayload,
             });
             if (Boolean(order?.data)) {
-               dispatch(clearCart());
+              dispatch(clearCart());
               Swal.fire({
                 title: "Congratulations! Payment Successful",
                 text: " Your order has been successful!",
@@ -117,13 +117,12 @@ function Success() {
               });
             }
           } else if (orderType === "bundle_course") {
-            const res = subscribeToCourseBundle({
+            const res = await subscribeToCourseBundle({
               sub_category_id: payload?.sub_category_id,
               subscription_duration_in_months:
                 payload?.subscription_duration_in_months,
-              trx_id,
+              payment_ref_id: nagadPaymentRefId,
             });
-
             if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",
@@ -157,7 +156,6 @@ function Success() {
         }
         Cookies.remove("order_type");
         Cookies.remove("creationPayload");
-        
       } catch (error) {
         toast.error(
           "Order failed!  Contact to easy learning platform admin!",
