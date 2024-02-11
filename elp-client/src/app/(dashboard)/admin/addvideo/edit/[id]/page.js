@@ -34,10 +34,10 @@ const UpdateCoursePlaylistEditPage = ({ params }) => {
   //   }
   // }, [data, setValue]);
   const onSubmit = async (data) => {
-    console.log(data);
+    (data);
     try {
       const res = await updateCoursePlaylist({ id, body: data });
-      console.log(res);
+      (res);
       if (res?.data?._id === id) {
         toast.success("Course playlist updated successfully");
         router.push("/admin/addvideo");

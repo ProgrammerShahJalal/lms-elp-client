@@ -30,7 +30,7 @@ const GiveMark = ({ examResultData, refetchExamResult, examId, setModalOpen, stu
                 marks: questionMarksArray,
             };
             const { data: submissionData } = await giveMarkToStudent(payload);
-            console.log(submissionData, 'submissionData');
+            (submissionData, 'submissionData');
 
             if (submissionData) {
                 toast.success("Congratulations! You have successfully submitted marks");
@@ -39,7 +39,7 @@ const GiveMark = ({ examResultData, refetchExamResult, examId, setModalOpen, stu
             }
             refetchExamResult()
 
-            console.log('Submission successful:', submissionData);
+            ('Submission successful:', submissionData);
         } catch (error) {
             console.error('Error submitting marks:', error);
         }

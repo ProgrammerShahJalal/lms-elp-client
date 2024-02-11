@@ -3,7 +3,7 @@
 const AllBuyingCourseDetails = ({item}) => {
     const dateObject = new Date(item?.createdAt);
     const humanReadableFormatLocal = dateObject.toLocaleDateString();
-    // console.log(item)
+    // (item)
     return (
         <tr className="hover border">
           <td>{item?.course_id?.title}</td>

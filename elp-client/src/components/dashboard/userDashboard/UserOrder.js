@@ -10,7 +10,7 @@ import SingleOrderDetails from "./SingleOrderDetails";
 const UserOrder = () => {
 
   const {data, isLoading, isError} = useGetMyAllOrdersDetailsQuery();
-  // console.log(data, 'form user order');
+  // (data, 'form user order');
   const bookOrdersData = data?.orders;
   
 

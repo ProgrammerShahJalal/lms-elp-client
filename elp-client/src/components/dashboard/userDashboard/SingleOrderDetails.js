@@ -6,7 +6,7 @@ const SingleOrderDetails = ({ item }) => {
   const dateObject = new Date(item?.createdAt);
   const humanReadableFormatLocal = dateObject.toLocaleDateString();
   
-  // console.log(item)
+  // (item)
   
 
   return (

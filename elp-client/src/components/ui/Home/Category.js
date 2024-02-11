@@ -21,7 +21,7 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 const Category = () => {
   const { data, isError, isLoading } = useGetAllCategoriesQuery();
   const categoriesData = data?.categories;
-  // console.log(categoriesData)
+  // (categoriesData)
 
   const breakpoints = {
     480: {

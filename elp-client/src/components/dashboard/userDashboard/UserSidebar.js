@@ -18,9 +18,9 @@ const UserSidebar = () => {
   const { role, userId } = getUserInfo();
 
   const { data: user } = useGetSingleUserQuery(userId);
-  //   console.log(user)
+  //   (user)
 
-  // console.log(role, 'basic dash')
+  // (role, 'basic dash')
 
   const [isOpen, setIsOpen] = useState(false);
 

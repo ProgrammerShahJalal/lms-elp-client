@@ -12,7 +12,7 @@ const UserCourses = () => {
     useGetMyCourseSubscriptionsHistoryQuery();
 
   const courseSubs = data?.courseSubscription;
-  console.log("sourse subs", courseSubs);
+  ("sourse subs", courseSubs);
 
   let content = null;
 

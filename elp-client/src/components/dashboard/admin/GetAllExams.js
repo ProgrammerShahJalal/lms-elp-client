@@ -17,11 +17,11 @@ const GetAllExams = () => {
 
   const { data, isLoading, isError, refetch } = useGetAllExamsQuery({limit,  page, searchTerm});
   const [deleteExam] = useDeleteExamMutation()
-//   console.log(data?.exams?.data);
+//   (data?.exams?.data);
   const examsData = data?.exams?.data;
 
 
-  console.log('info', data?.exams?.meta);
+  ('info', data?.exams?.meta);
 
   useEffect(() => {
     refetch();
@@ -48,7 +48,7 @@ const GetAllExams = () => {
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteExam(id);
-        // console.log(res?.data)
+        // (res?.data)
   
         if (res?.data?._id === id) {
           // Item deleted successfully

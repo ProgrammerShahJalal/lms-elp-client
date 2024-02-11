@@ -13,7 +13,7 @@ const AllBooks = () => {
     limit,
     page,
   });
-  console.log(data);
+  (data);
 
   const booksData = data?.books?.data;
   const totalData = data?.books?.meta?.total;

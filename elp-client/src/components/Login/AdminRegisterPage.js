@@ -25,7 +25,7 @@ const AdminRegisterPage = () => {
     try {
       // const res = await userSignup({ ...data }).unwrap();
       await userSignup({ ...data }).unwrap();
-      // console.log(res, ' from res');
+      // (res, ' from res');
       toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
     } catch (err) {
       if (err.data?.statusCode === 500 && err.data?.errorMessages.includes("duplicate key")) {

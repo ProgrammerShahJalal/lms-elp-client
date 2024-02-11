@@ -49,7 +49,7 @@ const AddVideo = () => {
     refetchPlaylist();
   }, [limit, page, searchTerm]);
 
-  console.log('info', data?.playlists);
+  ('info', data?.playlists);
 
   const totalData = data?.playlists?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);
@@ -94,7 +94,7 @@ const AddVideo = () => {
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteVideoPlaylist(id);
-        // console.log(res?.data)
+        // (res?.data)
 
         if (res?.data?._id === id) {
           // Item deleted successfully

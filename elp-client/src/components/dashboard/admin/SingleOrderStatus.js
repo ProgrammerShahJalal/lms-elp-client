@@ -11,7 +11,7 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
   });
 
   const allOrdersStatus = statusData?.allStatus?.data;
-  // console.log(allOrdersStatus);
+  // (allOrdersStatus);
 
   const [orderStatusChange] = useOrderStatusChangeMutation();
 
@@ -24,13 +24,13 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
         body: { status: selectedStatus },
       });
   
-      // console.log("Backend Response:", response);
+      // ("Backend Response:", response);
   
       if (response.data) {
         toast.success("Order Status Updated Successfully");
-        // console.log("Order Status Before Update:", orderStatus);
+        // ("Order Status Before Update:", orderStatus);
         setOrderStatus(selectedStatus);
-        // console.log("Order Status After Update:", selectedStatus);
+        // ("Order Status After Update:", selectedStatus);
       } else {
         toast.error("Failed to update order status");
       }

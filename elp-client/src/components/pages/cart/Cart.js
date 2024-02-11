@@ -23,7 +23,7 @@ import {
 const Cart = () => {
   const { books, total } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  //  console.log(books)
+  //  (books)
   // const [total, setTotal] = useState(0); // State to hold the total price
 
   // useEffect(() => {
@@ -58,7 +58,7 @@ const Cart = () => {
   //     if (result.isConfirmed) {
   //       // User confirmed deletion
   //       const res = await deletecart(id);
-  //       // console.log(res)
+  //       // (res)
 
   //       if (res?.data?._id === id) {
   //         // Item deleted successfully

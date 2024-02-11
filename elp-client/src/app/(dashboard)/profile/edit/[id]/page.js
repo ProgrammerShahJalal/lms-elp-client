@@ -15,7 +15,7 @@ const UserProfileEditPage = ({params}) => {
   const [email , setEmail] = useState("");
   const [contact_no , setContact_no] = useState("");
   // const [name , setName] = useState("");
-  // console.log(data,'single user')
+  // (data,'single user')
   const defaultValues = {
     name: data?.name,
     email: data?.email,
@@ -39,13 +39,13 @@ useEffect(()=>{
 
   const onHandleSubmit = async (e) => {
     e.preventDefault()
-    // console.log(values)
+    // (values)
     try {
-      // console.log(name,contact_no,email)
+      // (name,contact_no,email)
        const res = await updateUser({
         id, name, email, contact_no
        });
-      //  console.log(res, 'afetr api')
+      //  (res, 'afetr api')
        if(res){
         toast.success("Profile updated successfully");
         // router.push("/profile");

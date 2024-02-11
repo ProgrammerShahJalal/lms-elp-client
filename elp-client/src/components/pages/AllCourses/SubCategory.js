@@ -13,7 +13,7 @@ const SubCategory = ({id}) => {
     
     const filterCourseDta = coursesData?.filter((item) => item?.sub_category_id?.id ===  id)
 
-    // console.log(filterCourseDta)
+    // (filterCourseDta)
 
 
     let content = null;

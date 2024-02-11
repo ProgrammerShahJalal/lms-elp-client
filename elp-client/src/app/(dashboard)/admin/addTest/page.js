@@ -36,7 +36,7 @@ const AddBooks = () => {
         sub_category_id: selectedSubcategories,
     });
     const allCourse = data?.courses?.data;
-    // console.log(variable);
+    // (variable);
 
     // ... (other state variables)
     const [repetitionData, setRepetitionData] = useState([{ category_id: '', subcategory_id: '', course_id: '' }]);
@@ -70,7 +70,7 @@ const AddBooks = () => {
     const { register, handleSubmit, reset, watch, setValue } = useForm();
 
     // const onSubmit = async (data) => {
-    //     console.log(data, ' this is just data console log');
+    //     (data, ' this is just data console log');
     //     data.price = Number(data?.price);
     //     data.discount_price = Number(data?.discount_price);
 
@@ -80,7 +80,7 @@ const AddBooks = () => {
     //     const formData = new FormData();
     //     formData.append("file", file[0]);
     //     formData.append("data", result);
-    //     console.log(formData);
+    //     (formData);
     //     try {
     //         const resultData = await addBooks(formData);
 
@@ -92,32 +92,32 @@ const AddBooks = () => {
     //     }
     // };
     const onSubmit = async (data) => {
-        // console.log(data);
+        // (data);
         data.price = Number(data?.price);
         data.discount_price = Number(data?.discount_price);
 
         const content = { ...data };
-        console.log(data);
+        (data);
 
         const file = content["file"];
-        // console.log(file)
+        // (file)
         // delete content['file'];
         const result = JSON.stringify(content);
-        // console.log(result, "json");
+        // (result, "json");
         const course_id = data?.categories?.map((category) => category.course_id) || [];
-        console.log(course_id, 'this is course id');
+        (course_id, 'this is course id');
         const formData = new FormData();
         formData.append("file", file[0]);
         formData.append("data", result);
-        console.log(formData, 'this is form data');
-        // console.log(formData, 'formdaata')
+        (formData, 'this is form data');
+        // (formData, 'formdaata')
         try {
             const resultData = await addBooks(formData, course_id);
 
             if (resultData) {
                 toast.success("Book created successfully");
             }
-            // console.log(resultData, ' from add category async')
+            // (resultData, ' from add category async')
         } catch (error) {
             toast.error(error.message);
         }

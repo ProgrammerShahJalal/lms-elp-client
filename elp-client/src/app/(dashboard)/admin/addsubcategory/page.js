@@ -39,27 +39,27 @@ const AdminAddSubCategory = () => {
   // const totalPages = Math.ceil(totalData / limit);
   
   const onSubmit = async (data) => {
-    // console.log(data);
+    // (data);
     const content = {...data};
 
     const file = content['file']
-    // console.log(file)
+    // (file)
     // delete content['file'];
     const result = JSON.stringify(content)
-    // console.log(result, "json")
+    // (result, "json")
     const formData = new FormData();
     formData.append('file', file[0]);
     formData.append('data', result);
-    // console.log(formData, 'formdaata')
+    // (formData, 'formdaata')
     try {
 
       const resultData = await addSubcategory(formData)
-      console.log(resultData, 'after ap call')
+      (resultData, 'after ap call')
       if(resultData){
           toast.success("subcategory created successfully");
          
       }
-      // console.log(resultData, ' from add category async')
+      // (resultData, ' from add category async')
 
     } catch (error) {
       toast.error(error.message)

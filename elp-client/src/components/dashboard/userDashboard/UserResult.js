@@ -4,7 +4,7 @@ const UserResult = ({ item }) => {
   const examId = item?.exam_id?._id;
   const totalObtainedMarks = item?.question_mark?.reduce((total, mark) => total + mark?.mark_obtained, 0);
 
-  console.log(item?.user_id);
+  (item?.user_id);
   return (
     <tr>
       <td className="py-2  px-1 border-b md:table-cell flex">
