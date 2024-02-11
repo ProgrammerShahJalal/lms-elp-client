@@ -166,6 +166,12 @@ const MobileNavbar = () => {
             >
               যোগাযোগ
             </Link>
+            <Link
+              href="/notice"
+              className="block dark:text-black hover:text-white font-bold"
+            >
+              নোটিশ
+            </Link>
 
             <li className="relative group">
            <Header1/>
