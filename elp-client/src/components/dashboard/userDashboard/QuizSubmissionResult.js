@@ -1,10 +1,12 @@
-import { useExamResultQuery } from "@/redux/api/resultApi";
-const QuizSubmissionResult = ({ data: checkQuiz }) => {
-    const { data } = useExamResultQuery({ exam_type: 0 });
-    const getAllQuestion = data?.exams?.data;
+// import { useExamResultQuery } from "@/redux/api/resultApi";
+const QuizSubmissionResult = ({ examResult }) => {
+
+    // const { data } = useExamResultQuery({ exam_type: 0, exam_id: examId });
+    const getAllQuestion = examResult?.exams?.data;
     const mappedData = getAllQuestion?.map(item => ({
         answer: JSON.parse(item.answer)
     }));
+    console.log(mappedData, 'this is examresult');
 
     return (
         <div>
