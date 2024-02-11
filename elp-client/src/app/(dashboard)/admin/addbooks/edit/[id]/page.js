@@ -34,7 +34,7 @@ const UpdateBookPage = ({params}) => {
   const [updateBook] = useUpdateBookMutation();
   useEffect(() => {
     if (data) {
-      // banner: data?.file?.name,
+        // cover_page: data?.file?.name,
       setValue("title", data?.title);
     //   setValue("author", data?.author);
     //   setValue("category_id", data?.category_id || "");
