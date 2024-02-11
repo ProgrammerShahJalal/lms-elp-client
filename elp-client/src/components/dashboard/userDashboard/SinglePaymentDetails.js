@@ -14,7 +14,6 @@ const SinglePaymentDetails = ({ item }) => {
   const { userId } = getUserInfo();
   const { data: examData } = useGetSingleExamQuery(examId);
   const { data: questionData } = useGetQuestionsOfAnExamQuery(examId)
-  console.log(questionData, 'this is exam data');
   const [submitExamUser] = useSubmitExamUserMutation();
   const [modalOpen, setModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen1] = useState(false);

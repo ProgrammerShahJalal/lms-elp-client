@@ -163,46 +163,83 @@ const UserExamPage = ({ params }) => {
     );
   }
 
+  // if (!isLoading && !isError && data?.length > 0) {
+  //   content = examResult?.exams?.data?.length ?
+  //     <QuizSubmissionResult examResult={examResult} />
+
+  //     :
+  //     data?.map((quiz, i) => (
+  //       <div key={quiz.id} className="mb-6 p-4  rounded">
+  //         <p className="text-lg font-bold">
+  //           Question {i + 1}: {quiz.question}
+  //         </p>
+  //         <div>
+  //           {quiz?.options?.map((option, index) => (
+  //             <div key={index} className="mb-2">
+  //               <label className="flex items-center">
+  //                 <input
+  //                   type="radio"
+  //                   className="mr-2 h-7 w-5"
+  //                   name={`answer_${quiz.id}`}
+  //                   // checked={selectedOptions[quiz.id]?.[option]}
+  //                   checked={selectedOptions[quiz.id] === option}
+  //                   onChange={() => handleCheckboxChange(quiz.id, option)}
+  //                 />
+  //                 {/* <span>{quiz?.options?.find((o) => o.hasOwnProperty(option))?.[option]}</span> */}
+  //                 <span>{Object.values(option)[0]}</span>
+  //               </label>
+  //             </div>
+  //           ))}
+  //         </div>
+  //       </div>
+  //     ))
+
+  // }
   if (!isLoading && !isError && data?.length > 0) {
     content = examResult?.exams?.data?.length ?
-      <QuizSubmissionResult examResult={examResult} />
-
-      :
-      data?.map((quiz, i) => (
-        <div key={quiz.id} className="mb-6 p-4  rounded">
-          <p className="text-lg font-bold">
-            Question {i + 1}: {quiz.question}
+      <QuizSubmissionResult examResult={examResult} /> :
+      <>
+        <div className="flex justify-end">
+          <p className={`text-xl font-bold px-2 rounded-sm  fixed ${isWarningTime ? 'bg-red-500' : 'bg-transparent'}`}>
+            {examTimeInMinutes ? `End In: ${minutes} minutes: ${seconds} seconds left` : 'Exam duration not available'}
           </p>
-          <div>
-            {quiz?.options?.map((option, index) => (
-              <div key={index} className="mb-2">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    className="mr-2 h-7 w-5"
-                    name={`answer_${quiz.id}`}
-                    // checked={selectedOptions[quiz.id]?.[option]}
-                    checked={selectedOptions[quiz.id] === option}
-                    onChange={() => handleCheckboxChange(quiz.id, option)}
-                  />
-                  {/* <span>{quiz?.options?.find((o) => o.hasOwnProperty(option))?.[option]}</span> */}
-                  <span>{Object.values(option)[0]}</span>
-                </label>
-              </div>
-            ))}
-          </div>
         </div>
-      ))
-
+        {data?.map((quiz, i) => (
+          <div key={quiz.id} className="mb-6 p-4  rounded">
+            <p className="text-lg font-bold">
+              Question {i + 1}: {quiz.question}
+            </p>
+            <div>
+              {quiz?.options?.map((option, index) => (
+                <div key={index} className="mb-2">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      className="mr-2 h-7 w-5"
+                      name={`answer_${quiz.id}`}
+                      // checked={selectedOptions[quiz.id]?.[option]}
+                      checked={selectedOptions[quiz.id] === option}
+                      onChange={() => handleCheckboxChange(quiz.id, option)}
+                    />
+                    {/* <span>{quiz?.options?.find((o) => o.hasOwnProperty(option))?.[option]}</span> */}
+                    <span>{Object.values(option)[0]}</span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </>
   }
+
 
   return (
     <div>
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <p className={`text-xl font-bold px-2 rounded-sm  fixed ${isWarningTime ? 'bg-red-500' : 'bg-transparent'}`}>
           {examTimeInMinutes ? `End In: ${minutes} minutes: ${seconds} seconds left` : 'Exam duration not available'}
         </p>
-      </div>
+      </div> */}
       {content}
       <button
         onClick={handleSubmit}
@@ -211,7 +248,7 @@ const UserExamPage = ({ params }) => {
       >
         Submit
       </button>
-      {quizSubmitted && (
+      {/* {quizSubmitted && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Quiz Results</h2>
           <div className="mt-2">
@@ -224,9 +261,7 @@ const UserExamPage = ({ params }) => {
             ))}
           </div>
         </div>
-      )}
-
-      <QuizSubmissionResult examResult={examResult} />
+      )} */}
     </div>
   );
 };
