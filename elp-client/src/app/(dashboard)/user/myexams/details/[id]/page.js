@@ -1,9 +1,10 @@
 'use client'
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
+import QuizSubmissionResult from "@/components/dashboard/userDashboard/QuizSubmissionResult";
 import { useGetSingleExamQuery } from "@/redux/api/examsApi";
 import { useGetMyQuestionsEnrollHistoryQuery } from "@/redux/api/questionsApi";
-import { useSubmitExamUserMutation } from "@/redux/api/resultApi";
+import { useExamResultQuery, useSubmitExamUserMutation } from "@/redux/api/resultApi";
 import { getUserInfo } from "@/services/auth.service";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -15,13 +16,14 @@ const UserExamPage = ({ params }) => {
   const [submitExamUser] = useSubmitExamUserMutation()
   const { data, isLoading, isError } = useGetMyQuestionsEnrollHistoryQuery(id);
   const { data: exam, isLoading: loading, isError: error } = useGetSingleExamQuery(id);
+  const { data: examResult } = useExamResultQuery({ exam_type: 0, exam_id: id });
   const examTimeInMinutes = exam?.duration_in_minutes;
   const [time, setTime] = useState(examTimeInMinutes ? examTimeInMinutes * 60 : 0);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState({});
-  // Calculate totalQuestions when needed
+
   const totalQuestions = Object.keys(selectedOptions).length;
 
   const handleCheckboxChange = (questionId, option) => {
@@ -69,6 +71,7 @@ const UserExamPage = ({ params }) => {
         const selectedOption = selectedOptions[quiz.id];
         return {
           question: quiz?.question,
+          correct_answer: quiz?.correct_answer,
           options: quiz?.options?.map((opt) => Object.values(opt)[0]),
           answer: selectedOption || "you don't give an answer",
           is_correct: correctAnswers[quiz.id] === selectedOption ? 1 : 0,
@@ -79,7 +82,6 @@ const UserExamPage = ({ params }) => {
       total_wrong_answer: totalWrongAnswers,
       isApproved: true
     };
-
     // Make an API request to save the user's submission
     setSubmitButtonDisabled(true);
     try {
@@ -135,8 +137,8 @@ const UserExamPage = ({ params }) => {
   const isWarningTime = time <= 60;
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
+  // console.log(examResult?.exams?.data, "this isexamResult");
   let content = null;
-
   if (isLoading) {
     content = (
       <>
@@ -148,6 +150,7 @@ const UserExamPage = ({ params }) => {
   if (!isLoading && isError) {
     content = <Error />;
   }
+  // console.log(examResult?.exams?.data?.length, "examResult?.exams?.data?.length");
 
   if (!isLoading && !isError && data?.length === 0) {
     content = (
@@ -161,31 +164,36 @@ const UserExamPage = ({ params }) => {
   }
 
   if (!isLoading && !isError && data?.length > 0) {
-    content = data?.map((quiz, i) => (
-      <div key={quiz.id} className="mb-6 p-4  rounded">
-        <p className="text-lg font-bold">
-          Question {i + 1}: {quiz.question}
-        </p>
-        <div>
-          {quiz?.options?.map((option, index) => (
-            <div key={index} className="mb-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  className="mr-2 h-7 w-5"
-                  name={`answer_${quiz.id}`}
-                  // checked={selectedOptions[quiz.id]?.[option]}
-                  checked={selectedOptions[quiz.id] === option}
-                  onChange={() => handleCheckboxChange(quiz.id, option)}
-                />
-                {/* <span>{quiz?.options?.find((o) => o.hasOwnProperty(option))?.[option]}</span> */}
-                <span>{Object.values(option)[0]}</span>
-              </label>
-            </div>
-          ))}
+    content = examResult?.exams?.data?.length ?
+      <QuizSubmissionResult examResult={examResult} />
+
+      :
+      data?.map((quiz, i) => (
+        <div key={quiz.id} className="mb-6 p-4  rounded">
+          <p className="text-lg font-bold">
+            Question {i + 1}: {quiz.question}
+          </p>
+          <div>
+            {quiz?.options?.map((option, index) => (
+              <div key={index} className="mb-2">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    className="mr-2 h-7 w-5"
+                    name={`answer_${quiz.id}`}
+                    // checked={selectedOptions[quiz.id]?.[option]}
+                    checked={selectedOptions[quiz.id] === option}
+                    onChange={() => handleCheckboxChange(quiz.id, option)}
+                  />
+                  {/* <span>{quiz?.options?.find((o) => o.hasOwnProperty(option))?.[option]}</span> */}
+                  <span>{Object.values(option)[0]}</span>
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    ));
+      ))
+
   }
 
   return (
@@ -206,8 +214,6 @@ const UserExamPage = ({ params }) => {
       {quizSubmitted && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Quiz Results</h2>
-
-
           <div className="mt-2">
             {data?.map((quiz, i) => (<>
               <p key={quiz.id} className="text-green-400">
@@ -219,6 +225,8 @@ const UserExamPage = ({ params }) => {
           </div>
         </div>
       )}
+
+      <QuizSubmissionResult examResult={examResult} />
     </div>
   );
 };
