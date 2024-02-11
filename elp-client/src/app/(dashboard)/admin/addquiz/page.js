@@ -156,7 +156,7 @@ const AddQuiz = () => {
                     onSubmit={handleSubmit}
                     className=" mx-auto  p-8 border rounded shadow"
                 >
-                    <h2 className="text-2xl font-semibold mb-4">Quiz Questions</h2>
+                    <h2 className="text-2xl font-semibold mb-4">Add Quiz Questions</h2>
                     <div>
                         {/* Category selection field */}
                         <div className="mb-4">
@@ -458,6 +458,10 @@ const AddQuiz = () => {
                     </tbody>
                 </table> */}
             <div className="overflow-x-auto">
+                <div className="text-center py-5">
+                <h2 className="text-2xl font-semibold mb-4">সব কুইজ এখানে আছে</h2>
+                <p>নির্দিষ্ট পরীক্ষার সমস্ত কুইজ দেখতে, পরীক্ষার শিরোনামে ক্লিক করুন।</p>
+                </div>
                 {isFilteredQuestionLoading ? (
                     <p>Loading...</p>
                 ) : (
@@ -475,7 +479,7 @@ const AddQuiz = () => {
                         </thead>
                         <tbody>
                             {filteredQuestions?.map((quiz, i) => (
-                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} refetchExams={refetchExams} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
+                                <AdminAddQuiz key={quiz?.id} handleDelete={handleDelete} refetch={refetch} filteredQuestions={filteredQuestions} quiz={quiz} i={i} />
                             ))}
                         </tbody>
                     </table>

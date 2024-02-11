@@ -13,13 +13,13 @@ const AllUserExams = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading, isError, refetch } = useGetAllUserExamsQuery({ limit, page, searchTerm });
+  const { data, isLoading, isError, refetch: refetchUserExam } = useGetAllUserExamsQuery({ limit, page, searchTerm });
 
   const allExams = data?.exams?.data;
 
 
   useEffect(() => {
-    refetch();
+    refetchUserExam();
   }, [limit, page, searchTerm]);
 
 

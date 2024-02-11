@@ -2,7 +2,7 @@ import { useUpdateStatusChangeMutation } from "@/redux/api/examsApi";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
-const AdminChangeWrittenStatus = ({ quiz, i, handleDelete }) => {
+const AdminChangeWrittenStatus = ({ refetch, quiz, i, handleDelete }) => {
     const examId = quiz?.exam_id?._id;
     const activeStatus = quiz?.exam_id?.is_active;
     const [updateStatusChange] = useUpdateStatusChangeMutation()
@@ -15,6 +15,7 @@ const AdminChangeWrittenStatus = ({ quiz, i, handleDelete }) => {
             if (result) {
                 toast.success("Successfully change the status")
             }
+            refetch()
         } catch (error) {
             console.error("Error Updating status", error)
 

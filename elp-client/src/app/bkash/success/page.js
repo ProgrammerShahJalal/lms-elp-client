@@ -101,13 +101,12 @@ function Success() {
               });
             }
           } else if (orderType === "bundle_course") {
-            const res = subscribeToCourseBundle({
+            const res = await subscribeToCourseBundle({
               sub_category_id: payload?.sub_category_id,
               subscription_duration_in_months:
                 payload?.subscription_duration_in_months,
               trx_id,
             });
-
             if (Boolean(res?.data)) {
               Swal.fire({
                 title: "Congratulations! Payment Successful",

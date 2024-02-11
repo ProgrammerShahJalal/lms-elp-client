@@ -4,6 +4,7 @@ import { useGetAllNoticesQuery } from "@/redux/api/noticeApi";
 import InitialLoader from "../Loader/InitialLoader";
 import Error from "../Loader/Error";
 import { useState } from "react";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import Pagination from "@/app/(dashboard)/Pagination";
 
 const NoticePage = () => {
@@ -63,8 +64,11 @@ const NoticePage = () => {
           <div className="bg-green-500 text-white px-3 rounded py-4">
             <h2>{formatDate(item?.createdAt)}</h2>
           </div>
-          <div className="text-gray-500 pl-5">
-            <h2 className="font-bold text-xl cursor-pointer">{item?.title}</h2>
+          <div className="pl-5">
+          <div className="flex justify-between">
+           <h2 className="font-bold text-xl">{item?.title}</h2>
+            {expandedNoticeId === item?.id ? <FaAngleUp /> : <FaAngleDown />} 
+           </div>
             {expandedNoticeId === item?.id && <p>{item?.description}</p>}
           </div>
         </div>
