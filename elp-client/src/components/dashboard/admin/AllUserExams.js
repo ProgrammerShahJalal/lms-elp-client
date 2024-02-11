@@ -6,19 +6,20 @@ import { useGetAllUserExamsQuery } from "@/redux/api/examsApi";
 import AllExamDetails from "./AllExamDetails";
 import Pagination from "@/app/(dashboard)/Pagination";
 import { useEffect, useState } from "react";
+import EmptyContent from "@/components/Loader/EmptyContent";
 
 const AllUserExams = () => {
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading, isError, refetch } = useGetAllUserExamsQuery({limit, page, searchTerm});
+  const { data, isLoading, isError, refetch: refetchUserExam } = useGetAllUserExamsQuery({ limit, page, searchTerm });
 
   const allExams = data?.exams?.data;
-  
-  
+
+
   useEffect(() => {
-    refetch();
+    refetchUserExam();
   }, [limit, page, searchTerm]);
 
 
@@ -26,7 +27,7 @@ const AllUserExams = () => {
   const totalPages = Math.ceil(totalData / limit);
 
 
-  
+
   let content = null;
 
   if (isLoading) {
@@ -68,7 +69,8 @@ const AllUserExams = () => {
               <th className="py-2 px-2 border-b">পরিক্ষার ফী</th>
               <th className="py-2 px-2 border-b">টোটাল মার্ক্স</th>
               <th className="py-2 px-2 border-b">উত্তর দেখুন</th>
-              <th className="py-2 px-2 border-b">প্রাপ্ত মার্ক্স</th>
+              <th className="py-2 px-2 border-b">ক্যুইজ মার্ক্স</th>
+              <th className="py-2 px-2 border-b">লিখিত মার্ক্স</th>
               <th className="py-2 px-2 border-b">নম্বর দিন</th>
 
 
@@ -80,7 +82,7 @@ const AllUserExams = () => {
           </tbody>
         </table>
 
-        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
 
       </div>
     </div>

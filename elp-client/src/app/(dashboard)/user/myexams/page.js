@@ -14,10 +14,7 @@ const MyExamPages = () => {
   const { userId } = getUserInfo();
   const { data: payments, isError, isLoading } = useGetMyExamPaymentQuery();
   const paymentsData = payments?.payments;
-  // const filteredArray = paymentsData?.filter(item => {
-  //   return item?.exam_id?.exam_type === "1"
-  // });
-  // console.log(filteredArray, 'this is filtered data');
+  console.log(paymentsData, 'this is payments data');
   let content = null;
 
   if (isLoading) {
@@ -47,9 +44,24 @@ const MyExamPages = () => {
   }
 
   if (!isLoading && !isError && paymentsData?.length > 0) {
-    content = paymentsData?.map((item) => (<SinglePaymentDetails key={item?.id} item={item} />
+    // content = paymentsData?.map((item) => (<SinglePaymentDetails key={item?.id} item={item} />
 
-    ));
+    // ));
+    content = paymentsData.map((item) => {
+      if (item?.exam_id?.is_active) {
+        return <SinglePaymentDetails key={item?.id} item={item} />;
+      } else {
+        return (
+          <tr key={item?.id}>
+            <td colSpan="8">
+              <p className="text-red-500 font-bold">
+                This quiz  or written is currently inactive. please, be patient, when admin approved then you can give exam.
+              </p>
+            </td>
+          </tr>
+        );
+      }
+    });
   }
 
 
@@ -70,6 +82,7 @@ const MyExamPages = () => {
                 <th>কেনার তারিখ</th>
                 <th>ট্রান্সজেকশন আইডি</th>
                 <th>পেমেন্ট</th>
+                <th>সমস্ত প্রশ্ন দেখুন</th>
                 <th>পরিক্ষা দিন</th>
               </tr>
             </thead>

@@ -1,19 +1,24 @@
 import { useGetSingleExamQuery } from "@/redux/api/examsApi";
+import { useGetQuestionsOfAnExamQuery } from "@/redux/api/questionsApi";
 import { useSubmitExamUserMutation } from "@/redux/api/resultApi";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import UserSeeBroadQuestion from "./UserSeeBroadQuestion";
 
 const SinglePaymentDetails = ({ item }) => {
-  console.log(item);
   const examId = item?.exam_id?._id;
   const dateObject = new Date(item?.createdAt);
   const localData = dateObject.toLocaleDateString();
   const { userId } = getUserInfo();
   const { data: examData } = useGetSingleExamQuery(examId);
+  const { data: questionData } = useGetQuestionsOfAnExamQuery(examId)
+  console.log(questionData, 'this is exam data');
   const [submitExamUser] = useSubmitExamUserMutation();
   const [modalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen1] = useState(false);
+
 
   const handleSubmitPdf = async (e) => {
     e.preventDefault();
@@ -75,59 +80,80 @@ const SinglePaymentDetails = ({ item }) => {
       <td>paid</td>
       <td>
         {isQuiz ? (
+          <p>nothing to do</p>
+          // <button onClick={() => document.getElementById('my_modal_3').showModal()} className="px-2 py-2 bg-green-600 text-white rounded-sm">See All Questions</button>
+        ) : (
+
+          <button onClick={() => setIsModalOpen1(true)} className="px-2 py-2 bg-green-600 text-white rounded-sm">See All Questions</button>
+        )}
+      </td>
+      <td>
+        {isQuiz ? (
           <Link
             href={`/user/myexams/details/${item?.exam_id?.id}`}
             className="text-red-500 font-bold"
           >
-            পরিক্ষা দিন
+            কুইজ  দিন
           </Link>
         ) : (
           <button
             onClick={() => setModalOpen(true)}
-            className="your-button-styles"
+            className=""
           >
             Submit Your Pdf
           </button>
         )}
       </td>
-      <dialog open={modalOpen} id={`my_modal_${examId}`} className="modal">
-        <div className="modal-box">
-          <form method="dialog" onSubmit={handleSubmitPdf}>
-            <h1 className="font-bold text-red-500">
-              Before Submit, Please check pdf link is public, and carefully
-              submit this
-            </h1>
-            <div>
-              <label
-                htmlFor="answer link"
-                className="block text-sm font-medium text-gray-600"
+      <div>
+        <dialog open={modalOpen} id={`my_modal_${examId}`} className="modal">
+          <div className="modal-box">
+            <form method="dialog" onSubmit={handleSubmitPdf}>
+              <h1 className="font-bold text-red-500">
+                Before Submit, Please check pdf link is public, and carefully
+                submit this
+              </h1>
+              <div>
+                <label
+                  htmlFor="answer link"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Give Pdf Url:
+                </label>
+                <input
+                  type="text"
+                  id=""
+                  name="answer"
+                  className="mt-1 p-2 border rounded-md w-full"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white w-full py-2 px-4 rounded-md mt-4"
               >
-                Give Pdf Url:
-              </label>
-              <input
-                type="text"
-                id=""
-                name="answer"
-                className="mt-1 p-2 border rounded-md w-full"
-              />
-            </div>
+                Submit Your Answer
+              </button>
+            </form>
             <button
-              type="submit"
-              className="bg-blue-500 text-white w-full py-2 px-4 rounded-md mt-4"
+              onClick={() => {
+                setModalOpen(false);
+              }}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             >
-              Submit Your Answer
+              ✕
             </button>
-          </form>
-          <button
-            onClick={() => {
-              setModalOpen(false);
-            }}
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-          >
-            ✕
-          </button>
-        </div>
-      </dialog>
+          </div>
+        </dialog>
+      </div>
+      <div>
+        <dialog open={isModalOpen} id={`my_modal_${examId}_questions`} className="modal">
+          <div className="modal-box">
+            {
+              questionData?.map((item, index) => <UserSeeBroadQuestion key={item?.id} item={item} index={index} setIsModalOpen1={setIsModalOpen1}></UserSeeBroadQuestion>)
+            }
+          </div>
+
+        </dialog>
+      </div>
     </tr>
   );
 };

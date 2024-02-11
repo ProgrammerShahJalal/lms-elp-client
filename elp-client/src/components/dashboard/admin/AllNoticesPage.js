@@ -9,38 +9,32 @@ import {
 } from "@/redux/api/noticeApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AllNoticesPage = () => {
-  const [limit, setLimit] = useState(50);
+  const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const { data, isLoading, isError } = useGetAllNoticesQuery({ limit, page });
   const [deleteNotice] = useDeleteNoticeMutation();
   const allNotices = data?.notices?.data;
 
-  const formatDate = (isoDate) => {
-    const date = new Date(isoDate);
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const month = monthNames[date.getMonth()];
-    const day = date.getDate();
-    return `${month} ${day}`;
+
+const formatDate = (isoDate) => {
+  const date = new Date(isoDate);
+  const options = { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+};
+
+  const totalData = data?.notices?.meta?.total;
+  const totalPages = Math.ceil(totalData / limit);
+
+  const [expandedNoticeId, setExpandedNoticeId] = useState(null);
+
+  const toggleDescription = (id) => {
+    setExpandedNoticeId(expandedNoticeId === id ? null : id);
   };
 
-  const totalData = data?.data?.meta?.total;
-  const totalPages = Math.ceil(totalData / limit);
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -108,17 +102,18 @@ const AllNoticesPage = () => {
   if (!isLoading && !isError && allNotices?.length > 0) {
     content = allNotices?.map((item) => (
       <div className=" bg-white rounded-lg shadow-lg border-b-2" key={item?.id}>
-        <div className="flex  items-center">
+        <div className="flex items-center cursor-pointer" onClick={() => toggleDescription(item?.id)}>
           <div className="bg-green-500 text-white px-3 rounded py-4">
             <h2>{formatDate(item?.createdAt)}</h2>
-            {/* <h2>February</h2>
-         <h1 className="font-bold text-2xl">21</h1> */}
           </div>
-          <div className="text-gray-500 pl-5">
-            <h2 className="font-bold text-xl">{item?.title}</h2>
-            <p>{item?.description}</p>
+          <div className="pl-5">
+           <div className="flex justify-between">
+           <h2 className="font-bold text-xl">{item?.title}</h2>
+            {expandedNoticeId === item?.id ? <FaAngleUp /> : <FaAngleDown />} 
+           </div>
+            {expandedNoticeId === item?.id && <p>{item?.description}</p>}
             <button
-              className="bg-red-500 text-white py- mb-4 px-2 rounded-md cursor-pointer hover:bg-red-700"
+              className="bg-red-500 text-white my-5 mb-4 px-4 rounded-md cursor-pointer hover:bg-red-700"
               onClick={() => handleDelete(item?.id)}
             >
               Delete

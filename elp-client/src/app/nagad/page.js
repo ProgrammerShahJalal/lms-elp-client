@@ -16,7 +16,7 @@ import { useAddOrderMutation } from "@/redux/api/ordersApi";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Swal from "sweetalert2";
-import successImg from "@/assets/images/success.svg";
+import nagadImage from "@/assets/images/nagad_logo.png";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "@/redux/features/cart/cartSlice";
@@ -38,132 +38,138 @@ function Success() {
 
   useEffect(() => {
     const processPayment = async () => {
-      try {
-        // if book ordered, create book payload
-        let booksPayload;
-        if (books?.length) {
-          booksPayload = books?.map((book) => {
-            return {
-              book_id: book?._id,
-              quantity: book?.quantity,
-            };
-          });
-        }
-        if (payloadString) {
-          const payload = JSON.parse(payloadString);
-          payload.payment_ref_id = nagadPaymentRefId;
+      if (nagadPaymentStatus === "Success") {
+        try {
+          // if book ordered, create book payload
+          let booksPayload;
+          if (books?.length) {
+            booksPayload = books?.map((book) => {
+              return {
+                book_id: book?._id,
+                quantity: book?.quantity,
+              };
+            });
+          }
+          if (payloadString) {
+            const payload = JSON.parse(payloadString);
+            payload.payment_ref_id = nagadPaymentRefId;
 
-          if (orderType === "subscription") {
-            const res = await subscribeToCourse(payload);
-            if (Boolean(res?.data)) {
-              Swal.fire({
-                title: "Congratulations! Payment Successful",
-                text: "You  can now continue your subscribed course!",
-                icon: "success",
+            if (orderType === "subscription") {
+              const res = await subscribeToCourse(payload);
+              if (Boolean(res?.data)) {
+                Swal.fire({
+                  title: "Congratulations! Payment Successful",
+                  text: "You  can now continue your subscribed course!",
+                  icon: "success",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error!",
+                  text: "Error buying course! Contact to admin",
+                  icon: "error",
+                });
+              }
+            } else if (orderType === "exam") {
+              const res = await payForExam(payload);
+              if (Boolean(res?.data)) {
+                Swal.fire({
+                  title: "Congratulations! Payment Successful",
+                  text: "You  can now participate to the paid exam!",
+                  icon: "success",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error!",
+                  text: "Error paying for exam! Contact to admin",
+                  icon: "error",
+                });
+              }
+            } else if (orderType === "hard copy") {
+              const shippingAddressPayload = {
+                user_id,
+                division: payload?.division,
+                district: payload?.district,
+                upazilla: payload?.upazilla,
+                address: payload?.address,
+                contact_no: payload?.contact_no,
+                billing_name: payload?.billing_name,
+              };
+              if (payload?.is_default) {
+                await updateShippingAddress(shippingAddressPayload);
+              }
+              // create order
+              const order = await addOrder({
+                payment_ref_id: nagadPaymentRefId,
+                shipping_address: JSON.stringify(shippingAddressPayload),
+                books: booksPayload,
               });
-            } else {
-              Swal.fire({
-                title: "Error!",
-                text: "Error buying course! Contact to admin",
-                icon: "error",
+              if (Boolean(order?.data)) {
+                dispatch(clearCart());
+                Swal.fire({
+                  title: "Congratulations! Payment Successful",
+                  text: " Your order has been successful!",
+                  icon: "success",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error!",
+                  text: "Error paying for exam! Contact to admin",
+                  icon: "error",
+                });
+              }
+            } else if (orderType === "bundle_course") {
+              const res = await subscribeToCourseBundle({
+                sub_category_id: payload?.sub_category_id,
+                subscription_duration_in_months:
+                  payload?.subscription_duration_in_months,
+                payment_ref_id: nagadPaymentRefId,
               });
+              if (Boolean(res?.data)) {
+                Swal.fire({
+                  title: "Congratulations! Payment Successful",
+                  text: " Your bundle course has been bought successfully.!",
+                  icon: "success",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error!",
+                  text: "Error paying for exam! Contact to admin",
+                  icon: "error",
+                });
+              }
             }
-          } else if (orderType === "exam") {
-            const res = await payForExam(payload);
-            if (Boolean(res?.data)) {
-              Swal.fire({
-                title: "Congratulations! Payment Successful",
-                text: "You  can now participate to the paid exam!",
-                icon: "success",
-              });
-            } else {
-              Swal.fire({
-                title: "Error!",
-                text: "Error paying for exam! Contact to admin",
-                icon: "error",
-              });
-            }
-          } else if (orderType === "hard copy") {
-            const shippingAddressPayload = {
-              user_id,
-              division: payload?.division,
-              district: payload?.district,
-              upazilla: payload?.upazilla,
-              address: payload?.address,
-              contact_no: payload?.contact_no,
-              billing_name: payload?.billing_name,
-            };
-            if (payload?.is_default) {
-              await updateShippingAddress(shippingAddressPayload);
-            }
-            // create order
+          }
+          if (orderType === "pdf") {
             const order = await addOrder({
               payment_ref_id: nagadPaymentRefId,
-              shipping_address: JSON.stringify(shippingAddressPayload),
               books: booksPayload,
             });
             if (Boolean(order?.data)) {
-               dispatch(clearCart());
+              dispatch(clearCart());
               Swal.fire({
                 title: "Congratulations! Payment Successful",
-                text: " Your order has been successful!",
+                text: " Your order has been successfully.!",
                 icon: "success",
               });
             } else {
-              Swal.fire({
-                title: "Error!",
-                text: "Error paying for exam! Contact to admin",
-                icon: "error",
-              });
-            }
-          } else if (orderType === "bundle_course") {
-            const res = subscribeToCourseBundle({
-              sub_category_id: payload?.sub_category_id,
-              subscription_duration_in_months:
-                payload?.subscription_duration_in_months,
-              trx_id,
-            });
-
-            if (Boolean(res?.data)) {
-              Swal.fire({
-                title: "Congratulations! Payment Successful",
-                text: " Your bundle course has been bought successfully.!",
-                icon: "success",
-              });
-            } else {
-              Swal.fire({
-                title: "Error!",
-                text: "Error paying for exam! Contact to admin",
-                icon: "error",
-              });
+              toast.error("Order creation failed!");
             }
           }
+        } catch (error) {
+          toast.error(
+            "Order failed!  Contact to easy learning platform admin!",
+            error
+          );
         }
-        if (orderType === "pdf") {
-          const order = await addOrder({
-            payment_ref_id: nagadPaymentRefId,
-            books: booksPayload,
-          });
-          if (Boolean(order?.data)) {
-            dispatch(clearCart());
-            Swal.fire({
-              title: "Congratulations! Payment Successful",
-              text: " Your order has been successfully.!",
-              icon: "success",
-            });
-          } else {
-            toast.error("Order creation failed!");
-          }
-        }
-        Cookies.remove("order_type");
-        Cookies.remove("creationPayload");
-        
-      } catch (error) {
-        toast.error(
-          "Order failed!  Contact to easy learning platform admin!",
-          error
-        );
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: `Error! Payment ${nagadPaymentStatus}!!!`,
+          icon: "error",
+        });
       }
+      Cookies.remove("order_type");
+      Cookies.remove("creationPayload");
     };
     processPayment();
   }, []);
@@ -176,18 +182,17 @@ function Success() {
           <div className="space-y-5">
             <div className="flex justify-center">
               <Image
-                src={successImg}
+                src={nagadImage}
                 alt="success-img"
                 width={400}
                 height={200}
               />
             </div>
             <h3 className="text-5xl text-yellowPrimary pb-8">
-              {" "}
-              Your Payment is successful!
+              Your Payment was initiated!
             </h3>
             <p className="pb-10 text-xl">
-              You Can continue our paid services which have bought
+              You Can continue our paid services if you have bought successfully
             </p>
             <Link
               className="mt-8 bg-bluePrimary text-white py-5 px-10 transition-all duration-300 rounded hover:bg-cyanPrimary mr-5"
