@@ -229,6 +229,13 @@ const UserExamPage = ({ params }) => {
             </div>
           </div>
         ))}
+        <button
+          onClick={handleSubmit}
+          disabled={isSubmitButtonDisabled || time === 0}
+          className={`py-2 px-4 rounded ${isSubmitButtonDisabled ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+        >
+          Submit
+        </button>
       </>
   }
 
@@ -241,13 +248,13 @@ const UserExamPage = ({ params }) => {
         </p>
       </div> */}
       {content}
-      <button
+      {/* <button
         onClick={handleSubmit}
         disabled={isSubmitButtonDisabled || time === 0}
         className={`py-2 px-4 rounded ${isSubmitButtonDisabled ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
       >
         Submit
-      </button>
+      </button> */}
       {/* {quizSubmitted && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Quiz Results</h2>
