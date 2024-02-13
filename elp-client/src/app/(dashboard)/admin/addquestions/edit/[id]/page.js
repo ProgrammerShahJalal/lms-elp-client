@@ -37,7 +37,7 @@ const UpdateQuestionPage = ({params}) => {
     return (
         <div>
             <h2>Update The Question</h2> 
-            <span className="text-orange-600">{data?.question}</span>
+           
 
             <div>
       <form onSubmit={handleSubmit(onSubmit)} >
@@ -45,14 +45,14 @@ const UpdateQuestionPage = ({params}) => {
         <label className="block text-sm font-medium text-gray-600">
         Question
         </label>
-        <input
-          required
-          type="text"
-          name="question"
-          {...register("question")}
-          defaultValue={data?.question}
-          className="mt-1 p-2 w-96 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-        />
+      {data?.question && <input
+        required
+        type="text"
+        name="question"
+        {...register("question")}
+        defaultValue={data?.question}
+        className="mt-1 p-2 w-96 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+      />}
       </div>
 
         
@@ -62,14 +62,14 @@ const UpdateQuestionPage = ({params}) => {
           <label className="block text-sm font-medium text-gray-600">
            Mark
           </label>
-          <input
+         { data?.mark && <input
             type="number"
             required
             name="mark"
             {...register("mark")}
             defaultValue={data?.mark}
             className="mt-1 p-2 w-96  border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
+          />}
         </div>
 
 

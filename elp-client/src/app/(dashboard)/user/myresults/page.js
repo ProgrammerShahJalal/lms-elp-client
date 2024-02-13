@@ -31,7 +31,7 @@ const MyAllResultPage = () => {
             <>
                 {" "}
                 <tr className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg">
-                    <h5>Your don't buy any exam right now</h5>
+                    <h5>এখন আপানার কোন পরীক্ষার ফলাফল নাই</h5>
                 </tr>
             </>
         );
