@@ -25,12 +25,12 @@ const AddProduct = () => {
     
 
     formData.append('description', data.description);
-    // console.log(allPics);
+    // (allPics);
     
     // formData.append('pictures', allPics);
-    // console.log(formData.entries());
+    // (formData.entries());
     for (var key of formData.entries()) {
-      console.log(key[0] + ', ' + key[1]);
+      (key[0] + ', ' + key[1]);
   }
 
 
@@ -61,7 +61,7 @@ const AddProduct = () => {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
+        (result);
         if ('error' in result) {
           alert(result.error)
         } else {
@@ -69,7 +69,7 @@ const AddProduct = () => {
         }
       })
       .catch(error => {
-        console.log(error);
+        (error);
       });
 
     reset();

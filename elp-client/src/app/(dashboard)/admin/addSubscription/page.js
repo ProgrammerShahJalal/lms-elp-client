@@ -106,7 +106,7 @@ const AddSubscription = () => {
             if (result.isConfirmed) {
                 // User confirmed deletion
                 const res = await deleteSubscription(categoryId);
-                // console.log(res?.data)
+                // (res?.data)
 
                 if (res?.data?._id === categoryId) {
                     Swal.fire({

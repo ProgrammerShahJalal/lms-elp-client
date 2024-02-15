@@ -28,29 +28,29 @@ const AdminAddCategory = () => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
-    // console.log(data)
+    // (data)
 
 
 
     const content = { ...data };
     const file = content["file"];
-    // console.log(file)
+    // (file)
     // delete content['file'];
     const result = JSON.stringify(content);
-    // console.log(result, "json");
+    // (result, "json");
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
-    // console.log(formData, "formdaata");
+    // (formData, "formdaata");
 
     try {
       const resultData = await addCategory(formData);
-      // console.log(resultData, "after api call");
+      // (resultData, "after api call");
       if (resultData?.data?._id) {
         toast.success("category created successfully");
         // router.push("/");
       }
-      // console.log(resultData, ' from add category async')
+      // (resultData, ' from add category async')
     } catch (error) {
       toast.error(error.message);
     }
@@ -71,7 +71,7 @@ const AdminAddCategory = () => {
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteCategory(categoryId);
-        // console.log(res?.data)
+        // (res?.data)
 
         if (res?.data?._id === categoryId) {
           // Item deleted successfully
@@ -100,7 +100,7 @@ const AdminAddCategory = () => {
     refetch();
   }, [limit, page, searchTerm]);
 
-// console.log('info', categories);
+// ('info', categories);
   // const totalData = questions?.categories?.meta?.total;
   // const totalPages = Math.ceil(totalData / limit);
 

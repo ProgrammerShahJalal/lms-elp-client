@@ -5,13 +5,13 @@ import React from 'react';
 
 const GiveBroadQuestionMark = ({ params }) => {
     const { id } = params;
-    console.log(id, 'id');
+    (id, 'id');
     const { userId } = getUserInfo();
     const { data: singleExam } = useGetSingleSubmissionExamQuery(id)
-    console.log(singleExam);
+    (singleExam);
     // const { data } = useExamResultQuery();
     // const allExam = data?.exams?.data;
-    // console.log(allExam);
+    // (allExam);
     return (
         <div>
             <h1>Hello, This is new component</h1>

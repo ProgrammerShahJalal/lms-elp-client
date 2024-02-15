@@ -46,7 +46,7 @@ const SinglePaymentDetails = ({ item }) => {
       }
 
       // Handle the submission response as needed
-      console.log("Submission successful:", submissionData);
+      ("Submission successful:", submissionData);
     } catch (error) {
       console.error("Error submitting exam:", error);
     }

@@ -22,7 +22,7 @@ const UpdateSubCategoryPage = ({params}) => {
 
     const [updateSubCategory] = useUpdateSubCategoryMutation();
 
-    // console.log(data)
+    // (data)
 
     useEffect(() => {
       if (data) {

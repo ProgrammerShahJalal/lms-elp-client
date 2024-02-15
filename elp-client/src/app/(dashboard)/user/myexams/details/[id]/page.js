@@ -137,7 +137,7 @@ const UserExamPage = ({ params }) => {
   const isWarningTime = time <= 60;
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  // console.log(examResult?.exams?.data, "this isexamResult");
+  // (examResult?.exams?.data, "this isexamResult");
   let content = null;
   if (isLoading) {
     content = (
@@ -150,7 +150,7 @@ const UserExamPage = ({ params }) => {
   if (!isLoading && isError) {
     content = <Error />;
   }
-  // console.log(examResult?.exams?.data?.length, "examResult?.exams?.data?.length");
+  // (examResult?.exams?.data?.length, "examResult?.exams?.data?.length");
 
   if (!isLoading && !isError && data?.length === 0) {
     content = (

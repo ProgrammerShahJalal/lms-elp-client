@@ -144,7 +144,7 @@ const AddQuestions = () => {
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteQuestions(id);
-        // console.log(res?.data)
+        // (res?.data)
 
         if (res?.data?._id === id) {
           // Item deleted successfully

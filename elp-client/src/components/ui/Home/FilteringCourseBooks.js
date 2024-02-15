@@ -12,7 +12,7 @@ const FilteringCourseBooks = ({sub_category_id}) => {
 
 
     const {data:subCategory} = useGetSingleSubCategoryQuery(sub_category_id);
-    // console.log(data)
+    // (data)
     return (
         <>
         <div className="flex gap-5 py-10 mx-14 items-center">

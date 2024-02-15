@@ -15,7 +15,7 @@ const AllExamDetails = ({ item, refetchUserExam }) => {
   });
   const examResultData = examResult?.exams?.data[0];
   const totalObtainedMarks = examResultData?.question_mark?.reduce((total, mark) => total + mark?.mark_obtained, 0);
-  console.log(totalObtainedMarks);
+  (totalObtainedMarks);
   return (
     <tr className="block md:table-row">
       <td className="py-2  px-1 border-b md:table-cell flex">

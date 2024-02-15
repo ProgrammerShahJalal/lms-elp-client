@@ -82,7 +82,7 @@ const AddQuiz = () => {
             toast.success("Quiz added successfully")
         }
     };
-    // console.log(selectedExam?.id, 'this is selected exam');
+    // (selectedExam?.id, 'this is selected exam');
     const handleDelete = async (categoryId) => {
         try {
             const res = await deleteQuestions(categoryId);

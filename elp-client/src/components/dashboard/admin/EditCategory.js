@@ -11,7 +11,7 @@ const EditCategory = ({id}) => {
     const router = useRouter();
 
     const [updateCategory] = useUpdateCategoryMutation()
-    // console.log(data)
+    // (data)
 
     const onSubmit = async (data) => {
       const content = { ...data };

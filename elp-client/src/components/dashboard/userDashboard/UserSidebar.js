@@ -18,9 +18,9 @@ const UserSidebar = () => {
   const { role, userId } = getUserInfo();
 
   const { data: user } = useGetSingleUserQuery(userId);
-  //   console.log(user)
+  //   (user)
 
-  // console.log(role, 'basic dash')
+  // (role, 'basic dash')
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,7 +32,7 @@ const UserSidebar = () => {
   };
 
   return (
-    <div className="z-50">
+    <div className="z-50" >
       <button className="block lg:hidden px-2 py-1 " onClick={toggleSidebar}>
         ☰
       </button>
@@ -164,14 +164,14 @@ const UserSidebar = () => {
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
-                     সকল বিভাগ 
+                    সকল বিভাগ
                   </Link>
                 </li>
                 <li >
                   <Link href={"/admin/addsubcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaAddressBook />
-                    সকল উপ বিভাগ 
+                    সকল উপ বিভাগ
                   </Link>
                 </li>
                 <li >
@@ -241,9 +241,9 @@ const UserSidebar = () => {
                 </li>
                 <li >
                   <Link href={"/superAdmin/addnotice"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
-                   
-                    <IoIosNotifications size={30}/>
-                    নোটিশ যোগ করুন 
+
+                    <IoIosNotifications size={30} />
+                    নোটিশ যোগ করুন
                   </Link>
                 </li>
               </ul>
@@ -259,7 +259,7 @@ const UserSidebar = () => {
                     <ImProfile fontSize={20} /> প্রোফাইল
                   </Link>
                 </li>
-              
+
                 <li>
                   <Link
                     href="/user/mycourses"
@@ -276,7 +276,7 @@ const UserSidebar = () => {
                     <SiCoursera fontSize={18} /> আমার কেনা  বইসমুহ
                   </Link>
                 </li>
-                
+
                 <li>
                   <Link
                     href="/user/myexams"
@@ -293,7 +293,7 @@ const UserSidebar = () => {
                     <SiCoursera fontSize={18} /> আমার রেজাল্টসমূহ
                   </Link>
                 </li>
-               
+
                 <li>
                   <Link
                     href="/user/userorder"
@@ -302,7 +302,7 @@ const UserSidebar = () => {
                     <FaBorderAll fontSize={18} /> অর্ডার হিসট্রি
                   </Link>
                 </li>
-                
+
                 {/* <li>
                   <Link
                     href="/user/membershipplan"

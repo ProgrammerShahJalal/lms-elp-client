@@ -54,7 +54,7 @@ const AdminAddExams = () => {
       //   const selectedExam = allCourse?.find(
       //     (exam) => exam.id === newQuestion.exam_id
       //   );
-      //   console.log(selectedExam ,'exam')
+      //   (selectedExam ,'exam')
       const formattedQuestion = {
         ...newQuestion,
         total_marks: parseInt(newQuestion.total_marks, 10),
@@ -63,14 +63,14 @@ const AdminAddExams = () => {
         is_active: newQuestion.is_active === "true",
         course_id: selectedCourse,
       };
-      // console.log(selectedCourse,'after couse')
-      // console.log(formattedQuestion,'after api')
+      // (selectedCourse,'after couse')
+      // (formattedQuestion,'after api')
       const result = addAllExams(formattedQuestion);
-      // console.log(result,'api')
+      // (result,'api')
       if (result) {
         toast.success("Exam added successfully");
       }
-      // console.log(formattedQuestion);
+      // (formattedQuestion);
     } catch (error) {
       // Handle the error here
       toast.error("An error occurred:", error);

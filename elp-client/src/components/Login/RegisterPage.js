@@ -28,7 +28,7 @@ const RegisterPage = () => {
       const res = await userSignup({ ...data }).unwrap();
 
       if (res?.accessToken) {
-        // console.log(res, " from res");
+        // (res, " from res");
         storeUserInfo({ accessToken: res?.accessToken });
         toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
         router.push("/");

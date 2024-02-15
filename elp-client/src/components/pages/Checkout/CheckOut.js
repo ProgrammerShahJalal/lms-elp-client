@@ -185,7 +185,7 @@ const CheckOut = () => {
 
         asyncOperation();
       } catch (error) {
-        console.log("Error during asynchronous operation:", error);
+        ("Error during asynchronous operation:", error);
       }
     };
 

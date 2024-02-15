@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const UserWelcome = () => {
   const { userId } = getUserInfo();
-  // console.log(getUserInfo())
+  // (getUserInfo())
   const { data } = useGetSingleUserQuery(userId);
 
   const [timeOfDay, setTimeOfDay] = useState('');

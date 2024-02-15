@@ -29,7 +29,7 @@ const HomePage = () => {
   // const {data} = useGetAllCoursesQuery({
   //   title:"Course title here"
   // });
-  // console.log(data)
+  // (data)
   return (
     <div className="">
     

@@ -15,7 +15,7 @@ const UserExam = ({ exam_id }) => {
       [questionId]: { [option]: true },
     }));
   };
-  // console.log(data)
+  // (data)
   let content = null;
 
   if (isLoading) {

@@ -32,10 +32,10 @@ export default function Nagad() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/nagad/payment/verify/${payment_ref_id}`
       );
       // if payment is verified, comes here
-      console.log(payment);
+      (payment);
     } catch (error) {
       // comes here if payment not verified
-      console.log(error, "error");
+      (error, "error");
     }
   };
   return (

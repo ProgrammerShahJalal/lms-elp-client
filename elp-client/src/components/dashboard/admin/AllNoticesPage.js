@@ -50,7 +50,7 @@ const formatDate = (isoDate) => {
       if (result.isConfirmed) {
         // User confirmed deletion
         const res = await deleteNotice(id);
-        // console.log(res?.data)
+        // (res?.data)
 
         if (res?.data?._id === id) {
           // Item deleted successfully
