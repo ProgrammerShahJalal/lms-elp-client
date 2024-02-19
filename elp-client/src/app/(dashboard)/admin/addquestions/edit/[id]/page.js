@@ -1,7 +1,10 @@
+// "use client";
 import EditQuestion from "@/components/dashboard/admin/EditQuestion";
-import { useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
+import axios from "axios";
+import { useParams } from "next/navigation";
 
-const EditQuestionPage = ({ params }) => {
+const EditQuestionPage = () => {
+  const params = useParams();
   const { id } = params;
   return (
     <div>
@@ -10,12 +13,16 @@ const EditQuestionPage = ({ params }) => {
   );
 };
 
-export async function generateStaticParams() {
-  const { data: questions } = useGetAllQuestionsQuery({
-    limit: 10000,
-    page: 1,
-  });
-  return questions?.categories?.data?.map((data) => ({ id: data?._id }));
-}
+// export async function generateStaticParams() {
+//   const { data } = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions`,
+//     {
+//       headers: {
+//         Authorization: process.env.SUPER_ADMIN_TOKEN,
+//       },
+//     }
+//   );
+//   return data?.data?.data?.map((data) => ({ id: data?._id }));
+// }
 
 export default EditQuestionPage;
