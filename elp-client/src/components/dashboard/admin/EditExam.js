@@ -24,7 +24,7 @@ const EditExam = ({ id }) => {
 
     try {
       const res = await updateExam({ id, body: data });
-    
+
       if (res?.data?._id === id) {
         toast.success("Exam updated successfully");
         router.push("/admin/addexams");
@@ -44,7 +44,7 @@ const EditExam = ({ id }) => {
     fee: data?.fee,
     is_active: data?.is_active,
     exam_type: data?.exam_type,
-    course_id: data?.course_id,
+    course_id: data?.course_id?._id,
   };
 
   return (
@@ -56,7 +56,7 @@ const EditExam = ({ id }) => {
           <div className="mb-4">
             <label className="block text-sm mb-2">Select the Course</label>
             <select
-              {...register("course_id" )}
+              {...register("course_id")}
               defaultValue={data?.course_id}
               className="w-full border border-gray-300 p-2 rounded-md"
             >
