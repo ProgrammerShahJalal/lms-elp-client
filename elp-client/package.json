@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "dependencies": {
     "@emailjs/browser": "^3.12.1",
@@ -25,6 +26,7 @@
     "react-quill": "^2.0.0",
     "react-redux": "^9.0.3",
     "react-youtube": "^10.1.0",
+    "sharp": "^0.33.2",
     "sweetalert2": "^11.10.2",
     "swiper": "^11.0.5"
   },
