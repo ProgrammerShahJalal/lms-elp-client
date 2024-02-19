@@ -12,7 +12,7 @@ const EditCoursePage = ({ params }) => {
 
 export async function generateStaticParams() {
   const { data: courses } = useGetAllCoursesQuery({
-    limit: 100,
+    limit: 10000,
     page: 1,
   });
   return courses?.courses?.data?.map((data) => ({ id: data?._id }));

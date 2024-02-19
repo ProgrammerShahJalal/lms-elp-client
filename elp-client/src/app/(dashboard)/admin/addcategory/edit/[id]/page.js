@@ -1,5 +1,5 @@
 import EditCategory from "@/components/dashboard/admin/EditCategory";
-import axios from "axios";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 
 const EditCategoryPage = ({ params }) => {
   const { id } = params;

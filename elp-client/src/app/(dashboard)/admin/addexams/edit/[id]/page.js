@@ -12,11 +12,15 @@ const ExamEditPage = ({ params }) => {
 };
 
 export async function generateStaticParams() {
-  const { data, isLoading, isError } = useGetAllExamsQuery({
+  const {
+    data: exams,
+    isLoading,
+    isError,
+  } = useGetAllExamsQuery({
     limit: 10000,
     page: 1,
   });
-  return data?.exams?.map((data) => ({ id: data?._id }));
+  return exams?.exams?.data?.map((data) => ({ id: data?._id }));
 }
 
 export default ExamEditPage;

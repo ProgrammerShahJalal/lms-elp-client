@@ -1,6 +1,5 @@
-import EditCourse from "@/components/dashboard/admin/EditCourse";
 import EditQuestion from "@/components/dashboard/admin/EditQuestion";
-import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+import { useGetAllQuestionsQuery } from "@/redux/api/questionsApi";
 
 const EditQuestionPage = ({ params }) => {
   const { id } = params;
@@ -12,11 +11,11 @@ const EditQuestionPage = ({ params }) => {
 };
 
 export async function generateStaticParams() {
-  const { data: courses } = useGetAllCoursesQuery({
-    limit: 100,
+  const { data: questions } = useGetAllQuestionsQuery({
+    limit: 10000,
     page: 1,
   });
-  return courses?.courses?.data?.map((data) => ({ id: data?._id }));
+  return questions?.categories?.data?.map((data) => ({ id: data?._id }));
 }
 
 export default EditQuestionPage;
