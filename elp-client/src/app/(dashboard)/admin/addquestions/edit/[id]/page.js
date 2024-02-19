@@ -1,4 +1,5 @@
-// "use client";
+"use client";
+
 import EditQuestion from "@/components/dashboard/admin/EditQuestion";
 import axios from "axios";
 import { useParams } from "next/navigation";

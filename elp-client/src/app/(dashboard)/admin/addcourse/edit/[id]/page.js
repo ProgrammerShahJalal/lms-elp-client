@@ -1,4 +1,5 @@
-// "use client";
+"use client";
+
 import EditCourse from "@/components/dashboard/admin/EditCourse";
 import axios from "axios";
 import { useParams } from "next/navigation";

@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import EditBook from "@/components/dashboard/admin/EditBook";
 import axios from "axios";

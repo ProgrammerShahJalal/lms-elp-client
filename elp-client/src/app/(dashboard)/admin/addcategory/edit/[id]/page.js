@@ -1,4 +1,5 @@
-// "use client";
+"use client";
+
 import EditCategory from "@/components/dashboard/admin/EditCategory";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -6,7 +7,6 @@ import { useParams } from "next/navigation";
 const EditCategoryPage = () => {
   const params = useParams();
   const { id } = params;
-  console.log(params, id);
 
   return (
     <div>
