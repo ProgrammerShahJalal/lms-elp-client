@@ -7,7 +7,7 @@ import ToastProvider from '@/lib/ToastProvider'
 
 export const metadata = {
   title: 'ইজি লার্নিং প্লাটফর্ম',
-  description: 'Easy Job Preparetion | Easy Learning Platform',
+  description: 'Easy Job Preparetion | Easy Job Preparetion',
 }
 
 export default function RootLayout({ children }) {

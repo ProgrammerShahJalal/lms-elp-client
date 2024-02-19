@@ -23,7 +23,7 @@ const FirstPartAbout = () => {
         </div>
         <div className="space-y-5">
             <h5 className="uppercase font-bold text-bluePrimary ">About Us</h5>
-            <h2 className="text-3xl font-semibold text-black text-justify">Easy Learning Platform</h2>
+            <h2 className="text-3xl font-semibold text-black text-justify">Easy Job Preparetion</h2>
             <p className="text-black text-justify">Online learning has become increasingly popular in recent years, offering a flexible and convenient way for individuals to pursue education and training.Our online learning platform is designed to be flexible, enabling you to fit your learning around your busy schedule. You can access the courses on any device, including desktop computers, tablet & mobile devices.</p>
 
             <div className="flex justify-between items-center">

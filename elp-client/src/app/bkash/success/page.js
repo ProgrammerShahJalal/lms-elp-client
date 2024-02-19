@@ -115,7 +115,7 @@ function Success() {
               });
             } else {
               toast.error(
-                "Order failed. Contact to easy learning platform admin!"
+                "Order failed. Contact to Easy Job Preparetion admin!"
               );
             }
           }
@@ -140,7 +140,7 @@ function Success() {
         Cookies.remove("creationPayload");
       } catch (error) {
         toast.error(
-          "Order failed!  Contact to easy learning platform admin!",
+          "Order failed!  Contact to Easy Job Preparetion admin!",
           error
         );
       }
