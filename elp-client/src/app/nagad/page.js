@@ -157,7 +157,7 @@ function Success() {
           }
         } catch (error) {
           toast.error(
-            "Order failed!  Contact to easy learning platform admin!",
+            "Order failed!  Contact to Easy Job Preparetion admin!",
             error
           );
         }

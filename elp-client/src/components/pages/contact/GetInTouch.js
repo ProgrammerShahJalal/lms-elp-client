@@ -22,7 +22,7 @@ const GetInTouch = () => {
                 </div>
 
                 <h2 className="font-bold text-xl">Our Website</h2>
-                <p className="">Easy Learning Platform</p>
+                <p className="">Easy Job Preparetion</p>
               </div>
             </div>
           </Link>

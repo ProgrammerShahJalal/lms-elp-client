@@ -150,7 +150,7 @@ const Footer = () => {
       <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">
         <aside>
           <p>
-            Copyright © 2024 - All rights reserved by Easy Learning Platform
+            Copyright © 2024 - All rights reserved by Easy Job Preparetion
           </p>
          
           <a

@@ -123,7 +123,7 @@ const Navbar = () => {
           >
             <Image
               src={logo}
-              alt="Easy Learning Platform"
+              alt="Easy Job Preparetion"
               className="w-14 inline-block items-center"
             />
             <span className="dark:text-cyanPrimary hover:text-bluePrimary">
