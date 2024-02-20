@@ -114,7 +114,7 @@ const PrivactPage = () => {
         </li>
         <li>
           <p>
-            <strong>Website</strong> refers to Easy Learning Platform,
+            <strong>Website</strong> refers to Easy Job Preparetion,
             accessible from{" "}
             <a
               href="http://localhost:3000/"

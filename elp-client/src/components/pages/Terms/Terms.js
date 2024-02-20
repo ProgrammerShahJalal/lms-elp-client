@@ -5,16 +5,16 @@ const Terms = () => {
         <strong>Terms and Conditions</strong>
       </h2>
 
-      <p>Welcome to Easy Learning Platform!</p>
+      <p>Welcome to Easy Job Preparetion!</p>
 
       <p>
         These terms and conditions outline the rules and regulations for the use
-        of Easy Learning Platform's Website, located at http://localhost:3000/.
+        of Easy Job Preparetion's Website, located at http://localhost:3000/.
       </p>
 
       <p>
         By accessing this website we assume you accept these terms and
-        conditions. Do not continue to use Easy Learning Platform if you do not
+        conditions. Do not continue to use Easy Job Preparetion if you do not
         agree to take all of the terms and conditions stated on this page.
       </p>
 
@@ -39,8 +39,8 @@ const Terms = () => {
       </h3>
 
       <p>
-        We employ the use of cookies. By accessing Easy Learning Platform, you
-        agreed to use cookies in agreement with the Easy Learning Platform's
+        We employ the use of cookies. By accessing Easy Job Preparetion, you
+        agreed to use cookies in agreement with the Easy Job Preparetion's
         Privacy Policy.{" "}
       </p>
 
@@ -57,21 +57,21 @@ const Terms = () => {
       </h3>
 
       <p>
-        Unless otherwise stated, Easy Learning Platform and/or its licensors own
+        Unless otherwise stated, Easy Job Preparetion and/or its licensors own
         the intellectual property rights for all material on Easy Learning
         Platform. All intellectual property rights are reserved. You may access
-        this from Easy Learning Platform for your own personal use subjected to
+        this from Easy Job Preparetion for your own personal use subjected to
         restrictions set in these terms and conditions.
       </p>
 
       <p>You must not:</p>
       <ul>
-        <li>Republish material from Easy Learning Platform</li>
-        <li>Sell, rent or sub-license material from Easy Learning Platform</li>
+        <li>Republish material from Easy Job Preparetion</li>
+        <li>Sell, rent or sub-license material from Easy Job Preparetion</li>
         <li>
-          Reproduce, duplicate or copy material from Easy Learning Platform
+          Reproduce, duplicate or copy material from Easy Job Preparetion
         </li>
-        <li>Redistribute content from Easy Learning Platform</li>
+        <li>Redistribute content from Easy Job Preparetion</li>
       </ul>
 
       <p>
@@ -88,17 +88,17 @@ const Terms = () => {
         exchange opinions and information in certain areas of the website. Easy
         Learning Platform does not filter, edit, publish or review Comments
         prior to their presence on the website. Comments do not reflect the
-        views and opinions of Easy Learning Platform,its agents and/or
+        views and opinions of Easy Job Preparetion,its agents and/or
         affiliates. Comments reflect the views and opinions of the person who
         post their views and opinions. To the extent permitted by applicable
-        laws, Easy Learning Platform shall not be liable for the Comments or for
+        laws, Easy Job Preparetion shall not be liable for the Comments or for
         any liability, damages or expenses caused and/or suffered as a result of
         any use of and/or posting of and/or appearance of the Comments on this
         website.
       </p>
 
       <p>
-        Easy Learning Platform reserves the right to monitor all Comments and to
+        Easy Job Preparetion reserves the right to monitor all Comments and to
         remove any Comments which can be considered inappropriate, offensive or
         causes breach of these Terms and Conditions.
       </p>
@@ -126,7 +126,7 @@ const Terms = () => {
       </ul>
 
       <p>
-        You hereby grant Easy Learning Platform a non-exclusive license to use,
+        You hereby grant Easy Job Preparetion a non-exclusive license to use,
         reproduce, edit and authorize others to use, reproduce and edit any of
         your Comments in any and all forms, formats or media.
       </p>
@@ -184,7 +184,7 @@ const Terms = () => {
         that: (a) the link would not make us look unfavorably to ourselves or to
         our accredited businesses; (b) the organization does not have any
         negative records with us; (c) the benefit to us from the visibility of
-        the hyperlink compensates the absence of Easy Learning Platform; and (d)
+        the hyperlink compensates the absence of Easy Job Preparetion; and (d)
         the link is in the context of general resource information.
       </p>
 
@@ -198,7 +198,7 @@ const Terms = () => {
       <p>
         If you are one of the organizations listed in paragraph 2 above and are
         interested in linking to our website, you must inform us by sending an
-        e-mail to Easy Learning Platform. Please include your name, your
+        e-mail to Easy Job Preparetion. Please include your name, your
         organization name, contact information as well as the URL of your site,
         a list of any URLs from which you intend to link to our Website, and a
         list of the URLs on our site to which you would like to link. Wait 2-3
@@ -218,7 +218,7 @@ const Terms = () => {
       </ul>
 
       <p>
-        No use of Easy Learning Platform's logo or other artwork will be allowed
+        No use of Easy Job Preparetion's logo or other artwork will be allowed
         for linking absent a trademark license agreement.
       </p>
 

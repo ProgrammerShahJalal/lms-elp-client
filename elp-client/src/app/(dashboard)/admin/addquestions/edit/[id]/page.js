@@ -1,7 +1,10 @@
-'use client'
+"use client";
 
-import { useGetSingleQuestionQuery, useUpdateQuestionMutation } from "@/redux/api/questionsApi";
+import EditQuestion from "@/components/dashboard/admin/EditQuestion";
+import axios from "axios";
+import { useParams } from "next/navigation";
 
+<<<<<<< HEAD
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -79,9 +82,28 @@ const UpdateQuestionPage = ({params}) => {
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700 cursor-pointer "
         />
       </form>
+=======
+const EditQuestionPage = () => {
+  const params = useParams();
+  const { id } = params;
+  return (
+    <div>
+      <EditQuestion id={id} />
+>>>>>>> e402a632be19be419acfbc3b873f14ad18c8f14e
     </div>
-        </div>
-    );
+  );
 };
 
-export default UpdateQuestionPage;
+// export async function generateStaticParams() {
+//   const { data } = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions`,
+//     {
+//       headers: {
+//         Authorization: process.env.SUPER_ADMIN_TOKEN,
+//       },
+//     }
+//   );
+//   return data?.data?.data?.map((data) => ({ id: data?._id }));
+// }
+
+export default EditQuestionPage;
