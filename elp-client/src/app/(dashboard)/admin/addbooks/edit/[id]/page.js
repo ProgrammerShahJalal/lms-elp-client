@@ -1,7 +1,11 @@
-import EditBook from "@/components/dashboard/admin/EditBook";
-import { useGetAllBooksQuery } from "@/redux/api/booksApi";
+"use client";
 
-const BookEditPage = ({ params }) => {
+import EditBook from "@/components/dashboard/admin/EditBook";
+import axios from "axios";
+import { useParams } from "next/navigation";
+
+const BookEditPage = () => {
+  const params = useParams();
   const { id } = params;
 
   return (
@@ -11,16 +15,11 @@ const BookEditPage = ({ params }) => {
   );
 };
 
-export async function generateStaticParams() {
-  const {
-    data: allBooks,
-    isLoading,
-    isError,
-  } = useGetAllBooksQuery({
-    limit: 10000,
-    page: 1,
-  });
-  return allBooks?.books?.data?.map((data) => ({ id: data?._id }));
-}
+// export async function generateStaticParams() {
+//   const { data } = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/books`
+//   );
+//   return data?.data?.data?.map((data) => ({ id: data?._id }));
+// }
 
 export default BookEditPage;

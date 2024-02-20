@@ -1,7 +1,11 @@
-import EditCourse from "@/components/dashboard/admin/EditCourse";
-import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
+"use client";
 
-const EditCoursePage = ({ params }) => {
+import EditCourse from "@/components/dashboard/admin/EditCourse";
+import axios from "axios";
+import { useParams } from "next/navigation";
+
+const EditCoursePage = () => {
+  const params = useParams();
   const { id } = params;
   return (
     <div>
@@ -10,12 +14,11 @@ const EditCoursePage = ({ params }) => {
   );
 };
 
-export async function generateStaticParams() {
-  const { data: courses } = useGetAllCoursesQuery({
-    limit: 10000,
-    page: 1,
-  });
-  return courses?.courses?.data?.map((data) => ({ id: data?._id }));
-}
+// export async function generateStaticParams() {
+//   const { data } = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/courses`
+//   );
+//   return data?.data?.data?.map((data) => ({ id: data?._id }));
+// }
 
 export default EditCoursePage;
