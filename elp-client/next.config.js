@@ -7,3 +7,15 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// /** @type {import('next').NextConfig} */
+// module.exports = {
+//   // output: "export",
+//   experimental: {
+//     reactMode: "concurrent",
+//     clientComponents: true,
+//   },
+//   images: {
+//     domains: ["i.ibb.co", "tecdn.b-cdn.net", "res.cloudinary.com"],
+//   },
+// };

@@ -1,7 +1,11 @@
-import EditSubCategory from "@/components/dashboard/admin/EditSubCategory";
-import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+"use client";
 
-const EditSubCategoryPage = ({ params }) => {
+import EditSubCategory from "@/components/dashboard/admin/EditSubCategory";
+import axios from "axios";
+import { useParams } from "next/navigation";
+
+const EditSubCategoryPage = () => {
+  const params = useParams();
   const { id } = params;
   return (
     <div>
@@ -10,12 +14,11 @@ const EditSubCategoryPage = ({ params }) => {
   );
 };
 
-export async function generateStaticParams() {
-  const { data: subCategories } = useGetAllSubcategoriesQuery({
-    limit: 100,
-    page: 1,
-  });
-  return subCategories?.subcategories?.map((data) => ({ id: data?._id }));
-}
+// export async function generateStaticParams() {
+//   const { data } = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/sub-categories`
+//   );
+//   return data?.data?.data?.map((data) => ({ id: data?._id }));
+// }
 
 export default EditSubCategoryPage;
