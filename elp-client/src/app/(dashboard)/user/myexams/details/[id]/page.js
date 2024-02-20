@@ -18,12 +18,16 @@ const UserExamPage = ({ params }) => {
   const { data: exam, isLoading: loading, isError: error } = useGetSingleExamQuery(id);
   const { data: examResult } = useExamResultQuery({ exam_type: 0, exam_id: id });
   const examTimeInMinutes = exam?.duration_in_minutes;
-  const [time, setTime] = useState(examTimeInMinutes ? examTimeInMinutes * 60 : 0);
+  // const [time, setTime] = useState(examTimeInMinutes ? examTimeInMinutes * 60 : 0);
+  const [time, setTime] = useState(() => {
+    const storedTime = localStorage.getItem(`examTime_${id}`);
+    return storedTime ? parseInt(storedTime, 10) : examTimeInMinutes ? examTimeInMinutes * 60 : 0;
+  });
   const [selectedOptions, setSelectedOptions] = useState({});
+
   const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState({});
-
   const totalQuestions = Object.keys(selectedOptions).length;
 
   const handleCheckboxChange = (questionId, option) => {
@@ -34,7 +38,6 @@ const UserExamPage = ({ params }) => {
     }));
     setSubmitButtonDisabled(false);
   };
-
   const handleSubmit = async () => {
     const totalCorrectAnswers = data?.reduce((total, quiz) => {
       const selectedOption = selectedOptions[quiz.id];
@@ -120,6 +123,7 @@ const UserExamPage = ({ params }) => {
   };
   const [hasAutoSubmitted, setHasAutoSubmitted] = useState(false);
 
+
   useEffect(() => {
     if (examTimeInMinutes && time > 0 && !quizSubmitted) {
       const timerId = setInterval(() => {
@@ -128,15 +132,19 @@ const UserExamPage = ({ params }) => {
 
       return () => clearInterval(timerId);
     } else if (time === 0 && !hasAutoSubmitted && !quizSubmitted) {
-      // Auto-submit the quiz when the timer reaches 0 minutes and 0 seconds
       handleSubmit();
-      setHasAutoSubmitted(true); // Set the flag to avoid repeated submissions
+      setHasAutoSubmitted(true);
     }
   }, [examTimeInMinutes, time, handleSubmit, hasAutoSubmitted, quizSubmitted]);
 
   const isWarningTime = time <= 60;
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
+
+  useEffect(() => {
+    localStorage.setItem(`examTime_${id}`, time.toString());
+  }, [time, id]);
+
   // (examResult?.exams?.data, "this isexamResult");
   let content = null;
   if (isLoading) {
