@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 const UserEditShippingPage = () => {
   const router = useRouter();
   const params = useParams();
-  console.log(params);
 
   const { id } = params;
   const { data } = useGetMyShippingAddressQuery();

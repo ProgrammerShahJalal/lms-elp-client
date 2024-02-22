@@ -11,7 +11,7 @@ const UserPdfCard = ({ item, index }) => {
   const myAllOrders = JSON.parse(item?.orders);
 
 
- 
+
 
 
   const openPDFModal = (index) => {
@@ -28,7 +28,7 @@ const UserPdfCard = ({ item, index }) => {
 
   return (
     <>
-     
+
       {myAllOrders &&
         myAllOrders?.map((order, index) => (
           <UserPdfCardShow
@@ -46,7 +46,7 @@ const UserPdfCard = ({ item, index }) => {
           isOpen={isOpen}
           onClose={() => closePDFModal(index)}
           pdfSrc={data[index]?.pdf_link}
-         
+
         />
       ))}
     </>

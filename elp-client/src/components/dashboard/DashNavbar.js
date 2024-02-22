@@ -10,7 +10,7 @@ import { useGetSingleUserQuery } from "@/redux/api/authApi";
 const DashNavbar = () => {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-  const {userId } = getUserInfo();
+  const { userId } = getUserInfo();
   const { data } = useGetSingleUserQuery(userId);
 
   // logout
@@ -36,14 +36,14 @@ const DashNavbar = () => {
           {/* <ToggleTheme /> */}
           {userLoggedIn ? (
             <>
-           <h2 className="text-xl font-bold ">{data?.name}</h2>
-            <div
-              className="flex items-center gap-3 bg-yellowPrimary text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 ml-2 text-sm rounded"
-              onClick={logout}
-            >
-              <FiLogOut fontSize={20} />
-              <button className=" ">লগ আউট</button>
-            </div>
+              <h2 className="text-xl font-bold ">{data?.name}</h2>
+              <div
+                className="flex items-center gap-3 bg-yellowPrimary text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 ml-2 text-sm rounded"
+                onClick={logout}
+              >
+                <FiLogOut fontSize={20} />
+                <button className=" ">লগ আউট</button>
+              </div>
             </>
           ) : (
             <div className="flex items-center gap-3 bg-blue-600 text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 rounded">

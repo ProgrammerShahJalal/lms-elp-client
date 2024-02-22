@@ -6,10 +6,6 @@ import SinglePaymentDetails from "@/components/dashboard/userDashboard/SinglePay
 
 import { useGetMyExamPaymentQuery } from "@/redux/api/examsApi";
 import { getUserInfo } from "@/services/auth.service";
-
-import Link from "next/link";
-
-
 const MyExamPages = () => {
   const { userId } = getUserInfo();
   const { data: payments, isError, isLoading } = useGetMyExamPaymentQuery();
