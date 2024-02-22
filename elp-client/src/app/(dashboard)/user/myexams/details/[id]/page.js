@@ -16,7 +16,7 @@ const UserExamPage = ({ params }) => {
   const [submitExamUser] = useSubmitExamUserMutation()
   const { data, isLoading, isError } = useGetMyQuestionsEnrollHistoryQuery(id);
   const { data: exam, isLoading: loading, isError: error } = useGetSingleExamQuery(id);
-  const { data: examResult } = useExamResultQuery({ exam_type: 0, exam_id: id });
+  const { data: examResult } = useExamResultQuery({ exam_type: 0, exam_id: id, user_id: userId });
   const examTimeInMinutes = exam?.duration_in_minutes;
   // const [time, setTime] = useState(examTimeInMinutes ? examTimeInMinutes * 60 : 0);
   const [time, setTime] = useState(() => {

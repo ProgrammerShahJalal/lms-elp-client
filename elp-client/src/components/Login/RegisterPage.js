@@ -12,7 +12,7 @@ import { storeUserInfo } from "@/services/auth.service";
 const RegisterPage = () => {
   const [userSignup] = useUserSignupMutation();
   const router = useRouter();
-  const { register, handleSubmit, reset,setError, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -26,20 +26,20 @@ const RegisterPage = () => {
     try {
       setLoading(true);
       const res = await userSignup({ ...data }).unwrap();
-
       if (res?.accessToken) {
         // (res, " from res");
         storeUserInfo({ accessToken: res?.accessToken });
         toast.success("ইউজার সফল্ভাবে রেজিস্টার হয়েছে ।");
         router.push("/");
-      } else {
-        toast.error("Email already exists. Please use a different email.");
+      }
+      else {
+        toast.error("Email or Mobile number already exists. Please use a different Email or Number.");
       }
     } catch (err) {
       toast.error(err.message);
     }
     finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
   return (
@@ -51,7 +51,7 @@ const RegisterPage = () => {
 
         <div className="mb-10">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
-          {loading ? (
+            {loading ? (
               <div className="flex justify-center items-center">
                 <div className="relative inline-flex">
                   <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
@@ -103,11 +103,11 @@ const RegisterPage = () => {
                 placeholder=" 01742561023 আপনার মোবাইল নাম্বার "
                 className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200"
               />
-             
+
             </div>
             {errors.contact_no && (
-          <p className="text-red-500">{errors.contact_no.message}</p>
-        )}
+              <p className="text-red-500">{errors.contact_no.message}</p>
+            )}
             <div className="flex justify-center">
               <div className="relative w-80">
                 <input

@@ -10,10 +10,10 @@ const AboutUs = () => {
   ];
   return (
     <div className=" ">
-      <Commonbanner title="ABOUT US" breadcrumbItems={breadcrumbItems}/>
-      <FirstPartAbout/>
-      <OurMission/>
-      <ChooseUs/>
+      <Commonbanner title="আমাদের সম্পর্কে" breadcrumbItems={breadcrumbItems} />
+      <FirstPartAbout />
+      <OurMission />
+      <ChooseUs />
     </div>
   );
 };

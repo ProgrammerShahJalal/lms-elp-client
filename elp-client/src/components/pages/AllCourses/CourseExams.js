@@ -16,6 +16,7 @@ function CourseExams({ course_id }) {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
 
+
   // states
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -116,15 +117,15 @@ function CourseExams({ course_id }) {
                 <td className="py-2 px-4 md:w-1/4">{exam?.total_marks}</td>
                 <td className="py-2 px-4 md:w-1/4">{exam?.fee}</td>
                 <td className="py-2 px-4 md:w-1/4">
-                  <p
+                  <button
                     onClick={() => {
                       setSelectedExam(exam);
                       setModalOpen(true);
                     }}
                     className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0 cursor-pointer w-fit"
                   >
-                    Enroll
-                  </p>
+                    {exam?.exam_type === 0 ? 'কুইজ কিনুন' : 'প্রশ্ন কিনুন'}
+                  </button>
                 </td>
               </tr>
             ))}
