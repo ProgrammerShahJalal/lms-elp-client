@@ -103,7 +103,7 @@ function CourseSubscriptions({ course_id }) {
             }}
             className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0  cursor-pointer w-fit"
           >
-            Enroll
+            কোর্স কিনুন
           </p>
         </td>
       </tr>
