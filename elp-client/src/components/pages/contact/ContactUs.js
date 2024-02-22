@@ -4,15 +4,15 @@ import OurMap from "./OurMap";
 
 
 const ContactUs = () => {
-    const breadcrumbItems = [
-        { label: 'হোম', link: '/' },
-        { label: 'Contact' },
-      ];
+  const breadcrumbItems = [
+    { label: 'হোম', link: '/' },
+    { label: 'যোগাযোগ' },
+  ];
   return (
     <div>
-        <Commonbanner title="Contact Us" breadcrumbItems={breadcrumbItems}/>
-        <GetInTouch/>
-        <OurMap/>
+      <Commonbanner title="যোগাযোগ করুন" breadcrumbItems={breadcrumbItems} />
+      <GetInTouch />
+      <OurMap />
     </div>
   )
 }

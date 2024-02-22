@@ -26,7 +26,6 @@ const ExamApprovedByAdmin = ({ item, i }) => {
 
     // const handleStatusChange = async () => {
     //     try {
-    //         console.log(allQuestion, 'all questions');
     //         const result = await updateStatusChange({
     //             id: examId,
     //             is_active: !activeStatus

@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import UserSeeBroadQuestion from "./UserSeeBroadQuestion";
 
 const SinglePaymentDetails = ({ item }) => {
+  const [pdfSubmitted, setPdfSubmitted] = useState(false);
   const examId = item?.exam_id?._id;
   const dateObject = new Date(item?.createdAt);
   const localData = dateObject.toLocaleDateString();
@@ -24,7 +25,6 @@ const SinglePaymentDetails = ({ item }) => {
 
     const form = e.target;
     const answer = form.answer.value;
-
     try {
       const payload = {
         user_id: userId,
@@ -41,6 +41,8 @@ const SinglePaymentDetails = ({ item }) => {
       const { data: submissionData } = await submitExamUser(payload);
       if (submissionData) {
         toast.success("Congratulation, You have successfully submit your ans");
+        setPdfSubmitted(true);
+        setModalOpen(false);
       } else {
         toast.error("Your submission not successfully submit");
       }
@@ -97,9 +99,14 @@ const SinglePaymentDetails = ({ item }) => {
         ) : (
           <button
             onClick={() => setModalOpen(true)}
-            className=""
+            className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0"
+            disabled={pdfSubmitted}
+
           >
-            Submit Your Pdf
+            {
+              pdfSubmitted ? "Answer Submitted" : "Submit Your Pdf"
+            }
+
           </button>
         )}
       </td>
@@ -108,13 +115,15 @@ const SinglePaymentDetails = ({ item }) => {
           <div className="modal-box">
             <form method="dialog" onSubmit={handleSubmitPdf}>
               <h1 className="font-bold text-red-500">
-                Before Submit, Please check pdf link is public, and carefully
-                submit this
+                আপনি শুধু একবার জমা দিতে পারবেন  পিডিএফ লিংক। সুতরাং, সতর্ক হয়ে জমা দিন। <br />অবশ্যই পাবলিক লিংক হতে হবে
+
+                {/* Before Submit, Please check pdf link is public, and carefully
+                submit this */}
               </h1>
               <div>
                 <label
                   htmlFor="answer link"
-                  className="block text-sm font-medium text-gray-600"
+                  className="block text-sm font-medium text-gray-600 mt-4"
                 >
                   Give Pdf Url:
                 </label>
@@ -146,9 +155,24 @@ const SinglePaymentDetails = ({ item }) => {
       <div>
         <dialog open={isModalOpen} id={`my_modal_${examId}_questions`} className="modal">
           <div className="modal-box">
-            {
+            {/* {
               questionData?.map((item, index) => <UserSeeBroadQuestion key={item?.id} item={item} index={index} setIsModalOpen1={setIsModalOpen1}></UserSeeBroadQuestion>)
+            } */}
+            {
+              questionData ? (
+                questionData.map((item, index) => (
+                  <UserSeeBroadQuestion
+                    key={item?.id}
+                    item={item}
+                    index={index}
+                    setIsModalOpen1={setIsModalOpen1}
+                  />
+                ))
+              ) : (
+                <p>There is no question available</p>
+              )
             }
+
           </div>
 
         </dialog>

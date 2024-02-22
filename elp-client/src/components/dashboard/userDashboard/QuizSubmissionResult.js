@@ -22,7 +22,7 @@ const QuizSubmissionResult = ({ examResult }) => {
                     {item?.answer?.map((answer, answerIndex) => (
                         <div key={answerIndex} className="mb-4">
                             <div className="font-bold">{`Question ${answerIndex + 1}: ${answer?.question}`}</div>
-                            <span>Your Quiz Ans: {answer?.correct_answer}</span>
+                            <span>Right Ans: {answer?.correct_answer}</span>
                             <ul className="grid grid-cols-1 gap-4">
                                 {answer?.options?.map((option, optionIndex) => {
                                     const isChecked = Object.values(answer?.answer).includes(option);

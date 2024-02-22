@@ -409,16 +409,30 @@ const CheckOut = () => {
                 </span>
                 Go back to cart
               </Link>
-              <button
-                type="button"
-                onClick={handlePlaceOrderBtn}
-                className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
-              >
-                Place Order
-                <span className="font-bold pl-3">
-                  <FaArrowRightLong />
-                </span>
-              </button>
+              {
+                userLoggedIn ? <button
+                  type="button"
+                  onClick={handlePlaceOrderBtn}
+                  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
+                >
+                  Place Order
+                  <span className="font-bold pl-3">
+                    <FaArrowRightLong />
+                  </span>
+                </button> :
+                  <Link href='/login'>
+                    <button
+                      type="button"
+                      className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
+                    >
+                      Login
+                      <span className="font-bold pl-3">
+                        <FaArrowRightLong />
+                      </span>
+                    </button>
+                  </Link>
+              }
+
             </div>
           </div>
           {/* ====================  Payment modal  ==========================================*/}
