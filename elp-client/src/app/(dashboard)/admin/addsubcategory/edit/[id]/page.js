@@ -4,8 +4,8 @@ import EditSubCategory from "@/components/dashboard/admin/EditSubCategory";
 import axios from "axios";
 import { useParams } from "next/navigation";
 
-const EditSubCategoryPage = () => {
-  const params = useParams();
+const EditSubCategoryPage = ({ params }) => {
+  // const params = useParams();
   const { id } = params;
   return (
     <div>
