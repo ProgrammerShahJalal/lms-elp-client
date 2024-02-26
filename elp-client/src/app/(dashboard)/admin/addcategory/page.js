@@ -17,7 +17,7 @@ const AdminAddCategory = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: categories, refetch } = useGetAllCategoriesQuery({limit, page, searchTerm});
+  const { data: categories, refetch } = useGetAllCategoriesQuery({ limit, page, searchTerm });
 
   const allCategory = categories?.categories;
 
@@ -100,12 +100,12 @@ const AdminAddCategory = () => {
     refetch();
   }, [limit, page, searchTerm]);
 
-// ('info', categories);
+  // ('info', categories);
   // const totalData = questions?.categories?.meta?.total;
   // const totalPages = Math.ceil(totalData / limit);
 
   return (
-    <div>
+    <div >
       {/* <h1 className="text-2xl font-bold mb-4">Add Category</h1> */}
       {/* <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
@@ -139,11 +139,11 @@ const AdminAddCategory = () => {
           Category List
         </h1>
         {allCategory ? (
-          <ul>
+          <ul className="border p-5 rounded-md">
             {allCategory?.map((category, i) => (
               <li
                 key={category.id}
-                className="mb-4 flex items-center justify-between space-x-10 border py-3 px-5 rounded w-96"
+                className="mb-4 flex items-center justify-between  space-x-10 border py-3 px-5 rounded "
               >
                 <div className=" flex items-center ">
                   <h2 className="text-xl font-bold  pr-5">

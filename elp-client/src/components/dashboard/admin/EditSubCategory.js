@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const EditSubCategory = ({ params }) => {
+const EditSubCategory = ({ id }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { id } = params;
+  // const { id } = params;
   const { register, handleSubmit, reset, setValue } = useForm();
   const { data } = useGetSingleSubCategoryQuery(id);
   const router = useRouter();
@@ -84,8 +84,9 @@ const EditSubCategory = ({ params }) => {
         {data?.category_id && (
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Category</label>
-
-            <select
+            <input type="text" defaultValue={data?.category_id?.title} disabled className="cursor-not-allowed w-full border border-gray-300 p-2 rounded-md" />
+            {/* <p>{data?.category_id?.title}</p> */}
+            {/* <select
               {...register("category_id")}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
@@ -99,7 +100,7 @@ const EditSubCategory = ({ params }) => {
                   {category?.title}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
         )}
         {/* <div className="mb-4">
