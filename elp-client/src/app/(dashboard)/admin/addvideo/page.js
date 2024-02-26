@@ -20,17 +20,17 @@ const AddVideo = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [addPlaylistVideo] = useAddPlaylistVideoMutation();
-  const { data, refetch: refetchPlaylist } = useGetAllPlaylistQuery({limit, page, searchTerm});
+  const { data, refetch: refetchPlaylist } = useGetAllPlaylistQuery({ limit, page, searchTerm });
   const coursePLaylists = data?.playlists?.data;
 
- 
+
   const [deleteVideoPlaylist] = useDeleteVideoPlaylistMutation();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
-  const { data: categories, refetch: refetchCategories } = useGetAllCategoriesQuery({limit, page, searchTerm});
+  const { data: categories, refetch: refetchCategories } = useGetAllCategoriesQuery({ limit, page, searchTerm });
 
   const { data: subCategories, refetch: refetchSubCategories } =
     useGetAllSubcategoriesQuery({
@@ -43,7 +43,7 @@ const AddVideo = () => {
   });
   const allCourse = courses?.courses?.data;
 
- 
+
 
   useEffect(() => {
     refetchPlaylist();
@@ -68,9 +68,9 @@ const AddVideo = () => {
         sub_category_id: selectedSubcategory,
         course_id: selectedCourse,
       };
-      
+
       const res = await addPlaylistVideo(formattedData);
-     
+
       if (res) {
         toast.success("video playlist added successfully");
       }
@@ -245,9 +245,9 @@ const AddVideo = () => {
         <button
           type="button"
           onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+          className="bg-blue-500 w-full text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
         >
-          Submit
+          Add Playlist
         </button>
       </form>
 
@@ -280,10 +280,10 @@ const AddVideo = () => {
                   </a>
                 </td>
                 <td className="py-2 px-4 border-b md:table-cell">
-                      <Link  href={`/admin/addvideo/edit/${playlist?.id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">
-                        Update
-                      </Link>
-                    </td>
+                  <Link href={`/admin/addvideo/edit/${playlist?.id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">
+                    Update
+                  </Link>
+                </td>
                 <td>
                   <button
                     className="bg-red-500 text-white py-1 px-2 rounded-md"
@@ -297,7 +297,7 @@ const AddVideo = () => {
           </tbody>
         </table>
 
-        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
 
       </div>
     </div>

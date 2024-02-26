@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Pagination from "../../Pagination";
 const AdminAddSubCategory = () => {
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(15);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -20,9 +20,9 @@ const AdminAddSubCategory = () => {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useGetAllCategoriesQuery({limit, page, searchTerm});
+  } = useGetAllCategoriesQuery({ limit, page, searchTerm });
 
-  const { data: subcategories, isLoading: isSubcategoryLoading, refetch } = useGetAllSubcategoriesQuery({limit, page, searchTerm});
+  const { data: subcategories, isLoading: isSubcategoryLoading, refetch } = useGetAllSubcategoriesQuery({ limit, page, searchTerm });
 
   const allSubcategory = subcategories?.subcategories;
 
@@ -37,10 +37,10 @@ const AdminAddSubCategory = () => {
 
   // const totalData = questions?.categories?.meta?.total;
   // const totalPages = Math.ceil(totalData / limit);
-  
+
   const onSubmit = async (data) => {
     // (data);
-    const content = {...data};
+    const content = { ...data };
 
     const file = content['file']
     // (file)
@@ -54,10 +54,10 @@ const AdminAddSubCategory = () => {
     try {
 
       const resultData = await addSubcategory(formData)
-      (resultData, 'after ap call')
-      if(resultData){
-          toast.success("subcategory created successfully");
-         
+        (resultData, 'after ap call')
+      if (resultData) {
+        toast.success("subcategory created successfully");
+
       }
       // (resultData, ' from add category async')
 
@@ -127,7 +127,7 @@ const AdminAddSubCategory = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md w-full"
         >
           Add Subcategory
         </button>
@@ -143,6 +143,7 @@ const AdminAddSubCategory = () => {
                 <th className="py-2 px-4 border-b">Title</th>
                 {/* <th className="py-2 px-4 border-b">Icon</th> */}
                 <th className="py-2 px-4 border-b">Category</th>
+                <th className="py-2 px-4 border-b">Update</th>
                 {/* <th className="py-2 px-4 border-b">Update</th>
                 <th className="py-2 px-4 border-b">Delete</th> */}
               </tr>
@@ -155,7 +156,7 @@ const AdminAddSubCategory = () => {
                     <img src={subcategory?.icon} alt="Subcategory Icon" className="w-10 h-10" />
                   </td> */}
                   <td className="py-2 px-4 border-b md:table-cell">{subcategory?.category_id?.title}</td>
-                   <td className="py-2 px-4 border-b md:table-cell">
+                  <td className="py-2 px-4 border-b md:table-cell">
                     <Link href={`/admin/addsubcategory/edit/${subcategory?._id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</Link>
                   </td>
                   {/*<td className="py-2 px-4 border-b md:table-cell">

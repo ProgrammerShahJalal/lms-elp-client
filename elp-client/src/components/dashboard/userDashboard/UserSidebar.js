@@ -13,10 +13,10 @@ import { MdRememberMe, MdQuiz } from "react-icons/md";
 import { useState } from "react";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import checkPermission from "@/utils/checkPermission";
 
 const UserSidebar = () => {
-  const { role, userId } = getUserInfo();
-
+  const { role, permission, userId } = getUserInfo();
   const { data: user } = useGetSingleUserQuery(userId);
   //   (user)
 
@@ -60,9 +60,8 @@ const UserSidebar = () => {
                     <ImProfile fontSize={20} /> প্রোফাইল
                   </Link>
                 </li>
-                <li>
-                </li>
-                <li className="">
+
+                {/* <li className="">
                   <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200">
                     {" "}
                     <FaAddressBook />
@@ -75,34 +74,38 @@ const UserSidebar = () => {
                     <FaAddressBook />
                     উপ বিভাগ যোগ করুন
                   </Link>
-                </li>
-                <li >
-                  <Link href={"/admin/addcourse"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
-                    {" "}
-                    <SiCoursera />
-                    কোর্স যোগ করুন
-                  </Link>
-                </li>
-                <li >
-                  <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
-                    {" "}
-                    <MdSubscriptions fontSize={20} />
-                    সাবস্ক্রিপশন যোগ করুন
-                  </Link>
-                </li>
-                <li >
+                </li> */}
+                {
+                  checkPermission("course") && <li >
+                    <Link href={"/admin/addcourse"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                      {" "}
+                      <SiCoursera />
+                      কোর্স যোগ করুন
+                    </Link>
+                  </li>
+                }
+                {
+                  checkPermission("subscription") && <li >
+                    <Link href={"/admin/addSubscription"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                      {" "}
+                      <MdSubscriptions fontSize={20} />
+                      সাবস্ক্রিপশন যোগ করুন
+                    </Link>
+                  </li>
+                }
+                {checkPermission("course_video") && <li >
                   <Link href={"/admin/addvideo"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaFileVideo />
                     ভিডিও যোগ করুন
                   </Link>{" "}
-                </li>
-                <li >
+                </li>}
+                {checkPermission('exam') && <li >
                   <Link href={"/admin/addexams"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     <PiExamFill />
                     পরীক্ষা যোগ করুন
                   </Link>
-                </li>
+                </li>}
                 <li >
                   <Link href={"/admin/addquiz"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900  py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     <MdQuiz /> কুইজ যোগ করুন
@@ -113,20 +116,22 @@ const UserSidebar = () => {
                     <BsFillQuestionSquareFill /> লিখিত প্রশ্ন যোগ করুন
                   </Link>
                 </li>
-                <li >
-                  <Link href={"/admin/addbooks"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
-                    {" "}
-                    <FaBookOpen />
-                    বই যোগ করুন
-                  </Link>
-                </li>
-                <li >
+                {
+                  checkPermission("book") && <li >
+                    <Link href={"/admin/addbooks"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
+                      {" "}
+                      <FaBookOpen />
+                      বই যোগ করুন
+                    </Link>
+                  </li>
+                }
+                {checkPermission("order") && <li >
                   <Link href={"/admin/allorders"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}
                     <FaBookOpen />
                     সব অর্ডার সমূহ
                   </Link>
-                </li>
+                </li>}
                 <li >
                   <Link href={"/admin/alluserscourses"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900   py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
                     {" "}

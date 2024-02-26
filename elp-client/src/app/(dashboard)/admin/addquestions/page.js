@@ -57,7 +57,7 @@ const AddQuestions = () => {
   const { data: questions, refetch } = useGetAllQuestionsQuery({ limit, page, searchTerm });
 
   const allQuiz = questions?.categories?.data;
-  const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
+  const filteredQuestions = allQuiz?.filter((quiz) => quiz?.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
 

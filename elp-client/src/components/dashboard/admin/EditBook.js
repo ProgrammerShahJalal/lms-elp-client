@@ -214,7 +214,7 @@ const EditBook = ({ id }) => {
             <option value="pdf">PDF</option>
           </select>
         </div>
-        <div>
+        {/* <div>
           <label
             htmlFor="pdf_link"
             className="block text-sm font-medium text-gray-600"
@@ -229,26 +229,26 @@ const EditBook = ({ id }) => {
             defaultValue={data?.pdf_link}
             className="mt-1 p-2 border rounded-md w-full"
           />
-        </div>
+        </div> */}
         {/* Conditionally render PDF Link input based on the selected format */}
-        {/* {watch("format") === "pdf" && (
-            <div>
-              <label
-                htmlFor="pdf_link"
-                className="block text-sm font-medium text-gray-600"
-              >
-                PDF Link:
-              </label>
-              <input
-                type="text"
-                id="pdf_link"
-                name="pdf_link"
-                {...register("pdf_link" )}
-                defaultValue={data?.pdf_link}
-                className="mt-1 p-2 border rounded-md w-full"
-              />
-            </div>
-          )} */}
+        {watch("format") === "pdf" && (
+          <div>
+            <label
+              htmlFor="pdf_link"
+              className="block text-sm font-medium text-gray-600"
+            >
+              PDF Link:
+            </label>
+            <input
+              type="text"
+              id="pdf_link"
+              name="pdf_link"
+              {...register("pdf_link")}
+              defaultValue={data?.pdf_link}
+              className="mt-1 p-2 border rounded-md w-full"
+            />
+          </div>
+        )}
 
         {/* {repetitionData.map((repetition, repetitionIndex) => (
             <div key={repetitionIndex}>

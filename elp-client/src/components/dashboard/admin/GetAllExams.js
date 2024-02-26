@@ -77,8 +77,8 @@ const GetAllExams = () => {
               <th className="py-2 px-4 border-b">Minutes</th>
               <th className="py-2 px-4 border-b">Exam Type</th>
               <th className="py-2 px-4 border-b">Fee</th>
-              <th className="py-2 px-4 border-b">Total Marks</th>
-              <th className="py-2 px-4 border-b">Total Question Mark</th>
+              <th className="py-2 px-4 border-b">Total Exam Marks</th>
+              <th className="py-2 px-4 border-b">Total Add This Question Mark</th>
               <th className="py-2 px-4 border-b">IsActive</th>
               <th className="py-2 px-4 border-b">Approved Exam</th>
               <th className="py-2 px-4 border-b">Update</th>
