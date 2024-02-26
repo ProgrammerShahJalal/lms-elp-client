@@ -17,8 +17,6 @@ const UpdateQuestionPage = ({params}) => {
     const { data } = useGetSingleQuestionQuery(id);
     const [updateQuestion] = useUpdateQuestionMutation();
   
-   
-  
     const onSubmit = async (data) => {
       try {
         data.mark = Number(data?.mark);
