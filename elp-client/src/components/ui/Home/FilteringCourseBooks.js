@@ -15,19 +15,19 @@ const FilteringCourseBooks = ({ sub_category_id }) => {
   // (data)
   return (
     <>
-      <div className="flex gap-5 mx-14 items-center sm:mt-14 lg:mt-24 ">
-        <h2 className="text-2xl font-bold px-2  rounded">{subCategory?.category_id?.title}  {subCategory?.title} </h2>
+      <div className="flex gap-5 lg:mx-14 items-center sm:mt-14 lg:mt-24 ">
+        <h2 className="lg:text-2xl font-bold px-2  rounded">{subCategory?.category_id?.title}  {subCategory?.title} </h2>
 
-        <button onClick={() => setShowCourses(true)} className="mb-2 text-bluePrimary hover:text-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold text-xl mt-4">
+        <button onClick={() => setShowCourses(true)} className=" text-bluePrimary hover:text-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold lg:text-xl ">
           সব  কোর্স দেখুন
         </button>
-        <button onClick={() => setShowCourses(false)} className="mb-2 mt-4 text-bluePrimary hover:text-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold text-xl">
+        <button onClick={() => setShowCourses(false)} className="  text-bluePrimary hover:text-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold lg:text-xl">
           সব বই দেখুন
         </button>
       </div>
       {showCourses ? <SubCategoryCourses sub_category_id={sub_category_id} /> : <SubCategoryBooks sub_category_id={sub_category_id} />}
       <div className="flex justify-end">
-        <Link href={`/courses/category/subcategory/courseBundle/${sub_category_id}`} className=" bg-bluePrimary text-white hover:bg-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold text-xl border px-10 py-3 ">
+        <Link href={`/courses/category/subcategory/courseBundle/${sub_category_id}`} className=" bg-bluePrimary text-white hover:bg-yellowPrimary    rounded transition-all duration-500 delay-200 font-bold text-xl border px-10 py-3 lg:mb-0 mb-5">
 
           সব কোর্স একসাথে কিনুন
         </Link>

@@ -8,9 +8,12 @@ import Link from "next/link";
 import AllBuyingCourseDetails from "./AllBuyingCourseDetails";
 import { useEffect, useState } from "react";
 import Pagination from "@/app/(dashboard)/Pagination";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 
 const AllBuyingCourses = () => {
+  const router = useRouter();
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,6 +27,15 @@ const AllBuyingCourses = () => {
   useEffect(() => {
     refetch();
   }, [limit, page, searchTerm]);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('order')){
+
+     router.push('/')
+    }
+
+  },[])
 
   const totalData = data?.subscriptionsHistory?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);

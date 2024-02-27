@@ -11,8 +11,10 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Pagination from "../../Pagination";
+import checkPermission from "@/utils/checkPermission";
 
 const AdminAddCategory = () => {
+  const router = useRouter();
   const [limit, setLimit] = useState(3);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +26,7 @@ const AdminAddCategory = () => {
   const [addCategory] = useAddCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
-  const router = useRouter();
+ 
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
@@ -99,6 +101,7 @@ const AdminAddCategory = () => {
   useEffect(() => {
     refetch();
   }, [limit, page, searchTerm]);
+  
 
   // ('info', categories);
   // const totalData = questions?.categories?.meta?.total;
@@ -159,7 +162,7 @@ const AdminAddCategory = () => {
                   )} */}
                 </div>
                 <div>
-                  <Link href={`/admin/addcategory/edit/${category?._id}`} className="mx-4">
+                  <Link href={`/superAdmin/addcategory/edit/${category?._id}`} className="mx-4">
                     <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
                       Update
                     </button>

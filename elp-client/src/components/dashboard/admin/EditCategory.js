@@ -28,7 +28,7 @@ const EditCategory = ({id}) => {
          
           if (res?.data?._id === id) {
             toast.success("Category updated successfully");
-            router.push("/admin/addcategory");
+            router.push("/superAdmin/addcategory");
           } else {
             toast.error("Something is wrong updating the category");
           }

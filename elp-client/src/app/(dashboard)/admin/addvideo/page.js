@@ -13,8 +13,11 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Pagination from "../../Pagination";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AddVideo = () => {
+  const router = useRouter();
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,7 +52,17 @@ const AddVideo = () => {
     refetchPlaylist();
   }, [limit, page, searchTerm]);
 
+
   ('info', data?.playlists);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('course_video')){
+
+     router.push('/')
+    }
+
+  },[])
 
   const totalData = data?.playlists?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);

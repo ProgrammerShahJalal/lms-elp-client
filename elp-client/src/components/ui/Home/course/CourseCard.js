@@ -10,11 +10,12 @@ const CourseCard = ({ item }) => {
     <>
       {/* hover:-translate-y-1 hover:scale-110 */}
       <div className="card shadow-lg my-6 transition ease-in-out delay-150  duration-300 rounded bg-white ">
+       
         <figure className="relative ">
           <Image
             className="rounded h-48 "
             src={item?.banner}
-            alt="course"
+            alt={item?.title}
             width={400}
             height={50}
           />
@@ -58,9 +59,10 @@ const CourseCard = ({ item }) => {
           </div>
           <p
             dangerouslySetInnerHTML={{
-              __html: `${item?.description.substring(0, 90)}...`,
+              __html: `${item?.description.substring(0, 50)}...`,
             }}
           ></p>
+           <h2>Hello</h2>
 
           <div className="py-3">
             {/* {item?.description}{" "} */}

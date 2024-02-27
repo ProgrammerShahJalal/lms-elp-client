@@ -49,7 +49,7 @@ const EditSubCategory = ({ id }) => {
 
       if (res?.data?._id === id) {
         toast.success(" Sub Category updated successfully");
-        router.push("/admin/addsubcategory");
+        router.push("/superAdmin/addsubcategory");
       } else {
         toast.error("Something is wrong updating the category");
       }
@@ -84,9 +84,9 @@ const EditSubCategory = ({ id }) => {
         {data?.category_id && (
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">Category</label>
-            <input type="text" defaultValue={data?.category_id?.title} disabled className="cursor-not-allowed w-full border border-gray-300 p-2 rounded-md" />
+            {/* <input type="text" defaultValue={data?.category_id?.title} disabled className="cursor-not-allowed w-full border border-gray-300 p-2 rounded-md" /> */}
             {/* <p>{data?.category_id?.title}</p> */}
-            {/* <select
+            <select
               {...register("category_id")}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
@@ -100,7 +100,7 @@ const EditSubCategory = ({ id }) => {
                   {category?.title}
                 </option>
               ))}
-            </select> */}
+            </select>
           </div>
         )}
         {/* <div className="mb-4">

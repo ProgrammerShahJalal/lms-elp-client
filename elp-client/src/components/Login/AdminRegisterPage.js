@@ -41,8 +41,8 @@ const AdminRegisterPage = () => {
     <div className="bg-white border rounded shadow-lg max-w-md mx-auto py-5 my-10 z-0">
       <div>
         <h2 className="text-lg font-bold text-center pb-10 pt-5 text-cyanPrimary">
-          ইজি লার্নিং প্লাটফর্মে আপনাকে স্বাগতম।
-        </h2>
+        ইজি জব প্রিপারেশনে আপনাকে স্বাগতম।
+        </h2> 
 
         <div className="mb-10">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">

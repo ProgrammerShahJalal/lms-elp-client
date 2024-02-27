@@ -6,7 +6,7 @@ import { SiYoutubemusic } from "react-icons/si";
 const FreeSeminar = () => {
   return (
     <div className="bg-bluePrimary py-16">
-      <div className="px-14">
+      <div className="lg:px-14  px-3 ">
         <div className=" grid lg:grid-cols-2  gap-5">
           <div className="relative    transition duration-300 ease-in-out hover:opacity-60">
             {/* <Image className="rounded " src="https://tecdn.b-cdn.net/img/new/fluid/city/113.webp" alt="booking" height={300} width={500}/> */}

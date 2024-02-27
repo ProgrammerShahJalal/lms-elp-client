@@ -26,7 +26,7 @@ const DashNavbar = () => {
       <div className="navbar px-5">
         <div className="navbar-start ">
           <Link href="/" className="text-lg font-bold text-cyan-900">
-            ইজি লার্নিং প্লাটফর্ম
+          ইজি জব প্রিপারেশন
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
