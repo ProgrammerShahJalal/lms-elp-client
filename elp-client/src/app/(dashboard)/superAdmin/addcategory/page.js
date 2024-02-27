@@ -162,7 +162,7 @@ const AdminAddCategory = () => {
                   )} */}
                 </div>
                 <div>
-                  <Link href={`/admin/addcategory/edit/${category?._id}`} className="mx-4">
+                  <Link href={`/superAdmin/addcategory/edit/${category?._id}`} className="mx-4">
                     <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
                       Update
                     </button>

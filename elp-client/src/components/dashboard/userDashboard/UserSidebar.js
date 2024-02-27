@@ -66,20 +66,7 @@ const UserSidebar = () => {
                   </Link>
                 </li>
 
-                {/* <li className="">
-                  <Link href={"/admin/addcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200">
-                    {" "}
-                    <FaAddressBook />
-                    বিভাগ যোগ করুন
-                  </Link>
-                </li>
-                <li >
-                  <Link href={"/admin/addsubcategory"} className=" transition-all text-cyan-900  text-lg hover:bg-blue-900    py-4 hover:text-white rounded flex items-center gap-3 bg-gray-200 ">
-                    {" "}
-                    <FaAddressBook />
-                    উপ বিভাগ যোগ করুন
-                  </Link>
-                </li> */}
+               
                 {checkPermission("course") && <li>
                   <Link
                     href={"/admin/addcourse"} passHref legacyBehavior
@@ -244,7 +231,7 @@ const UserSidebar = () => {
                 </li>
                 <li>
                   <Link
-                    href={"/admin/addcategory"} passHref legacyBehavior
+                    href={"/superAdmin/addcategory"} passHref legacyBehavior
                   >
                     <a className={`transition-all text-cyan-900 text-lg py-2 rounded flex items-center gap-3 bg-gray-200 ${pathname === "/admin/addcategory" ? "active" : ""
                       }`}>
@@ -256,7 +243,7 @@ const UserSidebar = () => {
                 </li>
                 <li>
                   <Link
-                    href={"/admin/addsubcategory"} passHref legacyBehavior
+                    href={"/superAdmin/addsubcategory"} passHref legacyBehavior
                   >
                     <a className={`transition-all text-cyan-900 text-lg py-2 rounded flex items-center gap-3 bg-gray-200 ${pathname === "/admin/addsubcategory" ? "active" : ""
                       }`}>

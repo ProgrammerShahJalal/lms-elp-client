@@ -157,7 +157,7 @@ const AdminAddSubCategory = () => {
                   </td> */}
                   <td className="py-2 px-4 border-b md:table-cell">{subcategory?.category_id?.title}</td>
                   <td className="py-2 px-4 border-b md:table-cell">
-                    <Link href={`/admin/addsubcategory/edit/${subcategory?._id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</Link>
+                    <Link href={`/superAdmin/addsubcategory/edit/${subcategory?._id}`} className="bg-blue-500 text-white py-1 px-2 rounded-md">Update</Link>
                   </td>
                   {/*<td className="py-2 px-4 border-b md:table-cell">
                     <button className="bg-red-500 text-white py-1 px-2 rounded-md" onClick={() => handleDelete(subcategory?.id)}>Delete</button>
