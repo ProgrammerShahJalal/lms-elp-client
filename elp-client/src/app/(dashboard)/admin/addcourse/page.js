@@ -13,8 +13,13 @@ import {
 import Swal from "sweetalert2";
 import Link from "next/link";
 import Pagination from "../../Pagination";
+import { getUserInfo } from "@/services/auth.service";
+import checkPermission from "@/utils/checkPermission";
+import { useRouter } from "next/navigation";
 
 const AddCourseForm = () => {
+  const router = useRouter();
+ 
   const [limit, setLimit] = useState(15);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,8 +51,19 @@ const AddCourseForm = () => {
     refetch();
   }, [limit, page, searchTerm]);
 
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('course')){
+
+     router.push('/')
+    }
+
+  },[])
+
   const totalData = courses?.courses?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);
+
+
 
 
 

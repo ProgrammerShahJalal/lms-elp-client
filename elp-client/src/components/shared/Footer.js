@@ -28,18 +28,20 @@ const Footer = () => {
             className="text-xl font-semibold flex items-center space-x-2"
           >
             <Image
-              src={logo}
+              src="https://i.ibb.co/F4C6DrK/easy-job-prepareting-removebg-preview.png"
               alt="logo"
-              className="w-14 inline-block items-center"
+              className=" inline-block items-center"
+              width={35}
+              height={0}
             />
             <span className="text-white hover:text-bluePrimary text-xl">
-              ইজি লার্নিং প্লাটফর্ম
+            ইজি জব প্রিপারেশন 
             </span>
           </a>
           <p className="leading-loose  py-7">
             যেকোনো বয়সের শিক্ষার্থী, প্রফেশনাল ও ফ্রিল্যান্সারদের <br /> জন্য
             বহুব্রীহি হলো দেশের সেরা স্কিল ডেভেলপমেন্ট <br />
-            সলিউশন। ইজি লার্নিং প্লাটফর্ম ইন্ডাস্ট্রির এক্সপার্টদের বানানো{" "}
+            সলিউশন। ইজি জব প্রিপারেশন ইন্ডাস্ট্রির এক্সপার্টদের বানানো{" "}
             <br /> ক্যারিয়ার ট্র্যাক প্রোগ্রাম ও ফাউন্ডেশন কোর্সগুলো <br /> দেশে
             আপনার সফল ক্যারিয়ার নিশ্চিত করবে।
           </p>
@@ -94,7 +96,7 @@ const Footer = () => {
           <a href="/terms" className="link link-hover">
             টার্মস এন্ড কন্ডিশন
           </a>
-          <a className="link link-hover" href="/policy">
+          <a className="link link-hover" href="/privacy">
             প্লেসমেন্ট সাপোর্ট
           </a>
           {/* <a className="link link-hover" href="/support">প্লেসমেন্ট সাপোর্ট</a> */}

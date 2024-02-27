@@ -7,8 +7,11 @@ import AllExamDetails from "./AllExamDetails";
 import Pagination from "@/app/(dashboard)/Pagination";
 import { useEffect, useState } from "react";
 import EmptyContent from "@/components/Loader/EmptyContent";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AllUserExams = () => {
+  const router = useRouter();
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,6 +24,15 @@ const AllUserExams = () => {
   useEffect(() => {
     refetchUserExam();
   }, [limit, page, searchTerm]);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('exam')){
+
+     router.push('/')
+    }
+
+  },[])
 
 
   const totalData = data?.exams?.meta?.total;

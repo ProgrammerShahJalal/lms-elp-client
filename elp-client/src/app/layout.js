@@ -6,7 +6,7 @@ import ToastProvider from '@/lib/ToastProvider'
 
 
 export const metadata = {
-  title: 'ইজি লার্নিং প্লাটফর্ম',
+  title: 'ইজি জব প্রিপারেশন ',
   description: 'Easy Job Preparetion | Easy Job Preparetion',
 }
 

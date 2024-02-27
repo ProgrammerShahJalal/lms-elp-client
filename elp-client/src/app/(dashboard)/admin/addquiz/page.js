@@ -15,8 +15,11 @@ import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Pagination from "../../Pagination";
 import AdminAddQuiz from "@/components/dashboard/admin/AdminAddQuiz";
 import SeeDynamicQuiz from "@/components/dashboard/admin/SeeDynamicQuiz";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AddQuiz = () => {
+  const router = useRouter();
   const [limit, setLimit] = useState(25);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -157,6 +160,15 @@ const AddQuiz = () => {
   useEffect(() => {
     refetch();
   }, [limit, page, searchTerm]);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('exam')){
+
+     router.push('/')
+    }
+
+  },[])
 
   const totalData = questions?.categories?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);

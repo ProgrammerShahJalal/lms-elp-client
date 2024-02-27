@@ -7,8 +7,11 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Pagination from "../../Pagination";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AddSubscription = () => {
+    const router = useRouter();
     const [limit, setLimit] = useState(30);
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
@@ -64,6 +67,14 @@ const AddSubscription = () => {
         };
         fetchSubCategories();
     }, [page]);
+    //check permission
+  useEffect(()=>{
+    if(!checkPermission('subscription')){
+
+     router.push('/')
+    }
+
+  },[])
 
 
 

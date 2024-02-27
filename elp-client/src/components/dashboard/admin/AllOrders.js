@@ -5,8 +5,11 @@ import InitialLoader from "@/components/Loader/InitialLoader";
 import { useEffect, useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import Pagination from "@/app/(dashboard)/Pagination";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AllOrders = () => {
+  const router = useRouter();
   const [sortedOrder, setSortedOrder] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortField, setSortField] = useState(null);
@@ -64,7 +67,14 @@ useEffect(() => {
   setSearchTerm(debouncedTerm);
 }, [debouncedTerm]);
 
-  
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('order')){
+
+     router.push('/')
+    }
+
+  },[])
 
   let content = null;
 

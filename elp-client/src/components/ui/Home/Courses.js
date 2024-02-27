@@ -68,7 +68,7 @@ const Courses = () => {
   }
 
   return (
-    <div className="px-14">
+    <div className="lg:px-14 px-5">
       <div className="flex gap-5 py-2">
         <h2 className="text-2xl font-bold px-2  rounded">ক্যারিয়ার ট্র্যাক কোর্স</h2>
         <Link href="/courses" className=" bg-bluePrimary hover:bg-cyanPrimary w-44 text-white px-7 py-3 rounded transition-all duration-500 delay-200">

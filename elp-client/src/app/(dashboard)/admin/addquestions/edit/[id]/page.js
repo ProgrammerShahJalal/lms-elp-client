@@ -35,6 +35,7 @@ const UpdateQuestionPage = ({ params }) => {
 
 
   return (
+    <>
     <div>
       <h2>Update The Question</h2>
       <div>
@@ -79,6 +80,7 @@ const UpdateQuestionPage = ({ params }) => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

@@ -5,10 +5,13 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useAddAllExamsMutation } from "@/redux/api/examsApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import checkPermission from "@/utils/checkPermission";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AdminAddExams = () => {
+  const router = useRouter();
   const [addAllExams] = useAddAllExamsMutation();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -46,6 +49,15 @@ const AdminAddExams = () => {
     };
     fetchSubCategories();
   }, [selectedSubcategory]);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('exam')){
+
+     router.push('/')
+    }
+
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();

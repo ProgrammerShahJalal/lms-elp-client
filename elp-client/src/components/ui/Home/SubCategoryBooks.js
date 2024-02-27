@@ -73,7 +73,7 @@ const SubCategoryBooks = ({ sub_category_id }) => {
   }
 
   return (
-    <div className="px-14 py-10 ">
+    <div className="px-14 py-8 ">
       <div className="">
         <Swiper
           navigation={true}
