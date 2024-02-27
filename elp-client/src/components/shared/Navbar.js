@@ -122,12 +122,14 @@ const Navbar = () => {
             className="text-lg font-semibold flex items-center space-x-2"
           >
             <Image
-              src={logo}
+              src="https://i.ibb.co/F4C6DrK/easy-job-prepareting-removebg-preview.png"
               alt="Easy Job Preparetion"
-              className="w-14 inline-block items-center"
+              className=" inline-block items-center"
+              width={35}
+              height={0}
             />
             <span className="dark:text-cyanPrimary hover:text-bluePrimary">
-              ইজি লার্নিং প্লাটফর্ম
+            ইজি জব প্রিপারেশন 
             </span>
           </Link>
 

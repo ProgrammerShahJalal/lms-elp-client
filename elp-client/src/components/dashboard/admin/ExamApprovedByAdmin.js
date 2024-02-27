@@ -116,10 +116,10 @@ const ExamApprovedByAdmin = ({ item, i }) => {
                 )}
             </td>
             <td className="py-2 px-4 border-b md:table-cell">{item?.fee}</td>
-            <td className="py-2 px-4 border-b md:table-cell">
+            <td className="py-2 px-4 border-b md:table-cell text-center">
                 {totalQuestionMark}
             </td>
-            <td className="py-2 px-4 border-b md:table-cell">
+            <td className="py-2 px-4 border-b md:table-cell text-center">
                 {totalMark}
             </td>
 

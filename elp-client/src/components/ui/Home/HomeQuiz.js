@@ -6,7 +6,7 @@ const HomeQuiz = () => {
 
 
   return (
-    <div className="mx-14  py-10 rounded shadow-current">
+    <div className="lg:px-14 py-10 px-3 rounded shadow-current">
       <div className="px-14 ">
         <div className="space-y-4">
           <h2 className="lg:text-3xl md:text-2xl font-semibold">বুঝতে পারছেন না কোথা থেকে শুরু করবেন?</h2>

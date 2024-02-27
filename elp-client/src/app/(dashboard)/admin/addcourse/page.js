@@ -13,8 +13,13 @@ import {
 import Swal from "sweetalert2";
 import Link from "next/link";
 import Pagination from "../../Pagination";
+import { getUserInfo } from "@/services/auth.service";
+import checkPermission from "@/utils/checkPermission";
+import { useRouter } from "next/navigation";
 
 const AddCourseForm = () => {
+  const router = useRouter();
+ 
   const [limit, setLimit] = useState(15);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,7 +41,7 @@ const AddCourseForm = () => {
   const allSubcategory = subcategories?.subcategories;
 
   const { data: courses, isLoading: isSubcategoryLoading, refetch } =
-    useGetAllCoursesQuery({limit, page, searchTerm});
+    useGetAllCoursesQuery({ limit, page, searchTerm });
   const allCourses = courses?.courses?.data;
 
   const currentCourses = courses?.courses?.data;
@@ -46,8 +51,19 @@ const AddCourseForm = () => {
     refetch();
   }, [limit, page, searchTerm]);
 
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('course')){
+
+     router.push('/')
+    }
+
+  },[])
+
   const totalData = courses?.courses?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);
+
+
 
 
 
@@ -61,20 +77,20 @@ const AddCourseForm = () => {
     const content = { ...data };
 
     const file = content["file"];
-    
+
     const result = JSON.stringify(content);
-  
+
     const formData = new FormData();
     formData.append("file", file[0]);
     formData.append("data", result);
 
     try {
       const resultData = await addCourse(formData);
-    
+
       if (resultData) {
         toast.success("course created successfully");
       }
-  
+
     } catch (error) {
       toast.error(error.message);
     }
@@ -104,7 +120,7 @@ const AddCourseForm = () => {
             icon: "success",
           });
         } else {
-         
+
           Swal.fire({
             title: "Error!",
             text: "Something went wrong with deletion.",
@@ -117,7 +133,7 @@ const AddCourseForm = () => {
     }
   };
 
-  
+
 
   return (
     <div className="container mx-auto p-4">
@@ -150,12 +166,12 @@ const AddCourseForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Category:</label>
-           
+
             <select
               {...register("category_id", { required: true })}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
-                setValue("sub_category_id", ""); 
+                setValue("sub_category_id", "");
               }}
               value={selectedCategory}
               className="w-full border border-gray-300 p-2 rounded-md"
@@ -169,7 +185,7 @@ const AddCourseForm = () => {
                 </option>
               ))}
             </select>
-            
+
           </div>
           <div className="mb-4">
             <label className="block text-sm mb-2">Sub Category:</label>
@@ -273,7 +289,7 @@ const AddCourseForm = () => {
           <button
             type="submit"
             //   onClick={handleAddCourse}
-            className="bg-blue-500 text-white px-4 py-2 mt-6 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+            className="bg-blue-500 w-full text-white px-4 py-2 mt-6 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
           >
             Add Course
           </button>
@@ -338,7 +354,7 @@ const AddCourseForm = () => {
             </tbody>
           </table>
 
-<Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+          <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
 
         </div>
       )}

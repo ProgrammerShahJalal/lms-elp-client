@@ -7,12 +7,15 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Pagination from "../../Pagination";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AddSubscription = () => {
-  const [limit, setLimit] = useState(30);
-  const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  
+    const router = useRouter();
+    const [limit, setLimit] = useState(30);
+    const [page, setPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const { data, refetch } = useGetAllSubscriptionQuery({
         limit,
         page,
@@ -20,7 +23,7 @@ const AddSubscription = () => {
     });
 
     const allSubscription = data?.exams?.data;
-   
+
     const [deleteSubscription] = useDeleteSubscriptionMutation()
     const [addSubscription] = useAddSubscriptionMutation()
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -35,21 +38,21 @@ const AddSubscription = () => {
             searchTerm,
         });
     const { data: courses, refetch: refetchCourses } = useGetAllCoursesQuery({
-            sub_category_id: selectedSubcategory,
-            limit,
-            page,
-            searchTerm,
+        sub_category_id: selectedSubcategory,
+        limit,
+        page,
+        searchTerm,
     });
 
     const allCourse = courses?.courses?.data;
 
-  useEffect(() => {
-    refetch();
-  }, [limit, page, searchTerm]);
+    useEffect(() => {
+        refetch();
+    }, [limit, page, searchTerm]);
 
-  const totalData = courses?.courses?.meta?.total;
-  const totalPages = Math.ceil(totalData / limit);
-    
+    const totalData = courses?.courses?.meta?.total;
+    const totalPages = Math.ceil(totalData / limit);
+
     useEffect(() => {
         const fetchSubCategory = async () => {
             await refetchSubCategories({ category_id: selectedCategory, limit, page, searchTerm });
@@ -64,11 +67,19 @@ const AddSubscription = () => {
         };
         fetchSubCategories();
     }, [page]);
+    //check permission
+  useEffect(()=>{
+    if(!checkPermission('subscription')){
 
-  
+     router.push('/')
+    }
+
+  },[])
 
 
-    
+
+
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -83,8 +94,11 @@ const AddSubscription = () => {
             if (response) {
                 toast.success("Successfully Added Subscription")
             }
+            else {
+                toast.error("Not adding subscription")
+            }
         } catch (error) {
-            toast.error("Not adding subscription")
+            toast.error("You are not authorized")
             console.error('Error adding subscription', error)
 
         }
@@ -269,12 +283,13 @@ const AddSubscription = () => {
                 </div>
             </form>
 
-           
+
             <div className="mt-8 overflow-x-auto">
                 <h1 className="text-3xl font-semibold mb-4">Subscription List</h1>
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr>
+                            <th className="lg:border border-gray-300 px-4 py-2">Number</th>
                             <th className="lg:border border-gray-300 px-4 py-2">Name</th>
                             <th className="lg:border border-gray-300 px-4 py-2">Duration (Months)</th>
                             <th className="lg:border border-gray-300 px-4 py-2">Cost</th>
@@ -283,8 +298,9 @@ const AddSubscription = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allSubscription?.map((subscription) => (
+                        {allSubscription?.map((subscription, index) => (
                             <tr key={subscription._id}>
+                                <td className="lg:border text-center border-gray-300 px-4 py-2">{index + 1}</td>
                                 <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.name}</td>
                                 <td className="lg:border text-center border-gray-300 px-4 py-2">{subscription?.subscription_duration_in_months}</td>
                                 <td className="lg:border text-center border-gray-300 px-4 py-2">৳ {subscription?.cost}</td>
@@ -298,7 +314,7 @@ const AddSubscription = () => {
                 </table>
 
 
-                <Pagination totalPages={totalPages} currentPage={page} setPage={setPage}/>
+                <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
 
 
             </div>

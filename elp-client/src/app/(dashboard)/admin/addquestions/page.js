@@ -15,9 +15,11 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Pagination from "../../Pagination";
 import AdminChangeWrittenStatus from "@/components/dashboard/admin/AdminChangeWrittenStatus";
+import { useRouter } from "next/navigation";
+import checkPermission from "@/utils/checkPermission";
 
 const AddQuestions = () => {
-
+  const router = useRouter();
   const [limit, setLimit] = useState(30);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,7 +59,7 @@ const AddQuestions = () => {
   const { data: questions, refetch } = useGetAllQuestionsQuery({ limit, page, searchTerm });
 
   const allQuiz = questions?.categories?.data;
-  const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "1");
+  const filteredQuestions = allQuiz?.filter((quiz) => quiz?.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
 
@@ -91,6 +93,15 @@ const AddQuestions = () => {
     };
     fetchExams();
   }, [selectedCourse]);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('exam')){
+
+     router.push('/')
+    }
+
+  },[])
 
   const handleSubmit = async (event) => {
     event.preventDefault();

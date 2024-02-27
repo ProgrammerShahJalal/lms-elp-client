@@ -23,9 +23,9 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
         id: allOrdersStatus[0]?._id,
         body: { status: selectedStatus },
       });
-  
+
       // ("Backend Response:", response);
-  
+
       if (response.data) {
         toast.success("Order Status Updated Successfully");
         // ("Order Status Before Update:", orderStatus);
@@ -39,8 +39,8 @@ const SingleOrderStatus = ({ orderDetailsId }) => {
       toast.error("Error updating order status");
     }
   };
-  
-  
+
+
   useEffect(() => {
     if (allOrdersStatus?.length) {
       setOrderStatus(allOrdersStatus[0]?.status);

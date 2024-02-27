@@ -78,7 +78,7 @@ const BookSection = () => {
     content = booksData?.map((item, index) => <SwiperSlide key={item?._id}><BookSectionCard  item={item} onOpenPDFModal={() => openPDFModal(index)}/></SwiperSlide>);
   }
   return (
-    <div className="px-14 py-20">
+    <div className="lg:px-14  px-3  py-20">
       <div className="flex gap-5 py-5">
         <h2 className="text-2xl font-bold px-2  rounded ">আমাদের সকল বইসমূহ</h2>
         <Link href="/books" className="mb-5 bg-bluePrimary hover:bg-cyanPrimary w-44 text-white px-7 py-3 rounded transition-all duration-500 delay-200">

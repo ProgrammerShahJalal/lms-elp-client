@@ -1,6 +1,6 @@
 const Faq = () => {
   return (
-    <div className="px-14 py-20">
+    <div className="lg:px-14 py-10 px-3">
       <h2 className="text-center py-7 text-2xl font-bold">আপনার কিছু কমন <span className="text-bluePrimary">প্রশ্নের উত্তর</span></h2>
       <p className="text-center py-5">আপনাদের কমন কিছু প্রশ্নের উত্তর আমরা এখানে লিস্ট করে দিয়েছি। <br /> আমাদের কে প্রশ্ন করার পূর্বে এই লিস্টটি একবার পড়ে নেয়ার অনুরোধ থাকলো। <br /> তাহলে আমাদের উত্তরের জন্য আপনাকে অপেক্ষা করতে হবেনা এবং আপনার মূল্যবান সময় বেঁচে যাবে।</p>
       <div className="bg-white p-5 rounded border space-y-4">

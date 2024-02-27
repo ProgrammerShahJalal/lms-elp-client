@@ -42,7 +42,7 @@ const UserWelcome = () => {
         <h2 className='text-2xl font-bold pb-3 text-cyan-900 '>
           {`${timeOfDay} ${data?.name}`}
         </h2>
-        <h5 className='text-cyan-900   text-lg'>ক্লাসের খুঁটিনাটি সব জেনে নাও তোমার <span className='text-cyan-900'>ইজি লার্নিং প্লাটফর্ম</span> ড্যাশবোর্ডে</h5>
+        <h5 className='text-cyan-900   text-lg'>ক্লাসের খুঁটিনাটি সব জেনে নাও তোমার <span className='text-cyan-900'>ইজি জব প্রিপারেশন</span> ড্যাশবোর্ডে</h5>
       </div>
 
 

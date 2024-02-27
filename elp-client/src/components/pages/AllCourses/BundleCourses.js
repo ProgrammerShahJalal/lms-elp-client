@@ -103,7 +103,7 @@ const BundleCourses = ({ bundle, i, isLast, sub_category_id }) => {
         <PaymentModal
           setModalOpen={setModalOpen}
           setPaymentMethod={setPaymentMethod}
-          amount={20}
+          amount={bundle?.total_cost}
         />
       )}
     </div>

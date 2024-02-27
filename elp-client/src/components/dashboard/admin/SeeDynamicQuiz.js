@@ -1,18 +1,18 @@
 
 const SeeDynamicQuiz = ({ setOpenModal, filteredQuestions, examTitle }) => {
-    const specificQuiz = filteredQuestions.filter(q => q.exam_id.title === examTitle);
+    const specificQuiz = filteredQuestions.filter(q => q?.exam_id?.title === examTitle);
 
     return (
         <div className="modal-box">
             <h1 className="text-xl font-semibold">{examTitle}</h1>
             <thead>
-                            <tr>
-                                <th className="py-2 border-b">Question</th>
-                                <th className="py-2 border-b">Option</th>
-                                <th className="py-2 border-b">Correct Answer</th>
-                            </tr>
-                        </thead>
-           
+                <tr>
+                    <th className="py-2 border-b">Question</th>
+                    <th className="py-2 border-b">Option</th>
+                    <th className="py-2 border-b">Correct Answer</th>
+                </tr>
+            </thead>
+
             {specificQuiz.map((filteredQuiz, index) => (
                 <tr key={index}>
 

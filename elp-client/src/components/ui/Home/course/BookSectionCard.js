@@ -49,7 +49,7 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
 
   return (
     <>
-      <div className="card w-[350px]  shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
+      <div className="card w-[350px]   shadow-xl cursor-pointer transition ease-in-out delay-150  duration-300 rounded bg-white">
         <div>
           <button
             onClick={onOpenPDFModal}
@@ -108,7 +108,7 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
                 className="py-2"
               
               > {
-                item?.description
+                item?.description?.slice(0,50)
              }</p>
               <Link
                 className="text-bluePrimary pl-5"

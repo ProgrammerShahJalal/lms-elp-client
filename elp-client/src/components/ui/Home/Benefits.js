@@ -62,10 +62,10 @@ const data = [
 
 const Benefits = () => {
   return (
-    <div className="px-14 pt-20 pb-10">
+    <div className="lg:px-14 py-10 px-3">
       <h2 className="lg:text-3xl md:text-xl font-bold pt-5 pb-10 dark:text-cyanPrimary">
         {" "}
-        ইজি লার্নিং প্লাটফর্ম থেকে আপনি কী কী সুবিধা পাবেন
+        ইজি জব প্রিপারেশন থেকে আপনি কী কী সুবিধা পাবেন
       </h2>
 
       <div className="grid lg:grid-cols-2 gap-4">

@@ -72,7 +72,7 @@ const SubCategoryCourses = ({ sub_category_id }) => {
   }
 
   return (
-    <div className="px-14 py-10">
+    <div className="lg:px-14 py-5 px-3">
       <div className="">
         <Swiper
           navigation={true}

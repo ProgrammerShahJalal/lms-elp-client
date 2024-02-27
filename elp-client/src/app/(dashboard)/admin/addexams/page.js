@@ -5,10 +5,13 @@ import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import { useAddAllExamsMutation } from "@/redux/api/examsApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
+import checkPermission from "@/utils/checkPermission";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AdminAddExams = () => {
+  const router = useRouter();
   const [addAllExams] = useAddAllExamsMutation();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -29,7 +32,7 @@ const AdminAddExams = () => {
     total_marks: 0,
     duration_in_minutes: 0,
     fee: 0,
-    is_active: "",
+    is_active: false,
     exam_type: "",
   });
 
@@ -46,6 +49,15 @@ const AdminAddExams = () => {
     };
     fetchSubCategories();
   }, [selectedSubcategory]);
+
+  //check permission
+  useEffect(()=>{
+    if(!checkPermission('exam')){
+
+     router.push('/')
+    }
+
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,7 +93,7 @@ const AdminAddExams = () => {
 
   return (
     <div>
-        <h1 className="text-2xl font-bold mb-4">Add New Exam</h1>
+      <h1 className="text-2xl font-bold mb-4">Add New Exam</h1>
       <form
         onSubmit={handleSubmit}
         className=" mx-auto bg-white p-8 border rounded shadow"
@@ -295,7 +307,7 @@ const AdminAddExams = () => {
             className="mt-1 p-3 border rounded w-full focus:outline-none focus:border-indigo-500"
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             htmlFor="is_active"
             className="block text-sm font-medium text-gray-600"
@@ -318,7 +330,7 @@ const AdminAddExams = () => {
             <option value="true">True</option>
             <option value="false">False</option>
           </select>
-        </div>
+        </div> */}
         <div className="mb-4">
           <label
             htmlFor="exam_type"
