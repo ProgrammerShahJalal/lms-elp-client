@@ -99,12 +99,12 @@ function CourseExams({ course_id }) {
       <div className="overflow-x-auto">
         <table className="table table-auto min-w-full bg-white border border-gray-300">
           <thead>
-            <tr>
-              <th className="py-2 px-4 md:w-1/4">Exam Title</th>
-              <th className="py-2 px-4 md:w-1/4">Exam Type</th>
-              <th className="py-2 px-4 md:w-1/4">Total Marks</th>
-              <th className="py-2 px-4 md:w-1/4">Fee</th>
-              <th className="py-2 px-4 md:w-1/4">Action</th>
+            <tr className="text-[16px]">
+              <th className="py-2 px-4 md:w-1/4">পরীক্ষার শিরোনাম</th>
+              <th className="py-2 px-4 md:w-1/4">পরীক্ষার ধরণ</th>
+              <th className="py-2 px-4 md:w-1/4">মোট নাম্বার  </th>
+              <th className="py-2 px-4 md:w-1/4">ফি</th>
+              <th className="py-2 px-4 md:w-1/4">অ্যাকশন</th>
             </tr>
           </thead>
           <tbody>
@@ -115,14 +115,14 @@ function CourseExams({ course_id }) {
                   {exam?.exam_type == "0" ? "MCQ" : "Written"}
                 </td>
                 <td className="py-2 px-4 md:w-1/4">{exam?.total_marks}</td>
-                <td className="py-2 px-4 md:w-1/4">{exam?.fee}</td>
-                <td className="py-2 px-4 md:w-1/4">
+                <td className="py-2 px-4 md:w-1/4">{exam?.fee} {" "}টাকা</td>
+                <td className="">
                   <button
                     onClick={() => {
                       setSelectedExam(exam);
                       setModalOpen(true);
                     }}
-                    className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0 cursor-pointer w-fit"
+                    className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0 cursor-pointer lg:w-[100px]"
                   >
                     {exam?.exam_type === 0 ? 'কুইজ কিনুন' : 'প্রশ্ন কিনুন'}
                   </button>

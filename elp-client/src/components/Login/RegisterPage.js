@@ -75,7 +75,7 @@ const RegisterPage = () => {
               <input
                 type="email"
                 {...register("email")}
-                placeholder="আপনার ইমেইল"
+                placeholder="আপনার ইমেইল abc@gmail.com"
                 className="border py-4 px-3 rounded outline-none hover:border-gray-500  w-80  bg-gray-200"
               />
             </div>

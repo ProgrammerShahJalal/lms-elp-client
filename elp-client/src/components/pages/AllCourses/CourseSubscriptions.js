@@ -94,7 +94,7 @@ function CourseSubscriptions({ course_id }) {
       <tr className="hover" key={subscription?._id}>
         <td>{subscription?.name}</td>
         <td>{subscription?.subscription_duration_in_months} Months</td>
-        <td>{subscription?.cost}</td>
+        <td>{subscription?.cost}{" "}টাকা</td>
         <td>
           <p
             onClick={() => {
@@ -113,15 +113,15 @@ function CourseSubscriptions({ course_id }) {
   return (
     <>
       <div>
-        <h2 className="text-xl font-bold">Buy</h2>
+        
         <table className="table table-auto">
           {/* head */}
           <thead>
-            <tr>
-              <th>Subscription Name</th>
-              <th>Duration</th>
-              <th>Cost</th>
-              <th>Action</th>
+            <tr className="text-[16px]">
+              <th>সাবস্ক্রিপশন নাম</th>
+              <th>সময়কাল</th>
+              <th>মূল্য</th>
+              <th>অ্যাকশন </th>
             </tr>
           </thead>
           <tbody>{content}</tbody>

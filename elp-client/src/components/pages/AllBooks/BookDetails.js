@@ -10,13 +10,13 @@ const BookDetails = ({id}) => {
     const {data,isLoading,isError} = useGetSingleBookQuery(id);
     const breadcrumbItems = [
         { label: 'হোম', link: '/' },
-        { label: ' Books ',link: '/books' },
-        { label: ' Book ডিটেইলস ', }
+        { label: ' বইসমূহ ',link: '/books' },
+        { label: ' বই ডিটেইলস ', }
       ];
 
   return (
     <div>
-        <Commonbanner title="Book Details" breadcrumbItems={breadcrumbItems}/>
+        <Commonbanner title="বই ডিটেইলস" breadcrumbItems={breadcrumbItems}/>
         <div className="lg:mx-14">
         <BookDetailsData  data={data} isLoading={isLoading} isError={isError}/>
 

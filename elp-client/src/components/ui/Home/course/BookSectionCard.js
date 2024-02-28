@@ -3,7 +3,7 @@ import Image from "next/image";
 import avatar from "../../../../assets/images/img1.png";
 import { PiNotebookBold } from "react-icons/pi";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
@@ -12,6 +12,9 @@ import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 
 const BookSectionCard = ({ item, onOpenPDFModal }) => {
+  const {books:cartItems} = useSelector((state) => state.cart);
+ 
+ 
   
 
   const [showPDFModal, setShowPDFModal] = useState(false);
@@ -24,9 +27,19 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
   };
   const dispatch = useDispatch();
 
+  // const handleAddBook = (item) => {
+  //   dispatch(addToCart(item));
+  //   toast.success("বইটি ঝুড়িতে যোগ হয়েছে  সফলভাবে");
+  // };
   const handleAddBook = (item) => {
-    dispatch(addToCart(item));
-    toast.success("Book added in your cart");
+    const existingBook = cartItems?.find((book) => book._id === item._id);
+  
+    if (existingBook) {
+      toast.error('বইটি ইতিমধ্যে ঝুড়িতে যোগ করা হয়েছে');
+    } else {
+      dispatch(addToCart(item));
+      toast.success('বইটি ঝুড়িতে যোগ হয়েছে সফলভাবে');
+    }
   };
   // const [addToCart] = useAddToCartMutation();
   // const userLoggedIn = isLoggedIn();
