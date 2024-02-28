@@ -2,13 +2,17 @@
 
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 import { useAddToCartMutation } from "@/redux/api/cartApi";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 import { isLoggedIn } from "@/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const BookDetailsData = ({ data, isError, isLoading }) => {
+  const {books:cartItems} = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onOpenPDFModal = () => {
@@ -20,26 +24,22 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
     setIsModalOpen(false);
   };
 
-  const [addToCart] = useAddToCartMutation();
+  // const [addToCart] = useAddToCartMutation();
   const userLoggedIn = isLoggedIn();
   // const dispatch = useDispatch();
 
-  const handleAddBook = async (data) => {
-    // if (!userLoggedIn) {
-    //   return toast.error("Please signin to buy a book");
-    // }
-
-    const res = await addToCart({book_id: data?.item?._id, quantity: 1 });
   
- 
-    if (res?.data?.quantity && res.data.quantity > 1) {
-      toast.success('Book has already been added to your cart. Please check your cart.');
+
+  const handleAddBook = (data) => {
+    const existingBook = cartItems?.find((book) => book._id === data._id);
+  
+    if (existingBook) {
+      toast.error('আপনি এই বইটি ইতিমধ্যে ঝুড়িতে যোগ করেছেন | অনুগ্রহ করে ঝুড়িতে দেখুন।');
     } else {
-      toast.success('Book added to your cart successfully.');
+      dispatch(addToCart(data));
+      toast.success('বইটি ঝুড়িতে যোগ হয়েছে সফলভাবে');
     }
-   
-    
-  }
+  };
 
 
   let content = null;
@@ -47,7 +47,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
   if (isLoading) {
     content = (
       <>
-        <div>Loading...</div>
+        <div>লোডিং...</div>
       </>
     );
   }
@@ -55,7 +55,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
   if (!isLoading && isError) {
     content = <h5>There was an error</h5>;
   }
-
+ 
   if (!isLoading && !isError && data) {
     content = (
       <div className="grid lg:grid-cols-2 gap-5 my-10">
@@ -81,21 +81,21 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
           <div className="space-y-4 mb-10">
             <h2 className="text-2xl font-bold">{data?.title}</h2>
             <p>{data?.description}</p>
-            <p>Writer:  {data?.writer}</p>
+            <p>লেখক:  {data?.writer}</p>
             <p>
-              Sub Category:{" "}
+            সাব ক্যাটাগরি:{" "}
               <span className=" text-yellowPrimary">{data?.course_id[0]?.sub_category_id?.category_id?.title}</span>{" "}
               
               <span className=" text-bluePrimary pl-5 font-semibold">
                 {" "}
-                Category: {data?.course_id[0]?.sub_category_id?.title}  {" "}
+                 ক্যাটাগরি: {data?.course_id[0]?.sub_category_id?.title}  {" "}
               </span>
             </p>
-            <p>{data?.format}</p>
+            <p>বইটি ধরনঃ  {data?.format}</p>
           
-            <p>{data?.price} TK</p>
+            <p>{data?.price} {" "}টাকা</p>
             <button onClick={() => handleAddBook(data)}  className="bg-yellowPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
-              এড টু কার্ড
+            ঝুড়িতে যোগ করুন
             </button> 
 
             <button

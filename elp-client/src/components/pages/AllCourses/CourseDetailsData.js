@@ -28,9 +28,9 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
             <div className="w-96 mx-auto">
               <p>
                 <span className="text-bluePrimary pr-10 font-semibold">
-                  Category: {data?.sub_category_id?.category_id?.title}
+                ক্যাটাগরি: {data?.sub_category_id?.category_id?.title}
                 </span>
-                Sub Category:{" "}
+                সাব ক্যাটাগরি:{" "}
                 <span className="text-yellowPrimary">
                   {data?.sub_category_id?.title}
                 </span>
@@ -113,10 +113,10 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
         <div className="md:pl-10 mt-4 md:mt-0">
           <div className=" bg-white rounded border py-10 px-5 mt-4 mx-5">
             {data && <CourseSubscriptions course_id={data?._id} />}
-          </div>
+          </div> 
 
           <div className="bg-white rounded border py-10 px-5  m-5">
-            <h2 className="text-xl font-bold">Exams on this course:</h2>
+            <h2 className="text-xl font-bold">এই কোর্সের  পরীক্ষাসমূহ :</h2>
             {data && <CourseExams course_id={data?._id} />}
           </div>
         </div>

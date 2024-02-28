@@ -25,9 +25,9 @@ const AllCourses = () => {
   if (isLoading) {
     content = (
       <>
-        <div>Loading...</div>
+        <div> লোডিং...</div>
       </>
-    );
+    ); 
   }
 
   if (!isLoading && isError) {
@@ -53,7 +53,7 @@ const AllCourses = () => {
       <Commonbanner title="সব কোর্স" breadcrumbItems={breadcrumbItems} />
       <div className="px-14 py-10">
         <div className="">
-          <h2 className="text-2xl font-bold  rounded text-center py-10"> কোর্স</h2>
+          <h2 className="text-2xl font-bold  rounded text-center py-10"> সকল কোর্স</h2>
         </div>
         <div className="grid lg:grid-cols-3  gap-4">{content}</div>
 

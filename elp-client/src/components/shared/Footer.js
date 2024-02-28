@@ -35,15 +35,15 @@ const Footer = () => {
               height={0}
             />
             <span className="text-white hover:text-bluePrimary text-xl">
-            ইজি জব প্রিপারেশন 
+              ইজি জব প্রিপারেশন
             </span>
           </a>
           <p className="leading-loose  py-7">
             যেকোনো বয়সের শিক্ষার্থী, প্রফেশনাল ও ফ্রিল্যান্সারদের <br /> জন্য
-            বহুব্রীহি হলো দেশের সেরা স্কিল ডেভেলপমেন্ট <br />
-            সলিউশন। ইজি জব প্রিপারেশন ইন্ডাস্ট্রির এক্সপার্টদের বানানো{" "}
-            <br /> ক্যারিয়ার ট্র্যাক প্রোগ্রাম ও ফাউন্ডেশন কোর্সগুলো <br /> দেশে
-            আপনার সফল ক্যারিয়ার নিশ্চিত করবে।
+            ইজি জব প্রিপারেশন হলো দেশের সেরা স্কিল ডেভেলপমেন্ট <br />
+            সলিউশন। ইজি জব প্রিপারেশন ইন্ডাস্ট্রির এক্সপার্টদের বানানো <br />{" "}
+            ক্যারিয়ার ট্র্যাক প্রোগ্রাম ও ফাউন্ডেশন কোর্সগুলো <br /> দেশে আপনার
+            সফল ক্যারিয়ার নিশ্চিত করবে।
           </p>
 
           <div className="flex space-x-3">
@@ -69,11 +69,9 @@ const Footer = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              
-                <span>
-                  <FaWhatsapp className="text-white text-xl" />
-                </span>
-              
+              <span>
+                <FaWhatsapp className="text-white text-xl" />
+              </span>
             </p>
             <p className="bg-gray-700 p-4  rounded transition-all duration-300  hover:bg-bluePrimary text-center cursor-pointer">
               <Link href="/">
@@ -126,42 +124,39 @@ const Footer = () => {
             ফ্রী সেমিনারে অংশ নেন{" "}
           </a>
         </nav>
-        <nav>
+        <nav className="">
           <header className=" text-white text-lg font-bold pb-3">
             যোগাযোগ তথ্য
           </header>
           <a className="link link-hover">
-            Dhaka Office: Dilkusha R/A, Motijheel, Dhaka-1223
+            ঢাকা অফিস: দিলকুশা আর/এ, মতিঝিল, ঢাকা-১২২৩
           </a>
           <a className="link link-hover">
-            Kushtia Office: Bandhpara, Khoksa Bazar, Khoksa, Kushtia-7020.
+            কুষ্টিয়া অফিস: বান্ধপাড়া, খোকসা বাজার, খোকসা, কুষ্টিয়া-৭০২০।
           </a>
           <a className="link link-hover">
-            Rangpur Office: Shapla Chattar, Rangpur Sadar-5400
+            রংপুর অফিস: শাপলা চত্বর, রংপুর সদর-৫৪০০
           </a>{" "}
           <a className="link link-hover">
-            Rajshahi Office: Sonadighir mor, Rajshahi-6000.
+            রাজশাহী অফিস: সোনাদিঘীর মোর, রাজশাহী-৬০০০।
           </a>
           <a className="link link-hover">
-            Chattagram Office: Anderkilla, Chattagram-4000
+            চট্টগ্রাম অফিস: আন্দরকিল্লা, চট্টগ্রাম-৪০০০
           </a>
-          <a className="link link-hover">+880 18 863 47350</a>
+          <a className="link link-hover">+৮৮০ ১৮ ৮৬৩ ৪৭৩৫০</a>
           <a className="link link-hover">easyjobpreperation@gmail.com</a>
         </nav>
       </footer>
       <footer className="footer footer-center pb-5 bg-cyanPrimary text-white">
         <aside>
-          <p>
-            Copyright © 2024 - All rights reserved by Easy Job Preparetion
-          </p>
-         
+          <p>Copyright © 2024 - All rights reserved by Easy Job Preparetion</p>
+
           <a
-          target="_blank"
-          href="https://www.linkedin.com/in/ProgrammerShahJalal/"
+            target="_blank"
+            href="https://www.linkedin.com/in/ProgrammerShahJalal/"
           >
-          Developed by Elite Developer Unity
+            Developed by Elite Developer Unity
           </a>
-        
         </aside>
       </footer>
     </div>

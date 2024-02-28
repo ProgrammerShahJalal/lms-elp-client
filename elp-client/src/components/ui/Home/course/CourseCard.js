@@ -62,7 +62,7 @@ const CourseCard = ({ item }) => {
               __html: `${item?.description.substring(0, 50)}...`,
             }}
           ></p>
-           <h2>Hello</h2>
+          
 
           <div className="py-3">
             {/* {item?.description}{" "} */}

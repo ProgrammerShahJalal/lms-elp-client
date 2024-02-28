@@ -58,15 +58,16 @@ const UserProfileInfo = () => {
 {
   addressData && <div className="flex items-center justify-between rounded-lg py-5 px-10 mt-6 border border-gray-200">
   <div>
-  <h2 className="font-semibold text-lg">Your Shipping Info:</h2>
-<p>Address: {addressData?.address}</p>
-<p>Billing Name: {addressData?.billing_name}</p>
-<p>Contact No: {addressData?.contact_no}</p>
-<p>District: {addressData?.district}</p>
-<p>Division: {addressData?.division}</p>
-<p>Upazilla: {addressData?.upazilla}</p>
-<p>
-    Updated At: {addressData?.updatedAt &&
+  <h2 className="font-semibold text-lg">আপনার শিপিং তথ্য:</h2> 
+<p>বাসা/ হোল্ডিং নাম্বার: {addressData?.address}</p>
+<p>আপনার নাম: {addressData?.billing_name}</p>
+<p>আপনার  মোবাইল নাম্বার  : {addressData?.contact_no}</p>
+<p>জেলা: {addressData?.district}</p>
+<p>উপজেলা: {addressData?.upazilla}</p>
+<p>বিভাগ: {addressData?.division}</p>
+
+<p> 
+    ক্রিয়েট করেছেন : {addressData?.updatedAt &&
       new Date(addressData.updatedAt).toLocaleString('en-US', {
         year: 'numeric',
         month: '2-digit',
