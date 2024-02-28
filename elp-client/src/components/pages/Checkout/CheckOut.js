@@ -208,10 +208,10 @@ const CheckOut = () => {
             className={`grid lg:grid-cols-2 auto-cols-auto gap-5 py-20 justify-center`}
           >
             <div>
-              {shippingCharge ? (
+              {shippingCharge ? ( 
                 <div>
                   <h2 className="font-semibold text-yellowPrimary pb-5 text-xl">
-                    Shipping Address
+                    আপনার শিপিং ঠিকানা
                   </h2>
                   <div className="bg-white border rounded">
                     <div className="max-w-md mx-auto mt-8">
@@ -393,7 +393,7 @@ const CheckOut = () => {
 
             <div>
               <h2 className="font-semibold text-yellowPrimary pb-5 text-xl">
-                Products
+                আপনার অর্ডারকৃত বইসমূহ 
               </h2>
               <CheckoutCart shippingCharge={shippingCharge} total={total} />
             </div>
@@ -407,7 +407,7 @@ const CheckOut = () => {
                 <span className="font-bold pr-3">
                   <FaArrowLeftLong />
                 </span>
-                Go back to cart
+                ঝুড়িতে ফিরে যান 
               </Link>
               {
                 userLoggedIn ? <button
@@ -415,7 +415,7 @@ const CheckOut = () => {
                   onClick={handlePlaceOrderBtn}
                   className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
                 >
-                  Place Order
+                  অর্ডার প্লেস করুন 
                   <span className="font-bold pl-3">
                     <FaArrowRightLong />
                   </span>
@@ -425,7 +425,7 @@ const CheckOut = () => {
                       type="button"
                       className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary  flex items-center"
                     >
-                      Login
+                     অর্ডার প্লেস করতে লগ ইন করুন 
                       <span className="font-bold pl-3">
                         <FaArrowRightLong />
                       </span>

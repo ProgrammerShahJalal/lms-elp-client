@@ -1,7 +1,7 @@
 import AllBooks from "@/components/pages/AllBooks/AllBooks"
 
 export const metadata = {
-    title:'বুকস'
+    title:'বুকসমূহ'
 }
 
 const AllBooksPage = () => {

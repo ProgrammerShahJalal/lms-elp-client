@@ -85,26 +85,26 @@ const SinglePaymentDetails = ({ item }) => {
           // <button onClick={() => document.getElementById('my_modal_3').showModal()} className="px-2 py-2 bg-green-600 text-white rounded-sm">See All Questions</button>
         ) : (
 
-          <button onClick={() => setIsModalOpen1(true)} className="px-2 py-2 bg-green-600 text-white rounded-sm">See All Questions</button>
+          <button onClick={() => setIsModalOpen1(true)} className="px-2 py-2 bg-green-600 text-white rounded-sm lg:w-[100px]">সমস্ত প্রশ্ন দেখুন</button>
         )}
       </td>
       <td>
         {isQuiz ? (
           <Link
             href={`/user/myexams/details/${item?.exam_id?.id}`}
-            className="text-red-500 font-bold"
+            className="text-red-500 font-bold "
           >
             কুইজ  দিন
           </Link>
         ) : (
           <button
             onClick={() => setModalOpen(true)}
-            className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0"
+            className="bg-bluePrimary text-white py-2  lg:w-[150px] transition-all duration-300 rounded hover:bg-cyanPrimary z-0"
             disabled={pdfSubmitted}
-
-          >
+ 
+          > 
             {
-              pdfSubmitted ? "Answer Submitted" : "Submit Your Pdf"
+              pdfSubmitted ? "উত্তর  জমা দিয়েছেন" : "আপনার উত্তর জমা দিন"
             }
 
           </button>
@@ -125,23 +125,24 @@ const SinglePaymentDetails = ({ item }) => {
                   htmlFor="answer link"
                   className="block text-sm font-medium text-gray-600 mt-4"
                 >
-                  Give Pdf Url:
+                  আপনার পিডিএফ লিংক দিন:
                 </label>
                 <input
-                  type="text"
+                  type="url"
                   id=""
                   name="answer"
-                  className="mt-1 p-2 border rounded-md w-full"
+                  placeholder="আপনার পিডিএফ লিংক দিন "
+                  className="mt-1 p-2 border rounded-md w-full" required
                 />
               </div>
               <button
                 type="submit"
                 className="bg-blue-500 text-white w-full py-2 px-4 rounded-md mt-4"
               >
-                Submit Your Answer
+                আপনার উত্তর জমা দিন
               </button>
             </form>
-            <button
+            <button 
               onClick={() => {
                 setModalOpen(false);
               }}

@@ -49,15 +49,15 @@ const RoutinesShow = () => {
 
             {isLoading && (
                 <div className="text-center text-gray-500 mt-4">
-                    Routines are loading...
+                    রুটিন লোড হচ্ছে...
                 </div>
             )}
-
+ 
             {
                 !isLoading && <>
                     {/* Add category filter */}
                     <div className="m-8">
-                        <label className="text-base font-bold">Filter by Category:</label>
+                        <label className="text-base font-bold">ক্যাটাগরি দিয়ে দেখুন :</label> 
                         <select
                             className="ml-2 p-2 border border-gray-300 rounded"
                             value={selectedCategory}
@@ -76,7 +76,7 @@ const RoutinesShow = () => {
 
                     {/* Add subcategory filter */}
                     <div className="m-8">
-                        <label className="text-sm font-bold">Filter by Subcategory:</label>
+                        <label className="text-sm font-bold">সাব ক্যাটাগরি দিয়ে দেখুন:</label>
                         <select
                             className="ml-2 p-2 border border-gray-300 rounded"
                             value={selectedSubcategory}
@@ -105,10 +105,10 @@ const RoutinesShow = () => {
                         {course.sub_category_id && (
                             <div className="mb-2">
                                 <h3 className="text-lg font-bold mb-1">
-                                    Category: {course.sub_category_id.category_id.title}
+                                ক্যাটাগরি : {course.sub_category_id.category_id.title}
                                 </h3>
                                 <p className="text-sm mb-1">
-                                    Subcategory: {course.sub_category_id.title}
+                                সাব ক্যাটাগরি: {course.sub_category_id.title}
                                 </p>
                             </div>
                         )}

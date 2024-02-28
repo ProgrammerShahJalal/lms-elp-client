@@ -18,11 +18,11 @@ const ContactForm = () => {
       .then((result) => {
         if (result.status === 200) {
           setSubmissionStatus("submitted");
-          toast.success("Your email has been sent successfully");
+          toast.success("আপনার মেইলটি সফলভাবে জমা হয়েছে ।");
         }
       }, (error) => {
-        setSubmissionStatus("submitNow");
-        toast.error(error.text);
+        setSubmissionStatus("submitNow"); 
+        toast.error(error.text); 
       });
   };
   return (
@@ -32,22 +32,22 @@ const ContactForm = () => {
           type="text"
           name="from_name"
           className="px-4 py-3 bg-gray-200 w-full outline-none text-xl rounded "
-          placeholder="Your Name *"
+          placeholder=" আপনার নাম *"
           required
         />
         <input
           type="text"
           className="px-4 py-3 bg-gray-200 w-full outline-none text-xl rounded "
-          placeholder="Your Email *"
+          placeholder=" আপনার  ইমেইল *"
           name="from_email"
           required
         />
         <input
   type="text"
   className="px-4 py-3 bg-gray-200 w-full outline-none text-xl rounded "
-  placeholder="Your Phone *"
+  placeholder="আপনার মোবাইল নাম্বার *"
   name="from_con"
-  pattern="^01\d{9}$"
+  pattern="^01\d{9}$" 
   title="মোবাইল নাম্বারটি  ১১ টি সংখ্যা হতে হবে এবং এমন হবে 01742561023"
   required
 />
@@ -55,7 +55,7 @@ const ContactForm = () => {
         <textarea rows={5}
           type="text"
           className="px-4 py-3 bg-gray-200 w-full outline-none text-xl rounded "
-          placeholder="Type comment here *"
+          placeholder="আপনার মন্তব্য লিখুন  *"
           name="message"
           required
         />
@@ -66,10 +66,10 @@ const ContactForm = () => {
           }`}
           value={
             submissionStatus === "submitNow"
-              ? "Submit Now"
+              ? " জমা দিন"
               : submissionStatus === "submitting"
-              ? "Submitting..."
-              : "Submitted"
+              ? "জমা হচ্ছে..."
+              : "জমা হয়েছে"
           }
           disabled={submissionStatus === "submitting"}
         />

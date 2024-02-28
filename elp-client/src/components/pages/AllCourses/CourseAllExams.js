@@ -102,7 +102,7 @@ const CourseAllExams = ({ course_id }) => {
       <>
         {" "}
         <div className="flex justify-center items-center font-bold bg-green-400  text-white py-3 rounded text-lg mt-5">
-          <h5>There is No Quiz In this course now</h5>
+          <h5> এই কোর্সে এখনও কোনো কুইজ/  পরীক্ষা  নেই।</h5>
         </div>
       </>
     );
@@ -143,13 +143,13 @@ const CourseAllExams = ({ course_id }) => {
           <table className="table">
             {/* head */}
             <thead>
-              <tr>
-                <th></th>
-                <th>Exam Title</th>
-                <th>Exam Type</th>
-                <th>Total Marks</th>
-                <th>Fee</th>
-                <th>Action</th>
+              <tr className="text-[16px]">
+               
+                <th>পরীক্ষার শিরোনাম</th>
+                <th>পরীক্ষার ধরণ</th>
+                <th>মোট নাম্বার </th>
+                <th>ফি</th>
+                <th>অ্যাকশন</th>
               </tr>
             </thead>
             <tbody className="">

@@ -15,53 +15,53 @@ const CheckoutCart = ({ shippingCharge }) => {
             <div key={item?._id}>
               <div className="flex justify-between items-center pb-5">
                 <h2>{item?.title}</h2>
-                <h2>{item?.quantity * item?.price} TK</h2>
+                <h2>{item?.quantity * item?.price} {" "} টাকা</h2>
               </div>
-            </div>
+            </div> 
           ))}
           <hr />
           <div>
             <div>
               <h2 className="font-bold text-xl text-bluePrimary">
-                Shipping Method
+                শিপিং মেথড 
               </h2>
               <p className="border px-2 py-1">
                 {" "}
-                Standard Delivery: {shippingCharge} tk
-              </p>
+                ডেলিভারি চার্জ: {shippingCharge} {" "} টাকা
+              </p> 
             </div>
             <div className="py-5">
               <h2 className="font-bold text-xl text-bluePrimary">
-                Payment Method
+                পেমেন্ট মেথড 
               </h2>
-              <p className="border px-2 py-1">Bkash </p>
-              <p className="border px-2 py-1">Nagad </p>
+              <p className="border px-2 py-1">বিকাশ </p>
+              <p className="border px-2 py-1">নগদ </p>
             </div>
             <div className="pt-5">
               <div className="flex justify-between items-center text-start">
-                <h2>Subtotal:</h2>
+                <h2>সাব টোটাল:</h2>
                 <h2 className="font-bold text-xl text-bluePrimary">
-                  {total.toFixed(2)}
+                  {total.toFixed(2)} {" "} টাকা
+                </h2> 
+              </div>
+              <div className="flex justify-between items-center">
+                <h2>শিপিং ফি :</h2>
+                <h2 className="font-bold text-xl text-bluePrimary">
+                  {shippingCharge} {" "} টাকা
                 </h2>
               </div>
               <div className="flex justify-between items-center">
-                <h2>Shipping fee:</h2>
+                <h2>ট্যাক্স:</h2> 
+                <h2 className="font-bold text-xl text-bluePrimary">0.00 {" "} টাকা</h2>
+              </div>
+              <div className="flex justify-between items-center">
+                <h2>ডিসকাউন্ট:</h2>
+                <h2 className="font-bold text-xl text-bluePrimary">0.00 {" "} টাকা</h2>
+              </div>
+              <div className="flex justify-between items-center">
+                <h2>সর্বমোট :</h2>
                 <h2 className="font-bold text-xl text-bluePrimary">
-                  {shippingCharge} TK
-                </h2>
-              </div>
-              <div className="flex justify-between items-center">
-                <h2>Tax:</h2>
-                <h2 className="font-bold text-xl text-bluePrimary">0.00 Tk</h2>
-              </div>
-              <div className="flex justify-between items-center">
-                <h2>Discount:</h2>
-                <h2 className="font-bold text-xl text-bluePrimary">0.00 Tk</h2>
-              </div>
-              <div className="flex justify-between items-center">
-                <h2>Total:</h2>
-                <h2 className="font-bold text-xl text-bluePrimary">
-                  {(total + shippingCharge).toFixed(2)}{" "}
+                  {(total + shippingCharge).toFixed(2)}{" "}{" "} টাকা
                 </h2>
               </div>
             </div>
