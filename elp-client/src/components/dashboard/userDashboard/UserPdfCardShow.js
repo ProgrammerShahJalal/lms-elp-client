@@ -4,14 +4,13 @@ import Image from "next/image";
 import book from "../../../assets/images/book.jpg";
 import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
-
+import decryptLink from "@/helpers/decryptLink";
 
 const UserPdfCardShow = ({ bookId, order, index }) => {
   const { data } = useGetSingleBookQuery(bookId);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onOpenPDFModal = () => {
-
     setIsModalOpen(true);
   };
 
@@ -23,7 +22,12 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
     return (
       <>
         <div className="border rounded">
-          <Image src={data?.cover_page} width={400} alt="book-img" height={40} />
+          <Image
+            src={data?.cover_page}
+            width={400}
+            alt="book-img"
+            height={40}
+          />
           <div className="px-5 mb-6">
             <h2 className="text-xl font-bold py-4">
               {data?.title ? data?.title : "বইটি নাই"}
@@ -37,12 +41,15 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
           </div>
         </div>
         {isModalOpen && (
-          <PDFViewerModal isOpen={isModalOpen} pdfSrc={data?.pdf_link} onClose={onClosePDFModal} />
+          <PDFViewerModal
+            isOpen={isModalOpen}
+            pdfSrc={decryptLink(data?.pdf_link)}
+            onClose={onClosePDFModal}
+          />
         )}
       </>
     );
   }
-
 
   // return (
   //   <>
@@ -69,4 +76,3 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
 };
 
 export default UserPdfCardShow;
-
