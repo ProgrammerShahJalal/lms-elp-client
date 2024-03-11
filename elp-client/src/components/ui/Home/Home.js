@@ -32,6 +32,7 @@ import {
 } from "@/utils/subCategoryId";
 import FilteringCourseBooks from "./FilteringCourseBooks";
 import Header from "@/components/shared/Header";
+import CategorySubCategory from "./CategorySubCategory";
 
 const HomePage = () => {
   // const {data} = useGetAllCoursesQuery({
@@ -41,7 +42,8 @@ const HomePage = () => {
   return (
     <div className="">
       <Hero />
-      <Category />
+      {/* <Category /> */}
+      <CategorySubCategory />
 
       <Courses />
       <FilteringCourseBooks sub_category_id={bcsPriliSubId} />
