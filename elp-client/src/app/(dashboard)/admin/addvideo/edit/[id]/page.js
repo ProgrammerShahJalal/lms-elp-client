@@ -1,7 +1,7 @@
 "use client";
 
 import EditCoursePlylist from "@/components/dashboard/admin/EditCoursePlaylist";
-import axios from "axios";
+// import axios from "axios";
 import { useParams } from "next/navigation";
 
 const EditCoursePlaylistPage = () => {

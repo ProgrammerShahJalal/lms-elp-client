@@ -1,7 +1,7 @@
 "use client";
 
 import EditExam from "@/components/dashboard/admin/EditExam";
-import axios from "axios";
+// import axios from "axios";
 import { useParams } from "next/navigation";
 
 const ExamEditPage = () => {
