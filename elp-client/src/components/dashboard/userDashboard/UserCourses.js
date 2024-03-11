@@ -12,7 +12,7 @@ const UserCourses = () => {
     useGetMyCourseSubscriptionsHistoryQuery();
 
   const courseSubs = data?.courseSubscription;
-  ("sourse subs", courseSubs);
+  "sourse subs", courseSubs;
 
   let content = null;
 
@@ -27,7 +27,9 @@ const UserCourses = () => {
   if (!isLoading && isError) {
     content = (
       <div>
-        <h5 className="font-bold bg-green-600  text-white py-3 px-4 rounded text-lg">এখনও কোনো কোর্স কেনা হয়নি</h5>
+        <h5 className="font-bold bg-green-600  text-white py-3 px-4 rounded text-lg">
+          এখনও কোনো কোর্স কেনা হয়নি
+        </h5>
       </div>
     );
   }
@@ -47,10 +49,13 @@ const UserCourses = () => {
         key={item?._id}
         className="w-80 h-auto shadow-xl border rounded-lg border-lime-500"
       >
-
         <div className="flex justify-between items-center">
-        <p className="p-2 m-2 bg-purple-200 rounded-lg">{item?.course_id?.sub_category_id?.category_id?.title}</p>
-        <p className="p-2 m-2 bg-orange-200 rounded-lg">{item?.course_id?.sub_category_id?.title}</p>
+          <p className="p-2 m-2 bg-purple-200 rounded-lg">
+            {item?.course_id?.sub_category_id?.category_id?.title}
+          </p>
+          <p className="p-2 m-2 bg-orange-200 rounded-lg">
+            {item?.course_id?.sub_category_id?.title}
+          </p>
         </div>
 
         <img src={item?.course_id?.banner} alt="course" />
