@@ -7,7 +7,7 @@ import axios from "axios";
 import YoutubePlaylist from "./playlist";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
-
+import decryptLink from "@/helpers/decryptLink";
 
 const Play = () => {
   // Disable right-click
@@ -41,7 +41,9 @@ const Play = () => {
 
         if (course && course.length > 0) {
           for (const playlist of course) {
-            const playlistID = extractPlaylistIdFromUrl(playlist.playlist_link);
+            const playlistID = extractPlaylistIdFromUrl(
+              decryptLink(playlist.playlist_link)
+            );
             const response = await axios.get(
               `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistID}&key=${apiKey}&maxResults=${maxVideosToShow}`
             );
@@ -207,7 +209,6 @@ const Play = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-
   return (
     <div className="grid grid-cols-1 gap-1 select-none">
       {isLoading ? (
@@ -242,11 +243,10 @@ const Play = () => {
           </div>
 
           <div className="grid grid-cols-3 justify-items-center justify-center content-center items-center m-4 border-2 border-dotted border-sky-500">
-           
-           {/* Custom volume controls with progress bar */}
-           <div className="custom-volume-controls text-center">
-           <small>Volume</small>
-           <br/>
+            {/* Custom volume controls with progress bar */}
+            <div className="custom-volume-controls text-center">
+              <small>Volume</small>
+              <br />
               <input
                 type="range"
                 min="0"
@@ -256,11 +256,10 @@ const Play = () => {
                 className="volume-slider ml-6 md:ml-0"
               />
             </div>
-           
-  
+
             {/* Custom play button */}
             <div>
-            <div className="text-start ml-1">
+              <div className="text-start ml-1">
                 {isPlaying ? <small>Pause</small> : <small>Play</small>}
               </div>
               <img
@@ -279,25 +278,22 @@ const Play = () => {
             </div>
 
             <div className="pl-1 md:pl-4">
-            {/* Backward 10 Seconds Button */}
-            <button
-              onClick={() => handleSeek(-10)}
-              className="bg-blue-500 text-white px-2 py-2 rounded mr-2"
-            >
-              -10s
-            </button>
+              {/* Backward 10 Seconds Button */}
+              <button
+                onClick={() => handleSeek(-10)}
+                className="bg-blue-500 text-white px-2 py-2 rounded mr-2"
+              >
+                -10s
+              </button>
 
-            {/* Forward 10 Seconds Button */}
-            <button
-              onClick={() => handleSeek(10)}
-              className="bg-blue-500 text-white px-2 py-2 rounded"
-            >
-              +10s
-            </button>
-
-          
-           </div>
-
+              {/* Forward 10 Seconds Button */}
+              <button
+                onClick={() => handleSeek(10)}
+                className="bg-blue-500 text-white px-2 py-2 rounded"
+              >
+                +10s
+              </button>
+            </div>
           </div>
 
           <div className="bg-white  py-1 px-36 md:px-96 z-20 absolute bottom-44 left-0 right-0 text-green-500 font-bold flex items-center">
@@ -316,17 +312,17 @@ const Play = () => {
           </h2>
 
           <small
-        className="z-50 absolute font-bold text-red-600 shadow-sm"
-        style={{
-          top: contactNoPosition.top,
-          left: contactNoPosition.left,
-          right: contactNoPosition.right,
-          bottom: contactNoPosition.bottom,
-          transform: "-translate(-50%, -50%)",
-        }}
-      >
-        {data?.contact_no}
-      </small>
+            className="z-50 absolute font-bold text-red-600 shadow-sm"
+            style={{
+              top: contactNoPosition.top,
+              left: contactNoPosition.left,
+              right: contactNoPosition.right,
+              bottom: contactNoPosition.bottom,
+              transform: "-translate(-50%, -50%)",
+            }}
+          >
+            {data?.contact_no}
+          </small>
 
           <div className="flex justify-between mt-4">
             <button

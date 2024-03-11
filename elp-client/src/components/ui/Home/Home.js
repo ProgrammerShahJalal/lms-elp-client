@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import MemeberShipPlan from "@/components/ohters/MemeberShipPlan";
 import Benefits from "./Benefits";
 import BookSection from "./BookSection";
@@ -21,7 +21,15 @@ import NtrcaPrili from "./course/NtrcaPrili";
 import NtrcaWritten from "./course/NtrcaWritten";
 import PrimaryPrili from "./course/PrimaryPrili";
 import SubCategoryCourses from "./course/SubCategoryCourses";
-import { bankPriliSubId, bankWrittenSubId, bcsPriliSubId, bcsWrittenSubId, ntrcaPriliSubId, ntrcaWrittenSubId, primaryPriliSubId } from "@/utils/subCategoryId";
+import {
+  bankPriliSubId,
+  bankWrittenSubId,
+  bcsPriliSubId,
+  bcsWrittenSubId,
+  ntrcaPriliSubId,
+  ntrcaWrittenSubId,
+  primaryPriliSubId,
+} from "@/utils/subCategoryId";
 import FilteringCourseBooks from "./FilteringCourseBooks";
 import Header from "@/components/shared/Header";
 
@@ -32,29 +40,28 @@ const HomePage = () => {
   // (data)
   return (
     <div className="">
-    
-      <Hero/>
-      <Category/>
-     
-      <Courses/> 
-      <FilteringCourseBooks sub_category_id={bcsPriliSubId}/>
-      <FilteringCourseBooks sub_category_id={bcsWrittenSubId}/>
-      <FilteringCourseBooks sub_category_id={bankPriliSubId}/>
-      <FilteringCourseBooks sub_category_id={bankWrittenSubId}/>
-      <FilteringCourseBooks sub_category_id={ntrcaPriliSubId}/>
-      <FilteringCourseBooks sub_category_id={ntrcaWrittenSubId}/>
-      <FilteringCourseBooks sub_category_id={primaryPriliSubId}/>
-    
-      <FreeCourse/>
-      <BookSection/>
-      <FreeSeminar/>
-    
-      <Benefits/>
-      <Faq/>
-      <HomeQuiz/>
-      <SelectCarreer/>
-      <ScrollToTopButton/>
+      <Hero />
+      <Category />
+
+      <Courses />
+      <FilteringCourseBooks sub_category_id={bcsPriliSubId} />
+      <FilteringCourseBooks sub_category_id={bcsWrittenSubId} />
+      <FilteringCourseBooks sub_category_id={bankPriliSubId} />
+      <FilteringCourseBooks sub_category_id={bankWrittenSubId} />
+      <FilteringCourseBooks sub_category_id={ntrcaPriliSubId} />
+      <FilteringCourseBooks sub_category_id={ntrcaWrittenSubId} />
+      <FilteringCourseBooks sub_category_id={primaryPriliSubId} />
+
+      <FreeCourse />
+      <BookSection />
+      <FreeSeminar />
+
+      <Benefits />
+      <Faq />
+      <HomeQuiz />
+      <SelectCarreer />
+      <ScrollToTopButton />
     </div>
   );
 };
-export  default HomePage;
+export default HomePage;
