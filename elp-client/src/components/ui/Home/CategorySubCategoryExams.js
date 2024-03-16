@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
@@ -12,7 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { FaCheck } from "react-icons/fa6";
 
-const CategorySubCategory = () => {
+const CategorySubCategoryExams = () => {
   const { data, isError, isLoading } = useGetAllCategoriesQuery();
   const categoriesData = data?.categories;
 
@@ -84,9 +85,8 @@ const CategorySubCategory = () => {
             {item?.subCategories &&
               item?.subCategories?.length > 0 &&
               item?.subCategories?.map((subCategory, index, array) => (
-                <div className="w-full">
+                <div className="w-full" key={subCategory?._id}>
                   <div
-                    key={subCategory?._id}
                     className={`text-center flex flex-col py-2 ${
                       index === 0 && "border-l-0"
                     } border-l  border-y border-black`}
@@ -99,14 +99,14 @@ const CategorySubCategory = () => {
                     } border-l border-black`}
                   >
                     <Link
-                      href={`/courses/subcategory/${subCategory?._id}`}
+                      href={`/exams/subcategory/${subCategory?._id}`}
                       className={`inline-block w-full py-2 bg-yellowPrimary text-white transition-all duration-300 ${
                         array.length === index + 1 ? "rounded-br-md" : ""
                       }  hover:bg-bluePrimary ${
                         index === 0 && "rounded-bl-md"
                       }`}
                     >
-                      ভর্তি হোন
+                      পরীক্ষা দিন
                     </Link>
                   </div>
                 </div>
@@ -127,10 +127,10 @@ const CategorySubCategory = () => {
                   >
                     {/* link to the category, since sub-category not available for this category */}
                     <Link
-                      href={`/courses/category/${item?._id}`}
+                      href={`/exams/category/${item?._id}`}
                       className={`block w-full py-2 text-white transition-all duration-300 hover:bg-bluePrimary  rounded-b-md`}
                     >
-                      ভর্তি হোন
+                      পরীক্ষা দিন
                     </Link>
                   </div>
                 </div>
@@ -142,14 +142,11 @@ const CategorySubCategory = () => {
   }
 
   return (
-    <div className=" px-14 py-20 ">
+    <div className="px-14 py-4">
       <div className="lg:flex items-center justify-between my-4">
         <div>
-          {/* <h5 className="lg:text-xl py-4 mb-3">
-            দেশসেরা ইন্সট্রাক্টরদের সেরা সব কোর্স এখন এক প্ল্যাটফর্মে।
-          </h5> */}
           <h2 className="lg:text-3xl md:text-2xl font-semibold mb-2">
-            আমাদের কোর্সসমূহ থেকে বেছে নিন আপনার পছন্দের কোর্সঃ
+            পরীক্ষায় অংশগ্রহণ করে নিজের মেধা যাচাই করুনঃ
           </h2>
         </div>
       </div>
@@ -168,4 +165,4 @@ const CategorySubCategory = () => {
   );
 };
 
-export default CategorySubCategory;
+export default CategorySubCategoryExams;

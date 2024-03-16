@@ -1,6 +1,5 @@
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import Commonbanner from "@/components/banners/Commonbanner";
 import PaymentModal from "@/components/shared/PaymentModal";
 import { authKey } from "@/constants/storage";
 import { useGetAllExamsQuery } from "@/redux/api/examsApi";
@@ -15,7 +14,6 @@ import toast from "react-hot-toast";
 function CourseExams({ course_id }) {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
-
 
   // states
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -49,7 +47,6 @@ function CourseExams({ course_id }) {
 
     Cookies.set("order_type", "exam");
     Cookies.set("creationPayload", JSON.stringify(examPaymentPayload));
-
 
     if (paymentMethod === "bkash") {
       const { data } = await axios.post(
@@ -102,7 +99,7 @@ function CourseExams({ course_id }) {
             <tr className="text-[16px]">
               <th className="py-2 px-4 md:w-1/4">পরীক্ষার শিরোনাম</th>
               <th className="py-2 px-4 md:w-1/4">পরীক্ষার ধরণ</th>
-              <th className="py-2 px-4 md:w-1/4">মোট নাম্বার  </th>
+              <th className="py-2 px-4 md:w-1/4">মোট নাম্বার </th>
               <th className="py-2 px-4 md:w-1/4">ফি</th>
               <th className="py-2 px-4 md:w-1/4">অ্যাকশন</th>
             </tr>
@@ -115,7 +112,7 @@ function CourseExams({ course_id }) {
                   {exam?.exam_type == "0" ? "MCQ" : "Written"}
                 </td>
                 <td className="py-2 px-4 md:w-1/4">{exam?.total_marks}</td>
-                <td className="py-2 px-4 md:w-1/4">{exam?.fee} {" "}টাকা</td>
+                <td className="py-2 px-4 md:w-1/4">{exam?.fee} টাকা</td>
                 <td className="">
                   <button
                     onClick={() => {
@@ -124,7 +121,7 @@ function CourseExams({ course_id }) {
                     }}
                     className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary z-0 cursor-pointer lg:w-[100px]"
                   >
-                    {exam?.exam_type === 0 ? 'কুইজ কিনুন' : 'প্রশ্ন কিনুন'}
+                    {exam?.exam_type === 0 ? "কুইজ কিনুন" : "প্রশ্ন কিনুন"}
                   </button>
                 </td>
               </tr>
