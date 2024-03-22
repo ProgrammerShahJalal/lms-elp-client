@@ -66,7 +66,7 @@ const Quiz = ({ quizData, onSubmit }) => {
       <div>
         {currentQuestion > 0 && <button className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary mr-5 cursor-pointer"  onClick={handlePrevious}>Previous</button>}
         {isLastQuestion ? (
-          <button onClick={() => onSubmit(userAnswers)} className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-bluePrimary cursor-pointer" >Submit</button>
+          <button onClick={() => onSubmit(userAnswers)} className="bg-greenPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-bluePrimary cursor-pointer" >Submit</button>
         ) : (
           <button onClick={handleNext}  disabled={isNextButtonDisabled()}  className="bg-bluePrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary cursor-pointer" >Next</button>
         )}

@@ -53,7 +53,7 @@ const Testing = () => {
             <div key={path}>
               {dropdown ? (
                 <div
-                  className="relative inline-block  hover:text-yellowPrimary font-bold cursor-pointer text-white"
+                  className="relative inline-block  hover:text-greenPrimary font-bold cursor-pointer text-white"
                   onClick={toggleCoursesDropdown}
                   //   onMouseEnter={openCoursesDropdown}
                   //   onMouseLeave={closeCoursesDropdown}

@@ -40,7 +40,7 @@ const CourseDetailsData = ({ data, isError, isLoading }) => {
                   </span>
                 </p>
                 {data?.sub_category_id?.title && (
-                  <p className="text-yellowPrimary">
+                  <p className="text-greenPrimary">
                     সাব ক্যাটাগরি:{" "}
                     <span className="text-black font-medium">
                       {data?.sub_category_id?.title}

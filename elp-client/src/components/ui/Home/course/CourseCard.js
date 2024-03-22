@@ -20,7 +20,7 @@ const CourseCard = ({ item }) => {
             height={50}
           />
           {/* z-0-rotate-45 z-10 */}
-          <p className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">
+          <p className="absolute top-0 left-0 bg-greenPrimary text-white p-1  ">
             {item?.sub_category_id?.category_id?.title}
           </p>
           <Link
@@ -85,7 +85,7 @@ const CourseCard = ({ item }) => {
           <div className="text-center mt-6 mb-3 ">
             <Link
               href={`/courses/details/${item?._id}/subscribe`}
-              className="bg-yellowPrimary text-white py-4 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary"
+              className="bg-greenPrimary text-white py-4 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary"
             >
               কোর্সটি কিনুন
             </Link>

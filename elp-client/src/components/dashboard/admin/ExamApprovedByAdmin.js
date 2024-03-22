@@ -112,7 +112,7 @@ const ExamApprovedByAdmin = ({ item, i }) => {
                 {item?.exam_type === "0" ? (
                     <span className="text-bluePrimary">Quiz</span>
                 ) : (
-                    <span className="text-yellowPrimary">Questions</span>
+                    <span className="text-greenPrimary">Questions</span>
                 )}
             </td>
             <td className="py-2 px-4 border-b md:table-cell">{item?.fee}</td>
