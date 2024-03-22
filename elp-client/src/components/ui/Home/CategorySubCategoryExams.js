@@ -100,9 +100,9 @@ const CategorySubCategoryExams = () => {
                   >
                     <Link
                       href={`/exams/subcategory/${subCategory?._id}`}
-                      className={`inline-block w-full py-2 bg-yellowPrimary text-white transition-all duration-300 ${
+                      className={`inline-block w-full py-2 bg-green-600 text-white transition-all duration-300 ${
                         array.length === index + 1 ? "rounded-br-md" : ""
-                      }  hover:bg-bluePrimary ${
+                      }  hover:bg-green-500 ${
                         index === 0 && "rounded-bl-md"
                       }`}
                     >
@@ -123,12 +123,12 @@ const CategorySubCategoryExams = () => {
                     &nbsp;
                   </p>
                   <div
-                    className={`w-full bg-yellowPrimary text-center rounded-b-md`}
+                    className={`w-full bg-green-600 text-center rounded-b-md`}
                   >
                     {/* link to the category, since sub-category not available for this category */}
                     <Link
                       href={`/exams/category/${item?._id}`}
-                      className={`block w-full py-2 text-white transition-all duration-300 hover:bg-bluePrimary  rounded-b-md`}
+                      className={`block w-full py-2 text-white transition-all duration-300 hover:bg-green-500  rounded-b-md`}
                     >
                       পরীক্ষা দিন
                     </Link>

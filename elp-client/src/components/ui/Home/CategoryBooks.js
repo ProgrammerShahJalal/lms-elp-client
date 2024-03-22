@@ -77,12 +77,12 @@ const CategoryBooks = () => {
             <p className="text-center border-r border-black py-2">সফট কপি</p>
             <p className="text-center py-2">প্রিন্ট কপি</p>
           </div>
-          <div className={`w-full bg-yellowPrimary text-center rounded-b-md`}>
+          <div className={`w-full bg-green-600 text-center rounded-b-md`}>
             {/* link to the category, since sub-category not available for this category */}
 
             <Link
               href={`/books/category/${item?._id}`}
-              className={`block w-full py-2 text-white transition-all duration-300 hover:bg-bluePrimary rounded-b-md`}
+              className={`block w-full py-2 text-white transition-all duration-300 hover:bg-green-500 rounded-b-md`}
             >
               কিনুন
             </Link>
