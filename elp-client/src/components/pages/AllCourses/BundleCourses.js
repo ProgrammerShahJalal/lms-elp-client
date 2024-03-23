@@ -92,7 +92,7 @@ const BundleCourses = ({ bundle, i, isLast, sub_category_id }) => {
                 );
                 setModalOpen(true);
               }}
-              className="bg-yellowPrimary text-white py-3 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary "
+              className="bg-greenPrimary text-white py-3 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary "
             >
               বান্ডিল কোর্সটি কিনুন
             </button>

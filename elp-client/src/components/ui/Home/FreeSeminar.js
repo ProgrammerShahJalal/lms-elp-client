@@ -23,7 +23,7 @@ const FreeSeminar = () => {
               সফল ক্যারিয়ার গড়ার সঠিক দিকনির্দেশনা পেতে আমাদের ফ্রি সেমিনারগুলোতে অংশগ্রহণ করুন। এসব
               সেমিনারে প্রশ্নোত্তরের মাধ্যমে আপনার কনফিউশন দূর করতে পারবেন।
             </p>
-            <a href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank" className="bg-cyanPrimary text-white py-3 px-6 transition-all duration-300 rounded hover:bg-yellowPrimary">সিট বুক করুন</a>
+            <a href="https://forms.gle/3vjsXVuQi2vUomHX7" target="_blank" className="bg-cyanPrimary text-white py-3 px-6 transition-all duration-300 rounded hover:bg-greenPrimary">সিট বুক করুন</a>
           </div>
         </div>
       </div>

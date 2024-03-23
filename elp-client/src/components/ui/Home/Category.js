@@ -70,7 +70,7 @@ const Category = () => {
       <SwiperSlide key={item?._id}>
         {" "}
         <Link href={`/courses/category/${item?._id}`} className=" ">
-          <div className="bg-bluePrimary bg-opacity-50  rounded-lg shadow-lg border cursor-pointer  hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 hover:rounded-lg">
+          <div className="bg-bluePrimary bg-opacity-50  rounded-lg shadow-lg border cursor-pointer  hover:bg-greenPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110 hover:rounded-lg">
             <div className="text-center flex justify-center items-center">
               <div className="pt-4 h-52">
                 <Image
@@ -105,7 +105,7 @@ const Category = () => {
         {/* <button className="bg-transparent border-0 ">
           <Link
             href="/"
-            className="bg-transparent text-cyanPrimary py-4 px-4 transition-all font-semibold border border-cyan-900 duration-300 rounded hover:bg-yellowPrimary hover:border-none hover:text-white"
+            className="bg-transparent text-cyanPrimary py-4 px-4 transition-all font-semibold border border-cyan-900 duration-300 rounded hover:bg-greenPrimary hover:border-none hover:text-white"
           >
             সকল ক্যাটাগরি দেখুন
           </Link>{" "}

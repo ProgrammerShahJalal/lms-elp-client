@@ -34,7 +34,7 @@ const FreeCourseCard1 = () => {
           </div>
           <p className="py-3">
             প্রতিটি বিষয়ের সেরা মেন্টরের সাথে ৩ ধরনের লাইভ ক্লাসে প্রতিটি টপিক শিখো{" "}
-            <Link href="/" className="text-yellowPrimary">
+            <Link href="/" className="text-greenPrimary">
               বিস্তারিত পড়ুন
             </Link>{" "}
           </p>
@@ -46,7 +46,7 @@ const FreeCourseCard1 = () => {
             </p>
           </div>
           {/* <div className=" card-actions justify-center ">
-            <button className="bg-bluePrimary text-white py-2 px-2 transition-all duration-300 rounded hover:bg-yellowPrimary">
+            <button className="bg-bluePrimary text-white py-2 px-2 transition-all duration-300 rounded hover:bg-greenPrimary">
               এনরোল করুন
             </button>
           </div> */}

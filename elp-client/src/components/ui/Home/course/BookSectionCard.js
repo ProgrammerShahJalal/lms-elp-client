@@ -81,10 +81,10 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
             height={100}
           />
 
-          {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+          {/* <p  className="absolute top-0 left-0 bg-greenPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
           <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p> */}
 
-           <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">{item?.course_id[0]?.sub_category_id?.category_id?.title}</p>
+           <p  className="absolute top-0 left-0 bg-greenPrimary text-white p-1  ">{item?.course_id[0]?.sub_category_id?.category_id?.title}</p>
           <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 "> {item?.course_id[0]?.sub_category_id?.title}</p>
 
         </figure>
@@ -145,13 +145,13 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
             </p>
             <button
               onClick={() => handleAddBook(item)}
-              className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
+              className="bg-greenPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
             >
               ঝুড়িতে যোগ করুন
             </button>
           </div>
           {/* <div className=" card-actions justify-start ">
-            <button className="text-black transition-all duration-300 rounded hover:text-yellowPrimary font-medium underline">
+            <button className="text-black transition-all duration-300 rounded hover:text-greenPrimary font-medium underline">
               বইটি কিনুন
             </button>
           </div> */}
