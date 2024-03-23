@@ -15,7 +15,7 @@ const GetInTouch = () => {
       <div className="grid lg:grid-cols-2 gap-10">
         <div className="grid lg:grid-cols-2 gap-7"> 
           <Link href="/">
-            <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-greenPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
+            <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
               <div className="space-y-2 text-center">
                 <div className="flex justify-center items-center ">
                   <TbWorld className="text-4xl text-bluePrimary rounded-full bg-blue-200 p-2" />
@@ -26,7 +26,7 @@ const GetInTouch = () => {
               </div> 
             </div>
           </Link>
-          <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-greenPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
+          <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
             <div className="space-y-2 text-center">
               <div className="flex justify-center items-center">
                 <TbPhoneCall className="text-4xl text-bluePrimary rounded-full bg-blue-200 p-2" />
@@ -36,7 +36,7 @@ const GetInTouch = () => {
               <p className="">+৮৮০ ১৮ ৮৬৩ ৪৭৩৫০</p>
             </div>
           </div>
-          <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-greenPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
+          <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
             <div className="space-y-2 text-center">
               <div className="flex justify-center items-center">
                 <MdOutlineMailOutline className="text-4xl " />
@@ -46,7 +46,7 @@ const GetInTouch = () => {
               <p className="">easyjobpreperation@gmail.com</p>
             </div>
           </div> 
-          <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-greenPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
+          <div className="bg-white rounded shadow-md  h-48 pt-10 cursor-pointer hover:shadow-xl hover:bg-yellowPrimary hover:text-white transition-all transform duration-300 delay-200 hover:-translate-y-1 hover:scale-110">
             <div className="space-y-2 text-center">
               <div className="flex justify-center items-center">
                 <LuMapPin className="text-4xl " />

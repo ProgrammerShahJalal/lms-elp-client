@@ -54,7 +54,7 @@ const SubCategory = ({id}) => {
         <div>
              <Commonbanner title="সাব ক্যাটাগরি" breadcrumbItems={breadcrumbItems}/>
              <div className="mx-14 my-20">
-       <h2 className="text-center font-bold text-xl pb-10 text-greenPrimary">সব কোর্স</h2>
+       <h2 className="text-center font-bold text-xl pb-10 text-yellowPrimary">সব কোর্স</h2>
       <div className="grid lg:grid-cols-3  gap-4">{content}</div>
       </div>
         </div>

@@ -210,7 +210,7 @@ const CheckOut = () => {
             <div>
               {shippingCharge ? ( 
                 <div>
-                  <h2 className="font-semibold text-greenPrimary pb-5 text-xl">
+                  <h2 className="font-semibold text-yellowPrimary pb-5 text-xl">
                     আপনার শিপিং ঠিকানা
                   </h2>
                   <div className="bg-white border rounded">
@@ -392,7 +392,7 @@ const CheckOut = () => {
             </div>
 
             <div>
-              <h2 className="font-semibold text-greenPrimary pb-5 text-xl">
+              <h2 className="font-semibold text-yellowPrimary pb-5 text-xl">
                 আপনার অর্ডারকৃত বইসমূহ 
               </h2>
               <CheckoutCart shippingCharge={shippingCharge} total={total} />

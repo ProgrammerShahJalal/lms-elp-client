@@ -34,7 +34,7 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
             </h2>
             <button
               onClick={onOpenPDFModal}
-              className="rounded-lg font-bold text-lg bg-greenPrimary text-white px-10 py-3"
+              className="rounded-lg font-bold text-lg bg-yellowPrimary text-white px-10 py-3"
             >
               বইটি পড়ুন
             </button>
@@ -61,7 +61,7 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
   //         </h2>
   //         <button
   //           onClick={onOpenPDFModal}
-  //           className="rounded-lg font-bold text-lg bg-greenPrimary text-white px-10 py-3"
+  //           className="rounded-lg font-bold text-lg bg-yellowPrimary text-white px-10 py-3"
   //         >
   //           বইটি পড়ুন
   //         </button>

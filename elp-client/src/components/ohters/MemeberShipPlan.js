@@ -48,7 +48,7 @@ const MemeberShipPlan = () => {
                     <p className="opacity-75 py-2">Bandwidth : 2GB</p>
                     <p className="opacity-75 py-2">OnlineSpach : 1GB</p>
                     <p className="opacity-75 py-2">Support : yes</p>
-                    <a className="bg-greenPrimary text-white py-3 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary " href="/subscribe">Buy Now</a>
+                    <a className="bg-yellowPrimary text-white py-3 px-4 transition-all duration-300 rounded hover:bg-cyanPrimary " href="/subscribe">Buy Now</a>
                   </div>
                   <div className="custom-shape-divider-bottom-1645939714">
                     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
