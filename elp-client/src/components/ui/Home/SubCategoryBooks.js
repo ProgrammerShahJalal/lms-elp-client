@@ -15,10 +15,7 @@ import { Navigation, Pagination } from "swiper/modules";
 const SubCategoryBooks = ({ sub_category_id }) => {
   const { data, isError, isLoading } =
     useGetSubCategoryBookQuery(sub_category_id);
-
   const booksData = data;
-
-  //   const filteredCourses = coursesData?.filter((item) => item?.membership_type === "1");
 
   const breakpoints = {
     480: {

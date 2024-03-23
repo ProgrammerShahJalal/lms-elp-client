@@ -67,24 +67,22 @@ const CategoryBooks = () => {
     content = categoriesData?.map((item) => (
       <SwiperSlide key={item?._id}>
         <div className=" bg-opacity-50  rounded-lg shadow-lg border border-black bg-gray-200  transition-all transform duration-300 delay-200 hover:bg-gray-300 hover:rounded-lg">
-          <div className="text-center flex justify-center items-center">
-            <div className="pt-4">
-              {/* category title */}
-              <h2 className="py-5 font-semibold ">{item?.title} </h2>
-            </div>
+          <div className="flex justify-center items-center bg-bluePrimary rounded-t-md">
+            {/* category title */}
+            <h2 className="py-5 font-semibold text-white text-3xl text-center drop-shadow-md">
+              {item?.title}{" "}
+            </h2>
           </div>
-          <p className="flex justify-center items-center py-2 border-y border-black">
-            (প্রতি বইয়ের সাথে)
-          </p>
           <div className="grid grid-cols-2">
             <p className="text-center border-r border-black py-2">সফট কপি</p>
             <p className="text-center py-2">প্রিন্ট কপি</p>
           </div>
           <div className={`w-full bg-yellowPrimary text-center rounded-b-md`}>
             {/* link to the category, since sub-category not available for this category */}
+
             <Link
               href={`/books/category/${item?._id}`}
-              className={`block w-full py-2 text-white transition-all duration-300 hover:bg-bluePrimary  rounded-b-md`}
+              className={`block w-full py-2 text-white transition-all duration-300 hover:bg-bluePrimary rounded-b-md`}
             >
               কিনুন
             </Link>
