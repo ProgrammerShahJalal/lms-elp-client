@@ -42,7 +42,6 @@ const AddBooks = () => {
   const { register, control, handleSubmit, reset, watch, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     data.price = Number(data?.price);
     data.discount_price = Number(data?.discount_price);
 

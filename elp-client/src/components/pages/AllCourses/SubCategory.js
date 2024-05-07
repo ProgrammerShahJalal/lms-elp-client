@@ -11,8 +11,6 @@ const SubCategory = ({ id }) => {
   const { data, isError, isLoading } = useGetAllCoursesQuery({ limit: 500 });
   const coursesData = data?.courses?.data;
 
-  console.log(coursesData);
-
   const filterCourseDta = coursesData?.filter(
     (item) => item?.sub_category_id?.id === id
   );

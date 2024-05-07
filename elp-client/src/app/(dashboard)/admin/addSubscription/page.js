@@ -62,8 +62,6 @@ const AddSubscription = () => {
     refetchSubCategories();
   }, [page, searchTerm, selectedCategory]);
 
-  console.log(selectedCategory, subCategories);
-
   useEffect(() => {
     refetchCourses();
   }, [page, searchTerm, selectedSubcategory]);
