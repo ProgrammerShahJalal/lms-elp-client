@@ -37,8 +37,6 @@ const AddQuiz = () => {
   } = useGetAllQuestionsQuery({ limit, page, searchTerm, exam_type: "0" });
   const allQuiz = questions?.categories?.data;
 
-  console.log(allQuiz);
-
   const { data: categories } = useGetAllCategoriesQuery({
     limit,
     page,
