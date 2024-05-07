@@ -10,10 +10,10 @@ export const subjectApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response, meta) => {
+      transformResponse: (response) => {
         return {
-          subjects: response,
-          meta,
+          subjects: response?.data,
+          meta: response?.meta,
         };
       },
       providesTags: ["subjects"],

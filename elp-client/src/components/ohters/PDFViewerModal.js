@@ -14,9 +14,7 @@ const PDFViewerModal = ({ isOpen, onClose, pdfSrc }) => {
                 src="https://i.ibb.co/qNjGQnB/2592258.png"
                 alt="secure"
               />
-              
             </div>
-
 
             <button
               onClick={onClose}
