@@ -14,7 +14,6 @@ import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
 import { useGetAllCoursesQuery } from "@/redux/api/courseApi";
 import Pagination from "../../Pagination";
 import AdminAddQuiz from "@/components/dashboard/admin/AdminAddQuiz";
-import SeeDynamicQuiz from "@/components/dashboard/admin/SeeDynamicQuiz";
 import { useRouter } from "next/navigation";
 import checkPermission from "@/utils/checkPermission";
 
@@ -35,10 +34,10 @@ const AddQuiz = () => {
     data: questions,
     isLoading: isFilteredQuestionLoading,
     refetch,
-  } = useGetAllQuestionsQuery({ limit, page, searchTerm });
+  } = useGetAllQuestionsQuery({ limit, page, searchTerm, exam_type: "0" });
   const allQuiz = questions?.categories?.data;
 
-  const filteredQuestions = allQuiz?.filter((quiz) => quiz.exam_type === "0");
+  console.log(allQuiz);
 
   const { data: categories } = useGetAllCategoriesQuery({
     limit,
@@ -489,12 +488,12 @@ const AddQuiz = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredQuestions?.map((quiz, i) => (
+              {allQuiz?.map((quiz, i) => (
                 <AdminAddQuiz
                   key={quiz?.id}
                   handleDelete={handleDelete}
                   refetch={refetch}
-                  filteredQuestions={filteredQuestions}
+                  filteredQuestions={allQuiz}
                   quiz={quiz}
                   i={i}
                 />

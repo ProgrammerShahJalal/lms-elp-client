@@ -65,10 +65,10 @@ const AddQuestions = () => {
     limit,
     page,
     searchTerm,
+    exam_type: "1",
   });
+  const allQuestions = questions?.categories?.data;
 
-  const allQuiz = questions?.categories?.data;
-  const filteredQuestions = allQuiz?.filter((quiz) => quiz?.exam_type === "1");
   const [deleteQuestions] = useDeleteQuestionsMutation();
 
   useEffect(() => {
@@ -356,7 +356,7 @@ const AddQuestions = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredQuestions?.map((quiz, i) => (
+              {allQuestions?.map((quiz, i) => (
                 <AdminChangeWrittenStatus
                   key={quiz?._id}
                   refetch={refetch}
