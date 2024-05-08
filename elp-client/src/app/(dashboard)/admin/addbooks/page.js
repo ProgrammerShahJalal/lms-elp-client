@@ -337,7 +337,7 @@ const AddBooks = () => {
                     <td className="py-2 px-4 border-b">
                       {book.format === "pdf" ? (
                         <a
-                          href={decryptLink(book.pdf_link)}
+                          href={decryptLink(book?.pdf_link)}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
