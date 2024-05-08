@@ -76,7 +76,7 @@ const AddQuiz = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const selectedExam = allExams?.find(
-      (exam) => exam.id === newQuestion.exam_id
+      (exam) => exam._id === newQuestion.exam_id
     );
     const transformedArray = newQuestion?.options?.map((option, index) => {
       const key = String.fromCharCode(97 + index);
@@ -89,7 +89,7 @@ const AddQuiz = () => {
       // options: newQuestion.options,
       correct_answer: newQuestion.correct_answer,
       mark: 1,
-      exam_id: selectedExam.id,
+      exam_id: selectedExam._id,
       exam_type: "0",
     };
     const res = await addQuizPlaylist(newData);
@@ -488,7 +488,7 @@ const AddQuiz = () => {
             <tbody>
               {allQuiz?.map((quiz, i) => (
                 <AdminAddQuiz
-                  key={quiz?.id}
+                  key={quiz?._id}
                   handleDelete={handleDelete}
                   refetch={refetch}
                   filteredQuestions={allQuiz}

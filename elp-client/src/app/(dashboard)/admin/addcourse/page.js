@@ -326,7 +326,7 @@ const AddCourseForm = () => {
                   </td>
                   <td className="py-2 px-4 border-b md:table-cell">
                     <Link
-                      href={`/admin/addcourse/edit/${course?.id}`}
+                      href={`/admin/addcourse/edit/${course?._id}`}
                       className="bg-blue-500 text-white py-1 px-2 rounded-md"
                     >
                       Update
@@ -335,7 +335,7 @@ const AddCourseForm = () => {
                   <td className="py-2 px-4 border-b md:table-cell">
                     <button
                       className="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer"
-                      onClick={() => handleDelete(course.id)}
+                      onClick={() => handleDelete(course._id)}
                     >
                       Delete
                     </button>

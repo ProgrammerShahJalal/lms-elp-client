@@ -358,7 +358,7 @@ const AddBooks = () => {
                     <td className="py-2 px-4 border-b md:table-cell">
                       <button
                         className="bg-red-500 text-white py-1 px-2 rounded-md"
-                        onClick={() => handleDelete(book?.id)}
+                        onClick={() => handleDelete(book?._id)}
                       >
                         Delete
                       </button>

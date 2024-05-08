@@ -254,7 +254,7 @@ const AddSubscription = () => {
               </option>
             ) : (
               allCourse?.map((course) => (
-                <option key={course.id} value={course.id}>
+                <option key={course._id} value={course._id}>
                   {course.title}
                 </option>
               ))
