@@ -32,7 +32,7 @@ function ExamLists({ exams }) {
 
     const examPaymentPayload = {
       user_id: getUserInfo()?.userId,
-      exam_id: exam?.id,
+      exam_id: exam?._id,
     };
 
     Cookies.set("order_type", "exam");

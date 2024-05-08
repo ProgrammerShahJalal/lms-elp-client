@@ -21,6 +21,8 @@ import FilteringCourseBooks from "./FilteringCourseBooks";
 import CategorySubCategoryCourses from "./CategorySubCategoryCourses";
 import CategoryBooks from "./CategoryBooks";
 import CategorySubCategoryExams from "./CategorySubCategoryExams";
+import SubjectBooks from "./SubjectBooks";
+import ProstutiVittikBooks from "./ProstutiVittikBooks";
 
 const HomePage = () => {
   // const {data} = useGetAllCoursesQuery({
@@ -33,6 +35,8 @@ const HomePage = () => {
       {/* <Category /> */}
       <CategorySubCategoryCourses />
       <CategoryBooks />
+      <SubjectBooks />
+      <ProstutiVittikBooks />
       <CategorySubCategoryExams />
 
       {/* <Courses /> */}

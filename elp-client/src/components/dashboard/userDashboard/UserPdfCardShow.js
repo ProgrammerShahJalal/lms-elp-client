@@ -43,7 +43,7 @@ const UserPdfCardShow = ({ bookId, order, index }) => {
         {isModalOpen && (
           <PDFViewerModal
             isOpen={isModalOpen}
-            pdfSrc={decryptLink(data?.pdf_link)}
+            pdfSrc={data?.pdf_link ? decryptLink(data?.pdf_link) : ""}
             onClose={onClosePDFModal}
           />
         )}

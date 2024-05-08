@@ -16,7 +16,7 @@ function SingleSubjectOnDashBoard({ subject }) {
     try {
       // Send the updated title to the backend for the specific subject id
       const payload = { id: subject?._id, body: { title: updatedTitle } };
-      console.log(subject?.id, payload);
+
       const res = await updateSubject(payload); // You need to implement this function
 
       if (res?.data?._id === subject?.id) {

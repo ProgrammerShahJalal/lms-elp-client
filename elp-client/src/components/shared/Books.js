@@ -3,20 +3,15 @@
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import { useGetSubCategoryBooksQuery } from "@/redux/api/booksApi";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import BookSectionCard from "./course/BookSectionCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import BookSectionCard from "../ui/Home/course/BookSectionCard";
 
-const SubCategoryBooks = ({ sub_category_id }) => {
-  const { data, isError, isLoading } =
-    useGetSubCategoryBooksQuery(sub_category_id);
-  const booksData = data;
-
+const Books = ({ books, isLoading, isError }) => {
   const breakpoints = {
     480: {
       slidesPerView: 1,
@@ -50,7 +45,7 @@ const SubCategoryBooks = ({ sub_category_id }) => {
     content = <Error />;
   }
 
-  if (!isLoading && !isError && booksData?.length === 0) {
+  if (!isLoading && !isError && books?.length === 0) {
     content = (
       <>
         {" "}
@@ -59,8 +54,8 @@ const SubCategoryBooks = ({ sub_category_id }) => {
     );
   }
 
-  if (!isLoading && !isError && booksData?.length > 0) {
-    content = booksData?.map((item) => (
+  if (!isLoading && !isError && books?.length > 0) {
+    content = books?.map((item) => (
       <SwiperSlide key={item?._id}>
         <BookSectionCard item={item} />
       </SwiperSlide>
@@ -83,4 +78,4 @@ const SubCategoryBooks = ({ sub_category_id }) => {
   );
 };
 
-export default SubCategoryBooks;
+export default Books;

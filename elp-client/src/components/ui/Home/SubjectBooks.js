@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import InitialLoader from "@/components/Loader/InitialLoader";
 import Error from "@/components/Loader/Error";
 import EmptyContent from "@/components/Loader/EmptyContent";
@@ -11,11 +10,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { FaCheck } from "react-icons/fa6";
+import { useGetAllSubjectsQuery } from "@/redux/api/subjectApi";
 
-const CategoryBooks = () => {
-  const { data, isError, isLoading } = useGetAllCategoriesQuery();
-  const categoriesData = data?.categories;
+const SubjectBooks = () => {
+  const { data, isError, isLoading } = useGetAllSubjectsQuery();
+  const subjectsData = data?.subjects;
 
   const breakpoints = {
     480: {
@@ -54,7 +53,7 @@ const CategoryBooks = () => {
     content = <Error />;
   }
 
-  if (!isLoading && !isError && categoriesData?.length === 0) {
+  if (!isLoading && !isError && subjectsData?.length === 0) {
     content = (
       <>
         {" "}
@@ -63,8 +62,8 @@ const CategoryBooks = () => {
     );
   }
 
-  if (!isLoading && !isError && categoriesData?.length > 0) {
-    content = categoriesData?.map((item) => (
+  if (!isLoading && !isError && subjectsData?.length > 0) {
+    content = subjectsData?.map((item) => (
       <SwiperSlide key={item?._id}>
         <div className=" bg-opacity-50  rounded-lg shadow-lg border border-black bg-gray-200  transition-all transform duration-300 delay-200 hover:bg-gray-300 hover:rounded-lg">
           <div className="flex justify-center items-center bg-bluePrimary rounded-t-md">
@@ -81,7 +80,7 @@ const CategoryBooks = () => {
             {/* link to the category, since sub-category not available for this category */}
 
             <Link
-              href={`/books/category/${item?._id}`}
+              href={`/books/subject/${item?._id}`}
               className={`block w-full py-2 text-white transition-all duration-300 hover:bg-bluePrimary rounded-b-md`}
             >
               কিনুন
@@ -93,19 +92,9 @@ const CategoryBooks = () => {
   }
 
   return (
-    <div className="px-14 pt-20">
-      <div className="lg:flex items-center justify-between">
-        <div>
-          {/* <h5 className="lg:text-xl py-4 mb-3">
-            দেশসেরা ইন্সট্রাক্টরদের সেরা সব কোর্স এখন এক প্ল্যাটফর্মে।
-          </h5> */}
-          <h2 className="lg:text-3xl md:text-2xl font-semibold mb-2">
-            আমাদের বই সংগ্রহ করুন
-          </h2>
-        </div>
-      </div>
+    <div className="px-14 pt-4">
       <div className="mt-4 mb-2">
-        <h4 className="text-xl font-semibold">১&#41; জব ক্যাটাগরি অনুসারেঃ</h4>
+        <h4 className="text-xl font-semibold">২&#41; বিষয়-ভিত্তিকঃ</h4>
       </div>
 
       <div className="">
@@ -122,4 +111,4 @@ const CategoryBooks = () => {
   );
 };
 
-export default CategoryBooks;
+export default SubjectBooks;

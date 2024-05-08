@@ -142,7 +142,7 @@ const CategorySubCategoryExams = () => {
   }
 
   return (
-    <div className="px-14 py-4">
+    <div className="px-14 py-20">
       <div className="lg:flex items-center justify-between my-4">
         <div>
           <h2 className="lg:text-3xl md:text-2xl font-semibold mb-2">
