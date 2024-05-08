@@ -3,7 +3,7 @@
 import EmptyContent from "@/components/Loader/EmptyContent";
 import Error from "@/components/Loader/Error";
 import InitialLoader from "@/components/Loader/InitialLoader";
-import { useGetSubCategoryBookQuery } from "@/redux/api/booksApi";
+import { useGetSubCategoryBooksQuery } from "@/redux/api/booksApi";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,7 +14,7 @@ import { Navigation, Pagination } from "swiper/modules";
 
 const SubCategoryBooks = ({ sub_category_id }) => {
   const { data, isError, isLoading } =
-    useGetSubCategoryBookQuery(sub_category_id);
+    useGetSubCategoryBooksQuery(sub_category_id);
   const booksData = data;
 
   const breakpoints = {

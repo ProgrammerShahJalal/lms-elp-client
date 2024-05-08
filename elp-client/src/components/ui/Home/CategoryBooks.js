@@ -93,16 +93,19 @@ const CategoryBooks = () => {
   }
 
   return (
-    <div className=" px-14 py-20 ">
-      <div className="lg:flex items-center justify-between my-4">
+    <div className="px-14 pt-20">
+      <div className="lg:flex items-center justify-between">
         <div>
           {/* <h5 className="lg:text-xl py-4 mb-3">
             দেশসেরা ইন্সট্রাক্টরদের সেরা সব কোর্স এখন এক প্ল্যাটফর্মে।
           </h5> */}
           <h2 className="lg:text-3xl md:text-2xl font-semibold mb-2">
-            আমাদের বই সংগ্রহ করুনঃ
+            আমাদের বই সংগ্রহ করুন
           </h2>
         </div>
+      </div>
+      <div className="mt-4 mb-2">
+        <h4 className="text-xl font-semibold">১&#41; জব ক্যাটাগরি অনুসারেঃ</h4>
       </div>
 
       <div className="">

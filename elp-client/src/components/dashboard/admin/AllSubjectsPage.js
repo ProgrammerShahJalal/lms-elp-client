@@ -12,9 +12,9 @@ const AllSubjectsPage = () => {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isError } = useGetAllSubjectsQuery({ limit, page });
-  const allSubjects = data?.subjects?.data;
+  const allSubjects = data?.subjects;
 
-  const totalData = data?.Subjects?.meta?.total;
+  const totalData = data?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);
 
   let content = null;

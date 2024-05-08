@@ -22,7 +22,7 @@ export default function BundleCourse({ course_id, cost }) {
             </div>
             <div className="px-2">
               <h2 className="text-2xl font-bold py-2">{singleCourse?.title}</h2>
-              <h5 className="text-greenPrimary text-lg">
+              <h5 className="text-yellowPrimary text-lg">
                 {singleCourse?.author}
               </h5>
               <p> প্রতিটি কোর্সের মূল্য {cost} টাকা</p>

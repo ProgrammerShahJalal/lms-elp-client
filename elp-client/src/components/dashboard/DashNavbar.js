@@ -38,7 +38,7 @@ const DashNavbar = () => {
             <>
               <h2 className="text-xl font-bold ">{data?.name}</h2>
               <div
-                className="flex items-center gap-3 bg-greenPrimary text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 ml-2 text-sm rounded"
+                className="flex items-center gap-3 bg-yellowPrimary text-white transition-all  hover:bg-blue-900 cursor-pointer px-3 py-2 ml-2 text-sm rounded"
                 onClick={logout}
               >
                 <FiLogOut fontSize={20} />

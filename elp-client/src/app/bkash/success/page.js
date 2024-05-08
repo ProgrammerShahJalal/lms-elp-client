@@ -162,7 +162,7 @@ function Success() {
                 height={200}
               />
             </div>
-            <h3 className="text-5xl text-greenPrimary pb-8">
+            <h3 className="text-5xl text-yellowPrimary pb-8">
               {" "}
               Your Payment is successful!
             </h3>
@@ -176,7 +176,7 @@ function Success() {
               Go to Home
             </Link>
             <Link
-              className="mt-8 bg-greenPrimary text-white py-5 px-10 transition-all duration-300 rounded hover:bg-cyanPrimary"
+              className="mt-8 bg-yellowPrimary text-white py-5 px-10 transition-all duration-300 rounded hover:bg-cyanPrimary"
               href="/profile"
             >
               Go to your Dashboard

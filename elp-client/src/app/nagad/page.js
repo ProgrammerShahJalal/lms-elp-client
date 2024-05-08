@@ -234,7 +234,7 @@ function Success() {
                 Go to Home
               </Link>
               <Link
-                className="bg-greenPrimary text-white text-center py-2 px-3 md:py-5 md:px-10 transition-all duration-300 rounded hover:bg-cyanPrimary"
+                className="bg-yellowPrimary text-white text-center py-2 px-3 md:py-5 md:px-10 transition-all duration-300 rounded hover:bg-cyanPrimary"
                 href="/profile"
               >
                 Go to your Dashboard

@@ -12,10 +12,7 @@ import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 
 const BookSectionCard = ({ item, onOpenPDFModal }) => {
-  const {books:cartItems} = useSelector((state) => state.cart);
- 
- 
-  
+  const { books: cartItems } = useSelector((state) => state.cart);
 
   const [showPDFModal, setShowPDFModal] = useState(false);
   const openPDFModal = () => {
@@ -33,12 +30,12 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
   // };
   const handleAddBook = (item) => {
     const existingBook = cartItems?.find((book) => book._id === item._id);
-  
+
     if (existingBook) {
-      toast.error('বইটি ইতিমধ্যে ঝুড়িতে যোগ করা হয়েছে');
+      toast.error("বইটি ইতিমধ্যে ঝুড়িতে যোগ করা হয়েছে");
     } else {
       dispatch(addToCart(item));
-      toast.success('বইটি ঝুড়িতে যোগ হয়েছে সফলভাবে');
+      toast.success("বইটি ঝুড়িতে যোগ হয়েছে সফলভাবে");
     }
   };
   // const [addToCart] = useAddToCartMutation();
@@ -81,12 +78,16 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
             height={100}
           />
 
-          {/* <p  className="absolute top-0 left-0 bg-greenPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
+          {/* <p  className="absolute top-0 left-0 bg-yellowPrimary text-white p-1 rounded-xl ">{item?.course_id?.sub_category_id?.category_id?.title}</p>
           <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 rounded-xl"> {item?.course_id?.sub_category_id?.title}</p> */}
 
-           <p  className="absolute top-0 left-0 bg-greenPrimary text-white p-1  ">{item?.course_id[0]?.sub_category_id?.category_id?.title}</p>
-          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 "> {item?.course_id[0]?.sub_category_id?.title}</p>
-
+          <p className="absolute top-0 left-0 bg-yellowPrimary text-white p-1  ">
+            {item?.course_id[0]?.sub_category_id?.category_id?.title}
+          </p>
+          <p className="absolute top-0 right-0 bg-bluePrimary text-white p-1 ">
+            {" "}
+            {item?.course_id[0]?.sub_category_id?.title}
+          </p>
         </figure>
 
         <div className="cursor-pointer p-4 hover:bg-white hover:rounded hover:text-cyanPrimary">
@@ -117,12 +118,7 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
 
           <div className="flex justify-between items-center">
             <div>
-              <p
-                className="py-2"
-              
-              > {
-                item?.description?.slice(0,50)
-             }</p>
+              <p className="py-2"> {item?.description?.slice(0, 50)}</p>
               <Link
                 className="text-bluePrimary pl-5"
                 href={`/books/details/${item?._id}`}
@@ -145,13 +141,13 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
             </p>
             <button
               onClick={() => handleAddBook(item)}
-              className="bg-greenPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
+              className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
             >
               ঝুড়িতে যোগ করুন
             </button>
           </div>
           {/* <div className=" card-actions justify-start ">
-            <button className="text-black transition-all duration-300 rounded hover:text-greenPrimary font-medium underline">
+            <button className="text-black transition-all duration-300 rounded hover:text-yellowPrimary font-medium underline">
               বইটি কিনুন
             </button>
           </div> */}

@@ -84,7 +84,7 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
             <p>লেখক:  {data?.writer}</p>
             <p>
             সাব ক্যাটাগরি:{" "}
-              <span className=" text-greenPrimary">{data?.course_id[0]?.sub_category_id?.category_id?.title}</span>{" "}
+              <span className=" text-yellowPrimary">{data?.course_id[0]?.sub_category_id?.category_id?.title}</span>{" "}
               
               <span className=" text-bluePrimary pl-5 font-semibold">
                 {" "}
@@ -94,13 +94,13 @@ const BookDetailsData = ({ data, isError, isLoading }) => {
             <p>বইটি ধরনঃ  {data?.format}</p>
           
             <p>{data?.price} {" "}টাকা</p>
-            <button onClick={() => handleAddBook(data)}  className="bg-greenPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
+            <button onClick={() => handleAddBook(data)}  className="bg-yellowPrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-bluePrimary ">
             ঝুড়িতে যোগ করুন
             </button> 
 
             <button
             onClick={onOpenPDFModal}
-            className="bg-bluePrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-greenPrimary ml-3"
+            className="bg-bluePrimary text-white py-2 px-10 transition-all duration-300 rounded  hover:bg-yellowPrimary ml-3"
           >
             বইটি পড়ুন
           </button>
