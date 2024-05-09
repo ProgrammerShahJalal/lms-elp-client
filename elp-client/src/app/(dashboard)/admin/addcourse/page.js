@@ -204,8 +204,8 @@ const AddCourseForm = () => {
               <option value="" disabled>
                 Select membership type
               </option>
-              <option value="0">Free</option>
               <option value="1">Paid</option>
+              <option value="0">Free</option>
             </select>
           </div>
 
