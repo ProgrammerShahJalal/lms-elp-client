@@ -19,6 +19,8 @@ const AdminPermissions = ({ user, refetchAdmins }) => {
     "subscription",
     "course_video",
     "exam",
+    "question",
+    "quiz",
     "book",
     "order_status",
     "order",
