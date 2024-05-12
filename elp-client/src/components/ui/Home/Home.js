@@ -48,10 +48,10 @@ const HomePage = () => {
       <FilteringCourseBooks sub_category_id={ntrcaWrittenSubId} />
       <FilteringCourseBooks sub_category_id={primaryPriliSubId} /> */}
 
-      <FreeCourse />
       <BookSection />
-      <FreeSeminar />
+      <FreeCourse />
 
+      <FreeSeminar />
       <Benefits />
       <Faq />
       <HomeQuiz />
