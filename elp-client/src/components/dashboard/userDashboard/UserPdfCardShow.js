@@ -1,7 +1,6 @@
 "use client";
 import { useGetSingleBookQuery } from "@/redux/api/booksApi";
 import Image from "next/image";
-import book from "../../../assets/images/book.jpg";
 import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 import decryptLink from "@/helpers/decryptLink";

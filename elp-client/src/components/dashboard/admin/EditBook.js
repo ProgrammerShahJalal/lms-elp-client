@@ -338,18 +338,18 @@ const EditBook = ({ id }) => {
           />
         </div>
 
-        <div className="mb-4">
-          <SubjectSelectionsInput control={control} register={register} />
-        </div>
-        <div className="mb-4">
-          <CategorySelectionsInput control={control} register={register} />
-        </div>
-        <div className="mb-4">
-          <SubCategorySelectionsInput control={control} register={register} />
-        </div>
-        <div className="mb-4">
-          <CourseSelectionsInput control={control} register={register} />
-        </div>
+        {/* <div className="mb-4">
+            <SubjectSelectionsInput control={control} register={register} />
+          </div>
+          <div className="mb-4">
+            <CategorySelectionsInput control={control} register={register} />
+          </div>
+          <div className="mb-4">
+            <SubCategorySelectionsInput control={control} register={register} />
+          </div>
+          <div className="mb-4">
+            <CourseSelectionsInput control={control} register={register} />
+          </div> */}
 
         <button
           type="submit"
