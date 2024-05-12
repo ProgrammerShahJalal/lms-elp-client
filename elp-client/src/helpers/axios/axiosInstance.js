@@ -41,8 +41,8 @@ instance.interceptors.response.use(
     const message = response?.data?.message?.toLowerCase();
     if (message && message.includes("session expired")) {
       removeUserInfo(authKey);
-    }
-    return responseObject;
+      alert("Session expired! Another login found in your account!!!");
+    } else return responseObject;
   },
   async function (error) {
     if (error?.response?.status === 403) {

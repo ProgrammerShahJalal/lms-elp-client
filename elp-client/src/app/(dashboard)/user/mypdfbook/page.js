@@ -2,7 +2,6 @@
 
 import InitialLoader from "@/components/Loader/InitialLoader";
 import UserPdfCard from "@/components/dashboard/userDashboard/UserPdfCard";
-import PDFViewerModal from "@/components/ohters/PDFViewerModal";
 import { useGetMyAllOrdersDetailsQuery } from "@/redux/api/orderApi";
 
 const MyPurchasePdfPage = () => {
