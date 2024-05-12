@@ -6,10 +6,9 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "@/redux/features/cart/cartSlice";
-import { useAddToCartMutation } from "@/redux/api/cartApi";
-import { isLoggedIn } from "@/services/auth.service";
 import { useState } from "react";
 import PDFViewerModal from "@/components/ohters/PDFViewerModal";
+import decryptLink from "@/helpers/decryptLink";
 
 const BookSectionCard = ({ item, onOpenPDFModal }) => {
   const { books: cartItems } = useSelector((state) => state.cart);
@@ -139,12 +138,21 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
               <del className="text-gray-400  "> -{item?.price} </del>{" "}
               <span className="font-bold pl-2">{item?.discount_price}</span> Tk
             </p>
-            <button
-              onClick={() => handleAddBook(item)}
-              className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
-            >
-              ঝুড়িতে যোগ করুন
-            </button>
+            {item?.discount_price == 0 ? (
+              <button
+                onClick={openPDFModal}
+                className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
+              >
+                বইটি পড়ুন
+              </button>
+            ) : (
+              <button
+                onClick={() => handleAddBook(item)}
+                className="bg-yellowPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-bluePrimary "
+              >
+                ঝুড়িতে যোগ করুন
+              </button>
+            )}
           </div>
           {/* <div className=" card-actions justify-start ">
             <button className="text-black transition-all duration-300 rounded hover:text-yellowPrimary font-medium underline">
@@ -152,6 +160,13 @@ const BookSectionCard = ({ item, onOpenPDFModal }) => {
             </button>
           </div> */}
         </div>
+        {showPDFModal && (
+          <PDFViewerModal
+            isOpen={showPDFModal}
+            pdfSrc={item?.pdf_link ? decryptLink(item?.pdf_link) : ""}
+            onClose={closePDFModal}
+          />
+        )}
       </div>
     </>
   );

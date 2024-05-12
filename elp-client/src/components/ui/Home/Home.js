@@ -40,13 +40,13 @@ const HomePage = () => {
       <CategorySubCategoryExams />
 
       {/* <Courses /> */}
-      <FilteringCourseBooks sub_category_id={bcsPriliSubId} />
+      {/* <FilteringCourseBooks sub_category_id={bcsPriliSubId} />
       <FilteringCourseBooks sub_category_id={bcsWrittenSubId} />
       <FilteringCourseBooks sub_category_id={bankPriliSubId} />
       <FilteringCourseBooks sub_category_id={bankWrittenSubId} />
       <FilteringCourseBooks sub_category_id={ntrcaPriliSubId} />
       <FilteringCourseBooks sub_category_id={ntrcaWrittenSubId} />
-      <FilteringCourseBooks sub_category_id={primaryPriliSubId} />
+      <FilteringCourseBooks sub_category_id={primaryPriliSubId} /> */}
 
       <FreeCourse />
       <BookSection />
