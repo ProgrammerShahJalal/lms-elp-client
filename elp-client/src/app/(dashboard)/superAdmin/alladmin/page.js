@@ -11,8 +11,6 @@ export const adminPermissions = [
   "subscription",
   "course_video",
   "exam",
-  "quiz",
-  "question",
   "book",
   "order_status",
   "order",

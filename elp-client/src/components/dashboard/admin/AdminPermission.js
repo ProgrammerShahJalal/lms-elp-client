@@ -2,7 +2,6 @@
 
 import {
   useGivePermissionMutation,
-  usePermissionCheckQuery,
   useRemovePermissionMutation,
 } from "@/redux/api/usersApi";
 import toast from "react-hot-toast";
@@ -19,8 +18,6 @@ const AdminPermissions = ({ user, refetchAdmins }) => {
     "subscription",
     "course_video",
     "exam",
-    "question",
-    "quiz",
     "book",
     "order_status",
     "order",

@@ -8,7 +8,6 @@ import {
   useGetAllQuestionsQuery,
 } from "@/redux/api/questionsApi";
 import { useGetAllSubcategoriesQuery } from "@/redux/api/subcategoryApi";
-import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -110,8 +109,12 @@ const AddQuestions = () => {
         exam_id: selectedExam,
       });
 
-      if (res) {
+      if (res?.data) {
         toast.success("question added successfully");
+      } else {
+        toast.error(
+          "Error! not added. Check if all the questions added for this exam."
+        );
       }
     } catch (error) {
       toast.error("An error occurred:", error);

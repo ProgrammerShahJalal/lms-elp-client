@@ -24,7 +24,7 @@ function SubjectBooksShow({ params }) {
     isLoading,
     isError,
     refetch: refetchBooks,
-  } = useGetBooksOfASubjectQuery({ subject_id, args: { page, limit: 2 } });
+  } = useGetBooksOfASubjectQuery({ subject_id, args: { page, limit: 9 } });
 
   const totalData = data?.meta?.total;
   const totalPages = Math.ceil(totalData / limit);

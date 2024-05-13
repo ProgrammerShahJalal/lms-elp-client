@@ -42,46 +42,72 @@ const AddBooks = () => {
   const { register, control, handleSubmit, reset, watch, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    data.price = Number(data?.price);
-    data.discount_price = Number(data?.discount_price);
+    const confirmAdd = await Swal.fire({
+      title: "বইয়ের সব তথ্য ঠিকঠাক আছে তা আপনি নিশ্চিত?",
+      text: "আপনি যদি নিশ্চিত হোন তবে 'হ্যাঁ' বোতামে ক্লিক করুন অন্যথায় 'না/অনিশ্চিত' বোতামে ক্লিক করে আরেকবার চেক করে আসুন।",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "হ্যাঁ",
+      cancelButtonText: "না/অনিশ্চিত",
+    });
 
-    const content = { ...data };
+    if (confirmAdd.isConfirmed) {
+      data.price = Number(data?.price);
+      data.discount_price = Number(data?.discount_price);
 
-    content.subject_id = extractIdsFromFieldsArray(content.subjects, "subject");
-    delete content.subjects;
+      const content = { ...data };
 
-    content.category_id = extractIdsFromFieldsArray(
-      content.categories,
-      "category"
-    );
-    delete content.categories;
+      content.subject_id = extractIdsFromFieldsArray(
+        content.subjects,
+        "subject"
+      );
+      delete content.subjects;
 
-    content.sub_category_id = extractIdsFromFieldsArray(
-      content.subCategories,
-      "subCategory"
-    );
-    delete content.subCategories;
+      content.category_id = extractIdsFromFieldsArray(
+        content.categories,
+        "category"
+      );
+      delete content.categories;
 
-    content.course_id = extractIdsFromFieldsArray(content.courses, "course");
-    delete content.courses;
+      content.sub_category_id = extractIdsFromFieldsArray(
+        content.subCategories,
+        "subCategory"
+      );
+      delete content.subCategories;
 
-    const file = content["file"];
+      content.course_id = extractIdsFromFieldsArray(content.courses, "course");
+      delete content.courses;
 
-    const result = JSON.stringify(content);
-    const formData = new FormData();
-    formData.append("file", file[0]);
-    formData.append("data", result);
+      const file = content["file"];
 
-    try {
-      const resultData = await addBooks(formData);
+      const result = JSON.stringify(content);
+      const formData = new FormData();
+      formData.append("file", file[0]);
+      formData.append("data", result);
 
-      if (resultData?.data) {
-        toast.success("Book created successfully");
-      } else {
-        toast.error("Error! Book not added!!!");
+      try {
+        const resultData = await addBooks(formData);
+
+        if (resultData?.data) {
+          toast.success("Book created successfully");
+          Swal.fire({
+            title: "Added!",
+            text: "বই যোগ করা হয়েছে",
+            icon: "success",
+          });
+        } else {
+          toast.error("Error! Book not added!!!");
+        }
+      } catch (error) {
+        toast.error(error.message);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong when adding.",
+          icon: "error",
+        });
       }
-    } catch (error) {
-      toast.error(error.message);
     }
   };
 
