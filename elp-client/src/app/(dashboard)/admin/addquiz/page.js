@@ -93,15 +93,19 @@ const AddQuiz = () => {
       exam_type: "0",
     };
     const res = await addQuizPlaylist(newData);
-    if (res) {
+    if (res?.data) {
       toast.success("Quiz added successfully");
+    } else {
+      toast.error(
+        "Error! not added. Check if all the questions added for this exam."
+      );
     }
   };
   // (selectedExam?.id, 'this is selected exam');
   const handleDelete = async (categoryId) => {
     try {
       const res = await deleteQuestions(categoryId);
-      if (res) {
+      if (res?.data) {
         toast.success("Quiz deleted successfully");
       }
     } catch (error) {
