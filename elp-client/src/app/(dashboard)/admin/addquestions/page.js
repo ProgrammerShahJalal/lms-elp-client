@@ -104,7 +104,7 @@ const AddQuestions = () => {
     try {
       const res = await addQuizPlaylist({
         question,
-        convertMark,
+        mark: convertMark,
         exam_type: "1",
         exam_id: selectedExam,
       });
