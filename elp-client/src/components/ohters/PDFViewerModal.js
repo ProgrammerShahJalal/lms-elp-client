@@ -40,12 +40,14 @@ const PDFViewerModal = ({ isOpen, onClose, pdfSrc }) => {
             
             <div className="bg-white py-1 px-36 md:px-96 absolute top-0 right-0 text-green-500 font-bold flex items-center z-10">
               <h2 className="text-center px-12 md:px-32">TOP</h2>
-              <h2 className="text-center px-12 md:px-32">SECURE</h2>
               <img
                 className="w-16 py-3"
                 src="https://i.ibb.co/qNjGQnB/2592258.png"
                 alt="secure"
               />
+              
+              <h2 className="text-center px-12 md:px-32">SECURE</h2>
+              
             </div>
 
 
