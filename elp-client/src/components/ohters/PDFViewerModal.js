@@ -34,7 +34,8 @@ const PDFViewerModal = ({ isOpen, onClose, pdfSrc }) => {
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center scroll-smooth select-none z-50">
           <div className="bg-white p-4 rounded-md h-full w-full relative">
-            <div className="bg-white py-1 px-36 md:px-96 absolute top-0 right-0 text-green-500 font-bold flex items-center z-10">
+            
+            {/* <div className="bg-white py-1 px-36 md:px-96 absolute top-0 right-0 text-green-500 font-bold flex items-center z-10">
               <h2 className="text-center px-12 md:px-32">TOP</h2>
               <h2 className="text-center px-12 md:px-32">SECURE</h2>
               <img
@@ -42,25 +43,28 @@ const PDFViewerModal = ({ isOpen, onClose, pdfSrc }) => {
                 src="https://i.ibb.co/qNjGQnB/2592258.png"
                 alt="secure"
               />
-            </div>
+            </div> */}
+            
 
             <button
               onClick={onClose}
-              className="absolute top-0 right-0 text-6xl text-red-600 font-bold z-10"
+              className="absolute top-4 right-7 text-6xl bg-white w-20 text-red-600 font-bold z-10"
             >
               &times;
             </button>
 
-            <div className="relative z-0 h-full w-full pointer-events-none">
+            <div className="relative z-0 h-full w-full overflow-hidden">
               <iframe
                 src={pdfSrc}
                 width="100%"
                 height="100%"
                 frameBorder="0"
-                scrolling="no"
+                scrolling="yes"
                 className="pointer-events-auto"
               ></iframe>
-              <div className="absolute inset-0 bg-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-transparent" style={{ pointerEvents: 'none' }}>
+                
+              </div>
             </div>
           </div>
         </div>
