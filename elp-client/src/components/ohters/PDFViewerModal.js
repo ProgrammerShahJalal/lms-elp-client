@@ -44,11 +44,11 @@ const PDFViewerModal = ({ isOpen, onClose, pdfSrc }) => {
                 alt="secure"
               />
             </div> */}
-            
+
 
             <button
               onClick={onClose}
-              className="absolute top-4 right-7 text-6xl bg-white w-20 text-red-600 font-bold z-10"
+              className="absolute top-4 right-7 text-6xl bg-white w-20 h-20 text-red-600 font-bold z-10"
             >
               &times;
             </button>
